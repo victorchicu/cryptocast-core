@@ -33,6 +33,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
     private static final String SLASH = "/";
     private static final String LONG_DASH = "—";
     private static final String DOUBLE_DASH = "--";
+    private static final String UNSUPPORTED_COMMAND_OPERATION = "Unsupported command operation";
 
     private final BinanceService binanceService;
     private final TelegramBotService telegramBotService;
@@ -78,7 +79,10 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                                     );
                                 } else {
                                     String[] commandArgs = command.split(" ");
-                                    CommandLine commandLine = commandLineParserService.parse(BotCommandOptionsBuilder.defaultOptions(), commandArgs);
+                                    CommandLine commandLine = commandLineParserService.parse(
+                                            BotCommandOptionsBuilder.defaultOptions(),
+                                            commandArgs
+                                    );
                                     if (commandLine != null) {
                                         if (commandLine.hasOption("list")) {
                                             String symbol = commandLine.getOptionValue("list");
@@ -92,7 +96,10 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                                                     symbols
                                             );
                                             for (ParticipantSubscription participantSubscription : participantSubscriptions) {
-                                                telegramBotService.deleteMessage(participantSubscription.getChatId(), participantSubscription.getMessageId());
+                                                telegramBotService.deleteMessage(
+                                                        participantSubscription.getChatId(),
+                                                        participantSubscription.getMessageId()
+                                                );
                                             }
                                             for (String symbol : symbols) {
                                                 binanceService.subscribeSymbolMiniTickerEvent(
@@ -106,7 +113,10 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                                         } else if (commandLine.hasOption("stop")) {
                                             binanceService.unsubscribeAll();
                                         } else {
-                                            telegramBotService.sendMessage(update.message().chat().id(), "Unsupported command operation");
+                                            telegramBotService.sendMessage(
+                                                    update.message().chat().id(),
+                                                    UNSUPPORTED_COMMAND_OPERATION
+                                            );
                                         }
                                     }
                                 }
@@ -121,31 +131,37 @@ public class CryptostropheBotApplication implements CommandLineRunner {
     }
 
     private void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent symbolMiniTickerEvent) {
-        Optional<SymbolTickerEvent> optional = symbolTickerEventService.findSymbolTickerEvent(update.message().from().id(), symbol);
-        optional.ifPresent(symbolTickerEvent -> {
-            long timeout = symbolMiniTickerEvent.getEventTime() - (symbolTickerEvent.getEventTime() + 1000 * 5);
-            if (timeout > 0) {
-                String text = objectMapperService.serializeAsPrettyString(symbolMiniTickerEvent);
-                Integer participantId = update.message().from().id();
-                participantSubscriptionsService.findSubscription(participantId, symbol)
-                        .map(participantSubscription -> telegramBotService.updateMessage(
-                                participantSubscription.getChatId(),
-                                participantSubscription.getMessageId(),
-                                text
-                        ))
-                        .orElseGet(() -> {
-                            SendResponse response = telegramBotService.sendMessage(update.message().chat().id(), text);
-                            participantSubscriptionsService.saveSubscription(ParticipantSubscriptionFactory.create(
-                                    symbol,
-                                    response.message().chat().id(),
-                                    response.message().messageId(),
-                                    response.message().from().id())
-                            );
-                            return response;
-                        });
-                symbolTickerEventService.updateSymbolTickerEvent(participantId, symbolMiniTickerEvent.getEventTime());
-            }
-        });
+        Integer participantId = update.message().from().id();
+        symbolTickerEventService.findSymbolTickerEvent(participantId, symbol)
+                .map(symbolTickerEvent -> {
+                    long timeout = symbolMiniTickerEvent.getEventTime() - (symbolTickerEvent.getEventTime() + 1000 * 60);
+                    if (timeout > 0) {
+                        String text = objectMapperService.serializeAsPrettyString(symbolMiniTickerEvent);
+                        participantSubscriptionsService.findSubscription(participantId, symbol)
+                                .map(participantSubscription -> telegramBotService.updateMessage(
+                                        participantSubscription.getChatId(),
+                                        participantSubscription.getMessageId(),
+                                        text
+                                ))
+                                .orElseGet(() -> {
+                                    SendResponse response = telegramBotService.sendMessage(update.message().chat().id(), text);
+                                    participantSubscriptionsService.saveSubscription(ParticipantSubscriptionFactory.create(
+                                            symbol,
+                                            response.message().chat().id(),
+                                            response.message().messageId(),
+                                            response.message().from().id())
+                                    );
+                                    return response;
+                                });
+                        symbolTickerEventService.updateSymbolTickerEvent(participantId, symbolMiniTickerEvent.getEventTime());
+                    }
+                    return symbolTickerEvent;
+                })
+                .orElse(symbolTickerEventService.saveSymbolTickerEvent(
+                        new SymbolTickerEvent()
+                                .setEventTime(symbolMiniTickerEvent.getEventTime())
+                                .setParticipantId(participantId))
+                );
     }
 
     private String prepareCommand(String text) {

@@ -7,5 +7,7 @@ import java.util.Optional;
 public interface SymbolTickerEventService {
     void updateSymbolTickerEvent(Integer participantId, Long eventTime);
 
+    SymbolTickerEvent saveSymbolTickerEvent(SymbolTickerEvent symbolTickerEvent);
+
     Optional<SymbolTickerEvent> findSymbolTickerEvent(Integer participantId, String symbol);
 }
