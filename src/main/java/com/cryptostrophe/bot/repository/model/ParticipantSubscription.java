@@ -8,12 +8,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class ParticipantSubscription {
     @Id
     private String id;
-    @Field("symbol")
-    private String symbol;
     @Field("chat_id")
     private Long chatId;
-    @Field("created_at")
-    private Integer createdAt;
+    @Field("symbol")
+    private String symbol;
     @Field("message_id")
     private Integer messageId;
     @Field("participant_id")
@@ -28,14 +26,6 @@ public class ParticipantSubscription {
         return this;
     }
 
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
     public Long getChatId() {
         return chatId;
     }
@@ -45,12 +35,12 @@ public class ParticipantSubscription {
         return this;
     }
 
-    public Integer getCreatedAt() {
-        return createdAt;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public ParticipantSubscription setCreatedAt(Integer createdAt) {
-        this.createdAt = createdAt;
+    public ParticipantSubscription setSymbol(String symbol) {
+        this.symbol = symbol;
         return this;
     }
 

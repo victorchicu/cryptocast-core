@@ -2,6 +2,8 @@ package com.cryptostrophe.bot;
 
 import com.cryptostrophe.bot.binance.model.event.SymbolMiniTickerEvent;
 import com.cryptostrophe.bot.binance.model.market.SymbolPrice;
+import com.cryptostrophe.bot.factory.ParticipantSubscriptionFactory;
+import com.cryptostrophe.bot.repository.model.SymbolTickerEvent;
 import com.cryptostrophe.bot.repository.model.ParticipantSubscription;
 import com.cryptostrophe.bot.services.*;
 import com.cryptostrophe.bot.utils.BotCommandOptionsBuilder;
@@ -32,25 +34,28 @@ public class CryptostropheBotApplication implements CommandLineRunner {
     private static final String LONG_DASH = "—";
     private static final String DOUBLE_DASH = "--";
 
-    private final ParticipantSubscriptionsService participantSubscriptionsService;
     private final BinanceService binanceService;
     private final TelegramBotService telegramBotService;
     private final ObjectMapperService objectMapperService;
     private final CommandLineParserService commandLineParserService;
+    private final SymbolTickerEventService symbolTickerEventService;
+    private final ParticipantSubscriptionsService participantSubscriptionsService;
 
 
     public CryptostropheBotApplication(
-            ParticipantSubscriptionsService participantSubscriptionsService,
             BinanceService binanceService,
             TelegramBotService telegramBotService,
             ObjectMapperService objectMapperService,
-            CommandLineParserService commandLineParserService
+            CommandLineParserService commandLineParserService,
+            SymbolTickerEventService symbolTickerEventService,
+            ParticipantSubscriptionsService participantSubscriptionsService
     ) {
-        this.participantSubscriptionsService = participantSubscriptionsService;
         this.binanceService = binanceService;
         this.telegramBotService = telegramBotService;
         this.objectMapperService = objectMapperService;
         this.commandLineParserService = commandLineParserService;
+        this.symbolTickerEventService = symbolTickerEventService;
+        this.participantSubscriptionsService = participantSubscriptionsService;
     }
 
     public static void main(String[] args) {
@@ -115,28 +120,31 @@ public class CryptostropheBotApplication implements CommandLineRunner {
         );
     }
 
-    private void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent event) {
-        String text = objectMapperService.serializeAsPrettyString(event);
-        Integer participantId = update.message().from().id();
-        participantSubscriptionsService.findSubscription(participantId, symbol)
-                .map(participantSubscription -> {
-                    return telegramBotService.updateMessage(
-                            participantSubscription.getChatId(),
-                            participantSubscription.getMessageId(),
-                            text
-                    );
-                }).orElseGet(() -> {
-            SendResponse response = telegramBotService.sendMessage(
-                    update.message().chat().id(),
-                    text
-            );
-            participantSubscriptionsService.saveSubscription(
-                    new ParticipantSubscription()
-                            .setId(symbol)
-                            .setChatId(response.message().chat().id())
-                            .setMessageId(response.message().messageId())
-            );
-            return response;
+    private void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent symbolMiniTickerEvent) {
+        Optional<SymbolTickerEvent> optional = symbolTickerEventService.findSymbolTickerEvent(update.message().from().id(), symbol);
+        optional.ifPresent(symbolTickerEvent -> {
+            long timeout = symbolMiniTickerEvent.getEventTime() - (symbolTickerEvent.getEventTime() + 1000 * 5);
+            if (timeout > 0) {
+                String text = objectMapperService.serializeAsPrettyString(symbolMiniTickerEvent);
+                Integer participantId = update.message().from().id();
+                participantSubscriptionsService.findSubscription(participantId, symbol)
+                        .map(participantSubscription -> telegramBotService.updateMessage(
+                                participantSubscription.getChatId(),
+                                participantSubscription.getMessageId(),
+                                text
+                        ))
+                        .orElseGet(() -> {
+                            SendResponse response = telegramBotService.sendMessage(update.message().chat().id(), text);
+                            participantSubscriptionsService.saveSubscription(ParticipantSubscriptionFactory.create(
+                                    symbol,
+                                    response.message().chat().id(),
+                                    response.message().messageId(),
+                                    response.message().from().id())
+                            );
+                            return response;
+                        });
+                symbolTickerEventService.updateSymbolTickerEvent(participantId, symbolMiniTickerEvent.getEventTime());
+            }
         });
     }
 
