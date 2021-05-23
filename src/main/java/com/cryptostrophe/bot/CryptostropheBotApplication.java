@@ -2,7 +2,7 @@ package com.cryptostrophe.bot;
 
 import com.cryptostrophe.bot.binance.model.event.SymbolMiniTickerEvent;
 import com.cryptostrophe.bot.binance.model.market.SymbolPrice;
-import com.cryptostrophe.bot.repository.model.MessageDocument;
+import com.cryptostrophe.bot.repository.model.ParticipantSubscription;
 import com.cryptostrophe.bot.services.*;
 import com.cryptostrophe.bot.utils.BotCommandOptionsBuilder;
 import com.pengrad.telegrambot.UpdatesListener;
@@ -32,24 +32,24 @@ public class CryptostropheBotApplication implements CommandLineRunner {
     private static final String LONG_DASH = "—";
     private static final String DOUBLE_DASH = "--";
 
-    private final MessageService messageService;
+    private final ParticipantSubscriptionsService participantSubscriptionsService;
     private final BinanceService binanceService;
     private final TelegramBotService telegramBotService;
-    private final ObjectSerializerService objectSerializerService;
+    private final ObjectMapperService objectMapperService;
     private final CommandLineParserService commandLineParserService;
 
 
     public CryptostropheBotApplication(
-            MessageService messageService,
+            ParticipantSubscriptionsService participantSubscriptionsService,
             BinanceService binanceService,
             TelegramBotService telegramBotService,
-            ObjectSerializerService objectSerializerService,
+            ObjectMapperService objectMapperService,
             CommandLineParserService commandLineParserService
     ) {
-        this.messageService = messageService;
+        this.participantSubscriptionsService = participantSubscriptionsService;
         this.binanceService = binanceService;
         this.telegramBotService = telegramBotService;
-        this.objectSerializerService = objectSerializerService;
+        this.objectMapperService = objectMapperService;
         this.commandLineParserService = commandLineParserService;
     }
 
@@ -78,20 +78,22 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                                         if (commandLine.hasOption("list")) {
                                             String symbol = commandLine.getOptionValue("list");
                                             List<SymbolPrice> symbolPriceTickers = binanceService.getSymbolPriceTicker(symbol);
-                                            String text = objectSerializerService.writeValueAsPrettyString(symbolPriceTickers);
+                                            String text = objectMapperService.serializeAsPrettyString(symbolPriceTickers);
                                             telegramBotService.sendMessage(update.message().chat().id(), text);
                                         } else if (commandLine.hasOption("track")) {
                                             String[] symbols = commandLine.getOptionValues("track");
-                                            List<MessageDocument> documents = messageService.findAll(symbols);
-                                            for (MessageDocument document : documents) {
-                                                telegramBotService.deleteMessage(document.getChatId(), document.getMessageId());
+                                            List<ParticipantSubscription> participantSubscriptions = participantSubscriptionsService.findSubscriptions(
+                                                    update.message().from().id(),
+                                                    symbols
+                                            );
+                                            for (ParticipantSubscription participantSubscription : participantSubscriptions) {
+                                                telegramBotService.deleteMessage(participantSubscription.getChatId(), participantSubscription.getMessageId());
                                             }
                                             for (String symbol : symbols) {
                                                 binanceService.subscribeSymbolMiniTickerEvent(
                                                         symbol.toLowerCase(),
                                                         ((SymbolMiniTickerEvent event) -> {
-//                                                            event.getEventTime()
-                                                            handleEvent(update, symbol, event);
+                                                            handleSymbolMiniTickerEvent(update, symbol, event);
                                                         }),
                                                         e -> e.printStackTrace()
                                                 );
@@ -113,27 +115,29 @@ public class CryptostropheBotApplication implements CommandLineRunner {
         );
     }
 
-    private void handleEvent(Update update, String symbol, SymbolMiniTickerEvent event) {
-        String text = objectSerializerService.writeValueAsPrettyString(event);
-        messageService.findById(symbol)
-                .map(document -> telegramBotService.updateMessage(
-                        document.getChatId(),
-                        document.getMessageId(),
-                        text
-                ))
-                .orElseGet(() -> {
-                    SendResponse response = telegramBotService.sendMessage(
-                            update.message().chat().id(),
+    private void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent event) {
+        String text = objectMapperService.serializeAsPrettyString(event);
+        Integer participantId = update.message().from().id();
+        participantSubscriptionsService.findSubscription(participantId, symbol)
+                .map(participantSubscription -> {
+                    return telegramBotService.updateMessage(
+                            participantSubscription.getChatId(),
+                            participantSubscription.getMessageId(),
                             text
                     );
-                    messageService.save(
-                            new MessageDocument()
-                                    .setId(symbol)
-                                    .setChatId(response.message().chat().id())
-                                    .setMessageId(response.message().messageId())
-                    );
-                    return response;
-                });
+                }).orElseGet(() -> {
+            SendResponse response = telegramBotService.sendMessage(
+                    update.message().chat().id(),
+                    text
+            );
+            participantSubscriptionsService.saveSubscription(
+                    new ParticipantSubscription()
+                            .setId(symbol)
+                            .setChatId(response.message().chat().id())
+                            .setMessageId(response.message().messageId())
+            );
+            return response;
+        });
     }
 
     private String prepareCommand(String text) {
