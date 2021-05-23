@@ -18,7 +18,7 @@ public class SymbolTickerEventServiceImpl implements SymbolTickerEventService {
     @Override
     public void updateSymbolTickerEvent(Integer participantId, Long eventTime) {
         symbolTickerEventRepository.findById(participantId)
-                .map(participantEvent -> participantEvent.setEventTime(eventTime))
+                .map(symbolTickerEvent -> symbolTickerEvent.setEventTime(eventTime))
                 .ifPresent(symbolTickerEventRepository::save);
     }
 
