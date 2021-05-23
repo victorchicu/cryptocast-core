@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class SymbolTickerEvent {
     @Id
     private String id;
+    @Field("symbol")
+    private String symbol;
     @Field("event_time")
     private Long eventTime;
     @Field("participant_id")
@@ -19,6 +21,15 @@ public class SymbolTickerEvent {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public SymbolTickerEvent setSymbol(String symbol) {
+        this.symbol = symbol;
+        return this;
     }
 
     public Long getEventTime() {

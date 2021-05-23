@@ -31,6 +31,6 @@ public class SymbolTickerEventServiceImpl implements SymbolTickerEventService {
 
     @Override
     public Optional<SymbolTickerEvent> findSymbolTickerEvent(Integer participantId, String symbol) {
-        return symbolTickerEventRepository.findById(participantId);
+        return symbolTickerEventRepository.findByParticipantIdAndSymbol(participantId, symbol);
     }
 }

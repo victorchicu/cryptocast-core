@@ -159,6 +159,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                 })
                 .orElse(symbolTickerEventService.saveSymbolTickerEvent(
                         new SymbolTickerEvent()
+                                .setSymbol(symbol)
                                 .setEventTime(symbolMiniTickerEvent.getEventTime())
                                 .setParticipantId(participantId))
                 );
