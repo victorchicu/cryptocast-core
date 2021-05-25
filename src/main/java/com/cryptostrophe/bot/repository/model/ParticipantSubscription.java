@@ -12,8 +12,6 @@ public class ParticipantSubscription {
     private String symbol;
     @Field("chat_id")
     private Long chatId;
-    @Field("created_at")
-    private Integer createdAt;
     @Field("message_id")
     private Integer messageId;
     @Field("participant_id")
@@ -32,8 +30,9 @@ public class ParticipantSubscription {
         return symbol;
     }
 
-    public void setSymbol(String symbol) {
+    public ParticipantSubscription setSymbol(String symbol) {
         this.symbol = symbol;
+        return this;
     }
 
     public Long getChatId() {
@@ -42,15 +41,6 @@ public class ParticipantSubscription {
 
     public ParticipantSubscription setChatId(Long chatId) {
         this.chatId = chatId;
-        return this;
-    }
-
-    public Integer getCreatedAt() {
-        return createdAt;
-    }
-
-    public ParticipantSubscription setCreatedAt(Integer createdAt) {
-        this.createdAt = createdAt;
         return this;
     }
 

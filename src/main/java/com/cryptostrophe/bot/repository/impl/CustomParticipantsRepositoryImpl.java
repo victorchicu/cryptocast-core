@@ -32,10 +32,10 @@ public class CustomParticipantsRepositoryImpl implements CustomParticipantsRepos
     @Override
     public Optional<ParticipantSubscription> findSubscription(Integer participantId, String symbol) {
         Query query = Query.query(
-                Criteria.where("participant_id")
-                        .is(participantId)
-                        .and("symbol")
+                Criteria.where("symbol")
                         .is(symbol)
+                        .and("participant_id")
+                        .is(participantId)
         );
         ParticipantSubscription participantSubscription = mongoOperations.findOne(query, ParticipantSubscription.class, "participant_subscriptions");
         return Optional.ofNullable(participantSubscription);

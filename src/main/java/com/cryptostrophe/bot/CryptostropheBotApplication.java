@@ -2,7 +2,10 @@ package com.cryptostrophe.bot;
 
 import com.cryptostrophe.bot.binance.model.event.SymbolMiniTickerEvent;
 import com.cryptostrophe.bot.binance.model.market.SymbolPrice;
+import com.cryptostrophe.bot.configs.BinanceProperties;
+import com.cryptostrophe.bot.configs.Cryptocurrency;
 import com.cryptostrophe.bot.repository.model.ParticipantSubscription;
+import com.cryptostrophe.bot.repository.model.SymbolTickerEvent;
 import com.cryptostrophe.bot.services.*;
 import com.cryptostrophe.bot.utils.BotCommandOptionsBuilder;
 import com.pengrad.telegrambot.UpdatesListener;
@@ -22,35 +25,43 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class CryptostropheBotApplication implements CommandLineRunner {
+    private static final int SEND_TIMEOUT_TIME = 1000 * 5;
     private static final Logger LOG = LoggerFactory.getLogger(CryptostropheBotApplication.class);
     private static final String SLASH = "/";
     private static final String LONG_DASH = "—";
     private static final String DOUBLE_DASH = "--";
 
-    private final ParticipantSubscriptionsService participantSubscriptionsService;
     private final BinanceService binanceService;
+    private final BinanceProperties binanceProperties;
     private final TelegramBotService telegramBotService;
     private final ObjectMapperService objectMapperService;
     private final CommandLineParserService commandLineParserService;
-
+    private final SymbolTickerEventService symbolTickerEventService;
+    private final ParticipantSubscriptionsService participantSubscriptionsService;
 
     public CryptostropheBotApplication(
-            ParticipantSubscriptionsService participantSubscriptionsService,
             BinanceService binanceService,
+            BinanceProperties binanceProperties,
             TelegramBotService telegramBotService,
             ObjectMapperService objectMapperService,
-            CommandLineParserService commandLineParserService
+            CommandLineParserService commandLineParserService,
+            SymbolTickerEventService symbolTickerEventService,
+            ParticipantSubscriptionsService participantSubscriptionsService
     ) {
-        this.participantSubscriptionsService = participantSubscriptionsService;
         this.binanceService = binanceService;
+        this.binanceProperties = binanceProperties;
         this.telegramBotService = telegramBotService;
         this.objectMapperService = objectMapperService;
         this.commandLineParserService = commandLineParserService;
+        this.symbolTickerEventService = symbolTickerEventService;
+        this.participantSubscriptionsService = participantSubscriptionsService;
     }
 
     public static void main(String[] args) {
@@ -86,15 +97,20 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                                                     update.message().from().id(),
                                                     symbols
                                             );
-                                            for (ParticipantSubscription participantSubscription : participantSubscriptions) {
-                                                telegramBotService.deleteMessage(participantSubscription.getChatId(), participantSubscription.getMessageId());
-                                            }
+                                            participantSubscriptions.forEach(participantSubscription ->
+                                                    telegramBotService.deleteMessage(
+                                                            participantSubscription.getChatId(),
+                                                            participantSubscription.getMessageId())
+                                            );
+                                            participantSubscriptionsService.deleteSubscriptions(
+                                                    participantSubscriptions.stream()
+                                                            .map(ParticipantSubscription::getId)
+                                                            .collect(Collectors.toList())
+                                            );
                                             for (String symbol : symbols) {
                                                 binanceService.subscribeSymbolMiniTickerEvent(
                                                         symbol.toLowerCase(),
-                                                        ((SymbolMiniTickerEvent event) -> {
-                                                            handleSymbolMiniTickerEvent(update, symbol, event);
-                                                        }),
+                                                        ((SymbolMiniTickerEvent event) -> handleSymbolMiniTickerEvent(update, event)),
                                                         e -> e.printStackTrace()
                                                 );
                                             }
@@ -115,34 +131,52 @@ public class CryptostropheBotApplication implements CommandLineRunner {
         );
     }
 
-    private void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent event) {
-        String text = objectMapperService.serializeAsPrettyString(event);
+    private void handleSymbolMiniTickerEvent(Update update, SymbolMiniTickerEvent event) {
+        String text = printSymbolMiniTickerEvent(event);
         Integer participantId = update.message().from().id();
-        participantSubscriptionsService.findSubscription(participantId, symbol)
-                .map(participantSubscription -> {
-                    return telegramBotService.updateMessage(
-                            participantSubscription.getChatId(),
-                            participantSubscription.getMessageId(),
+        Optional<SymbolTickerEvent> optional = symbolTickerEventService.findSymbolTickerEvent(participantId, event.getSymbol());
+        if (optional.isPresent()) {
+            SymbolTickerEvent symbolTickerEvent = optional.get();
+            long timeout = event.getEventTime() - (symbolTickerEvent.getEventTime() + SEND_TIMEOUT_TIME);
+            if (timeout > 0) {
+                Optional<ParticipantSubscription> participantSubscription = participantSubscriptionsService.findSubscription(
+                        participantId,
+                        event.getSymbol()
+                );
+                participantSubscription.ifPresent(subscription -> {
+                    telegramBotService.updateMessage(
+                            subscription.getChatId(),
+                            subscription.getMessageId(),
                             text
                     );
-                }).orElseGet(() -> {
-            SendResponse response = telegramBotService.sendMessage(
+                    if (event.getClose().compareTo(event.getHigh()) > 0) {
+                        telegramBotService.sendMessage(
+                                subscription.getChatId(),
+                                String.format("%s IS UP\n", event.getSymbol(), printSymbolMiniTickerEvent(event))
+                        );
+                    }
+                });
+                symbolTickerEventService.updateSymbolTickerEvent(participantId, event.getSymbol(), event.getEventTime());
+            }
+        } else {
+            symbolTickerEventService.saveSymbolTickerEvent(new SymbolTickerEvent()
+                    .setSymbol(event.getSymbol())
+                    .setEventTime(event.getEventTime())
+                    .setParticipantId(participantId)
+            );
+
+            SendResponse sendResponse = telegramBotService.sendMessage(
                     update.message().chat().id(),
                     text
             );
-            participantSubscriptionsService.saveSubscription(
-                    new ParticipantSubscription()
-                            .setId(symbol)
-                            .setChatId(response.message().chat().id())
-                            .setMessageId(response.message().messageId())
-            );
-            return response;
-        });
-    }
 
-    private String prepareCommand(String text) {
-        String command = StringUtils.defaultString(text, "");
-        return command.equals("/help") ? command.replace(SLASH, DOUBLE_DASH) : command.replace(LONG_DASH, DOUBLE_DASH);
+            participantSubscriptionsService.saveSubscription(new ParticipantSubscription()
+                    .setSymbol(event.getSymbol())
+                    .setChatId(sendResponse.message().chat().id())
+                    .setMessageId(sendResponse.message().messageId())
+                    .setParticipantId(participantId)
+            );
+        }
     }
 
     private String helpString() {
@@ -155,5 +189,31 @@ public class CryptostropheBotApplication implements CommandLineRunner {
         Options defaultOptions = BotCommandOptionsBuilder.defaultOptions();
         formatter.printHelp(printWriter, HelpFormatter.DEFAULT_WIDTH, cmdLineSyntax, header, defaultOptions, HelpFormatter.DEFAULT_LEFT_PAD, HelpFormatter.DEFAULT_DESC_PAD, footer);
         return stringWriter.toString();
+    }
+
+    private String prepareCommand(String text) {
+        String command = StringUtils.defaultString(text, "");
+        return command.equals("/help") ? command.replace(SLASH, DOUBLE_DASH) : command.replace(LONG_DASH, DOUBLE_DASH);
+    }
+
+    private String printSymbolMiniTickerEvent(SymbolMiniTickerEvent event) {
+        Cryptocurrency cryptocurrency = binanceProperties.getCryptocurrency().get(event.getSymbol());
+        StringBuilder textBuilder = new StringBuilder();
+        if (cryptocurrency.getDivisor() == null) {
+            textBuilder = textBuilder.append("Symbol:" + event.getSymbol() + "\n");
+            textBuilder = textBuilder.append("Open: " + event.getOpen() + "\n");
+            textBuilder = textBuilder.append("Close: " + event.getClose() + "\n");
+            textBuilder = textBuilder.append("High: " + event.getHigh() + "\n");
+            textBuilder = textBuilder.append("Low: " + event.getLow() + "\n");
+        } else {
+            textBuilder = textBuilder.append("Symbol: " + event.getSymbol() + "\n");
+            textBuilder = textBuilder.append("Open: " + event.getOpen().divide(cryptocurrency.getDivisor()) + "\n");
+            textBuilder = textBuilder.append("Close: " + event.getClose().divide(cryptocurrency.getDivisor()) + "\n");
+            textBuilder = textBuilder.append("High: " + event.getHigh().divide(cryptocurrency.getDivisor()) + "\n");
+            textBuilder = textBuilder.append("Low: " + event.getLow().divide(cryptocurrency.getDivisor()) + "\n");
+        }
+        textBuilder = textBuilder.append("Total traded base asset volume: " + event.getTotalTradedBaseAssetVolume() + "\n");
+        textBuilder = textBuilder.append("Total traded quote asset volume: " + event.getTotalTradedQuoteAssetVolume() + "\n");
+        return textBuilder.toString();
     }
 }

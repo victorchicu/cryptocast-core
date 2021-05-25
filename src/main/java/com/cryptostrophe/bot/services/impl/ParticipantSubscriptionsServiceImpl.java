@@ -17,6 +17,11 @@ public class ParticipantSubscriptionsServiceImpl implements ParticipantSubscript
     }
 
     @Override
+    public void deleteSubscriptions(List<String> ids) {
+        participantsRepository.deleteAllById(ids);
+    }
+
+    @Override
     public ParticipantSubscription saveSubscription(ParticipantSubscription message) {
         return participantsRepository.save(message);
     }
