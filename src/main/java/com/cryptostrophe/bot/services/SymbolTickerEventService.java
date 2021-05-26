@@ -6,7 +6,7 @@ import com.mongodb.client.result.DeleteResult;
 import java.util.Optional;
 
 public interface SymbolTickerEventService {
-    void deleteSymbolTickerEvent(Integer participant, String symbol);
+    void deleteSymbolTickerEvent(Integer participantId, String symbol);
 
     void updateSymbolTickerEvent(Integer participantId, String symbol, Long eventTime);
 

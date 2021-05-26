@@ -3,6 +3,7 @@ package com.cryptostrophe.bot.services.impl;
 import com.cryptostrophe.bot.repository.ParticipantsRepository;
 import com.cryptostrophe.bot.repository.model.ParticipantSubscription;
 import com.cryptostrophe.bot.services.ParticipantSubscriptionsService;
+import org.apache.commons.collections4.IterableUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,11 @@ public class ParticipantSubscriptionsServiceImpl implements ParticipantSubscript
 
     public ParticipantSubscriptionsServiceImpl(ParticipantsRepository participantsRepository) {
         this.participantsRepository = participantsRepository;
+    }
+
+    @Override
+    public void deleteSubscription(String subscriptionId) {
+        participantsRepository.deleteById(subscriptionId);
     }
 
     @Override
@@ -29,6 +35,11 @@ public class ParticipantSubscriptionsServiceImpl implements ParticipantSubscript
     @Override
     public List<ParticipantSubscription> findSubscriptions(Integer participantId, List<String> symbols) {
         return participantsRepository.findSubscriptions(participantId, symbols);
+    }
+
+    @Override
+    public List<ParticipantSubscription> findAllSubscriptions() {
+        return IterableUtils.toList(participantsRepository.findAll());
     }
 
     @Override

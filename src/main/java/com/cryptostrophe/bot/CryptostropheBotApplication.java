@@ -17,7 +17,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.apache.commons.collections4.Closure;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,7 +95,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                                         } else if (commandLine.hasOption("track")) {
                                             trackEvents(update, symbols);
                                         } else if (commandLine.hasOption("stop")) {
-                                            stopTracking(update);
+                                            stopTracking();
                                         } else {
                                             telegramBotService.sendMessage(update.message().chat().id(), "Unsupported command operation");
                                         }
@@ -173,10 +172,14 @@ public class CryptostropheBotApplication implements CommandLineRunner {
         }
     }
 
-    private void stopTracking(Update update) {
-        telegramBotService.sendMessage(update.message().chat().id(), "Going to stop all tracked subscriptions..");
+    private void stopTracking() {
         binanceService.unsubscribeAll();
-        telegramBotService.sendMessage(update.message().chat().id(), "DONE");
+        //todo: Add unsubscribe per participant subscription
+        participantSubscriptionsService.findAllSubscriptions().forEach(subscription -> {
+            telegramBotService.deleteMessage(subscription.getChatId(), subscription.getMessageId());
+            symbolTickerEventService.deleteSymbolTickerEvent(subscription.getParticipantId(), subscription.getSymbol());
+            participantSubscriptionsService.deleteSubscription(subscription.getId());
+        });
     }
 
     private void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent event) {
