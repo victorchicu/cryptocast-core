@@ -42,6 +42,7 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
+    testImplementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
 }
 test {
     useJUnitPlatform()
