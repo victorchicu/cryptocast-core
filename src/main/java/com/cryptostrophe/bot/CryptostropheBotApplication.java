@@ -25,7 +25,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -95,7 +95,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                                             String[] symbols = commandLine.getOptionValues("track");
                                             List<ParticipantSubscription> participantSubscriptions = participantSubscriptionsService.findSubscriptions(
                                                     update.message().from().id(),
-                                                    symbols
+                                                    Arrays.asList(symbols)
                                             );
                                             participantSubscriptions.forEach(participantSubscription ->
                                                     telegramBotService.deleteMessage(
@@ -152,7 +152,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                     if (event.getClose().compareTo(event.getHigh()) > 0) {
                         telegramBotService.sendMessage(
                                 subscription.getChatId(),
-                                String.format("%s IS UP\n", event.getSymbol(), printSymbolMiniTickerEvent(event))
+                                String.format("%s IS UP\n%s", event.getSymbol(), printSymbolMiniTickerEvent(event))
                         );
                     }
                 });

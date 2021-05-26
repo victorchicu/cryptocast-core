@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CustomParticipantsRepository {
-    List<ParticipantSubscription> findSubscriptions(Integer participantId, String[] symbols);
+    List<ParticipantSubscription> findSubscriptions(Integer participantId, List<String> symbols);
 
     Optional<ParticipantSubscription> findSubscription(Integer participantId, String symbol);
 }

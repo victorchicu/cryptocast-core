@@ -19,7 +19,7 @@ public class SymbolTickerEventRepositoryImpl implements CustomSymbolTickerEventR
 
     @Override
     public Optional<SymbolTickerEvent> findSymbolTickerEvent(Integer participantId, String symbol) {
-        Query query = Query.query(Criteria.where("symbol").is(symbol).and("participant_id").is(participantId));
+        Query query = Query.query(Criteria.where("symbol").is(symbol).and("participantId").is(participantId));
         return Optional.ofNullable(mongoOperations.findOne(query, SymbolTickerEvent.class, "symbol_ticker_events"));
     }
 }

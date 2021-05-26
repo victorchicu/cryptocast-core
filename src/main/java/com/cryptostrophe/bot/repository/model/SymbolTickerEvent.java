@@ -1,27 +1,12 @@
 package com.cryptostrophe.bot.repository.model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document("symbol_ticker_events")
-public class SymbolTickerEvent {
-    @Id
-    private String id;
-    @Field("symbol")
-    private String symbol;
-    @Field("event_time")
+public class SymbolTickerEvent extends BaseEntity {
     private Long eventTime;
-    @Field("participant_id")
+    private String symbol;
     private Integer participantId;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getSymbol() {
         return symbol;

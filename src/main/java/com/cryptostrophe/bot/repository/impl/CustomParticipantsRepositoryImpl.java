@@ -19,24 +19,14 @@ public class CustomParticipantsRepositoryImpl implements CustomParticipantsRepos
     }
 
     @Override
-    public List<ParticipantSubscription> findSubscriptions(Integer participantId, String[] symbols) {
-        Query query = Query.query(
-                Criteria.where("participant_id")
-                        .is(participantId)
-                        .and("symbol")
-                        .in(symbols)
-        );
+    public List<ParticipantSubscription> findSubscriptions(Integer participantId, List<String> symbols) {
+        Query query = Query.query(Criteria.where("participantId").is(participantId).and("symbol").in(symbols));
         return mongoOperations.find(query, ParticipantSubscription.class, "participant_subscriptions");
     }
 
     @Override
     public Optional<ParticipantSubscription> findSubscription(Integer participantId, String symbol) {
-        Query query = Query.query(
-                Criteria.where("symbol")
-                        .is(symbol)
-                        .and("participant_id")
-                        .is(participantId)
-        );
+        Query query = Query.query(Criteria.where("participantId").is(participantId).and("symbol").is(symbol));
         ParticipantSubscription participantSubscription = mongoOperations.findOne(query, ParticipantSubscription.class, "participant_subscriptions");
         return Optional.ofNullable(participantSubscription);
     }

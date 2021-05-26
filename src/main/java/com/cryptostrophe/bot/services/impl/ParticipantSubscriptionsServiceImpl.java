@@ -27,7 +27,7 @@ public class ParticipantSubscriptionsServiceImpl implements ParticipantSubscript
     }
 
     @Override
-    public List<ParticipantSubscription> findSubscriptions(Integer participantId, String[] symbols) {
+    public List<ParticipantSubscription> findSubscriptions(Integer participantId, List<String> symbols) {
         return participantsRepository.findSubscriptions(participantId, symbols);
     }
 

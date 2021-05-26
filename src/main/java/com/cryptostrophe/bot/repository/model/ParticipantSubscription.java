@@ -1,30 +1,13 @@
 package com.cryptostrophe.bot.repository.model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "participant_subscriptions")
-public class ParticipantSubscription {
-    @Id
-    private String id;
-    @Field("symbol")
-    private String symbol;
-    @Field("chat_id")
+public class ParticipantSubscription extends BaseEntity {
     private Long chatId;
-    @Field("message_id")
+    private String symbol;
     private Integer messageId;
-    @Field("participant_id")
     private Integer participantId;
-
-    public String getId() {
-        return id;
-    }
-
-    public ParticipantSubscription setId(String id) {
-        this.id = id;
-        return this;
-    }
 
     public String getSymbol() {
         return symbol;

@@ -10,7 +10,7 @@ public interface ParticipantSubscriptionsService {
 
     ParticipantSubscription saveSubscription(ParticipantSubscription message);
 
-    List<ParticipantSubscription> findSubscriptions(Integer participantId, String[] symbols);
+    List<ParticipantSubscription> findSubscriptions(Integer participantId, List<String> symbols);
 
     Optional<ParticipantSubscription> findSubscription(Integer participantId, String symbol);
 }
