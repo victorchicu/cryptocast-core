@@ -17,6 +17,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.collections4.Closure;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.collections4.IteratorUtils.forEach;
 
 @SpringBootApplication
 public class CryptostropheBotApplication implements CommandLineRunner {
@@ -77,6 +80,9 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                 optional.ifPresent(message -> {
                     try {
                         String command = prepareCommand(message.text());
+                        if (!message.from().isBot()) {
+                            telegramBotService.deleteMessage(message.chat().id(), message.messageId());
+                        }
                         if (command.equals("--help")) {
                             printHelp(update);
                         } else {
@@ -119,12 +125,16 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                 symbols
         );
 
-        participantSubscriptions.forEach(participantSubscription ->
-                telegramBotService.deleteMessage(
-                        participantSubscription.getChatId(),
-                        participantSubscription.getMessageId()
-                )
-        );
+        forEach(participantSubscriptions.iterator(), subscription -> {
+            telegramBotService.deleteMessage(
+                    subscription.getChatId(),
+                    subscription.getMessageId()
+            );
+            symbolTickerEventService.deleteSymbolTickerEvent(
+                    subscription.getParticipantId(),
+                    subscription.getSymbol()
+            );
+        });
 
         if (participantSubscriptions.size() > 0) {
             participantSubscriptionsService.deleteSubscriptions(
