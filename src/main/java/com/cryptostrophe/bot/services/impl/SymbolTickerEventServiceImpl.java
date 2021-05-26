@@ -4,6 +4,7 @@ import com.cryptostrophe.bot.repository.CustomSymbolTickerEventRepository;
 import com.cryptostrophe.bot.repository.SymbolTickerEventRepository;
 import com.cryptostrophe.bot.repository.model.SymbolTickerEvent;
 import com.cryptostrophe.bot.services.SymbolTickerEventService;
+import com.mongodb.client.result.DeleteResult;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,12 @@ public class SymbolTickerEventServiceImpl implements SymbolTickerEventService {
                     symbolTickerEvent.setEventTime(eventTime);
                     symbolTickerEventRepository.save(symbolTickerEvent);
                 });
+    }
+
+    @Override
+    public void deleteSymbolTickerEvent(Integer participant, String symbol) {
+        Optional<SymbolTickerEvent> optional = symbolTickerEventRepository.findSymbolTickerEvent(participant, symbol);
+        optional.ifPresent(event -> symbolTickerEventRepository.deleteById(event.getId()));
     }
 
     @Override
