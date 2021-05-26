@@ -152,6 +152,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
     private void listSymbols(Update update, List<String> symbols) {
         List<SymbolPrice> symbolPriceTickers = binanceService.getSymbolPriceTicker(symbols.size() == 0 ? null : symbols.get(0));
         try {
+            //todo: Split list to multipart message (telegram message max size is 4096)
             long sizeOf = sizeOf(symbolPriceTickers);
             if (sizeOf <= 4096) {
                 String text = objectMapperService.serializeAsPrettyString(symbolPriceTickers);
@@ -250,7 +251,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                 .map(cryptocurrency -> {
                     StringBuilder textBuilder = new StringBuilder();
                     if (cryptocurrency.getDivisor() == null) {
-                        textBuilder = textBuilder.append("Symbol:" + symbol + "\n");
+                        textBuilder = textBuilder.append("Symbol: " + symbol + "\n");
                         textBuilder = textBuilder.append("Open: " + event.getOpen() + "\n");
                         textBuilder = textBuilder.append("Close: " + event.getClose() + "\n");
                         textBuilder = textBuilder.append("High: " + event.getHigh() + "\n");

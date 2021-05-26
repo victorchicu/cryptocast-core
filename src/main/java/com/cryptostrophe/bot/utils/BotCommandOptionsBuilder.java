@@ -33,7 +33,7 @@ public class BotCommandOptionsBuilder {
 
         options.addOption(
                 Option.builder("s")
-                        .desc("Switch off")
+                        .desc("Stop all tracked subscriptions")
                         .longOpt("stop")
                         .build()
         );
