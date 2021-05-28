@@ -2,15 +2,11 @@ package com.cryptostrophe.bot.repository;
 
 import com.cryptostrophe.bot.BaseTest;
 import com.cryptostrophe.bot.repository.model.ParticipantSubscription;
-import com.github.javafaker.Faker;
-import org.apache.commons.collections4.ListUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ParticipantsRepositoryIT extends BaseTest {

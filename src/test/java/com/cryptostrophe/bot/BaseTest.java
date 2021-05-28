@@ -1,17 +1,22 @@
 package com.cryptostrophe.bot;
 
+import com.cryptostrophe.bot.binance.model.event.SymbolMiniTickerEvent;
+import com.cryptostrophe.bot.configs.BinanceProperties;
 import com.cryptostrophe.bot.repository.ParticipantsRepository;
 import com.cryptostrophe.bot.repository.SymbolTickerEventRepository;
 import com.cryptostrophe.bot.repository.model.ParticipantSubscription;
 import com.cryptostrophe.bot.repository.model.SymbolTickerEvent;
+import com.cryptostrophe.bot.services.FreeMarkerTemplateService;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 @TestPropertySource("classpath:application.properties")
@@ -19,7 +24,11 @@ public class BaseTest {
     protected static Faker faker = new Faker();
 
     @Autowired
+    protected BinanceProperties binanceProperties;
+    @Autowired
     protected ParticipantsRepository participantsRepository;
+    @Autowired
+    protected FreeMarkerTemplateService freeMarkerTemplateService;
     @Autowired
     protected SymbolTickerEventRepository symbolTickerEventRepository;
 
@@ -28,6 +37,17 @@ public class BaseTest {
                 .setEventTime(Instant.now().toEpochMilli())
                 .setSymbol(faker.currency().name())
                 .setParticipantId(faker.number().randomDigit());
+    }
+
+    protected SymbolMiniTickerEvent randomSymbolMiniTickerEvent() {
+        SymbolMiniTickerEvent symbolMiniTickerEvent = new SymbolMiniTickerEvent();
+        Set<String> symbols = binanceProperties.getCryptocurrency().keySet();
+        symbolMiniTickerEvent.setSymbol(faker.options().option(symbols.toArray(new String[0])));
+        symbolMiniTickerEvent.setLow(new BigDecimal(Math.random()));
+        symbolMiniTickerEvent.setHigh(new BigDecimal(Math.random()));
+        symbolMiniTickerEvent.setOpen(new BigDecimal(Math.random()));
+        symbolMiniTickerEvent.setClose(new BigDecimal(Math.random()));
+        return symbolMiniTickerEvent;
     }
 
     protected ParticipantSubscription randomParticipantSubscription() {

@@ -1,24 +1,13 @@
 package com.cryptostrophe.bot.configs;
 
-import java.math.BigDecimal;
-
 public class Cryptocurrency {
-    private String name;
-    private BigDecimal divisor;
+    private String template;
 
-    public String getName() {
-        return name;
+    public String getTemplate() {
+        return template;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getDivisor() {
-        return divisor;
-    }
-
-    public void setDivisor(BigDecimal divisor) {
-        this.divisor = divisor;
+    public void setTemplate(String template) {
+        this.template = template;
     }
 }

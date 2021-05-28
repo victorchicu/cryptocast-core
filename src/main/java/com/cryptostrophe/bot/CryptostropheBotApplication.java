@@ -47,6 +47,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
     private final ObjectMapperService objectMapperService;
     private final CommandLineParserService commandLineParserService;
     private final SymbolTickerEventService symbolTickerEventService;
+    private final FreeMarkerTemplateService freeMarkerTemplateService;
     private final ParticipantSubscriptionsService participantSubscriptionsService;
 
     public CryptostropheBotApplication(
@@ -56,6 +57,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
             ObjectMapperService objectMapperService,
             CommandLineParserService commandLineParserService,
             SymbolTickerEventService symbolTickerEventService,
+            FreeMarkerTemplateService freeMarkerTemplateService,
             ParticipantSubscriptionsService participantSubscriptionsService
     ) {
         this.binanceService = binanceService;
@@ -64,6 +66,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
         this.objectMapperService = objectMapperService;
         this.commandLineParserService = commandLineParserService;
         this.symbolTickerEventService = symbolTickerEventService;
+        this.freeMarkerTemplateService = freeMarkerTemplateService;
         this.participantSubscriptionsService = participantSubscriptionsService;
     }
 
@@ -183,7 +186,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
     }
 
     private void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent event) {
-        String text = renderSymbolMiniTickerEvent(symbol, event);
+        String text = renderTemplate(symbol, event);
         Integer participantId = update.message().from().id();
         Optional<SymbolTickerEvent> optional = symbolTickerEventService.findSymbolTickerEvent(participantId, symbol);
         if (optional.isPresent()) {
@@ -203,7 +206,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                     if (event.getClose().compareTo(event.getHigh()) > 0) {
                         telegramBotService.sendMessage(
                                 subscription.getChatId(),
-                                String.format("%s IS UP\n%s", symbol, renderSymbolMiniTickerEvent(symbol, event))
+                                String.format("%s IS UP\n%s", symbol, renderTemplate(symbol, event))
                         );
                     }
                 });
@@ -258,27 +261,11 @@ public class CryptostropheBotApplication implements CommandLineRunner {
         return command.equals("/help") ? command.replace(SLASH, DOUBLE_DASH) : command.replace(LONG_DASH, DOUBLE_DASH);
     }
 
-    private String renderSymbolMiniTickerEvent(String symbol, SymbolMiniTickerEvent event) {
-        //todo: Add free market template
+    private <T> String renderTemplate(String symbol, T event) {
         return Optional.ofNullable(binanceProperties.getCryptocurrency().get(symbol))
                 .map(cryptocurrency -> {
-                    StringBuilder textBuilder = new StringBuilder();
-                    if (cryptocurrency.getDivisor() == null) {
-                        textBuilder = textBuilder.append("Symbol: " + symbol + "\n");
-                        textBuilder = textBuilder.append("Open: " + event.getOpen() + "\n");
-                        textBuilder = textBuilder.append("Close: " + event.getClose() + "\n");
-                        textBuilder = textBuilder.append("High: " + event.getHigh() + "\n");
-                        textBuilder = textBuilder.append("Low: " + event.getLow() + "\n");
-                    } else {
-                        textBuilder = textBuilder.append("Symbol: " + symbol + "\n");
-                        textBuilder = textBuilder.append("Open: " + event.getOpen().divide(cryptocurrency.getDivisor()) + "\n");
-                        textBuilder = textBuilder.append("Close: " + event.getClose().divide(cryptocurrency.getDivisor()) + "\n");
-                        textBuilder = textBuilder.append("High: " + event.getHigh().divide(cryptocurrency.getDivisor()) + "\n");
-                        textBuilder = textBuilder.append("Low: " + event.getLow().divide(cryptocurrency.getDivisor()) + "\n");
-                    }
-                    textBuilder = textBuilder.append("Total traded base asset volume: " + event.getTotalTradedBaseAssetVolume() + "\n");
-                    textBuilder = textBuilder.append("Total traded quote asset volume: " + event.getTotalTradedQuoteAssetVolume() + "\n");
-                    return textBuilder.toString();
+                    String text = freeMarkerTemplateService.render(cryptocurrency.getTemplate(), event);
+                    return text;
                 })
                 .orElseThrow(() -> new UnsupportedSymbolException(symbol));
     }
