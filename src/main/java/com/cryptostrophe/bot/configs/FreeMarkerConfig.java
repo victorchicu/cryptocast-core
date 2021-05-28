@@ -1,6 +1,6 @@
 package com.cryptostrophe.bot.configs;
 
-import com.cryptostrophe.bot.utils.BigDecimalUtils;
+import com.cryptostrophe.bot.utils.freemarker.NumberUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
@@ -14,7 +14,7 @@ public class FreeMarkerConfig {
         FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
         freeMarkerConfigurer.setTemplateLoaderPath("classpath:/templates");
         HashMap<String, Object> sharedVariables = new HashMap<>();
-        sharedVariables.put("decimal", new BigDecimalUtils());
+        sharedVariables.put("decimal", new NumberUtils());
         freeMarkerConfigurer.setFreemarkerVariables(sharedVariables);
         return freeMarkerConfigurer;
     }

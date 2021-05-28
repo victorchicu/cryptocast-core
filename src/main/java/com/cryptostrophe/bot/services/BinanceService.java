@@ -4,7 +4,6 @@ import com.cryptostrophe.bot.binance.SubscriptionErrorHandler;
 import com.cryptostrophe.bot.binance.SubscriptionListener;
 import com.cryptostrophe.bot.binance.model.event.SymbolMiniTickerEvent;
 import com.cryptostrophe.bot.binance.model.market.SymbolPrice;
-import com.cryptostrophe.bot.configs.BinanceProperties;
 
 import java.util.List;
 

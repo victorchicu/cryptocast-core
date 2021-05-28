@@ -7,6 +7,7 @@ import com.cryptostrophe.bot.exceptions.UnsupportedSymbolException;
 import com.cryptostrophe.bot.repository.model.ParticipantSubscription;
 import com.cryptostrophe.bot.repository.model.SymbolTickerEvent;
 import com.cryptostrophe.bot.services.*;
+import com.cryptostrophe.bot.utils.BigDecimalUtils;
 import com.cryptostrophe.bot.utils.BotCommandOptionsBuilder;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Message;
@@ -17,6 +18,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -204,9 +207,21 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                             text
                     );
                     if (event.getClose().compareTo(event.getHigh()) > 0) {
+                        BigDecimal percent = BigDecimalUtils.computePercentDiffBetweenTwoNumbers(event.getHigh(), event.getClose());
+                        List<SymbolPrice> symbolPrices = binanceService.getSymbolPriceTicker(event.getSymbol());
+                        SymbolPrice symbolPrice = IterableUtils.first(symbolPrices);
                         telegramBotService.sendMessage(
                                 subscription.getChatId(),
-                                String.format("%s IS UP\n%s", symbol, renderTemplate(symbol, event))
+                                String.format("%s is up %f to $%f", event.getSymbol(), percent, symbolPrice.getPrice().toPlainString())
+                        );
+                    }
+                    if (event.getLow().compareTo(event.getClose()) > 0) {
+                        List<SymbolPrice> symbolPrices = binanceService.getSymbolPriceTicker(event.getSymbol());
+                        SymbolPrice symbolPrice = IterableUtils.first(symbolPrices);
+                        BigDecimal percent = BigDecimalUtils.computePercentDiffBetweenTwoNumbers(event.getClose(), event.getLow());
+                        telegramBotService.sendMessage(
+                                subscription.getChatId(),
+                                String.format("%s is down %f to $%f", event.getSymbol(), percent, symbolPrice.getPrice().toPlainString())
                         );
                     }
                 });
@@ -263,10 +278,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
 
     private <T> String renderTemplate(String symbol, T event) {
         return Optional.ofNullable(binanceProperties.getCryptocurrency().get(symbol))
-                .map(cryptocurrency -> {
-                    String text = freeMarkerTemplateService.render(cryptocurrency.getTemplate(), event);
-                    return text;
-                })
+                .map(cryptocurrency -> freeMarkerTemplateService.render(cryptocurrency.getTemplate(), event))
                 .orElseThrow(() -> new UnsupportedSymbolException(symbol));
     }
 
