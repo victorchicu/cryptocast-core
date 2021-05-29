@@ -240,7 +240,8 @@ public class CryptostropheBotApplication implements CommandLineRunner {
 
             SendResponse sendResponse = telegramBotService.sendMessage(
                     update.message().chat().id(),
-                    text
+                    text,
+                    ParseMode.HTML
             );
 
             participantSubscriptionsService.saveSubscription(new ParticipantSubscription()
