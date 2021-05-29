@@ -10,5 +10,5 @@ import java.util.List;
 public interface BinanceService {
     void unsubscribeAll();
     void subscribeSymbolMiniTickerEvent(String symbol, SubscriptionListener<SymbolMiniTickerEvent> callback, SubscriptionErrorHandler errorHandler);
-    List<SymbolPrice> getSymbolPriceTicker(String symbol);
+    List<SymbolPrice> getSymbolPrices(String symbols);
 }

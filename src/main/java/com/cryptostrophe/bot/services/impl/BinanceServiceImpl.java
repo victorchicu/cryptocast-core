@@ -21,8 +21,8 @@ public class BinanceServiceImpl implements BinanceService {
         this.subscriptionClient = subscriptionClient;
     }
 
-    public List<SymbolPrice> getSymbolPriceTicker(String symbol) {
-        return syncRequestClient.getSymbolPriceTicker(symbol);
+    public List<SymbolPrice> getSymbolPrices(String symbols) {
+        return syncRequestClient.getSymbolPriceTicker(symbols);
     }
 
     @Override

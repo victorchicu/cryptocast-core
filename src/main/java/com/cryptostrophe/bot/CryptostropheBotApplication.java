@@ -89,7 +89,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                             telegramBotService.deleteMessage(message.chat().id(), message.messageId());
                         }
                         if (command.equals("--help")) {
-                            printHelp(update);
+                            help(update);
                         } else {
                             String[] commandArgs = command.split(" ");
                             Options defaultOptions = BotCommandOptionsBuilder.defaultOptions();
@@ -113,15 +113,11 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                 });
             });
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
-        }, e -> e.printStackTrace());
+        }, e -> LOG.error(e.getMessage(), e));
     }
 
-    private void printHelp(Update update) {
-        telegramBotService.sendMessage(
-                update.message().chat().id(),
-                helpString(),
-                ParseMode.Markdown
-        );
+    private void help(Update update) {
+        telegramBotService.sendMessage(update.message().chat().id(), helpString());
     }
 
     private void trackEvents(Update update, List<String> symbols) {
@@ -156,26 +152,33 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                         try {
                             handleSymbolMiniTickerEvent(update, symbol, event);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            LOG.error(e.getMessage(), e);
                         }
                     }),
-                    e -> e.printStackTrace()
+                    e -> LOG.error(e.getMessage(), e)
             );
         }
     }
 
     private void listSymbols(Update update, List<String> symbols) {
-        List<SymbolPrice> symbolPriceTickers = binanceService.getSymbolPriceTicker(symbols.size() == 0 ? null : symbols.get(0));
-        try {
-            //todo: Split list to multipart message (telegram message max size is 4096)
-            long sizeOf = sizeOf(symbolPriceTickers);
-            if (sizeOf <= 4096) {
-                String text = objectMapperService.serializeAsPrettyString(symbolPriceTickers);
-                telegramBotService.sendMessage(update.message().chat().id(), text);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        List<SymbolPrice> symbolPrices = binanceService.getSymbolPrices(null);
+
+        if (symbols != null) {
+            symbolPrices = symbolPrices.stream()
+                    .filter(symbolPrice ->
+                            symbols.stream()
+                                    .anyMatch(s -> s.equals(symbolPrice.getSymbol().toLowerCase().toLowerCase()))
+                    )
+                    .collect(Collectors.toList());
         }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (SymbolPrice symbolPrice : symbolPrices) {
+            stringBuilder.append(symbolPrice.getSymbol() + " " + symbolPrice.getPrice() + "\n");
+        }
+
+        telegramBotService.sendMessage(update.message().chat().id(), stringBuilder.toString());
     }
 
     private void stopTracking() {
@@ -204,11 +207,12 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                     telegramBotService.updateMessage(
                             subscription.getChatId(),
                             subscription.getMessageId(),
-                            text
+                            text,
+                            ParseMode.HTML
                     );
                     if (event.getClose().compareTo(event.getHigh()) > 0) {
                         BigDecimal percent = BigDecimalUtils.computePercentDiffBetweenTwoNumbers(event.getHigh(), event.getClose());
-                        List<SymbolPrice> symbolPrices = binanceService.getSymbolPriceTicker(event.getSymbol());
+                        List<SymbolPrice> symbolPrices = binanceService.getSymbolPrices(event.getSymbol());
                         SymbolPrice symbolPrice = IterableUtils.first(symbolPrices);
                         telegramBotService.sendMessage(
                                 subscription.getChatId(),
@@ -216,7 +220,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                         );
                     }
                     if (event.getLow().compareTo(event.getClose()) > 0) {
-                        List<SymbolPrice> symbolPrices = binanceService.getSymbolPriceTicker(event.getSymbol());
+                        List<SymbolPrice> symbolPrices = binanceService.getSymbolPrices(event.getSymbol());
                         SymbolPrice symbolPrice = IterableUtils.first(symbolPrices);
                         BigDecimal percent = BigDecimalUtils.computePercentDiffBetweenTwoNumbers(event.getClose(), event.getLow());
                         telegramBotService.sendMessage(

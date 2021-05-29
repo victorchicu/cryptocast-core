@@ -26,7 +26,7 @@ public class BotCommandOptionsBuilder {
                         )
                         .longOpt("list")
                         .hasArgs()
-                        .argName("symbol")
+                        .argName("symbol1, symbol2, ...")
                         .optionalArg(true)
                         .build()
         );
