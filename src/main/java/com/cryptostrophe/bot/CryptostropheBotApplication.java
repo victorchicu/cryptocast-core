@@ -252,18 +252,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
             );
         }
     }
-
-    public long sizeOf(List list) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-        try {
-            objectOutputStream.writeObject(list);
-        } finally {
-            objectOutputStream.close();
-        }
-        return byteArrayOutputStream.toByteArray().length;
-    }
-
+    
     private String helpString() {
         String header = "";
         String footer = "";
