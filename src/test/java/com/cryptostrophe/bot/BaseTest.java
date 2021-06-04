@@ -2,6 +2,7 @@ package com.cryptostrophe.bot;
 
 import com.cryptostrophe.bot.binance.model.event.SymbolMiniTickerEvent;
 import com.cryptostrophe.bot.configs.BinanceProperties;
+import com.cryptostrophe.bot.picocli.services.PicoCliService;
 import com.cryptostrophe.bot.repository.ParticipantsRepository;
 import com.cryptostrophe.bot.repository.SymbolTickerEventRepository;
 import com.cryptostrophe.bot.repository.model.ParticipantSubscription;
@@ -23,6 +24,8 @@ import java.util.Set;
 public class BaseTest {
     protected static Faker faker = new Faker();
 
+    @Autowired
+    protected PicoCliService picoCliService;
     @Autowired
     protected BinanceProperties binanceProperties;
     @Autowired
