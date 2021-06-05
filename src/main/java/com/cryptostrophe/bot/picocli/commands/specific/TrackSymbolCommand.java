@@ -1,22 +1,22 @@
-package com.cryptostrophe.bot.services.impl;
+package com.cryptostrophe.bot.picocli.commands.specific;
 
 import com.cryptostrophe.bot.binance.model.event.SymbolMiniTickerEvent;
 import com.cryptostrophe.bot.binance.model.market.SymbolPrice;
 import com.cryptostrophe.bot.configs.BinanceProperties;
 import com.cryptostrophe.bot.exceptions.UnsupportedSymbolException;
-import com.cryptostrophe.bot.picocli.services.PicoCliService;
-import com.cryptostrophe.bot.repository.model.ParticipantSubscription;
-import com.cryptostrophe.bot.repository.model.SymbolTickerEvent;
+import com.cryptostrophe.bot.freemarker.services.FreeMarkerTemplateService;
+import com.cryptostrophe.bot.picocli.commands.BaseCommand;
+import com.cryptostrophe.bot.repository.model.ParticipantSubscriptionEntity;
+import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;
 import com.cryptostrophe.bot.services.*;
+import com.cryptostrophe.bot.telegram.services.TelegramBotService;
 import com.cryptostrophe.bot.utils.BigDecimalUtils;
-import com.pengrad.telegrambot.model.Message;
-import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.apache.commons.collections4.IterableUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
 import java.math.BigDecimal;
@@ -27,13 +27,14 @@ import java.util.stream.Collectors;
 
 import static org.apache.commons.collections4.IteratorUtils.forEach;
 
-@Service
-public class TelegramCommandProcessor implements CommandProcessor {
-    private static final int SEND_TIMEOUT_TIME = 1000 * 5;
-    private static final Logger LOG = LoggerFactory.getLogger(TelegramCommandProcessor.class);
-    private static final String SPACE = " ";
+@Component
+@CommandLine.Command(
+        name = "track",
+        description = "24hr rolling window mini-ticker statistics for all symbols that changed"
+)
+public class TrackSymbolCommand extends BaseCommand {
+    private static final Logger LOG = LoggerFactory.getLogger(TrackSymbolCommand.class);
 
-    private final PicoCliService picoCliService;
     private final BinanceService binanceService;
     private final BinanceProperties binanceProperties;
     private final TelegramBotService telegramBotService;
@@ -41,8 +42,7 @@ public class TelegramCommandProcessor implements CommandProcessor {
     private final FreeMarkerTemplateService freeMarkerTemplateService;
     private final ParticipantSubscriptionsService participantSubscriptionsService;
 
-    public TelegramCommandProcessor(
-            PicoCliService picoCliService,
+    public TrackSymbolCommand(
             BinanceService binanceService,
             BinanceProperties binanceProperties,
             TelegramBotService telegramBotService,
@@ -50,7 +50,6 @@ public class TelegramCommandProcessor implements CommandProcessor {
             FreeMarkerTemplateService freeMarkerTemplateService,
             ParticipantSubscriptionsService participantSubscriptionsService
     ) {
-        this.picoCliService = picoCliService;
         this.binanceService = binanceService;
         this.binanceProperties = binanceProperties;
         this.telegramBotService = telegramBotService;
@@ -58,30 +57,31 @@ public class TelegramCommandProcessor implements CommandProcessor {
         this.freeMarkerTemplateService = freeMarkerTemplateService;
         this.participantSubscriptionsService = participantSubscriptionsService;
     }
+    @CommandLine.ParentCommand
+    private BotCommand botCommand;
+    @CommandLine.Option(names = {"help"}, help = true, description = "Display this help message.")
+    private boolean usageHelpRequested;
+    @CommandLine.Parameters(arity = "1..*", paramLabel = "<symbols>", description = "The trading 'symbol' or shortened name (typically in capital letters) that refer to a coin on a trading platform. For example: BTCUSDT")
+    private String[] symbols;
 
     @Override
-    public void handleUpdate(Update update) {
-        Optional<Message> optional = Optional.ofNullable(update.message());
-        optional.ifPresent(message -> {
-            try {
-                if (!message.from().isBot()) {
-                    telegramBotService.deleteMessage(message.chat().id(), message.messageId());
-                }
-                String[] args = toArgs(update.message().text());
-                CommandLine.ParseResult parseResult = picoCliService.execute(args);
-                if (!parseResult.errors().isEmpty()) {
-                    Exception exception = parseResult.errors().get(0);
-                    LOG.error(exception.getMessage(), exception);
-                }
-            } catch (Exception e) {
-                LOG.error(e.getMessage(), e);
-            }
-        });
+    public void run() {
+        if (usageHelpRequested) {
+            String usageHelp = usage(this);
+            //TODO: Send telegram message
+        } else {
+            trackEvents(Arrays.asList(symbols));
+        }
     }
 
+    private <T> String renderTemplate(String symbol, T event) {
+        return Optional.ofNullable(binanceProperties.getCryptocurrency().get(symbol))
+                .map(cryptocurrency -> freeMarkerTemplateService.render(cryptocurrency.getTemplate(), event))
+                .orElseThrow(() -> new UnsupportedSymbolException(symbol));
+    }
 
     private void trackEvents(List<String> symbols) {
-        List<ParticipantSubscription> participantSubscriptions = participantSubscriptionsService.findSubscriptions(
+        List<ParticipantSubscriptionEntity> participantSubscriptions = participantSubscriptionsService.findSubscriptions(
                 0, //TODO: update.message().from().id(),
                 symbols
         );
@@ -100,7 +100,7 @@ public class TelegramCommandProcessor implements CommandProcessor {
         if (participantSubscriptions.size() > 0) {
             participantSubscriptionsService.deleteSubscriptions(
                     participantSubscriptions.stream()
-                            .map(ParticipantSubscription::getId)
+                            .map(ParticipantSubscriptionEntity::getId)
                             .collect(Collectors.toList())
             );
         }
@@ -120,45 +120,15 @@ public class TelegramCommandProcessor implements CommandProcessor {
         }
     }
 
-    private void listSymbols(Update update, List<String> symbols) {
-        List<SymbolPrice> symbolPrices = binanceService.getSymbolPrices(null);
-
-        if (symbols != null) {
-            symbolPrices = symbolPrices.stream()
-                    .filter(symbolPrice ->
-                            symbols.stream()
-                                    .anyMatch(s -> s.equals(symbolPrice.getSymbol().toLowerCase().toLowerCase()))
-                    )
-                    .collect(Collectors.toList());
-        }
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (SymbolPrice symbolPrice : symbolPrices) {
-            stringBuilder.append(symbolPrice.getSymbol() + " " + symbolPrice.getPrice() + "\n");
-        }
-
-        telegramBotService.sendMessage(update.message().chat().id(), stringBuilder.toString());
-    }
-
-    private void stopTracking() {
-        binanceService.unsubscribeAll();
-        participantSubscriptionsService.findAllSubscriptions().forEach(subscription -> {
-            telegramBotService.deleteMessage(subscription.getChatId(), subscription.getMessageId());
-            symbolTickerEventService.deleteSymbolTickerEvent(subscription.getParticipantId(), subscription.getSymbol());
-            participantSubscriptionsService.deleteSubscription(subscription.getId());
-        });
-    }
-
     private void handleSymbolMiniTickerEvent(String symbol, SymbolMiniTickerEvent event) {
         String text = renderTemplate(symbol, event);
         Integer participantId = 0; //TODO: update.message().from().id();
-        Optional<SymbolTickerEvent> optional = symbolTickerEventService.findSymbolTickerEvent(participantId, symbol);
+        Optional<SymbolTickerEventEntity> optional = symbolTickerEventService.findSymbolTickerEvent(participantId, symbol);
         if (optional.isPresent()) {
-            SymbolTickerEvent symbolTickerEvent = optional.get();
-            long timeout = event.getEventTime() - (symbolTickerEvent.getEventTime() + SEND_TIMEOUT_TIME);
+            SymbolTickerEventEntity symbolTickerEvent = optional.get();
+            long timeout = event.getEventTime() - (symbolTickerEvent.getEventTime() + 5000);
             if (timeout > 0) {
-                Optional<ParticipantSubscription> participantSubscription = participantSubscriptionsService.findSubscription(
+                Optional<ParticipantSubscriptionEntity> participantSubscription = participantSubscriptionsService.findSubscription(
                         participantId,
                         symbol
                 );
@@ -191,7 +161,7 @@ public class TelegramCommandProcessor implements CommandProcessor {
                 symbolTickerEventService.updateSymbolTickerEvent(participantId, symbol, event.getEventTime());
             }
         } else {
-            symbolTickerEventService.saveSymbolTickerEvent(new SymbolTickerEvent()
+            symbolTickerEventService.saveSymbolTickerEvent(new SymbolTickerEventEntity()
                     .setSymbol(symbol)
                     .setEventTime(event.getEventTime())
                     .setParticipantId(participantId)
@@ -203,26 +173,12 @@ public class TelegramCommandProcessor implements CommandProcessor {
                     ParseMode.HTML
             );
 
-            participantSubscriptionsService.saveSubscription(new ParticipantSubscription()
+            participantSubscriptionsService.saveSubscription(new ParticipantSubscriptionEntity()
                     .setSymbol(symbol)
                     .setChatId(sendResponse.message().chat().id())
                     .setMessageId(sendResponse.message().messageId())
                     .setParticipantId(participantId)
             );
         }
-    }
-
-    private String[] toArgs(String command) {
-        String[] args = command.split(SPACE);
-        if (command.startsWith("bot")) {
-            args = (String[]) Arrays.stream(command.split(SPACE)).skip(1).toArray();
-        }
-        return args;
-    }
-
-    private <T> String renderTemplate(String symbol, T event) {
-        return Optional.ofNullable(binanceProperties.getCryptocurrency().get(symbol))
-                .map(cryptocurrency -> freeMarkerTemplateService.render(cryptocurrency.getTemplate(), event))
-                .orElseThrow(() -> new UnsupportedSymbolException(symbol));
     }
 }

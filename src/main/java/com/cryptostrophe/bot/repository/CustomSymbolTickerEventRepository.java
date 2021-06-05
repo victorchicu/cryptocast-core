@@ -1,9 +1,9 @@
 package com.cryptostrophe.bot.repository;
 
-import com.cryptostrophe.bot.repository.model.SymbolTickerEvent;
+import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;
 
 import java.util.Optional;
 
 public interface CustomSymbolTickerEventRepository {
-    Optional<SymbolTickerEvent> findSymbolTickerEvent(Integer participantId, String symbol);
+    Optional<SymbolTickerEventEntity> findSymbolTickerEvent(Integer participantId, String symbol);
 }

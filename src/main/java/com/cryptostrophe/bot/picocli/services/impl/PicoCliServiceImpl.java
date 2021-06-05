@@ -4,8 +4,12 @@ import com.cryptostrophe.bot.picocli.services.PicoCliService;
 import org.springframework.stereotype.Service;
 import picocli.CommandLine;
 
+import java.util.Arrays;
+
 @Service
 public class PicoCliServiceImpl implements PicoCliService {
+    private static final String SPACE = " ";
+
     private final CommandLine commandLine;
 
     public PicoCliServiceImpl(CommandLine commandLine) {
@@ -13,9 +17,22 @@ public class PicoCliServiceImpl implements PicoCliService {
     }
 
     @Override
-    public CommandLine.ParseResult execute(String... args) {
+    public int execute(String... args) {
+        return commandLine.execute(args);
+    }
+
+    @Override
+    public CommandLine.ParseResult parse(String command) {
+        String[] args = toArgs(command);
         commandLine.getCommandSpec().parser().collectErrors(true);
-        CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
-        return parseResult;
+        return commandLine.parseArgs(args);
+    }
+
+    private String[] toArgs(String command) {
+        String[] args = command.split(SPACE);
+        if (command.startsWith("bot")) {
+            args = (String[]) Arrays.stream(command.split(SPACE)).skip(1).toArray();
+        }
+        return args;
     }
 }

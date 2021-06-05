@@ -1,7 +1,7 @@
 package com.cryptostrophe.bot.repository.impl;
 
 import com.cryptostrophe.bot.repository.CustomParticipantsRepository;
-import com.cryptostrophe.bot.repository.model.ParticipantSubscription;
+import com.cryptostrophe.bot.repository.model.ParticipantSubscriptionEntity;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -19,15 +19,15 @@ public class CustomParticipantsRepositoryImpl implements CustomParticipantsRepos
     }
 
     @Override
-    public List<ParticipantSubscription> findSubscriptions(Integer participantId, List<String> symbols) {
+    public List<ParticipantSubscriptionEntity> findSubscriptions(Integer participantId, List<String> symbols) {
         Query query = Query.query(Criteria.where("participantId").is(participantId).and("symbol").in(symbols));
-        return mongoOperations.find(query, ParticipantSubscription.class, "participant_subscriptions");
+        return mongoOperations.find(query, ParticipantSubscriptionEntity.class, "participant_subscriptions");
     }
 
     @Override
-    public Optional<ParticipantSubscription> findSubscription(Integer participantId, String symbol) {
+    public Optional<ParticipantSubscriptionEntity> findSubscription(Integer participantId, String symbol) {
         Query query = Query.query(Criteria.where("participantId").is(participantId).and("symbol").is(symbol));
-        ParticipantSubscription participantSubscription = mongoOperations.findOne(query, ParticipantSubscription.class, "participant_subscriptions");
+        ParticipantSubscriptionEntity participantSubscription = mongoOperations.findOne(query, ParticipantSubscriptionEntity.class, "participant_subscriptions");
         return Optional.ofNullable(participantSubscription);
     }
 }

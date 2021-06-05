@@ -1,6 +1,6 @@
-package com.cryptostrophe.bot.services.impl;
+package com.cryptostrophe.bot.freemarker.services.impl;
 
-import com.cryptostrophe.bot.services.FreeMarkerTemplateService;
+import com.cryptostrophe.bot.freemarker.services.FreeMarkerTemplateService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.slf4j.Logger;

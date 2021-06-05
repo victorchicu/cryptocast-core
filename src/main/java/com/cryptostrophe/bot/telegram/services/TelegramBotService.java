@@ -1,4 +1,4 @@
-package com.cryptostrophe.bot.services;
+package com.cryptostrophe.bot.telegram.services;
 
 import com.pengrad.telegrambot.ExceptionHandler;
 import com.pengrad.telegrambot.UpdatesListener;

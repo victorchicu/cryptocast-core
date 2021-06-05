@@ -1,6 +1,6 @@
 package com.cryptostrophe.bot.configs;
 
-import com.cryptostrophe.bot.utils.freemarker.NumberUtils;
+import com.cryptostrophe.bot.freemarker.NumberUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;

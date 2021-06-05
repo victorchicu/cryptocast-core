@@ -1,7 +1,7 @@
 package com.cryptostrophe.bot.repository.impl;
 
 import com.cryptostrophe.bot.repository.CustomSymbolTickerEventRepository;
-import com.cryptostrophe.bot.repository.model.SymbolTickerEvent;
+import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -18,8 +18,8 @@ public class SymbolTickerEventRepositoryImpl implements CustomSymbolTickerEventR
     }
 
     @Override
-    public Optional<SymbolTickerEvent> findSymbolTickerEvent(Integer participantId, String symbol) {
+    public Optional<SymbolTickerEventEntity> findSymbolTickerEvent(Integer participantId, String symbol) {
         Query query = Query.query(Criteria.where("symbol").is(symbol).and("participantId").is(participantId));
-        return Optional.ofNullable(mongoOperations.findOne(query, SymbolTickerEvent.class, "symbol_ticker_events"));
+        return Optional.ofNullable(mongoOperations.findOne(query, SymbolTickerEventEntity.class, "symbol_ticker_events"));
     }
 }

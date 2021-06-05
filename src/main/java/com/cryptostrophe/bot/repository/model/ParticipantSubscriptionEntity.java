@@ -3,7 +3,7 @@ package com.cryptostrophe.bot.repository.model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "participant_subscriptions")
-public class ParticipantSubscription extends BaseEntity {
+public class ParticipantSubscriptionEntity extends BaseEntity {
     private Long chatId;
     private String symbol;
     private Integer messageId;
@@ -13,7 +13,7 @@ public class ParticipantSubscription extends BaseEntity {
         return symbol;
     }
 
-    public ParticipantSubscription setSymbol(String symbol) {
+    public ParticipantSubscriptionEntity setSymbol(String symbol) {
         this.symbol = symbol;
         return this;
     }
@@ -22,7 +22,7 @@ public class ParticipantSubscription extends BaseEntity {
         return chatId;
     }
 
-    public ParticipantSubscription setChatId(Long chatId) {
+    public ParticipantSubscriptionEntity setChatId(Long chatId) {
         this.chatId = chatId;
         return this;
     }
@@ -31,7 +31,7 @@ public class ParticipantSubscription extends BaseEntity {
         return messageId;
     }
 
-    public ParticipantSubscription setMessageId(Integer messageId) {
+    public ParticipantSubscriptionEntity setMessageId(Integer messageId) {
         this.messageId = messageId;
         return this;
     }
@@ -40,7 +40,7 @@ public class ParticipantSubscription extends BaseEntity {
         return participantId;
     }
 
-    public ParticipantSubscription setParticipantId(Integer participantId) {
+    public ParticipantSubscriptionEntity setParticipantId(Integer participantId) {
         this.participantId = participantId;
         return this;
     }

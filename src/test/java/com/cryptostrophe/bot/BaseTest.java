@@ -5,9 +5,9 @@ import com.cryptostrophe.bot.configs.BinanceProperties;
 import com.cryptostrophe.bot.picocli.services.PicoCliService;
 import com.cryptostrophe.bot.repository.ParticipantsRepository;
 import com.cryptostrophe.bot.repository.SymbolTickerEventRepository;
-import com.cryptostrophe.bot.repository.model.ParticipantSubscription;
-import com.cryptostrophe.bot.repository.model.SymbolTickerEvent;
-import com.cryptostrophe.bot.services.FreeMarkerTemplateService;
+import com.cryptostrophe.bot.repository.model.ParticipantSubscriptionEntity;
+import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;
+import com.cryptostrophe.bot.freemarker.services.FreeMarkerTemplateService;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,8 +35,8 @@ public class BaseTest {
     @Autowired
     protected SymbolTickerEventRepository symbolTickerEventRepository;
 
-    protected SymbolTickerEvent randomSymbolTickerEvent() {
-        return new SymbolTickerEvent()
+    protected SymbolTickerEventEntity randomSymbolTickerEvent() {
+        return new SymbolTickerEventEntity()
                 .setEventTime(Instant.now().toEpochMilli())
                 .setSymbol(faker.currency().name())
                 .setParticipantId(faker.number().randomDigit());
@@ -53,20 +53,20 @@ public class BaseTest {
         return symbolMiniTickerEvent;
     }
 
-    protected ParticipantSubscription randomParticipantSubscription() {
-        return new ParticipantSubscription()
+    protected ParticipantSubscriptionEntity randomParticipantSubscription() {
+        return new ParticipantSubscriptionEntity()
                 .setChatId(faker.number().randomNumber())
                 .setSymbol(faker.currency().name())
                 .setMessageId(faker.number().randomDigit())
                 .setParticipantId(faker.number().randomDigit());
     }
 
-    protected List<ParticipantSubscription> randomParticipantSubscriptions(int n) {
+    protected List<ParticipantSubscriptionEntity> randomParticipantSubscriptions(int n) {
         int participantId = faker.number().randomDigit();
         long chatId = faker.number().randomNumber();
-        List<ParticipantSubscription> list = new LinkedList<>();
+        List<ParticipantSubscriptionEntity> list = new LinkedList<>();
         for (int i = 0; i < n; i++) {
-            ParticipantSubscription participantSubscription = new ParticipantSubscription()
+            ParticipantSubscriptionEntity participantSubscription = new ParticipantSubscriptionEntity()
                     .setChatId(chatId)
                     .setSymbol(faker.currency().name())
                     .setMessageId(faker.number().randomDigit())

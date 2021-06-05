@@ -1,7 +1,7 @@
-package com.cryptostrophe.bot.services.impl;
+package com.cryptostrophe.bot.telegram.services.impl;
 
-import com.cryptostrophe.bot.configs.TelegramProperties;
-import com.cryptostrophe.bot.services.TelegramBotService;
+import com.cryptostrophe.bot.telegram.configs.TelegramProperties;
+import com.cryptostrophe.bot.telegram.services.TelegramBotService;
 import com.pengrad.telegrambot.ExceptionHandler;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;

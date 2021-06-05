@@ -3,7 +3,7 @@ package com.cryptostrophe.bot.repository.model;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("symbol_ticker_events")
-public class SymbolTickerEvent extends BaseEntity {
+public class SymbolTickerEventEntity extends BaseEntity {
     private Long eventTime;
     private String symbol;
     private Integer participantId;
@@ -12,7 +12,7 @@ public class SymbolTickerEvent extends BaseEntity {
         return symbol;
     }
 
-    public SymbolTickerEvent setSymbol(String symbol) {
+    public SymbolTickerEventEntity setSymbol(String symbol) {
         this.symbol = symbol;
         return this;
     }
@@ -21,7 +21,7 @@ public class SymbolTickerEvent extends BaseEntity {
         return eventTime;
     }
 
-    public SymbolTickerEvent setEventTime(Long eventTime) {
+    public SymbolTickerEventEntity setEventTime(Long eventTime) {
         this.eventTime = eventTime;
         return this;
     }
@@ -30,7 +30,7 @@ public class SymbolTickerEvent extends BaseEntity {
         return participantId;
     }
 
-    public SymbolTickerEvent setParticipantId(Integer participantId) {
+    public SymbolTickerEventEntity setParticipantId(Integer participantId) {
         this.participantId = participantId;
         return this;
     }

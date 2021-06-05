@@ -1,7 +1,6 @@
 package com.cryptostrophe.bot.services;
 
-import com.cryptostrophe.bot.repository.model.SymbolTickerEvent;
-import com.mongodb.client.result.DeleteResult;
+import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;
 
 import java.util.Optional;
 
@@ -10,7 +9,7 @@ public interface SymbolTickerEventService {
 
     void updateSymbolTickerEvent(Integer participantId, String symbol, Long eventTime);
 
-    SymbolTickerEvent saveSymbolTickerEvent(SymbolTickerEvent symbolTickerEvent);
+    SymbolTickerEventEntity saveSymbolTickerEvent(SymbolTickerEventEntity symbolTickerEvent);
 
-    Optional<SymbolTickerEvent> findSymbolTickerEvent(Integer participantId, String symbol);
+    Optional<SymbolTickerEventEntity> findSymbolTickerEvent(Integer participantId, String symbol);
 }

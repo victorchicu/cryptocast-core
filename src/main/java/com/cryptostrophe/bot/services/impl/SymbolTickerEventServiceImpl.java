@@ -1,7 +1,7 @@
 package com.cryptostrophe.bot.services.impl;
 
 import com.cryptostrophe.bot.repository.SymbolTickerEventRepository;
-import com.cryptostrophe.bot.repository.model.SymbolTickerEvent;
+import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;
 import com.cryptostrophe.bot.services.SymbolTickerEventService;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class SymbolTickerEventServiceImpl implements SymbolTickerEventService {
     @Override
     public void updateSymbolTickerEvent(Integer participantId, String symbol, Long eventTime) {
         symbolTickerEventRepository.findSymbolTickerEvent(participantId, symbol)
-                .ifPresent((SymbolTickerEvent symbolTickerEvent) -> {
+                .ifPresent((SymbolTickerEventEntity symbolTickerEvent) -> {
                     symbolTickerEvent.setEventTime(eventTime);
                     symbolTickerEventRepository.save(symbolTickerEvent);
                 });
@@ -26,17 +26,17 @@ public class SymbolTickerEventServiceImpl implements SymbolTickerEventService {
 
     @Override
     public void deleteSymbolTickerEvent(Integer participantId, String symbol) {
-        Optional<SymbolTickerEvent> optional = symbolTickerEventRepository.findSymbolTickerEvent(participantId, symbol);
+        Optional<SymbolTickerEventEntity> optional = symbolTickerEventRepository.findSymbolTickerEvent(participantId, symbol);
         optional.ifPresent(event -> symbolTickerEventRepository.deleteById(event.getId()));
     }
 
     @Override
-    public SymbolTickerEvent saveSymbolTickerEvent(SymbolTickerEvent symbolTickerEvent) {
+    public SymbolTickerEventEntity saveSymbolTickerEvent(SymbolTickerEventEntity symbolTickerEvent) {
         return symbolTickerEventRepository.save(symbolTickerEvent);
     }
 
     @Override
-    public Optional<SymbolTickerEvent> findSymbolTickerEvent(Integer participantId, String symbol) {
+    public Optional<SymbolTickerEventEntity> findSymbolTickerEvent(Integer participantId, String symbol) {
         return symbolTickerEventRepository.findSymbolTickerEvent(participantId, symbol);
     }
 }
