@@ -1,6 +1,6 @@
 package com.cryptostrophe.bot.picocli.commands;
 
-import com.cryptostrophe.bot.picocli.exceptions.PrintCommandHelpException;
+import com.cryptostrophe.bot.picocli.exceptions.UsageHelpException;
 import picocli.CommandLine;
 
 import java.io.ByteArrayOutputStream;
@@ -16,7 +16,7 @@ public abstract class BaseCommand implements Runnable {
                 return outputStream.toString();
             }
         } catch (IOException e) {
-            throw new PrintCommandHelpException(e.getMessage(), e);
+            throw new UsageHelpException(e.getMessage(), e);
         }
     }
 }
