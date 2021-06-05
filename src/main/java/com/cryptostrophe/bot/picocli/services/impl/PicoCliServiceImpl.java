@@ -13,7 +13,9 @@ public class PicoCliServiceImpl implements PicoCliService {
     }
 
     @Override
-    public int execute(String... args) {
-        return commandLine.execute(args);
+    public CommandLine.ParseResult execute(String... args) {
+        commandLine.getCommandSpec().parser().collectErrors(true);
+        CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
+        return parseResult;
     }
 }
