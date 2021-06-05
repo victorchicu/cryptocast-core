@@ -9,6 +9,8 @@ import com.pengrad.telegrambot.response.SendResponse;
 public interface TelegramBotService {
     void setUpdateListener(UpdatesListener updatesListener, ExceptionHandler exceptionHandler);
 
+    void removeUpdateListener();
+
     SendResponse sendMessage(Long chatId, String text);
 
     SendResponse sendMessage(Long chatId, String text, ParseMode parseMode);

@@ -4,7 +4,6 @@ import com.cryptostrophe.bot.picocli.commands.BaseCommand;
 import com.cryptostrophe.bot.picocli.services.PicoCliService;
 import com.cryptostrophe.bot.telegram.services.TelegramBotService;
 import com.pengrad.telegrambot.UpdatesListener;
-import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @CommandLine.Command(

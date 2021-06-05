@@ -26,6 +26,16 @@ public class TelegramBotServiceImpl implements TelegramBotService {
     }
 
     @Override
+    public void setUpdateListener(UpdatesListener updatesListener, ExceptionHandler exceptionHandler) {
+        telegramBot.setUpdatesListener(updatesListener, exceptionHandler);
+    }
+
+    @Override
+    public void removeUpdateListener() {
+        telegramBot.removeGetUpdatesListener();
+    }
+
+    @Override
     public SendResponse sendMessage(Long chatId, String text) {
         return telegramBot.execute(new SendMessage(chatId, text));
     }
@@ -48,9 +58,5 @@ public class TelegramBotServiceImpl implements TelegramBotService {
     @Override
     public BaseResponse deleteMessage(Long chatId, Integer messageId) {
         return telegramBot.execute(new DeleteMessage(chatId, messageId));
-    }
-
-    public void setUpdateListener(UpdatesListener updatesListener, ExceptionHandler exceptionHandler) {
-        telegramBot.setUpdatesListener(updatesListener, exceptionHandler);
     }
 }
