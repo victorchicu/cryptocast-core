@@ -33,7 +33,13 @@ public class CryptostropheBotApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
         telegramBotService.setUpdateListener((List<Update> list) -> {
-            list.forEach((Update update) -> commandProcessor.handleUpdate(update));
+            list.forEach((Update update) -> {
+                try {
+                    commandProcessor.handleUpdate(update);
+                } catch (Exception e) {
+                    LOG.error(e.getMessage(), e);
+                }
+            });
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
         }, e -> LOG.error(e.getMessage(), e));
     }
