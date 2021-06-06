@@ -20,25 +20,25 @@ public class PicoCliServiceIT extends BaseTest {
 
     @Test
     public void should_parse_track_help_command() {
-        CommandLine.ParseResult parseResult = picoCliService.parse("track help");
+        CommandLine.ParseResult parseResult = picoCliService.parse("bot track help");
         Assertions.assertEquals(0, parseResult.errors().size());
     }
 
     @Test
     public void should_parse_track_with_single_symbol_param() {
-        CommandLine.ParseResult parseResult = picoCliService.parse("track BTCUSDT");
+        CommandLine.ParseResult parseResult = picoCliService.parse("bot track BTCUSDT");
         Assertions.assertEquals(0, parseResult.errors().size());
     }
 
     @Test
     public void should_parse_track_with_multiple_symbol_params() {
-        CommandLine.ParseResult parseResult = picoCliService.parse("track BTCUSDT 1000SHIBUSDT");
+        CommandLine.ParseResult parseResult = picoCliService.parse("bot track BTCUSDT 1000SHIBUSDT");
         Assertions.assertEquals(0, parseResult.errors().size());
     }
 
     @Test
-    public void should_expect_errors_if_missing_symbol_parameters() {
-        CommandLine.ParseResult parseResult = picoCliService.parse("track");
+    public void should_expect_errors_if_track_command_missing_symbol_parameters() {
+        CommandLine.ParseResult parseResult = picoCliService.parse("bot track");
         Assertions.assertFalse(parseResult.errors().isEmpty());
     }
 }

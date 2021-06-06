@@ -63,7 +63,11 @@ public class TrackSymbolCommand extends BaseCommand {
     @CommandLine.ParentCommand
     public BotCommand botCommand;
 
-    @CommandLine.Parameters(arity = "1..*", paramLabel = "<symbols>", description = "The trading 'symbol' or shortened name (typically in capital letters) that refer to a coin on a trading platform. For example: BTCUSDT")
+    @CommandLine.Parameters(
+            arity = "1..*",
+            paramLabel = "<symbols>",
+            description = "The trading 'symbol' or shortened name (typically in capital letters) that refer to a coin on a trading platform. For example: BTCUSDT"
+    )
     public List<String> symbols;
 
     @Override
