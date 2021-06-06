@@ -1,4 +1,4 @@
-package com.cryptostrophe.bot.freemarker;
+package com.cryptostrophe.bot.freemarker.utils;
 
 import java.math.BigDecimal;
 
