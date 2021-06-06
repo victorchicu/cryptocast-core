@@ -46,7 +46,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
     private void handleUpdate(Update update) {
         CommandLine.ParseResult parseResult = picoCliService.parse(update.message().text());
         if (parseResult.errors().isEmpty()) {
-            picoCliService.execute(update.message().text());
+            picoCliService.execute(update.message().text(), update);
         } else {
             for (Exception error : parseResult.errors()) {
                 LOG.error(error.getMessage(), error);

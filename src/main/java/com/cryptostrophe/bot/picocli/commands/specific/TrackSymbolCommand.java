@@ -13,6 +13,7 @@ import com.cryptostrophe.bot.services.ParticipantSubscriptionsService;
 import com.cryptostrophe.bot.services.SymbolTickerEventService;
 import com.cryptostrophe.bot.telegram.services.TelegramBotService;
 import com.cryptostrophe.bot.utils.BigDecimalUtils;
+import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.apache.commons.collections4.IterableUtils;
@@ -63,11 +64,15 @@ public class TrackSymbolCommand extends BaseCommand {
     @CommandLine.Parameters(arity = "1..*", paramLabel = "<symbols>", description = "The trading 'symbol' or shortened name (typically in capital letters) that refer to a coin on a trading platform. For example: BTCUSDT")
     public String[] symbols;
 
+    @CommandLine.ParentCommand
+    private BotCommand botCommand;
+
     @Override
     public void run() {
         if (usageHelpRequested) {
             String usageHelp = usage(this);
             LOG.info(usageHelp);
+            Update p = botCommand.getUpdate();
             //TODO: Send telegram message
         } else {
             trackEvents(Arrays.asList(symbols));
