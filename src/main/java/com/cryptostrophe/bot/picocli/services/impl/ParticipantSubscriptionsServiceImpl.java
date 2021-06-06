@@ -1,8 +1,8 @@
-package com.cryptostrophe.bot.services.impl;
+package com.cryptostrophe.bot.picocli.services.impl;
 
 import com.cryptostrophe.bot.repository.ParticipantsRepository;
 import com.cryptostrophe.bot.repository.model.ParticipantSubscriptionEntity;
-import com.cryptostrophe.bot.services.ParticipantSubscriptionsService;
+import com.cryptostrophe.bot.picocli.services.ParticipantSubscriptionsService;
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.stereotype.Service;
 

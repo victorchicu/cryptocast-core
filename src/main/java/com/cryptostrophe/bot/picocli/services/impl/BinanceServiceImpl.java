@@ -1,4 +1,4 @@
-package com.cryptostrophe.bot.services.impl;
+package com.cryptostrophe.bot.picocli.services.impl;
 
 import com.cryptostrophe.bot.binance.SubscriptionClient;
 import com.cryptostrophe.bot.binance.SubscriptionErrorHandler;
@@ -6,7 +6,7 @@ import com.cryptostrophe.bot.binance.SubscriptionListener;
 import com.cryptostrophe.bot.binance.SyncRequestClient;
 import com.cryptostrophe.bot.binance.model.event.SymbolMiniTickerEvent;
 import com.cryptostrophe.bot.binance.model.market.SymbolPrice;
-import com.cryptostrophe.bot.services.BinanceService;
+import com.cryptostrophe.bot.picocli.services.BinanceService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

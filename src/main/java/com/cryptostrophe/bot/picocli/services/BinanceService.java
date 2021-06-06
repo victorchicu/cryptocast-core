@@ -1,4 +1,4 @@
-package com.cryptostrophe.bot.services;
+package com.cryptostrophe.bot.picocli.services;
 
 import com.cryptostrophe.bot.binance.SubscriptionErrorHandler;
 import com.cryptostrophe.bot.binance.SubscriptionListener;

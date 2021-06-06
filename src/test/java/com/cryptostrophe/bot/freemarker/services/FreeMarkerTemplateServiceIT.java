@@ -1,4 +1,4 @@
-package com.cryptostrophe.bot.services;
+package com.cryptostrophe.bot.freemarker.services;
 
 import com.cryptostrophe.bot.BaseTest;
 import com.cryptostrophe.bot.binance.model.event.SymbolMiniTickerEvent;

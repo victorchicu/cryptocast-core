@@ -2,9 +2,9 @@ package com.cryptostrophe.bot.picocli.commands.specific;
 
 import com.cryptostrophe.bot.picocli.commands.BaseCommand;
 import com.cryptostrophe.bot.repository.model.ParticipantSubscriptionEntity;
-import com.cryptostrophe.bot.services.BinanceService;
-import com.cryptostrophe.bot.services.ParticipantSubscriptionsService;
-import com.cryptostrophe.bot.services.SymbolTickerEventService;
+import com.cryptostrophe.bot.picocli.services.BinanceService;
+import com.cryptostrophe.bot.picocli.services.ParticipantSubscriptionsService;
+import com.cryptostrophe.bot.picocli.services.SymbolTickerEventService;
 import com.cryptostrophe.bot.telegram.services.TelegramBotService;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;

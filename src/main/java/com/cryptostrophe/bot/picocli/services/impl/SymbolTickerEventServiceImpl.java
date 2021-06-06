@@ -1,8 +1,8 @@
-package com.cryptostrophe.bot.services.impl;
+package com.cryptostrophe.bot.picocli.services.impl;
 
 import com.cryptostrophe.bot.repository.SymbolTickerEventRepository;
 import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;
-import com.cryptostrophe.bot.services.SymbolTickerEventService;
+import com.cryptostrophe.bot.picocli.services.SymbolTickerEventService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
