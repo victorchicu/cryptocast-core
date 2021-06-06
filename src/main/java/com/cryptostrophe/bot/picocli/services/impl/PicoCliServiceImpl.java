@@ -1,10 +1,13 @@
 package com.cryptostrophe.bot.picocli.services.impl;
 
 import com.cryptostrophe.bot.picocli.services.PicoCliService;
+import com.pengrad.telegrambot.model.Update;
 import org.springframework.stereotype.Service;
 import picocli.CommandLine;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class PicoCliServiceImpl implements PicoCliService {
@@ -17,8 +20,14 @@ public class PicoCliServiceImpl implements PicoCliService {
     }
 
     @Override
-    public int execute(String... args) {
+    public int execute(String command) {
+        String[] args = toArgs(command);
         return commandLine.execute(args);
+    }
+
+    @Override
+    public int execute(String command, Update update) {
+        return execute(command);
     }
 
     @Override
@@ -31,7 +40,8 @@ public class PicoCliServiceImpl implements PicoCliService {
     private String[] toArgs(String command) {
         String[] args = command.split(SPACE);
         if (command.startsWith("bot")) {
-            args = (String[]) Arrays.stream(command.split(SPACE)).skip(1).toArray();
+            Stream<String> stream = Arrays.stream(command.split(SPACE));
+            args = stream.skip(1).collect(Collectors.toList()).toArray(new String[0]);
         }
         return args;
     }

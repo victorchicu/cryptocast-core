@@ -7,6 +7,18 @@ import picocli.CommandLine;
 
 public class PicoCliServiceIT extends BaseTest {
     @Test
+    public void should_parse_bot_start_command() {
+        CommandLine.ParseResult parseResult = picoCliService.parse("bot start");
+        Assertions.assertTrue(parseResult.errors().isEmpty());
+    }
+
+    @Test
+    public void should_parse_bot_stop_command() {
+        CommandLine.ParseResult parseResult = picoCliService.parse("bot stop");
+        Assertions.assertTrue(parseResult.errors().isEmpty());
+    }
+
+    @Test
     public void should_parse_bot_help_command() {
         CommandLine.ParseResult parseResult = picoCliService.parse("bot help");
         Assertions.assertTrue(parseResult.errors().isEmpty());

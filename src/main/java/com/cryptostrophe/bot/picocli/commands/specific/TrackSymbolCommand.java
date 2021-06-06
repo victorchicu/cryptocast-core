@@ -8,7 +8,9 @@ import com.cryptostrophe.bot.freemarker.services.FreeMarkerTemplateService;
 import com.cryptostrophe.bot.picocli.commands.BaseCommand;
 import com.cryptostrophe.bot.repository.model.ParticipantSubscriptionEntity;
 import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;
-import com.cryptostrophe.bot.services.*;
+import com.cryptostrophe.bot.services.BinanceService;
+import com.cryptostrophe.bot.services.ParticipantSubscriptionsService;
+import com.cryptostrophe.bot.services.SymbolTickerEventService;
 import com.cryptostrophe.bot.telegram.services.TelegramBotService;
 import com.cryptostrophe.bot.utils.BigDecimalUtils;
 import com.pengrad.telegrambot.model.request.ParseMode;
@@ -57,17 +59,15 @@ public class TrackSymbolCommand extends BaseCommand {
         this.freeMarkerTemplateService = freeMarkerTemplateService;
         this.participantSubscriptionsService = participantSubscriptionsService;
     }
-    @CommandLine.ParentCommand
-    private BotCommand botCommand;
-    @CommandLine.Option(names = {"help"}, help = true, description = "Display this help message.")
-    private boolean usageHelpRequested;
+
     @CommandLine.Parameters(arity = "1..*", paramLabel = "<symbols>", description = "The trading 'symbol' or shortened name (typically in capital letters) that refer to a coin on a trading platform. For example: BTCUSDT")
-    private String[] symbols;
+    public String[] symbols;
 
     @Override
     public void run() {
         if (usageHelpRequested) {
             String usageHelp = usage(this);
+            LOG.info(usageHelp);
             //TODO: Send telegram message
         } else {
             trackEvents(Arrays.asList(symbols));

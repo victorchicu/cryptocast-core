@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import picocli.CommandLine;
+import picocli.spring.PicocliSpringFactory;
 
 @Configuration
 public class PicoCliConfig {
@@ -19,22 +20,8 @@ public class PicoCliConfig {
 
     @Bean
     public CommandLine commandLine() {
-        CommandLine commandLine = new CommandLine(command, new PicoCliFactory(context));
-        commandLine.setExecutionStrategy(new CommandLine.RunAll());
+        CommandLine commandLine = new CommandLine(command, new PicocliSpringFactory(context));
+        commandLine.setExecutionStrategy(new CommandLine.RunLast());
         return commandLine;
-    }
-
-    static class PicoCliFactory implements CommandLine.IFactory {
-        private final ApplicationContext context;
-
-        public PicoCliFactory(ApplicationContext context) {
-            this.context = context;
-        }
-
-        @Override
-        public <T> T create(Class<T> cls) throws Exception {
-            T bean = context.getBean(cls);
-            return bean;
-        }
     }
 }

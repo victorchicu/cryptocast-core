@@ -9,6 +9,9 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 public abstract class BaseCommand implements Runnable {
+    @CommandLine.Option(names = {"help"}, help = true)
+    protected boolean usageHelpRequested;
+
     public static String usage(Object command) {
         try (OutputStream outputStream = new ByteArrayOutputStream()) {
             try (PrintStream printStream = new PrintStream(outputStream)) {

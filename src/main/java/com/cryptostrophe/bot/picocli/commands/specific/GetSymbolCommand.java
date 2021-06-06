@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@CommandLine.Command(
+        name = "list",
+        description = "Latest price for a set of symbols or omit symbol param to return all prices"
+)
 public class GetSymbolCommand extends BaseCommand {
     private final BinanceService binanceService;
     private final TelegramBotService telegramBotService;
@@ -20,10 +24,8 @@ public class GetSymbolCommand extends BaseCommand {
         this.telegramBotService = telegramBotService;
     }
 
-    @CommandLine.Option(names = {"help"}, help = true, description = "Display this help message.")
-    private boolean usageHelpRequested;
     @CommandLine.Parameters(arity = "1..*", paramLabel = "<symbols>", description = "The trading 'symbol' or shortened name (typically in capital letters) that refer to a coin on a trading platform. For example: BTCUSDT")
-    private List<String> symbols;
+    public List<String> symbols;
 
     @Override
     public void run() {
