@@ -4,6 +4,7 @@ import com.cryptostrophe.bot.binance.model.market.SymbolPrice;
 import com.cryptostrophe.bot.picocli.commands.BaseCommand;
 import com.cryptostrophe.bot.services.BinanceService;
 import com.cryptostrophe.bot.telegram.services.TelegramBotService;
+import com.pengrad.telegrambot.model.Update;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
@@ -24,14 +25,22 @@ public class GetSymbolCommand extends BaseCommand {
         this.telegramBotService = telegramBotService;
     }
 
-    @CommandLine.Parameters(arity = "1..*", paramLabel = "<symbols>", description = "The trading 'symbol' or shortened name (typically in capital letters) that refer to a coin on a trading platform. For example: BTCUSDT")
+    @CommandLine.ParentCommand
+    public BotCommand botCommand;
+
+    @CommandLine.Parameters(
+            arity = "1..*",
+            paramLabel = "<symbols>",
+            description = "The trading 'symbol' or shortened name (typically in capital letters) that refer to a coin on a trading platform. For example: BTCUSDT"
+    )
     public List<String> symbols;
 
     @Override
     public void run() {
+        Update update = botCommand.getUpdate();
         if (usageHelpRequested) {
             String usageHelp = usage(this);
-            //TODO: Send telegram message
+            telegramBotService.sendMessage(update.message().chat().id(), usageHelp);
         } else {
             List<SymbolPrice> symbolPrices = binanceService.getSymbolPrices(null);
 
@@ -50,8 +59,7 @@ public class GetSymbolCommand extends BaseCommand {
                 stringBuilder.append(symbolPrice.getSymbol() + " " + symbolPrice.getPrice() + "\n");
             }
 
-            //TODO: Send telegram message
-//        telegramBotService.sendMessage(update.message().chat().id(), stringBuilder.toString());
+            telegramBotService.sendMessage(update.message().chat().id(), stringBuilder.toString());
         }
     }
 }

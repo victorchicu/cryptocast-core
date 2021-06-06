@@ -1,50 +1,47 @@
 package com.cryptostrophe.bot.services;
 
 import com.cryptostrophe.bot.BaseTest;
+import com.cryptostrophe.bot.picocli.commands.specific.BotCommand;
+import com.pengrad.telegrambot.model.Update;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import picocli.CommandLine;
 
 public class PicoCliServiceIT extends BaseTest {
-    @Test
-    public void should_parse_bot_start_command() {
-        CommandLine.ParseResult parseResult = picoCliService.parse("bot start");
-        Assertions.assertTrue(parseResult.errors().isEmpty());
-    }
-
+    BotCommand botCommand = new BotCommand(new Update(), telegramBotService);
+    
     @Test
     public void should_parse_bot_stop_command() {
-        CommandLine.ParseResult parseResult = picoCliService.parse("bot stop");
-        Assertions.assertTrue(parseResult.errors().isEmpty());
+        int exitCode = picoCliService.execute("bot stop");
+        Assertions.assertEquals(0, exitCode);
     }
 
     @Test
     public void should_parse_bot_help_command() {
-        CommandLine.ParseResult parseResult = picoCliService.parse("bot help");
-        Assertions.assertTrue(parseResult.errors().isEmpty());
+        int exitCode = picoCliService.execute("bot help");
+        Assertions.assertEquals(0, exitCode);
     }
 
     @Test
     public void should_parse_track_help_command() {
-        CommandLine.ParseResult parseResult = picoCliService.parse("track help");
-        Assertions.assertTrue(parseResult.errors().isEmpty());
+        int exitCode = picoCliService.execute("track help");
+        Assertions.assertEquals(0, exitCode);
     }
 
     @Test
     public void should_parse_track_with_single_symbol_param() {
-        CommandLine.ParseResult parseResult = picoCliService.parse("track BTCUSDT");
-        Assertions.assertTrue(parseResult.errors().isEmpty());
+        int exitCode = picoCliService.execute("track BTCUSDT");
+        Assertions.assertEquals(0, exitCode);
     }
 
     @Test
     public void should_parse_track_with_multiple_symbol_params() {
-        CommandLine.ParseResult parseResult = picoCliService.parse("track BTCUSDT 1000SHIBUSDT");
-        Assertions.assertTrue(parseResult.errors().isEmpty());
+        int exitCode = picoCliService.execute("track BTCUSDT 1000SHIBUSDT");
+        Assertions.assertEquals(0, exitCode);
     }
 
     @Test
     public void should_expect_errors_if_missing_symbol_parameters() {
-        CommandLine.ParseResult parseResult = picoCliService.parse("track");
-        Assertions.assertFalse(parseResult.errors().isEmpty());
+        int exitCode = picoCliService.execute("track");
+        Assertions.assertNotEquals(0, exitCode);
     }
 }

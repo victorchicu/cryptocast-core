@@ -1,7 +1,6 @@
 package com.cryptostrophe.bot.picocli.configs;
 
 import com.cryptostrophe.bot.picocli.commands.specific.BotCommand;
-import com.pengrad.telegrambot.model.Update;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +18,9 @@ public class PicoCliConfig {
 
     @Bean
     public CommandLine commandLine() {
-        CommandLine commandLine = new CommandLine(new BotCommand(new Update()), new PicocliSpringFactory(context));
+        CommandLine commandLine = new CommandLine(new BotCommand(null, null), new PicocliSpringFactory(context));
         commandLine.setExecutionStrategy(new CommandLine.RunLast());
+        commandLine.getCommandSpec().parser().collectErrors(true);
         return commandLine;
     }
 }

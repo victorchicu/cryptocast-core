@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -61,21 +60,20 @@ public class TrackSymbolCommand extends BaseCommand {
         this.participantSubscriptionsService = participantSubscriptionsService;
     }
 
-    @CommandLine.Parameters(arity = "1..*", paramLabel = "<symbols>", description = "The trading 'symbol' or shortened name (typically in capital letters) that refer to a coin on a trading platform. For example: BTCUSDT")
-    public String[] symbols;
-
     @CommandLine.ParentCommand
-    private BotCommand botCommand;
+    public BotCommand botCommand;
+
+    @CommandLine.Parameters(arity = "1..*", paramLabel = "<symbols>", description = "The trading 'symbol' or shortened name (typically in capital letters) that refer to a coin on a trading platform. For example: BTCUSDT")
+    public List<String> symbols;
 
     @Override
     public void run() {
+        Update update = botCommand.getUpdate();
         if (usageHelpRequested) {
             String usageHelp = usage(this);
-            LOG.info(usageHelp);
-            Update p = botCommand.getUpdate();
-            //TODO: Send telegram message
+            telegramBotService.sendMessage(update.message().chat().id(), usageHelp);
         } else {
-            trackEvents(Arrays.asList(symbols));
+            trackEvents(update, symbols);
         }
     }
 
@@ -85,9 +83,9 @@ public class TrackSymbolCommand extends BaseCommand {
                 .orElseThrow(() -> new UnsupportedSymbolException(symbol));
     }
 
-    private void trackEvents(List<String> symbols) {
+    private void trackEvents(Update update, List<String> symbols) {
         List<ParticipantSubscriptionEntity> participantSubscriptions = participantSubscriptionsService.findSubscriptions(
-                0, //TODO: update.message().from().id(),
+                update.message().from().id(),
                 symbols
         );
 
@@ -104,8 +102,7 @@ public class TrackSymbolCommand extends BaseCommand {
 
         if (participantSubscriptions.size() > 0) {
             participantSubscriptionsService.deleteSubscriptions(
-                    participantSubscriptions.stream()
-                            .map(ParticipantSubscriptionEntity::getId)
+                    participantSubscriptions.stream().map(ParticipantSubscriptionEntity::getId)
                             .collect(Collectors.toList())
             );
         }
@@ -115,7 +112,7 @@ public class TrackSymbolCommand extends BaseCommand {
                     symbol.toLowerCase(),
                     ((SymbolMiniTickerEvent event) -> {
                         try {
-                            handleSymbolMiniTickerEvent(symbol, event);
+                            handleSymbolMiniTickerEvent(update, symbol, event);
                         } catch (Exception e) {
                             LOG.error(e.getMessage(), e);
                         }
@@ -125,9 +122,9 @@ public class TrackSymbolCommand extends BaseCommand {
         }
     }
 
-    private void handleSymbolMiniTickerEvent(String symbol, SymbolMiniTickerEvent event) {
+    private void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent event) {
         String text = renderTemplate(symbol, event);
-        Integer participantId = 0; //TODO: update.message().from().id();
+        Integer participantId = update.message().from().id();
         Optional<SymbolTickerEventEntity> optional = symbolTickerEventService.findSymbolTickerEvent(participantId, symbol);
         if (optional.isPresent()) {
             SymbolTickerEventEntity symbolTickerEvent = optional.get();
@@ -173,7 +170,7 @@ public class TrackSymbolCommand extends BaseCommand {
             );
 
             SendResponse sendResponse = telegramBotService.sendMessage(
-                    0L, //TODO: update.message().chat().id(),
+                    update.message().chat().id(),
                     text,
                     ParseMode.HTML
             );

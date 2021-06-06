@@ -8,6 +8,7 @@ import com.cryptostrophe.bot.repository.SymbolTickerEventRepository;
 import com.cryptostrophe.bot.repository.model.ParticipantSubscriptionEntity;
 import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;
 import com.cryptostrophe.bot.freemarker.services.FreeMarkerTemplateService;
+import com.cryptostrophe.bot.telegram.services.TelegramBotService;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,6 +29,8 @@ public class BaseTest {
     protected PicoCliService picoCliService;
     @Autowired
     protected BinanceProperties binanceProperties;
+    @Autowired
+    protected TelegramBotService telegramBotService;
     @Autowired
     protected ParticipantsRepository participantsRepository;
     @Autowired

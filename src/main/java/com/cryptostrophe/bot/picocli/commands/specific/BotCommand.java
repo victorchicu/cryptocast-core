@@ -1,33 +1,34 @@
 package com.cryptostrophe.bot.picocli.commands.specific;
 
 import com.cryptostrophe.bot.picocli.commands.BaseCommand;
+import com.cryptostrophe.bot.telegram.services.TelegramBotService;
 import com.pengrad.telegrambot.model.Update;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
 @CommandLine.Command(
         name = "bot",
         description = "Trading bot for Binance platform",
         subcommands = {
-                GetSymbolCommand.class, StopCommand.class, TrackSymbolCommand.class
+                StopCommand.class,
+                GetSymbolCommand.class,
+                TrackSymbolCommand.class
         }
 )
 public class BotCommand extends BaseCommand {
-    private static final Logger LOG = LoggerFactory.getLogger(BotCommand.class);
-
     private final Update update;
+    private final TelegramBotService telegramBotService;
 
-    public BotCommand(Update update) {
+    public BotCommand(Update update, TelegramBotService telegramBotService) {
         this.update = update;
+        this.telegramBotService = telegramBotService;
     }
 
     @Override
     public void run() {
-        String helpString = usage(this);
-        LOG.info(helpString);
-        //TODO: Send telegram message
+        if (usageHelpRequested) {
+            String usageHelp = usage(this);
+            telegramBotService.sendMessage(update.message().chat().id(), usageHelp);
+        }
     }
 
     public Update getUpdate() {

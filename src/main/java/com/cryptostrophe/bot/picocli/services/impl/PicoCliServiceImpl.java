@@ -2,6 +2,7 @@ package com.cryptostrophe.bot.picocli.services.impl;
 
 import com.cryptostrophe.bot.picocli.commands.specific.BotCommand;
 import com.cryptostrophe.bot.picocli.services.PicoCliService;
+import com.cryptostrophe.bot.telegram.services.TelegramBotService;
 import com.pengrad.telegrambot.model.Update;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -17,26 +18,19 @@ public class PicoCliServiceImpl implements PicoCliService {
     private static final String SPACE = " ";
 
     private final ApplicationContext context;
+    private final TelegramBotService telegramBotService;
 
-    public PicoCliServiceImpl(ApplicationContext context) {
+    public PicoCliServiceImpl(ApplicationContext context, TelegramBotService telegramBotService) {
         this.context = context;
+        this.telegramBotService = telegramBotService;
     }
 
     @Override
-    public int execute(String command, Update update) {
+    public int execute(String command, Update... updates) {
         String[] args = toArgs(command);
-        CommandLine commandLine = new CommandLine(new BotCommand(update), new PicocliSpringFactory(context));
+        CommandLine commandLine = new CommandLine(new BotCommand(updates.length > 0 ? updates[0] : null, telegramBotService), new PicocliSpringFactory(context));
         commandLine.setExecutionStrategy(new CommandLine.RunLast());
         return commandLine.execute(args);
-    }
-
-    @Override
-    public CommandLine.ParseResult parse(String command) {
-        String[] args = toArgs(command);
-        CommandLine commandLine = new CommandLine(new BotCommand(new Update()), new PicocliSpringFactory(context));
-        commandLine.setExecutionStrategy(new CommandLine.RunLast());
-        commandLine.getCommandSpec().parser().collectErrors(true);
-        return commandLine.parseArgs(args);
     }
 
     private String[] toArgs(String command) {

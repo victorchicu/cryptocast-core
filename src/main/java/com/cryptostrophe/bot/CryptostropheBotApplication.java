@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import picocli.CommandLine;
 
 import java.util.List;
 
@@ -34,23 +33,16 @@ public class CryptostropheBotApplication implements CommandLineRunner {
         telegramBotService.setUpdateListener((List<Update> list) -> {
             list.forEach((Update update) -> {
                 try {
-                    handleUpdate(update);
+                    String command = update.message().text();
+                    int exitCode = picoCliService.execute(command, update);
+                    if (exitCode > 0) {
+                        //TODO: Do parse and collect errors
+                    }
                 } catch (Exception e) {
                     LOG.error(e.getMessage(), e);
                 }
             });
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
         }, e -> LOG.error(e.getMessage(), e));
-    }
-
-    private void handleUpdate(Update update) {
-        CommandLine.ParseResult parseResult = picoCliService.parse(update.message().text());
-        if (parseResult.errors().isEmpty()) {
-            picoCliService.execute(update.message().text(), update);
-        } else {
-            for (Exception error : parseResult.errors()) {
-                LOG.error(error.getMessage(), error);
-            }
-        }
     }
 }
