@@ -77,17 +77,12 @@ public class TrackSymbolCommand extends BaseCommand {
             String usageHelp = usage(this);
             telegramBotService.sendMessage(update.message().chat().id(), usageHelp);
         } else {
-            trackEvents(update, symbols);
+            invalidateSubscriptions(update, symbols);
+            subscribeToSymbolMiniTickerEvents(update, symbols);
         }
     }
 
-    private <T> String renderTemplate(String symbol, T event) {
-        return Optional.ofNullable(binanceProperties.getCryptocurrency().get(symbol))
-                .map(cryptocurrency -> freeMarkerTemplateService.render(cryptocurrency.getTemplate(), event))
-                .orElseThrow(() -> new UnsupportedSymbolException(symbol));
-    }
-
-    private void trackEvents(Update update, List<String> symbols) {
+    public void invalidateSubscriptions(Update update, List<String> symbols) {
         List<ParticipantSubscriptionEntity> participantSubscriptions = participantSubscriptionsService.findSubscriptions(
                 update.message().from().id(),
                 symbols
@@ -110,23 +105,9 @@ public class TrackSymbolCommand extends BaseCommand {
                             .collect(Collectors.toList())
             );
         }
-
-        for (String symbol : symbols) {
-            binanceService.subscribeSymbolMiniTickerEvent(
-                    symbol.toLowerCase(),
-                    ((SymbolMiniTickerEvent event) -> {
-                        try {
-                            handleSymbolMiniTickerEvent(update, symbol, event);
-                        } catch (Exception e) {
-                            LOG.error(e.getMessage(), e);
-                        }
-                    }),
-                    e -> LOG.error(e.getMessage(), e)
-            );
-        }
     }
 
-    private void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent event) {
+    public void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent event) {
         String text = renderTemplate(symbol, event);
         Integer participantId = update.message().from().id();
         Optional<SymbolTickerEventEntity> optional = symbolTickerEventService.findSymbolTickerEvent(participantId, symbol);
@@ -186,5 +167,27 @@ public class TrackSymbolCommand extends BaseCommand {
                     .setParticipantId(participantId)
             );
         }
+    }
+
+    public void subscribeToSymbolMiniTickerEvents(Update update, List<String> symbols) {
+        for (String symbol : symbols) {
+            binanceService.subscribeSymbolMiniTickerEvent(
+                    symbol.toLowerCase(),
+                    ((SymbolMiniTickerEvent event) -> {
+                        try {
+                            handleSymbolMiniTickerEvent(update, symbol, event);
+                        } catch (Exception e) {
+                            LOG.error(e.getMessage(), e);
+                        }
+                    }),
+                    e -> LOG.error(e.getMessage(), e)
+            );
+        }
+    }
+
+    public <T> String renderTemplate(String symbol, T event) {
+        return Optional.ofNullable(binanceProperties.getCryptocurrency().get(symbol))
+                .map(cryptocurrency -> freeMarkerTemplateService.render(cryptocurrency.getTemplate(), event))
+                .orElseThrow(() -> new UnsupportedSymbolException(symbol));
     }
 }

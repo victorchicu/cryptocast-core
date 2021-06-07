@@ -2,13 +2,17 @@ package com.cryptostrophe.bot;
 
 import com.cryptostrophe.bot.binance.model.event.SymbolMiniTickerEvent;
 import com.cryptostrophe.bot.configs.BinanceProperties;
+import com.cryptostrophe.bot.picocli.services.BinanceService;
+import com.cryptostrophe.bot.picocli.services.ParticipantSubscriptionsService;
 import com.cryptostrophe.bot.picocli.services.PicoCliService;
+import com.cryptostrophe.bot.picocli.services.SymbolTickerEventService;
 import com.cryptostrophe.bot.repository.ParticipantsRepository;
 import com.cryptostrophe.bot.repository.SymbolTickerEventRepository;
 import com.cryptostrophe.bot.repository.model.ParticipantSubscriptionEntity;
 import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;
 import com.cryptostrophe.bot.freemarker.services.FreeMarkerTemplateService;
 import com.cryptostrophe.bot.telegram.services.TelegramBotService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +30,11 @@ public class BaseTest {
     protected static Faker faker = new Faker();
 
     @Autowired
+    protected ObjectMapper objectMapper;
+    @Autowired
     protected PicoCliService picoCliService;
+    @Autowired
+    protected BinanceService binanceService;
     @Autowired
     protected BinanceProperties binanceProperties;
     @Autowired
@@ -36,7 +44,11 @@ public class BaseTest {
     @Autowired
     protected FreeMarkerTemplateService freeMarkerTemplateService;
     @Autowired
+    protected SymbolTickerEventService symbolTickerEventService;
+    @Autowired
     protected SymbolTickerEventRepository symbolTickerEventRepository;
+    @Autowired
+    protected ParticipantSubscriptionsService participantSubscriptionsService;
 
     protected SymbolTickerEventEntity randomSymbolTickerEvent() {
         return new SymbolTickerEventEntity()

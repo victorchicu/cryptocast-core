@@ -2,6 +2,7 @@ package com.cryptostrophe.bot;
 
 import com.cryptostrophe.bot.picocli.services.PicoCliService;
 import com.cryptostrophe.bot.telegram.services.TelegramBotService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import org.slf4j.Logger;
@@ -16,10 +17,12 @@ import java.util.List;
 public class CryptostropheBotApplication implements CommandLineRunner {
     private static final Logger LOG = LoggerFactory.getLogger(CryptostropheBotApplication.class);
 
+    private final ObjectMapper objectMapper;
     private final PicoCliService picoCliService;
     private final TelegramBotService telegramBotService;
 
-    public CryptostropheBotApplication(PicoCliService picoCliService, TelegramBotService telegramBotService) {
+    public CryptostropheBotApplication(ObjectMapper objectMapper, PicoCliService picoCliService, TelegramBotService telegramBotService) {
+        this.objectMapper = objectMapper;
         this.picoCliService = picoCliService;
         this.telegramBotService = telegramBotService;
     }
@@ -34,10 +37,9 @@ public class CryptostropheBotApplication implements CommandLineRunner {
             list.forEach((Update update) -> {
                 try {
                     String command = update.message().text();
+                    LOG.info("Input command: {0}", command);
                     int exitCode = picoCliService.execute(command, update);
-                    if (exitCode > 0) {
-                        //TODO: Do parse and collect errors
-                    }
+                    LOG.error("Command execution ended with exit code: {0}", exitCode);
                 } catch (Exception e) {
                     LOG.error(e.getMessage(), e);
                 }

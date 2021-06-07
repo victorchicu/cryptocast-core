@@ -27,11 +27,9 @@ public class PicoCliServiceImpl implements PicoCliService {
 
     @Override
     public int execute(String command, Update... updates) {
+        Update update = updates.length > 0 ? updates[0] : null;
         String[] args = toArgs(command);
-        CommandLine commandLine = new CommandLine(
-                new BotCommand(updates.length > 0 ? updates[0] : null, telegramBotService),
-                new PicocliSpringFactory(context)
-        );
+        CommandLine commandLine = new CommandLine(new BotCommand(update, telegramBotService), new PicocliSpringFactory(context));
         commandLine.setExecutionStrategy(new CommandLine.RunLast());
         return commandLine.execute(args);
     }
@@ -39,10 +37,7 @@ public class PicoCliServiceImpl implements PicoCliService {
     @Override
     public CommandLine.ParseResult parse(String command) {
         String[] args = toArgs(command);
-        CommandLine commandLine = new CommandLine(
-                new BotCommand(null, null),
-                new PicocliSpringFactory(context)
-        );
+        CommandLine commandLine = new CommandLine(new BotCommand(null, null), new PicocliSpringFactory(context));
         commandLine.setExecutionStrategy(new CommandLine.RunLast());
         commandLine.getCommandSpec().parser().collectErrors(true);
         return commandLine.parseArgs(args);
