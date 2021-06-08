@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class BigDecimalUtilsIT {
     @Test
     public void should_compute_percent_difference_between_two_numbers_up() {
-        BigDecimal diff = BigDecimalUtils.computePercentDiffBetweenTwoNumbers(
+        BigDecimal diff = BigDecimalUtils.findPercentChangeBetweenTwoNumbers(
                 BigDecimal.valueOf(500.0),
                 BigDecimal.valueOf(150.0)
         );
@@ -17,7 +17,7 @@ public class BigDecimalUtilsIT {
 
     @Test
     public void should_compute_percent_difference_between_two_numbers_down() {
-        BigDecimal diff = BigDecimalUtils.computePercentDiffBetweenTwoNumbers(
+        BigDecimal diff = BigDecimalUtils.findPercentChangeBetweenTwoNumbers(
                 BigDecimal.valueOf(150.0),
                 BigDecimal.valueOf(500.0)
         );

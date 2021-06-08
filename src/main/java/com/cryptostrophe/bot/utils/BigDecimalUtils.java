@@ -3,7 +3,7 @@ package com.cryptostrophe.bot.utils;
 import java.math.BigDecimal;
 
 public class BigDecimalUtils {
-    public static BigDecimal computePercentDiffBetweenTwoNumbers(BigDecimal a, BigDecimal b) {
+    public static BigDecimal findPercentChangeBetweenTwoNumbers(BigDecimal a, BigDecimal b) {
         if (a.compareTo(b) < 0) {
             return ((b.subtract(a)).divide(a, BigDecimal.ROUND_UP)).multiply(BigDecimal.valueOf(100));
         } else if (a.compareTo(b) > 0) {

@@ -5,4 +5,4 @@
 <u>Close</u> ${decimal.divide(close, 1000)}
 <u>High</u> ${decimal.divide(high, 1000)}
 
-<b>Volume(24h)</b>
+<b>Change statistics (24h)</b>

@@ -108,7 +108,6 @@ public class TrackSymbolCommand extends BaseCommand {
     }
 
     public void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent event) {
-        String text = renderTemplate(symbol, event);
         Integer participantId = update.message().from().id();
         Optional<SymbolTickerEventEntity> optional = symbolTickerEventService.findSymbolTickerEvent(participantId, symbol);
         if (optional.isPresent()) {
@@ -119,45 +118,32 @@ public class TrackSymbolCommand extends BaseCommand {
                         participantId,
                         symbol
                 );
+
                 participantSubscription.ifPresent(subscription -> {
+                    String text = renderTemplate(symbol, event);
                     telegramBotService.updateMessage(
                             subscription.getChatId(),
                             subscription.getMessageId(),
                             text,
                             ParseMode.HTML
                     );
-                    if (event.getClose().compareTo(event.getHigh()) > 0) {
-                        BigDecimal percent = BigDecimalUtils.computePercentDiffBetweenTwoNumbers(event.getHigh(), event.getClose());
-                        List<SymbolPrice> symbolPrices = binanceService.getSymbolPrices(event.getSymbol());
-                        SymbolPrice symbolPrice = IterableUtils.first(symbolPrices);
-                        telegramBotService.sendMessage(
-                                subscription.getChatId(),
-                                String.format("%s is up %f to $%f", event.getSymbol(), percent, symbolPrice.getPrice().toPlainString())
-                        );
-                    }
-                    if (event.getLow().compareTo(event.getClose()) > 0) {
-                        List<SymbolPrice> symbolPrices = binanceService.getSymbolPrices(event.getSymbol());
-                        SymbolPrice symbolPrice = IterableUtils.first(symbolPrices);
-                        BigDecimal percent = BigDecimalUtils.computePercentDiffBetweenTwoNumbers(event.getClose(), event.getLow());
-                        telegramBotService.sendMessage(
-                                subscription.getChatId(),
-                                String.format("%s is down %f to $%f", event.getSymbol(), percent, symbolPrice.getPrice().toPlainString())
-                        );
-                    }
                 });
+
                 symbolTickerEventService.updateSymbolTickerEvent(participantId, symbol, event.getEventTime());
             }
         } else {
-            symbolTickerEventService.saveSymbolTickerEvent(new SymbolTickerEventEntity()
-                    .setSymbol(symbol)
-                    .setEventTime(event.getEventTime())
-                    .setParticipantId(participantId)
-            );
+            String text = renderTemplate(symbol, event);
 
             SendResponse sendResponse = telegramBotService.sendMessage(
                     update.message().chat().id(),
                     text,
                     ParseMode.HTML
+            );
+
+            symbolTickerEventService.saveSymbolTickerEvent(new SymbolTickerEventEntity()
+                    .setSymbol(symbol)
+                    .setEventTime(event.getEventTime())
+                    .setParticipantId(participantId)
             );
 
             participantSubscriptionsService.saveSubscription(new ParticipantSubscriptionEntity()
