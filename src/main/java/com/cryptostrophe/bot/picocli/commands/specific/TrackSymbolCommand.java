@@ -97,14 +97,10 @@ public class TrackSymbolCommand extends BaseCommand {
                     subscription.getParticipantId(),
                     subscription.getSymbol()
             );
-        });
-
-        if (participantSubscriptions.size() > 0) {
-            participantSubscriptionsService.deleteSubscriptions(
-                    participantSubscriptions.stream().map(ParticipantSubscriptionEntity::getId)
-                            .collect(Collectors.toList())
+            participantSubscriptionsService.deleteSubscription(
+                    subscription.getId()
             );
-        }
+        });
     }
 
     public void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent event) {
