@@ -5,6 +5,7 @@ import com.cryptostrophe.bot.binance.SubscriptionErrorHandler;
 import com.cryptostrophe.bot.binance.SubscriptionListener;
 import com.cryptostrophe.bot.binance.SyncRequestClient;
 import com.cryptostrophe.bot.binance.model.event.SymbolMiniTickerEvent;
+import com.cryptostrophe.bot.binance.model.event.SymbolTickerEvent;
 import com.cryptostrophe.bot.binance.model.market.SymbolPrice;
 import com.cryptostrophe.bot.picocli.services.BinanceService;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,11 @@ public class BinanceServiceImpl implements BinanceService {
     @Override
     public void unsubscribeAll() {
         subscriptionClient.unsubscribeAll();
+    }
+
+    @Override
+    public void subscribeSymbolTickerEvent(String symbol, SubscriptionListener<SymbolTickerEvent> callback, SubscriptionErrorHandler errorHandler) {
+        subscriptionClient.subscribeSymbolTickerEvent(symbol, callback, errorHandler);
     }
 
     public void subscribeSymbolMiniTickerEvent(String symbol, SubscriptionListener<SymbolMiniTickerEvent> callback, SubscriptionErrorHandler errorHandler) {

@@ -1,6 +1,6 @@
 package com.cryptostrophe.bot.configs;
 
-public class Cryptocurrency {
+public class CryptocurrencyConfig {
     private String template;
 
     public String getTemplate() {

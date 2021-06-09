@@ -1,31 +1,26 @@
 package com.cryptostrophe.bot.picocli.commands.specific;
 
-import com.cryptostrophe.bot.binance.model.event.SymbolMiniTickerEvent;
-import com.cryptostrophe.bot.binance.model.market.SymbolPrice;
+import com.cryptostrophe.bot.binance.model.event.SymbolTickerEvent;
 import com.cryptostrophe.bot.configs.BinanceProperties;
 import com.cryptostrophe.bot.exceptions.UnsupportedSymbolException;
 import com.cryptostrophe.bot.freemarker.services.FreeMarkerTemplateService;
 import com.cryptostrophe.bot.picocli.commands.BaseCommand;
-import com.cryptostrophe.bot.repository.model.ParticipantSubscriptionEntity;
-import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;
 import com.cryptostrophe.bot.picocli.services.BinanceService;
 import com.cryptostrophe.bot.picocli.services.ParticipantSubscriptionsService;
 import com.cryptostrophe.bot.picocli.services.SymbolTickerEventService;
+import com.cryptostrophe.bot.repository.model.ParticipantSubscriptionEntity;
+import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;
 import com.cryptostrophe.bot.telegram.services.TelegramBotService;
-import com.cryptostrophe.bot.utils.BigDecimalUtils;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.response.SendResponse;
-import org.apache.commons.collections4.IterableUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.apache.commons.collections4.IteratorUtils.forEach;
 
@@ -103,7 +98,7 @@ public class TrackSymbolCommand extends BaseCommand {
         });
     }
 
-    public void handleSymbolMiniTickerEvent(Update update, String symbol, SymbolMiniTickerEvent event) {
+    public void handleSymbolTickerEvent(Update update, String symbol, SymbolTickerEvent event) {
         Integer participantId = update.message().from().id();
         Optional<SymbolTickerEventEntity> optional = symbolTickerEventService.findSymbolTickerEvent(participantId, symbol);
         if (optional.isPresent()) {
@@ -153,11 +148,11 @@ public class TrackSymbolCommand extends BaseCommand {
 
     public void subscribeToSymbolMiniTickerEvents(Update update, List<String> symbols) {
         for (String symbol : symbols) {
-            binanceService.subscribeSymbolMiniTickerEvent(
+            binanceService.subscribeSymbolTickerEvent(
                     symbol.toLowerCase(),
-                    ((SymbolMiniTickerEvent event) -> {
+                    ((SymbolTickerEvent event) -> {
                         try {
-                            handleSymbolMiniTickerEvent(update, symbol, event);
+                            handleSymbolTickerEvent(update, symbol, event);
                         } catch (Exception e) {
                             LOG.error(e.getMessage(), e);
                         }

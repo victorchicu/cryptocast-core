@@ -7,4 +7,8 @@ public class NumberUtils {
         BigDecimal decimal = dividend.divide(divisor);
         return decimal.toPlainString();
     }
+
+    public String toPlainString(BigDecimal value) {
+        return value.toPlainString();
+    }
 }

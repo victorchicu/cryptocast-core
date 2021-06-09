@@ -1,4 +1,4 @@
-package com.cryptostrophe.bot.configs;
+package com.cryptostrophe.bot.repository.configs;
 
 import com.cryptostrophe.bot.repository.model.ParticipantSubscriptionEntity;
 import com.cryptostrophe.bot.repository.model.SymbolTickerEventEntity;

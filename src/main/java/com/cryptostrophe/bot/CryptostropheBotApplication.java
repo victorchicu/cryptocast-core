@@ -38,7 +38,7 @@ public class CryptostropheBotApplication implements CommandLineRunner {
                 try {
                     String command = update.message().text();
                     int exitCode = picoCliService.execute(command, update);
-                    LOG.info("Input command: {} | Execution result: {}", exitCode);
+                    LOG.info("Input command: {} | Execution result: {}", command, exitCode);
                 } catch (Exception e) {
                     LOG.error(e.getMessage(), e);
                 }
