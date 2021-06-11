@@ -10,8 +10,8 @@ services:
 #  data:
   jupyter-tensorflow:
     build:
-      context: env
-      dockerfile: env/tensorflow/Dockerfile
+      context: env/jupyter/
+      dockerfile: Dockerfile
     environment:
       JUPYTER_TYPE: lab
       JUPYTER_BASE_URL: /jupyter
