@@ -16,7 +16,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.testcontainers.containers.MongoDBContainer;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -26,8 +31,14 @@ import java.util.Set;
 
 @SpringBootTest
 @TestPropertySource("classpath:application.properties")
+@ContextConfiguration(initializers = BaseTest.Initializer.class)
 public class BaseTest {
-    protected static Faker faker = new Faker();
+    private static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:latest");
+    protected static final Faker faker = new Faker();
+
+    static {
+        mongoDBContainer.start();
+    }
 
     @Autowired
     protected ObjectMapper objectMapper;
@@ -50,13 +61,6 @@ public class BaseTest {
     @Autowired
     protected ParticipantSubscriptionsService participantSubscriptionsService;
 
-    protected SymbolTickerEventEntity randomSymbolTickerEvent() {
-        return new SymbolTickerEventEntity()
-                .setEventTime(Instant.now().toEpochMilli())
-                .setSymbol(faker.currency().name())
-                .setParticipantId(faker.number().randomDigit());
-    }
-
     protected SymbolMiniTickerEvent randomSymbolMiniTickerEvent() {
         SymbolMiniTickerEvent symbolMiniTickerEvent = new SymbolMiniTickerEvent();
         Set<String> symbols = binanceProperties.getCryptocurrency().keySet();
@@ -66,6 +70,13 @@ public class BaseTest {
         symbolMiniTickerEvent.setOpen(new BigDecimal(Math.random()));
         symbolMiniTickerEvent.setClose(new BigDecimal(Math.random()));
         return symbolMiniTickerEvent;
+    }
+
+    protected SymbolTickerEventEntity randomSymbolTickerEvent() {
+        return new SymbolTickerEventEntity()
+                .setEventTime(Instant.now().toEpochMilli())
+                .setSymbol(faker.currency().name())
+                .setParticipantId(faker.number().randomDigit());
     }
 
     protected ParticipantSubscriptionEntity randomParticipantSubscription() {
@@ -89,5 +100,12 @@ public class BaseTest {
             list.add(participantsRepository.save(participantSubscription));
         }
         return list;
+    }
+
+    static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+            TestPropertyValues.of("spring.data.mongodb.uri=" + mongoDBContainer.getReplicaSetUrl())
+                    .applyTo(configurableApplicationContext.getEnvironment());
+        }
     }
 }

@@ -39,9 +39,11 @@ public class ParticipantsRepositoryIT extends BaseTest {
         Assertions.assertEquals(
                 expectedParticipantSubscriptions.stream()
                         .map(participantSubscription -> participantSubscription.getId())
+                        .sorted()
                         .collect(Collectors.toList()),
                 actualParticipantSubscriptions.stream()
                         .map(participantSubscription -> participantSubscription.getId())
+                        .sorted()
                         .collect(Collectors.toList())
         );
     }
