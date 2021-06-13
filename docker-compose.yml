@@ -6,17 +6,21 @@ services:
     restart: always
     ports:
       - 27017:27017
+    volumes:
+      - mongo:/data/db
+#  jupyter:
+#    build:
+#      context: env/jupyter/
+#      dockerfile: Dockerfile
+#    environment:
+#      JUPYTER_TYPE: lab
+#      JUPYTER_BASE_URL: /jupyter
+#    ports:
+#      - 8888:8888
+#    restart: always
+#    volumes:
+#      - jupyter:/home/jovyan/work
 volumes:
-  data:
-  jupyter-tensorflow:
-    build:
-      context: env/jupyter/
-      dockerfile: Dockerfile
-    environment:
-      JUPYTER_TYPE: lab
-      JUPYTER_BASE_URL: /jupyter
-    ports:
-      - "8888:8888"
-    restart: always
-
+  mongo:
+#  jupyter:
     

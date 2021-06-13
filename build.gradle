@@ -8,7 +8,7 @@ jar {
     enabled(false)
     manifest {
         attributes(
-                'Main-Class': 'com.cryptostrophe.bot.CryptostropheBotApplication'
+                'Main-Class': 'com.crypto.bot.CryptoBotApplication'
         )
     }
 }
@@ -17,7 +17,7 @@ compileJava {
     options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
 }
 
-group = 'com.cryptostrophe'
+group = 'com.crypto'
 version = '0.0.1'
 sourceCompatibility = '1.8'
 
