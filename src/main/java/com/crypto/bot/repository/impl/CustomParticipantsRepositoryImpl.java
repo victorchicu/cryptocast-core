@@ -5,6 +5,7 @@ import com.crypto.bot.repository.model.ParticipantSubscriptionEntity;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,6 +17,11 @@ public class CustomParticipantsRepositoryImpl implements CustomParticipantsRepos
 
     public CustomParticipantsRepositoryImpl(MongoOperations mongoOperations) {
         this.mongoOperations = mongoOperations;
+    }
+
+    @Override
+    public void updateSubscription(Query query, String key, Object value) {
+        mongoOperations.updateFirst(query, Update.update(key, value), ParticipantSubscriptionEntity.class, "participant_subscriptions");
     }
 
     @Override

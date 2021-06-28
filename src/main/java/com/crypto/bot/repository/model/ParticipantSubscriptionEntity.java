@@ -5,18 +5,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "participant_subscriptions")
 public class ParticipantSubscriptionEntity extends BaseEntity {
     private Long chatId;
+    private Long recentEventTime;
     private String symbol;
     private Integer messageId;
     private Integer participantId;
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public ParticipantSubscriptionEntity setSymbol(String symbol) {
-        this.symbol = symbol;
-        return this;
-    }
 
     public Long getChatId() {
         return chatId;
@@ -24,6 +16,24 @@ public class ParticipantSubscriptionEntity extends BaseEntity {
 
     public ParticipantSubscriptionEntity setChatId(Long chatId) {
         this.chatId = chatId;
+        return this;
+    }
+
+    public Long getRecentEventTime() {
+        return recentEventTime;
+    }
+
+    public ParticipantSubscriptionEntity setRecentEventTime(Long recentEventTime) {
+        this.recentEventTime = recentEventTime;
+        return this;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public ParticipantSubscriptionEntity setSymbol(String symbol) {
+        this.symbol = symbol;
         return this;
     }
 

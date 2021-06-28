@@ -1,4 +1,4 @@
-package com.crypto.bot.picocli.services.impl;
+package com.crypto.bot.services.impl;
 
 import com.crypto.bot.binance.model.market.SymbolPrice;
 import com.crypto.bot.binance.SubscriptionClient;
@@ -7,7 +7,7 @@ import com.crypto.bot.binance.SubscriptionListener;
 import com.crypto.bot.binance.SyncRequestClient;
 import com.crypto.bot.binance.model.event.SymbolMiniTickerEvent;
 import com.crypto.bot.binance.model.event.SymbolTickerEvent;
-import com.crypto.bot.picocli.services.BinanceService;
+import com.crypto.bot.services.BinanceService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,16 +1,13 @@
 package com.crypto.bot;
 
-import com.crypto.bot.picocli.services.BinanceService;
+import com.crypto.bot.services.BinanceService;
 import com.crypto.bot.repository.ParticipantsRepository;
 import com.crypto.bot.telegram.services.TelegramBotService;
 import com.crypto.bot.binance.model.event.SymbolMiniTickerEvent;
 import com.crypto.bot.configs.BinanceProperties;
-import com.crypto.bot.picocli.services.ParticipantSubscriptionsService;
+import com.crypto.bot.services.ParticipantSubscriptionsService;
 import com.crypto.bot.picocli.services.PicoCliService;
-import com.crypto.bot.picocli.services.SymbolTickerEventService;
-import com.crypto.bot.repository.SymbolTickerEventRepository;
 import com.crypto.bot.repository.model.ParticipantSubscriptionEntity;
-import com.crypto.bot.repository.model.SymbolTickerEventEntity;
 import com.crypto.bot.freemarker.services.FreeMarkerTemplateService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
@@ -55,10 +52,6 @@ public class BaseTest {
     @Autowired
     protected FreeMarkerTemplateService freeMarkerTemplateService;
     @Autowired
-    protected SymbolTickerEventService symbolTickerEventService;
-    @Autowired
-    protected SymbolTickerEventRepository symbolTickerEventRepository;
-    @Autowired
     protected ParticipantSubscriptionsService participantSubscriptionsService;
 
     protected SymbolMiniTickerEvent randomSymbolMiniTickerEvent() {
@@ -70,13 +63,6 @@ public class BaseTest {
         symbolMiniTickerEvent.setOpen(new BigDecimal(Math.random()));
         symbolMiniTickerEvent.setClose(new BigDecimal(Math.random()));
         return symbolMiniTickerEvent;
-    }
-
-    protected SymbolTickerEventEntity randomSymbolTickerEvent() {
-        return new SymbolTickerEventEntity()
-                .setEventTime(Instant.now().toEpochMilli())
-                .setSymbol(faker.currency().name())
-                .setParticipantId(faker.number().randomDigit());
     }
 
     protected ParticipantSubscriptionEntity randomParticipantSubscription() {

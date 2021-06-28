@@ -1,9 +1,10 @@
-package com.crypto.bot.picocli.services.impl;
+package com.crypto.bot.services.impl;
 
 import com.crypto.bot.repository.ParticipantsRepository;
 import com.crypto.bot.repository.model.ParticipantSubscriptionEntity;
-import com.crypto.bot.picocli.services.ParticipantSubscriptionsService;
+import com.crypto.bot.services.ParticipantSubscriptionsService;
 import org.apache.commons.collections4.IterableUtils;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,11 @@ public class ParticipantSubscriptionsServiceImpl implements ParticipantSubscript
     @Override
     public void deleteSubscriptions(List<String> ids) {
         participantsRepository.deleteAllById(ids);
+    }
+
+    @Override
+    public void updateSubscription(Query query, String key, Object value) {
+        participantsRepository.updateSubscription(query, key, value);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.crypto.bot.picocli.services;
+package com.crypto.bot.services;
 
 import com.crypto.bot.binance.model.market.SymbolPrice;
 import com.crypto.bot.binance.SubscriptionErrorHandler;

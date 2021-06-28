@@ -1,7 +1,6 @@
 package com.crypto.bot.repository.configs;
 
 import com.crypto.bot.repository.model.ParticipantSubscriptionEntity;
-import com.crypto.bot.repository.model.SymbolTickerEventEntity;
 import org.bson.Document;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -23,18 +22,9 @@ public class MongoIndexConfig {
                 .ensureIndex(
                         new CompoundIndexDefinition(
                                 new Document()
-                                        .append("participantId", 1)
                                         .append("symbol", 1)
+                                        .append("participantId", 1)
                         ).unique().sparse().named("participant_subscription")
-                );
-
-        mongoOperations.indexOps(SymbolTickerEventEntity.class)
-                .ensureIndex(
-                        new CompoundIndexDefinition(
-                                new Document()
-                                        .append("participantId", 1)
-                                        .append("symbol", 1)
-                        ).unique().sparse().named("symbol_ticker_event")
                 );
     }
 }

@@ -17,12 +17,10 @@ import java.util.List;
 public class CryptoBotApplication implements CommandLineRunner {
     private static final Logger LOG = LoggerFactory.getLogger(CryptoBotApplication.class);
 
-    private final ObjectMapper objectMapper;
     private final PicoCliService picoCliService;
     private final TelegramBotService telegramBotService;
 
-    public CryptoBotApplication(ObjectMapper objectMapper, PicoCliService picoCliService, TelegramBotService telegramBotService) {
-        this.objectMapper = objectMapper;
+    public CryptoBotApplication(PicoCliService picoCliService, TelegramBotService telegramBotService) {
         this.picoCliService = picoCliService;
         this.telegramBotService = telegramBotService;
     }

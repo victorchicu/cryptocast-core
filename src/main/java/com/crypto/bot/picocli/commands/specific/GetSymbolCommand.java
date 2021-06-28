@@ -3,7 +3,7 @@ package com.crypto.bot.picocli.commands.specific;
 import com.crypto.bot.binance.model.market.SymbolPrice;
 import com.crypto.bot.telegram.services.TelegramBotService;
 import com.crypto.bot.picocli.commands.BaseCommand;
-import com.crypto.bot.picocli.services.BinanceService;
+import com.crypto.bot.services.BinanceService;
 import com.pengrad.telegrambot.model.Update;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
