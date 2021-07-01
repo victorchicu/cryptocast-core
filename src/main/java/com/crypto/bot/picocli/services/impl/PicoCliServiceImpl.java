@@ -45,7 +45,7 @@ public class PicoCliServiceImpl implements PicoCliService {
 
     private String[] toArgs(String command) {
         String[] args = command.split(SPACE);
-        if (command.startsWith("bot")) {
+        if (command.startsWith("bot") || command.startsWith("/")) {
             Stream<String> stream = Arrays.stream(command.split(SPACE));
             args = stream.skip(1).collect(Collectors.toList()).toArray(new String[0]);
         }

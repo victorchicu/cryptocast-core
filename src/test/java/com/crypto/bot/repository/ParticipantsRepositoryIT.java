@@ -1,7 +1,7 @@
 package com.crypto.bot.repository;
 
 import com.crypto.bot.BaseTest;
-import com.crypto.bot.repository.model.ParticipantSubscriptionEntity;
+import com.crypto.bot.repository.entity.SubscriptionEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 public class ParticipantsRepositoryIT extends BaseTest {
     @Test
     public void should_save_and_find_subscription_by_participant_id_and_symbol() {
-        ParticipantSubscriptionEntity expectedParticipantSubscription = participantsRepository.save(
+        SubscriptionEntity expectedParticipantSubscription = participantsRepository.save(
                 randomParticipantSubscription()
         );
 
-        Optional<ParticipantSubscriptionEntity> actualParticipantSubscription = participantsRepository.findSubscription(
+        Optional<SubscriptionEntity> actualParticipantSubscription = participantsRepository.findSubscription(
                 expectedParticipantSubscription.getParticipantId(),
-                expectedParticipantSubscription.getSymbol()
+                expectedParticipantSubscription.getSymbolName()
         );
 
         Assertions.assertEquals(
@@ -29,11 +29,11 @@ public class ParticipantsRepositoryIT extends BaseTest {
 
     @Test
     public void should_save_and_find_subscriptions_by_participant_id_and_set_of_symbols() {
-        List<ParticipantSubscriptionEntity> expectedParticipantSubscriptions = randomParticipantSubscriptions(3);
+        List<SubscriptionEntity> expectedParticipantSubscriptions = randomParticipantSubscriptions(3);
 
-        List<ParticipantSubscriptionEntity> actualParticipantSubscriptions = participantsRepository.findSubscriptions(
+        List<SubscriptionEntity> actualParticipantSubscriptions = participantsRepository.findSubscriptions(
                 expectedParticipantSubscriptions.get(0).getParticipantId(),
-                expectedParticipantSubscriptions.stream().map(ParticipantSubscriptionEntity::getSymbol).collect(Collectors.toList())
+                expectedParticipantSubscriptions.stream().map(SubscriptionEntity::getSymbolName).collect(Collectors.toList())
         );
 
         Assertions.assertEquals(

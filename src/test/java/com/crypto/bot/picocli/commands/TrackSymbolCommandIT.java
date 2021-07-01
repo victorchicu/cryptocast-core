@@ -22,9 +22,8 @@ public class TrackSymbolCommandIT extends BaseTest {
                 binanceService,
                 binanceProperties,
                 telegramBotService,
-                symbolTickerEventService,
                 freeMarkerTemplateService,
-                participantSubscriptionsService
+                subscriptionsService
         );
     }
 

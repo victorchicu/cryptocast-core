@@ -1,14 +1,14 @@
 package com.crypto.bot;
 
-import com.crypto.bot.services.BinanceService;
-import com.crypto.bot.repository.ParticipantsRepository;
-import com.crypto.bot.telegram.services.TelegramBotService;
-import com.crypto.bot.binance.model.event.SymbolMiniTickerEvent;
-import com.crypto.bot.configs.BinanceProperties;
-import com.crypto.bot.services.ParticipantSubscriptionsService;
-import com.crypto.bot.picocli.services.PicoCliService;
-import com.crypto.bot.repository.model.ParticipantSubscriptionEntity;
+import com.crypto.bot.binance.api.domain.event.SymbolMiniTickerEvent;
+import com.crypto.bot.binance.configs.BinanceProperties;
 import com.crypto.bot.freemarker.services.FreeMarkerTemplateService;
+import com.crypto.bot.picocli.services.PicoCliService;
+import com.crypto.bot.repository.SubscriptionsRepository;
+import com.crypto.bot.repository.entity.SubscriptionEntity;
+import com.crypto.bot.binance.services.BinanceService;
+import com.crypto.bot.services.SubscriptionsService;
+import com.crypto.bot.telegram.services.TelegramBotService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.testcontainers.containers.MongoDBContainer;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -48,11 +47,11 @@ public class BaseTest {
     @Autowired
     protected TelegramBotService telegramBotService;
     @Autowired
-    protected ParticipantsRepository participantsRepository;
+    protected SubscriptionsRepository participantsRepository;
     @Autowired
     protected FreeMarkerTemplateService freeMarkerTemplateService;
     @Autowired
-    protected ParticipantSubscriptionsService participantSubscriptionsService;
+    protected SubscriptionsService subscriptionsService;
 
     protected SymbolMiniTickerEvent randomSymbolMiniTickerEvent() {
         SymbolMiniTickerEvent symbolMiniTickerEvent = new SymbolMiniTickerEvent();
@@ -65,22 +64,22 @@ public class BaseTest {
         return symbolMiniTickerEvent;
     }
 
-    protected ParticipantSubscriptionEntity randomParticipantSubscription() {
-        return new ParticipantSubscriptionEntity()
+    protected SubscriptionEntity randomParticipantSubscription() {
+        return new SubscriptionEntity()
                 .setChatId(faker.number().randomNumber())
-                .setSymbol(faker.currency().name())
+                .setSymbolName(faker.currency().name())
                 .setMessageId(faker.number().randomDigit())
                 .setParticipantId(faker.number().randomDigit());
     }
 
-    protected List<ParticipantSubscriptionEntity> randomParticipantSubscriptions(int n) {
+    protected List<SubscriptionEntity> randomParticipantSubscriptions(int n) {
         int participantId = faker.number().randomDigit();
         long chatId = faker.number().randomNumber();
-        List<ParticipantSubscriptionEntity> list = new LinkedList<>();
+        List<SubscriptionEntity> list = new LinkedList<>();
         for (int i = 0; i < n; i++) {
-            ParticipantSubscriptionEntity participantSubscription = new ParticipantSubscriptionEntity()
+            SubscriptionEntity participantSubscription = new SubscriptionEntity()
                     .setChatId(chatId)
-                    .setSymbol(faker.currency().name())
+                    .setSymbolName(faker.currency().name())
                     .setMessageId(faker.number().randomDigit())
                     .setParticipantId(participantId);
             list.add(participantsRepository.save(participantSubscription));

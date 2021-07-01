@@ -1,8 +1,8 @@
 package com.crypto.bot;
 
-import com.crypto.bot.telegram.services.TelegramBotService;
 import com.crypto.bot.picocli.services.PicoCliService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.crypto.bot.telegram.entity.UpdateEntity;
+import com.crypto.bot.telegram.services.TelegramBotService;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import org.slf4j.Logger;
@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.convert.ConversionService;
 
 import java.util.List;
 
@@ -18,10 +19,16 @@ public class CryptoBotApplication implements CommandLineRunner {
     private static final Logger LOG = LoggerFactory.getLogger(CryptoBotApplication.class);
 
     private final PicoCliService picoCliService;
+    private final ConversionService conversionService;
     private final TelegramBotService telegramBotService;
 
-    public CryptoBotApplication(PicoCliService picoCliService, TelegramBotService telegramBotService) {
+    public CryptoBotApplication(
+            PicoCliService picoCliService,
+            ConversionService conversionService,
+            TelegramBotService telegramBotService
+    ) {
         this.picoCliService = picoCliService;
+        this.conversionService = conversionService;
         this.telegramBotService = telegramBotService;
     }
 
@@ -36,6 +43,8 @@ public class CryptoBotApplication implements CommandLineRunner {
                 try {
                     String command = update.message().text();
                     int exitCode = picoCliService.execute(command, update);
+                    UpdateEntity updateEntity = conversionService.convert(update, UpdateEntity.class);
+                    telegramBotService.saveMessage(updateEntity);
                     LOG.info("Input command: {} | Execution result: {}", command, exitCode);
                 } catch (Exception e) {
                     LOG.error(e.getMessage(), e);

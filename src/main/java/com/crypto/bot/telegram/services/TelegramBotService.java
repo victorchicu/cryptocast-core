@@ -1,5 +1,6 @@
 package com.crypto.bot.telegram.services;
 
+import com.crypto.bot.telegram.entity.UpdateEntity;
 import com.pengrad.telegrambot.ExceptionHandler;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.request.ParseMode;
@@ -10,6 +11,10 @@ public interface TelegramBotService {
     void setUpdateListener(UpdatesListener updatesListener, ExceptionHandler exceptionHandler);
 
     void removeUpdateListener();
+
+    void deleteAllMessages();
+
+    UpdateEntity saveMessage(UpdateEntity update);
 
     SendResponse sendMessage(Long chatId, String text);
 

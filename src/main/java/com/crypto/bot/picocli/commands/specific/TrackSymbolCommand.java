@@ -2,13 +2,13 @@ package com.crypto.bot.picocli.commands.specific;
 
 import com.crypto.bot.exceptions.UnsupportedSymbolException;
 import com.crypto.bot.telegram.services.TelegramBotService;
-import com.crypto.bot.binance.model.event.SymbolTickerEvent;
-import com.crypto.bot.configs.BinanceProperties;
+import com.crypto.bot.binance.api.domain.event.SymbolTickerEvent;
+import com.crypto.bot.binance.configs.BinanceProperties;
 import com.crypto.bot.freemarker.services.FreeMarkerTemplateService;
 import com.crypto.bot.picocli.commands.BaseCommand;
-import com.crypto.bot.services.BinanceService;
-import com.crypto.bot.services.ParticipantSubscriptionsService;
-import com.crypto.bot.repository.model.ParticipantSubscriptionEntity;
+import com.crypto.bot.binance.services.BinanceService;
+import com.crypto.bot.services.SubscriptionsService;
+import com.crypto.bot.repository.entity.SubscriptionEntity;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.response.SendResponse;
@@ -36,20 +36,20 @@ public class TrackSymbolCommand extends BaseCommand {
     private final BinanceProperties binanceProperties;
     private final TelegramBotService telegramBotService;
     private final FreeMarkerTemplateService freeMarkerTemplateService;
-    private final ParticipantSubscriptionsService participantSubscriptionsService;
+    private final SubscriptionsService subscriptionsService;
 
     public TrackSymbolCommand(
             BinanceService binanceService,
             BinanceProperties binanceProperties,
             TelegramBotService telegramBotService,
             FreeMarkerTemplateService freeMarkerTemplateService,
-            ParticipantSubscriptionsService participantSubscriptionsService
+            SubscriptionsService subscriptionsService
     ) {
         this.binanceService = binanceService;
         this.binanceProperties = binanceProperties;
         this.telegramBotService = telegramBotService;
         this.freeMarkerTemplateService = freeMarkerTemplateService;
-        this.participantSubscriptionsService = participantSubscriptionsService;
+        this.subscriptionsService = subscriptionsService;
     }
 
     @CommandLine.ParentCommand
@@ -74,52 +74,70 @@ public class TrackSymbolCommand extends BaseCommand {
         }
     }
 
-    public void invalidateSubscriptions(Update update, List<String> symbols) {
-        List<ParticipantSubscriptionEntity> participantSubscriptions = participantSubscriptionsService.findSubscriptions(
+    public void invalidateSubscriptions(Update update, List<String> symbolNames) {
+        List<SubscriptionEntity> participantSubscriptions = subscriptionsService.findSubscriptions(
                 update.message().from().id(),
-                symbols
+                symbolNames
         );
-
         forEach(participantSubscriptions.iterator(), subscription -> {
             telegramBotService.deleteMessage(
                     subscription.getChatId(),
                     subscription.getMessageId()
             );
-            participantSubscriptionsService.deleteSubscription(
+            subscriptionsService.deleteSubscription(
                     subscription.getId()
             );
         });
     }
 
-    public void handleSymbolTickerEvent(Update update, String symbol, SymbolTickerEvent symbolTickerEvent) {
+    public void handleSymbolTickerEvent(Update update, String symbolName, SymbolTickerEvent symbolTickerEvent) {
         Integer participantId = update.message().from().id();
-        participantSubscriptionsService.findSubscription(participantId, symbol)
-                .map(subscription -> {
-                    long timeout = symbolTickerEvent.getEventTime() - (subscription.getRecentEventTime() + 5000);
-                    if (timeout > 0) {
-                        String templateText = renderTemplate(symbol, symbolTickerEvent);
-                        telegramBotService.updateMessage(subscription.getChatId(), subscription.getMessageId(), templateText, ParseMode.HTML);
-                        participantSubscriptionsService.updateSubscription(
-                                Query.query(Criteria.where("symbol").is(subscription).and("participantId").is(participantId)),
-                                "recentEvenType",
-                                symbolTickerEvent.getEventTime()
-                        );
-                    }
-                    return subscription;
-                })
-                .orElseGet(() -> {
-                    String templateText = renderTemplate(symbol, symbolTickerEvent);
-                    SendResponse sendResponse = telegramBotService.sendMessage(update.message().chat().id(), templateText, ParseMode.HTML);
-                    participantSubscriptionsService.saveSubscription(
-                            new ParticipantSubscriptionEntity()
-                                    .setSymbol(symbol)
-                                    .setChatId(sendResponse.message().chat().id())
-                                    .setMessageId(sendResponse.message().messageId())
-                                    .setParticipantId(participantId)
-                                    .setRecentEventTime(symbolTickerEvent.getEventTime())
-                    );
-                    return null;
-                });
+        Optional<SubscriptionEntity> optional = subscriptionsService.findSubscription(participantId, symbolName);
+        if (optional.isPresent()) {
+            SubscriptionEntity subscription = optional.get();
+            long tumblingTimeWindow = (symbolTickerEvent.getEventTime() - 5000);
+            if (tumblingTimeWindow > subscription.getUpdatedAt()) {
+                String templateText = renderTemplate(symbolName, symbolTickerEvent);
+
+                telegramBotService.updateMessage(
+                        subscription.getChatId(),
+                        subscription.getMessageId(),
+                        templateText,
+                        ParseMode.HTML
+                );
+
+                subscriptionsService.updateSubscription(
+                        Query.query(
+                                Criteria.where("symbolName")
+                                        .is(subscription.getSymbolName())
+                                        .and("participantId")
+                                        .is(participantId)
+                        ),
+                        "updatedAt",
+                        symbolTickerEvent.getEventTime()
+                );
+            }
+        } else {
+            String templateText = renderTemplate(
+                    symbolName,
+                    symbolTickerEvent
+            );
+
+            SendResponse sendResponse = telegramBotService.sendMessage(
+                    update.message().chat().id(),
+                    templateText,
+                    ParseMode.HTML
+            );
+
+            subscriptionsService.saveSubscription(
+                    new SubscriptionEntity()
+                            .setChatId(sendResponse.message().chat().id())
+                            .setMessageId(sendResponse.message().messageId())
+                            .setUpdatedAt(symbolTickerEvent.getEventTime())
+                            .setSymbolName(symbolName)
+                            .setParticipantId(participantId)
+            );
+        }
     }
 
     public void subscribeToSymbolMiniTickerEvents(Update update, List<String> symbols) {

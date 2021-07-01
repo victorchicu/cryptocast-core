@@ -9,7 +9,7 @@ import picocli.CommandLine;
         name = "bot",
         description = "Trading bot for Binance platform",
         subcommands = {
-                StopCommand.class,
+                ClearCommand.class,
                 GetSymbolCommand.class,
                 TrackSymbolCommand.class
         }
