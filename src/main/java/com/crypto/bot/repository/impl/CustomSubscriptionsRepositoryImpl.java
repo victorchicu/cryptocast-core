@@ -2,6 +2,7 @@ package com.crypto.bot.repository.impl;
 
 import com.crypto.bot.repository.CustomSubscriptionsRepository;
 import com.crypto.bot.repository.entity.SubscriptionEntity;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -31,11 +32,20 @@ public class CustomSubscriptionsRepositoryImpl implements CustomSubscriptionsRep
     }
 
     @Override
+    public DeleteResult removeSubscriptions(Integer participantId) {
+        Query query = Query.query(
+                Criteria.where(SubscriptionEntity.Field.PARTICIPANT_ID)
+                .is(participantId)
+        );
+        return mongoOperations.remove(query, SubscriptionEntity.class, SubscriptionEntity.COLLECTION_NAME);
+    }
+
+    @Override
     public List<SubscriptionEntity> findSubscriptions(Integer participantId, List<String> symbolNames) {
         Query query = Query.query(
-                Criteria.where("participantId")
+                Criteria.where(SubscriptionEntity.Field.PARTICIPANT_ID)
                         .is(participantId)
-                        .and("symbolName")
+                        .and(SubscriptionEntity.Field.SYMBOL_NAME)
                         .in(symbolNames)
         );
         return mongoOperations.find(
@@ -48,9 +58,9 @@ public class CustomSubscriptionsRepositoryImpl implements CustomSubscriptionsRep
     @Override
     public Optional<SubscriptionEntity> findSubscription(Integer participantId, String symbolName) {
         Query query = Query.query(
-                Criteria.where("participantId")
+                Criteria.where(SubscriptionEntity.Field.PARTICIPANT_ID)
                         .is(participantId)
-                        .and("symbolName")
+                        .and(SubscriptionEntity.Field.SYMBOL_NAME)
                         .is(symbolName)
         );
         SubscriptionEntity participantSubscription = mongoOperations.findOne(

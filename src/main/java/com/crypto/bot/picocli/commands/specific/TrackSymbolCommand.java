@@ -103,14 +103,12 @@ public class TrackSymbolCommand extends BaseCommand {
             long tumblingTimeWindow = (symbolTickerEvent.getEventTime() - 5000);
             if (tumblingTimeWindow > subscription.getUpdatedAt()) {
                 String templateText = renderTemplate(symbolName, symbolTickerEvent);
-
                 telegramBotService.updateMessage(
                         subscription.getChatId(),
                         subscription.getMessageId(),
                         templateText,
                         ParseMode.HTML
                 );
-
                 subscriptionsService.updateSubscription(
                         Query.query(
                                 Criteria.where(SubscriptionEntity.Field.SYMBOL_NAME)

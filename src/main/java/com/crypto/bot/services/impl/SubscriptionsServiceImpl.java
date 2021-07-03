@@ -25,8 +25,8 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
     }
 
     @Override
-    public void deleteAllSubscriptions() {
-        subscriptionsRepository.deleteAll();
+    public void deleteAllSubscriptions(Integer participantId) {
+        subscriptionsRepository.removeSubscriptions(participantId);
     }
 
     @Override

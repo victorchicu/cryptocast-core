@@ -43,13 +43,11 @@ public class CryptoBotApplication implements CommandLineRunner {
         telegramBotService.setUpdateListener((List<Update> list) -> {
             list.forEach((Update update) -> {
                 try {
-                    String command = update.message().text();
-                    int exitCode = picoCliService.execute(command, update);
-                    LOG.info("Input command: {} | Execution result: {}", command, exitCode);
+                    telegramBotService.saveMessage(update);
+                    int exitCode = picoCliService.execute(update.message().text(), update);
+                    LOG.info("Bot input command: {} | Execution result: {}", update.message().text(), exitCode);
                 } catch (Exception e) {
                     LOG.error(e.getMessage(), e);
-                } finally {
-                    telegramBotService.saveMessage(update);
                 }
             });
             return UpdatesListener.CONFIRMED_UPDATES_ALL;

@@ -13,7 +13,7 @@ public interface TelegramBotService {
 
     void removeUpdateListener();
 
-    void deleteAllMessages();
+    void deleteAllMessages(Long chatId);
 
     UpdateEntity saveMessage(Update update);
 

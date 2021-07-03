@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface SubscriptionsService {
     void deleteSubscription(String subscriptionId);
 
-    void deleteAllSubscriptions();
+    void deleteAllSubscriptions(Integer participantId);
 
     void deleteAllSubscriptionsById(List<String> list);
 

@@ -20,6 +20,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,8 +59,8 @@ public class TelegramBotServiceImpl implements TelegramBotService {
     }
 
     @Override
-    public void deleteAllMessages() {
-        List<Integer> list = IterableUtils.toList(telegramBotRepository.findAll()).stream()
+    public void deleteAllMessages(Long chatId) {
+        List<Integer> list = IterableUtils.toList(telegramBotRepository.findAllByChatId(chatId)).stream()
                 .filter(updateEntity -> {
                     BaseResponse response = deleteMessage(updateEntity.getChatId(), updateEntity.getId());
                     return response.isOk();
@@ -92,5 +93,13 @@ public class TelegramBotServiceImpl implements TelegramBotService {
     @Override
     public BaseResponse deleteMessage(Long chatId, Integer messageId) {
         return telegramBot.execute(new DeleteMessage(chatId, messageId));
+    }
+
+    private BaseResponse invoke(Callable<BaseResponse> callable) {
+        try {
+            return callable.call();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
