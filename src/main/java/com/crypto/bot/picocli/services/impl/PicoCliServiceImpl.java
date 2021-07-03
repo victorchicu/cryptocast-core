@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 @Service
 public class PicoCliServiceImpl implements PicoCliService {
-    private static final String SPACE = " ";
+    private static final String SPLIT_CHARACTER = " ";
 
     private final ApplicationContext context;
     private final TelegramBotService telegramBotService;
@@ -44,9 +44,12 @@ public class PicoCliServiceImpl implements PicoCliService {
     }
 
     private String[] toArgs(String command) {
-        String[] args = command.split(SPACE);
-        if (command.startsWith("bot") || command.startsWith("/")) {
-            Stream<String> stream = Arrays.stream(command.split(SPACE));
+        if (command.startsWith("/")) {
+            command = command.replaceFirst("/", "");
+        }
+        String[] args = command.split(SPLIT_CHARACTER);
+        if (command.startsWith("bot")) {
+            Stream<String> stream = Arrays.stream(command.split(SPLIT_CHARACTER));
             args = stream.skip(1).collect(Collectors.toList()).toArray(new String[0]);
         }
         return args;
