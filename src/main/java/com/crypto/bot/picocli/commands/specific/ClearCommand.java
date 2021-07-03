@@ -1,6 +1,5 @@
 package com.crypto.bot.picocli.commands.specific;
 
-import com.crypto.bot.CryptoBotApplication;
 import com.crypto.bot.picocli.commands.BaseCommand;
 import com.crypto.bot.services.SubscriptionsService;
 import com.crypto.bot.telegram.services.TelegramBotService;

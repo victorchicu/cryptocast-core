@@ -11,7 +11,7 @@ public class BinanceProperties {
     private String url;
     private String apiKey;
     private String secretKey;
-    private Map<String, TemplateConfig> templates;
+    private Map<String, MappingsConfig> mappings;
 
     public String getUrl() {
         return url;
@@ -37,11 +37,11 @@ public class BinanceProperties {
         this.secretKey = secretKey;
     }
 
-    public Map<String, TemplateConfig> getTemplates() {
-        return templates;
+    public Map<String, MappingsConfig> getMappings() {
+        return mappings;
     }
 
-    public void setTemplates(Map<String, TemplateConfig> templates) {
-        this.templates = templates;
+    public void setMappings(Map<String, MappingsConfig> mappings) {
+        this.mappings = mappings;
     }
 }

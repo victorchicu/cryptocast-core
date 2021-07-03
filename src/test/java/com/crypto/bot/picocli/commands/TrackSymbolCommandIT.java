@@ -21,6 +21,7 @@ public class TrackSymbolCommandIT extends BaseTest {
         trackSymbolCommand = new TrackSymbolCommand(
                 binanceService,
                 binanceProperties,
+                conversionService,
                 telegramBotService,
                 freeMarkerTemplateService,
                 subscriptionsService

@@ -1,20 +1,19 @@
 package com.crypto.bot.picocli.commands.specific;
 
-import com.crypto.bot.binance.configs.TemplateConfig;
-import com.crypto.bot.exceptions.UnsupportedSymbolNameException;
-import com.crypto.bot.telegram.services.TelegramBotService;
 import com.crypto.bot.binance.api.domain.event.SymbolTickerEvent;
 import com.crypto.bot.binance.configs.BinanceProperties;
+import com.crypto.bot.binance.services.BinanceService;
 import com.crypto.bot.freemarker.services.FreeMarkerTemplateService;
 import com.crypto.bot.picocli.commands.BaseCommand;
-import com.crypto.bot.binance.services.BinanceService;
-import com.crypto.bot.services.SubscriptionsService;
 import com.crypto.bot.repository.entity.SubscriptionEntity;
+import com.crypto.bot.services.SubscriptionsService;
+import com.crypto.bot.telegram.services.TelegramBotService;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
@@ -22,6 +21,7 @@ import picocli.CommandLine;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.collections4.IteratorUtils.forEach;
 
@@ -35,19 +35,22 @@ public class TrackSymbolCommand extends BaseCommand {
 
     private final BinanceService binanceService;
     private final BinanceProperties binanceProperties;
+    private final ConversionService conversionService;
     private final TelegramBotService telegramBotService;
-    private final FreeMarkerTemplateService freeMarkerTemplateService;
     private final SubscriptionsService subscriptionsService;
+    private final FreeMarkerTemplateService freeMarkerTemplateService;
 
     public TrackSymbolCommand(
             BinanceService binanceService,
             BinanceProperties binanceProperties,
+            ConversionService conversionService,
             TelegramBotService telegramBotService,
             FreeMarkerTemplateService freeMarkerTemplateService,
             SubscriptionsService subscriptionsService
     ) {
         this.binanceService = binanceService;
         this.binanceProperties = binanceProperties;
+        this.conversionService = conversionService;
         this.telegramBotService = telegramBotService;
         this.freeMarkerTemplateService = freeMarkerTemplateService;
         this.subscriptionsService = subscriptionsService;
@@ -70,8 +73,11 @@ public class TrackSymbolCommand extends BaseCommand {
             String usageHelp = usage(this);
             telegramBotService.sendMessage(update.message().chat().id(), usageHelp);
         } else {
-            invalidateSubscriptions(update, symbols);
-            subscribeToSymbolTickerEvents(update, symbols);
+            List<String> symbolNames = symbols.stream()
+                    .map(source -> conversionService.convert(source, String.class))
+                    .collect(Collectors.toList());
+            invalidateSubscriptions(update, symbolNames);
+            subscribeToSymbolTickerEvents(update, symbolNames);
         }
     }
 
@@ -157,9 +163,7 @@ public class TrackSymbolCommand extends BaseCommand {
         }
     }
 
-    public <T> String renderTemplate(String symbolName, T eventObject) {
-        return Optional.ofNullable(binanceProperties.getTemplates().get(symbolName))
-                .map((TemplateConfig templateConfig) -> freeMarkerTemplateService.render(templateConfig.getName(), eventObject))
-                .orElseThrow(() -> new UnsupportedSymbolNameException(symbolName));
+    private <T> String renderTemplate(String symbolName, T eventObject) {
+        return freeMarkerTemplateService.render(symbolName + ".ftl", eventObject);
     }
 }

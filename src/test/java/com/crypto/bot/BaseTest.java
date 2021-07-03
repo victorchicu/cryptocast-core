@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.testcontainers.containers.MongoDBContainer;
@@ -43,19 +44,21 @@ public class BaseTest {
     @Autowired
     protected BinanceService binanceService;
     @Autowired
+    protected ConversionService conversionService;
+    @Autowired
     protected BinanceProperties binanceProperties;
     @Autowired
     protected TelegramBotService telegramBotService;
     @Autowired
+    protected SubscriptionsService subscriptionsService;
+    @Autowired
     protected SubscriptionsRepository participantsRepository;
     @Autowired
     protected FreeMarkerTemplateService freeMarkerTemplateService;
-    @Autowired
-    protected SubscriptionsService subscriptionsService;
 
     protected SymbolMiniTickerEvent randomSymbolMiniTickerEvent() {
         SymbolMiniTickerEvent symbolMiniTickerEvent = new SymbolMiniTickerEvent();
-        Set<String> symbols = binanceProperties.getTemplates().keySet();
+        Set<String> symbols = binanceProperties.getMappings().keySet();
         symbolMiniTickerEvent.setSymbol(faker.options().option(symbols.toArray(new String[0])));
         symbolMiniTickerEvent.setLow(new BigDecimal(Math.random()));
         symbolMiniTickerEvent.setHigh(new BigDecimal(Math.random()));

@@ -1,0 +1,246 @@
+binance:
+  apiKey: OIObqAkXmt3COxMZvOmlL802zJTj2o0ImlWpMUbsCnAVhLguYm9bVoUIwrNJYUK5
+  secretKey: ep3xSkW6VDuwjeqyC3oh5QvPpkWofucpvbxQPZLfqaIEroaFPtARQdoEGsnZId8B
+  mappings:
+    1inch:
+      name: 1inchusdt
+    aave:
+      name: aaveusdt
+    ada:
+      name: adausdt
+    akro:
+      name: akrousdt
+    algo:
+      name: algousdt
+    alice:
+      name: aliceusdt
+    alpha:
+      name: alphausdt
+    ankr:
+      name: ankrusdt
+    atom:
+      name: atomusdt
+    avax:
+      name: avaxusdt
+    axs:
+      name: axsusdt
+    bake:
+      name: bakeusdt
+    balu:
+      name: baluusdt
+    band:
+      name: bandusdt
+    bat:
+      name: batusdt
+    bch:
+      name: bchusdt
+    bel:
+      name: belusdt
+    blz:
+      name: blzusdt
+    bnb:
+      name: bnbusdt
+    btc:
+      name: btcusdt
+    btcb:
+      name: btcbusdt
+    bts:
+      name: btsusdt
+    btt:
+      name: bttusdt
+    bzrx:
+      name: bzrxusdt
+    celr:
+      name: celrusdt
+    chr:
+      name: chrusdt
+    chz:
+      name: chzusdt
+    comp:
+      name: compusdt
+    coti:
+      name: cotiusdt
+    crv:
+      name: crvusdt
+    ctk:
+      name: ctkusdt
+    cvc:
+      name: cvcusdt
+    dash:
+      name: dashusdt
+    defi:
+      name: defiusdt
+    dent:
+      name: dentusdt
+    dgb:
+      name: dgbusdt
+    dit:
+      name: ditusdt
+    dodo:
+      name: dodousdt
+    doge:
+      name: dogeusdt
+    egld:
+      name: egldusdt
+    enj:
+      name: enjusdt
+    eos:
+      name: eosusdt
+    etc:
+      name: etcusdt
+    eth:
+      name: ethusdt
+    fil:
+      name: filusdt
+    flm:
+      name: flmusdt
+    ftm:
+      name: ftmusdt
+    grt:
+      name: grtusdt
+    hbar:
+      name: hbarusdt
+    hnt:
+      name: hntusdt
+    hot:
+      name: hotusdt
+    icp:
+      name: icpusdt
+    icx:
+      name: icxusdt
+    iost:
+      name: iostusdt
+    iota:
+      name: iotausdt
+    kava:
+      name: kavausdt
+    knc:
+      name: kncusdt
+    ksm:
+      name: ksmusdt
+    lina:
+      name: linausdt
+    link:
+      name: linkusdt
+    lit:
+      name: litusdt
+    lrc:
+      name: lrcusdt
+    ltc:
+      name: ltcusdt
+    luna:
+      name: lunausdt
+    mana:
+      name: manausdt
+    matic:
+      name: maticusdt
+    mkr:
+      name: mkrusdt
+    mtl:
+      name: mtlusdt
+    near:
+      name: nearusdt
+    neo:
+      name: neousdt
+    nkn:
+      name: nknusdt
+    ocean:
+      name: oceanusdt
+    ogn:
+      name: ognusdt
+    omg:
+      name: omgusdt
+    one:
+      name: oneusdt
+    ont:
+      name: ontusdt
+    qtum:
+      name: qtumusdt
+    reef:
+      name: reefusdt
+    ren:
+      name: renusdt
+    rlc:
+      name: rlcusdt
+    rsr:
+      name: rsrusdt
+    rune:
+      name: runeusdt
+    rvn:
+      name: rvnusdt
+    sand:
+      name: sandusdt
+    sc:
+      name: scusdt
+    sfp:
+      name: sfpusdt
+    shib:
+      name: 1000shibusdt
+    skl:
+      name: sklusdt
+    snx:
+      name: snxusdt
+    sol:
+      name: solusdt
+    srm:
+      name: srmusdt
+    stmx:
+      name: stmxusdt
+    storj:
+      name: storjusdt
+    sushi:
+      name: sushiusdt
+    sxp:
+      name: sxpusdt
+    theta:
+      name: thetausdt
+    tomo:
+      name: tomousdt
+    trb:
+      name: trbusdt
+    trx:
+      name: trxusdt
+    unfi:
+      name: unfiusdt
+    uni:
+      name: uniusdt
+    vet:
+      name: vetusdt
+    wave:
+      name: waveusdt
+    xem:
+      name: xemusdt
+    xlm:
+      name: xlmusdt
+    xmr:
+      name: xmrusdt
+    xrp:
+      name: xrpusdt
+    xtz:
+      name: xtzusdt
+    yfi:
+      name: yfiusdt
+    yfii:
+      name: yfiiusdt
+    zec:
+      name: zecusdt
+    zen:
+      name: zenusdt
+    zilu:
+      name: ziluusdt
+    zrx:
+      name: zrxusdt
+  url: wss://api.binance.com/
+logging:
+  level:
+    root: info
+server:
+  port: 8080
+spring:
+  data:
+    mongodb:
+      database: cryptostrophe_bot
+      host: localhost
+      port: 27017
+telegram:
+  token: 1870562257:AAGjZijm2KTSI92kOEDaRDrY9sL7eP_6Gso
