@@ -4,7 +4,7 @@
 <u>Low</u> ${low}
 <u>Close</u> ${lastPrice}
 
-<b>OHLC statistics (24h)</b>
+<b>OHLC STATISTICS (24h)</b>
 <#if (priceChange > 0)>
     <#lt>${symbol} is up ${NumberUtils.toPlainString(priceChangePercent)}% to ${NumberUtils.toPlainString(priceChange)}
 <#else>

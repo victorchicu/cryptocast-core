@@ -4,7 +4,7 @@
 <u>Low</u> ${NumberUtils.divide(low, 1000)}
 <u>Close</u> ${NumberUtils.divide(lastPrice, 1000)}
 
-<b>OHLC statistics (24h)</b>
+<b>OHLC STATISTICS (24h)</b>
 <#if (priceChange > 0)>
     <#lt>${symbol} is up ${NumberUtils.toPlainString(priceChangePercent)}% to ${NumberUtils.divide(priceChange, 1000)}
 <#else>
