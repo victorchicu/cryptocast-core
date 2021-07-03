@@ -40,14 +40,6 @@ public class CryptoBotApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        Instant greater = Instant.ofEpochMilli(1625342205237L);
-        Instant less = Instant.ofEpochMilli(1625342180939L);
-
-        Duration p = Duration.between(greater, less);
-
-        String z = p.toString();
-        System.out.println(z);
-
         telegramBotService.setUpdateListener((List<Update> list) -> {
             list.forEach((Update update) -> {
                 try {
