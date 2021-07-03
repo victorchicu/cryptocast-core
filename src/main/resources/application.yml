@@ -240,7 +240,7 @@ spring:
   data:
     mongodb:
       database: cryptostrophe_bot
-      host: localhost
+      host: 46.101.21.158
       port: 27017
 telegram:
   token: 1870562257:AAGjZijm2KTSI92kOEDaRDrY9sL7eP_6Gso
