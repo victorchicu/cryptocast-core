@@ -146,6 +146,7 @@ public class TrackSymbolCommand extends BaseCommand {
     public void subscribeToSymbolTickerEvents(Update update, List<String> symbolNames) {
         for (String symbolName : symbolNames) {
             binanceService.subscribeSymbolTickerEvent(
+                    update.message().from().id(),
                     symbolName.toLowerCase(),
                     ((SymbolTickerEvent symbolTickerEvent) -> {
                         try {

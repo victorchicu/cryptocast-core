@@ -27,16 +27,31 @@ public class BinanceServiceImpl implements BinanceService {
     }
 
     @Override
+    public void unsubscribe(Integer participantId) {
+        subscriptionClient.unsubscribe(participantId);
+    }
+
+    @Override
     public void unsubscribeAll() {
         subscriptionClient.unsubscribeAll();
     }
 
     @Override
-    public void subscribeSymbolTickerEvent(String symbol, SubscriptionListener<SymbolTickerEvent> callback, SubscriptionErrorHandler errorHandler) {
-        subscriptionClient.subscribeSymbolTickerEvent(symbol, callback, errorHandler);
+    public void subscribeSymbolTickerEvent(
+            Integer participantId,
+            String symbol,
+            SubscriptionListener<SymbolTickerEvent> callback,
+            SubscriptionErrorHandler errorHandler
+    ) {
+        subscriptionClient.subscribeSymbolTickerEvent(participantId, symbol, callback, errorHandler);
     }
 
-    public void subscribeSymbolMiniTickerEvent(String symbol, SubscriptionListener<SymbolMiniTickerEvent> callback, SubscriptionErrorHandler errorHandler) {
-        subscriptionClient.subscribeSymbolMiniTickerEvent(symbol, callback, errorHandler);
+    public void subscribeSymbolMiniTickerEvent(
+            Integer participantId,
+            String symbol,
+            SubscriptionListener<SymbolMiniTickerEvent> callback,
+            SubscriptionErrorHandler errorHandler
+    ) {
+        subscriptionClient.subscribeSymbolMiniTickerEvent(participantId, symbol, callback, errorHandler);
     }
 }
