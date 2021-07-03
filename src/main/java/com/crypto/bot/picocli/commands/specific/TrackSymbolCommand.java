@@ -73,9 +73,7 @@ public class TrackSymbolCommand extends BaseCommand {
             String usageHelp = usage(this);
             telegramBotService.sendMessage(update.message().chat().id(), usageHelp);
         } else {
-            List<String> symbolNames = symbols.stream()
-                    .map(source -> conversionService.convert(source, String.class))
-                    .collect(Collectors.toList());
+            List<String> symbolNames = toBinanceFormatSymbolNames();
             invalidateSubscriptions(update, symbolNames);
             subscribeToSymbolTickerEvents(update, symbolNames);
         }
@@ -165,5 +163,11 @@ public class TrackSymbolCommand extends BaseCommand {
 
     private <T> String renderTemplate(String symbolName, T eventObject) {
         return freeMarkerTemplateService.render(symbolName + ".ftl", eventObject);
+    }
+
+    private List<String> toBinanceFormatSymbolNames() {
+        return symbols.stream()
+                .map(source -> conversionService.convert(source, String.class))
+                .collect(Collectors.toList());
     }
 }
