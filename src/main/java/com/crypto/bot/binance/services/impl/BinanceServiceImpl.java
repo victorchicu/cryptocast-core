@@ -1,12 +1,12 @@
 package com.crypto.bot.binance.services.impl;
 
-import com.crypto.bot.binance.api.domain.market.SymbolPrice;
-import com.crypto.bot.binance.api.SubscriptionClient;
-import com.crypto.bot.binance.api.SubscriptionErrorHandler;
-import com.crypto.bot.binance.api.SubscriptionListener;
-import com.crypto.bot.binance.api.SyncRequestClient;
-import com.crypto.bot.binance.api.domain.event.SymbolMiniTickerEvent;
-import com.crypto.bot.binance.api.domain.event.SymbolTickerEvent;
+import com.crypto.bot.binance.client.domain.market.SymbolPrice;
+import com.crypto.bot.binance.client.SubscriptionClient;
+import com.crypto.bot.binance.client.SubscriptionErrorHandler;
+import com.crypto.bot.binance.client.SubscriptionListener;
+import com.crypto.bot.binance.client.SyncRequestClient;
+import com.crypto.bot.binance.client.domain.event.SymbolMiniTickerEvent;
+import com.crypto.bot.binance.client.domain.event.SymbolTickerEvent;
 import com.crypto.bot.binance.services.BinanceService;
 import org.springframework.stereotype.Service;
 

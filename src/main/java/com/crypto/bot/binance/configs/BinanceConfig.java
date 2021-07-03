@@ -1,9 +1,9 @@
 package com.crypto.bot.binance.configs;
 
-import com.crypto.bot.binance.api.RequestOptions;
-import com.crypto.bot.binance.api.SubscriptionClient;
-import com.crypto.bot.binance.api.SubscriptionOptions;
-import com.crypto.bot.binance.api.SyncRequestClient;
+import com.crypto.bot.binance.client.RequestOptions;
+import com.crypto.bot.binance.client.SubscriptionClient;
+import com.crypto.bot.binance.client.SubscriptionOptions;
+import com.crypto.bot.binance.client.SyncRequestClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

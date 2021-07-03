@@ -1,6 +1,6 @@
 package com.crypto.bot.picocli.commands.specific;
 
-import com.crypto.bot.binance.api.domain.event.SymbolTickerEvent;
+import com.crypto.bot.binance.client.domain.event.SymbolTickerEvent;
 import com.crypto.bot.binance.configs.BinanceProperties;
 import com.crypto.bot.binance.services.BinanceService;
 import com.crypto.bot.freemarker.services.FreeMarkerTemplateService;

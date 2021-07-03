@@ -1,6 +1,6 @@
 package com.crypto.bot;
 
-import com.crypto.bot.binance.api.domain.event.SymbolMiniTickerEvent;
+import com.crypto.bot.binance.client.domain.event.SymbolMiniTickerEvent;
 import com.crypto.bot.binance.configs.BinanceProperties;
 import com.crypto.bot.freemarker.services.FreeMarkerTemplateService;
 import com.crypto.bot.picocli.services.PicoCliService;
