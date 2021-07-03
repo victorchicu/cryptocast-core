@@ -8,7 +8,7 @@ import okhttp3.WebSocketListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.crypto.bot.binance.configs.BinanceApiConstants;
+import com.crypto.bot.binance.api.configs.BinanceApiConstants;
 import com.crypto.bot.binance.api.exceptions.BinanceApiException;
 
 public class WebSocketConnection extends WebSocketListener {

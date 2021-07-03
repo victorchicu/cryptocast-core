@@ -1,6 +1,7 @@
 package com.crypto.bot.picocli.commands.specific;
 
-import com.crypto.bot.exceptions.UnsupportedSymbolException;
+import com.crypto.bot.binance.configs.TemplateConfig;
+import com.crypto.bot.exceptions.UnsupportedSymbolNameException;
 import com.crypto.bot.telegram.services.TelegramBotService;
 import com.crypto.bot.binance.api.domain.event.SymbolTickerEvent;
 import com.crypto.bot.binance.configs.BinanceProperties;
@@ -70,7 +71,7 @@ public class TrackSymbolCommand extends BaseCommand {
             telegramBotService.sendMessage(update.message().chat().id(), usageHelp);
         } else {
             invalidateSubscriptions(update, symbols);
-            subscribeToSymbolMiniTickerEvents(update, symbols);
+            subscribeToSymbolTickerEvents(update, symbols);
         }
     }
 
@@ -108,12 +109,12 @@ public class TrackSymbolCommand extends BaseCommand {
 
                 subscriptionsService.updateSubscription(
                         Query.query(
-                                Criteria.where("symbolName")
+                                Criteria.where(SubscriptionEntity.Field.SYMBOL_NAME)
                                         .is(subscription.getSymbolName())
-                                        .and("participantId")
+                                        .and(SubscriptionEntity.Field.PARTICIPANT_ID)
                                         .is(participantId)
                         ),
-                        "updatedAt",
+                        SubscriptionEntity.Field.UPDATED_AT,
                         symbolTickerEvent.getEventTime()
                 );
             }
@@ -140,13 +141,13 @@ public class TrackSymbolCommand extends BaseCommand {
         }
     }
 
-    public void subscribeToSymbolMiniTickerEvents(Update update, List<String> symbols) {
-        for (String symbol : symbols) {
+    public void subscribeToSymbolTickerEvents(Update update, List<String> symbolNames) {
+        for (String symbolName : symbolNames) {
             binanceService.subscribeSymbolTickerEvent(
-                    symbol.toLowerCase(),
-                    ((SymbolTickerEvent event) -> {
+                    symbolName.toLowerCase(),
+                    ((SymbolTickerEvent symbolTickerEvent) -> {
                         try {
-                            handleSymbolTickerEvent(update, symbol, event);
+                            handleSymbolTickerEvent(update, symbolName, symbolTickerEvent);
                         } catch (Exception e) {
                             LOG.error(e.getMessage(), e);
                         }
@@ -156,9 +157,9 @@ public class TrackSymbolCommand extends BaseCommand {
         }
     }
 
-    public <T> String renderTemplate(String symbol, T event) {
-        return Optional.ofNullable(binanceProperties.getCryptocurrency().get(symbol))
-                .map(cryptocurrency -> freeMarkerTemplateService.render(cryptocurrency.getTemplate(), event))
-                .orElseThrow(() -> new UnsupportedSymbolException(symbol));
+    public <T> String renderTemplate(String symbolName, T eventObject) {
+        return Optional.ofNullable(binanceProperties.getTemplates().get(symbolName))
+                .map((TemplateConfig templateConfig) -> freeMarkerTemplateService.render(templateConfig.getName(), eventObject))
+                .orElseThrow(() -> new UnsupportedSymbolNameException(symbolName));
     }
 }

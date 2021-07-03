@@ -21,10 +21,10 @@ public class MongoIndexConfig {
         mongoOperations.indexOps(SubscriptionEntity.class)
                 .ensureIndex(new CompoundIndexDefinition(
                         new Document()
-                                .append("symbol", 1)
-                                .append("participantId", 1)
+                                .append(SubscriptionEntity.Field.SYMBOL_NAME, 1)
+                                .append(SubscriptionEntity.Field.PARTICIPANT_ID, 1)
                         )
-                        .named("subscriptions")
+                        .named(SubscriptionEntity.COLLECTION_NAME)
                         .unique()
                         .sparse()
                 );

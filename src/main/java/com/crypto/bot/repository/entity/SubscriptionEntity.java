@@ -1,7 +1,10 @@
 package com.crypto.bot.repository.entity;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.Instant;
 
 @Document(collection = SubscriptionEntity.COLLECTION_NAME)
 public class SubscriptionEntity {
@@ -14,6 +17,8 @@ public class SubscriptionEntity {
     private String symbolName;
     private Integer messageId;
     private Integer participantId;
+    @CreatedDate
+    private Instant createdAt;
 
     public String getId() {
         return id;
@@ -66,5 +71,22 @@ public class SubscriptionEntity {
     public SubscriptionEntity setParticipantId(Integer participantId) {
         this.participantId = participantId;
         return this;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public static class Field {
+        public static final String ID = "_id";
+        public static final String CHAT_ID = "chatId";
+        public static final String UPDATED_AT = "updatedAt";
+        public static final String SYMBOL_NAME = "symbolName";
+        public static final String MESSAGE_ID = "messageId";
+        public static final String PARTICIPANT_ID = "participantId";
     }
 }

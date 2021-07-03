@@ -1,4 +1,4 @@
-package com.crypto.bot.binance.configs;
+package com.crypto.bot.binance.api.configs;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
 

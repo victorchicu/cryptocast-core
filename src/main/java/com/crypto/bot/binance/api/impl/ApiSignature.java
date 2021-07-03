@@ -2,7 +2,7 @@ package com.crypto.bot.binance.api.impl;
 
 import com.crypto.bot.binance.api.impl.utils.UrlParamsBuilder;
 import com.crypto.bot.binance.api.exceptions.BinanceApiException;
-import com.crypto.bot.binance.configs.BinanceApiConstants;
+import com.crypto.bot.binance.api.configs.BinanceApiConstants;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;

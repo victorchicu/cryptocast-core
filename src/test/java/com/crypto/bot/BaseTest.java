@@ -55,7 +55,7 @@ public class BaseTest {
 
     protected SymbolMiniTickerEvent randomSymbolMiniTickerEvent() {
         SymbolMiniTickerEvent symbolMiniTickerEvent = new SymbolMiniTickerEvent();
-        Set<String> symbols = binanceProperties.getCryptocurrency().keySet();
+        Set<String> symbols = binanceProperties.getTemplates().keySet();
         symbolMiniTickerEvent.setSymbol(faker.options().option(symbols.toArray(new String[0])));
         symbolMiniTickerEvent.setLow(new BigDecimal(Math.random()));
         symbolMiniTickerEvent.setHigh(new BigDecimal(Math.random()));

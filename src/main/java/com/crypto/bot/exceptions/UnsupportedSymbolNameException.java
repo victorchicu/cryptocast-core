@@ -1,9 +1,9 @@
 package com.crypto.bot.exceptions;
 
-public class UnsupportedSymbolException extends RuntimeException {
+public class UnsupportedSymbolNameException extends RuntimeException {
     private final String symbol;
 
-    public UnsupportedSymbolException(String symbol) {
+    public UnsupportedSymbolNameException(String symbol) {
         this.symbol = symbol;
     }
 

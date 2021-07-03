@@ -11,6 +11,7 @@ public class UpdateToEntityConverter implements Converter<Update, UpdateEntity> 
     public UpdateEntity convert(Update source) {
         return new UpdateEntity()
                 .setId(source.message().messageId())
+                .setText(source.message().text())
                 .setChatId(source.message().chat().id());
     }
 }

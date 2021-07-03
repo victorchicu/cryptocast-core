@@ -12,6 +12,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.convert.ConversionService;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 @SpringBootApplication
@@ -38,16 +40,24 @@ public class CryptoBotApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        Instant greater = Instant.ofEpochMilli(1625342205237L);
+        Instant less = Instant.ofEpochMilli(1625342180939L);
+
+        Duration p = Duration.between(greater, less);
+
+        String z = p.toString();
+        System.out.println(z);
+
         telegramBotService.setUpdateListener((List<Update> list) -> {
             list.forEach((Update update) -> {
                 try {
                     String command = update.message().text();
                     int exitCode = picoCliService.execute(command, update);
-                    UpdateEntity updateEntity = conversionService.convert(update, UpdateEntity.class);
-                    telegramBotService.saveMessage(updateEntity);
                     LOG.info("Input command: {} | Execution result: {}", command, exitCode);
                 } catch (Exception e) {
                     LOG.error(e.getMessage(), e);
+                } finally {
+                    telegramBotService.saveMessage(update);
                 }
             });
             return UpdatesListener.CONFIRMED_UPDATES_ALL;

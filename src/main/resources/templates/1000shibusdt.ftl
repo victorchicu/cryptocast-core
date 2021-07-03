@@ -1,15 +1,3 @@
-<b>${symbol}</b>
-<u>Open</u> ${NumberUtils.divide(open, 1000)}
-<u>High</u> ${NumberUtils.divide(high, 1000)}
-<u>Low</u> ${NumberUtils.divide(low, 1000)}
-<u>Close</u> ${NumberUtils.divide(lastPrice, 1000)}
+<#include "modules/ohlc_statistics_24h_shib.ftl">
 
-<b>OHLC statistics (24h)</b>
-<#if (priceChange > 0)>
-    <#lt>${symbol} is up ${NumberUtils.toPlainString(priceChangePercent)}% to ${NumberUtils.divide(priceChange, 1000)}
-<#else>
-    <#lt>${symbol} is down ${NumberUtils.toPlainString(priceChangePercent)}% to ${NumberUtils.divide(priceChange, 1000)}
-</#if>
-
-<b>Stock market trading hours</b>
-${(openTime)?number_to_date} to ${(closeTime)?number_to_date}
+<#include "modules/time_of_recent_update.ftl">

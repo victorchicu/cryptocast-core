@@ -1,6 +1,6 @@
 package com.crypto.bot.binance.api;
 
-import com.crypto.bot.binance.configs.BinanceApiConstants;
+import com.crypto.bot.binance.api.configs.BinanceApiConstants;
 import com.crypto.bot.binance.api.exceptions.BinanceApiException;
 import java.net.URL;
 

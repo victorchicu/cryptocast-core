@@ -37,6 +37,6 @@ public class TrackSymbolCommandIT extends BaseTest {
                 "    }\n" +
                 "}";
         Update update = gson.fromJson(jsonString, Update.class);
-        trackSymbolCommand.subscribeToSymbolMiniTickerEvents(update, Collections.emptyList());
+        trackSymbolCommand.subscribeToSymbolTickerEvents(update, Collections.emptyList());
     }
 }

@@ -16,6 +16,7 @@ import com.pengrad.telegrambot.response.BaseResponse;
 import com.pengrad.telegrambot.response.SendResponse;
 import okhttp3.OkHttpClient;
 import org.apache.commons.collections4.IterableUtils;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,19 +25,26 @@ import java.util.stream.Collectors;
 @Service
 public class TelegramBotServiceImpl implements TelegramBotService {
     private final TelegramBot telegramBot;
+    private final ConversionService conversionService;
     private final TelegramBotRepository telegramBotRepository;
 
-    public TelegramBotServiceImpl(TelegramProperties telegramProperties, TelegramBotRepository telegramBotRepository) {
+    public TelegramBotServiceImpl(
+            ConversionService conversionService,
+            TelegramProperties telegramProperties,
+            TelegramBotRepository telegramBotRepository
+    ) {
         this.telegramBot = new TelegramBot.Builder(telegramProperties.getToken())
                 .debug()
                 .okHttpClient(new OkHttpClient())
                 .build();
+        this.conversionService = conversionService;
         this.telegramBotRepository = telegramBotRepository;
     }
 
     @Override
-    public UpdateEntity saveMessage(UpdateEntity updateEntity) {
-        return telegramBotRepository.save(updateEntity);
+    public UpdateEntity saveMessage(Update update) {
+        UpdateEntity entity = conversionService.convert(update, UpdateEntity.class);
+        return telegramBotRepository.save(entity);
     }
 
     @Override

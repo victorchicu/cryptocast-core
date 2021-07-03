@@ -1,6 +1,6 @@
 package com.crypto.bot.binance.api.domain.trade;
 
-import com.crypto.bot.binance.configs.BinanceApiConstants;
+import com.crypto.bot.binance.api.configs.BinanceApiConstants;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
