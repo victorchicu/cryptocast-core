@@ -1,13 +1,13 @@
 package com.crypto.bot.telegram.services.impl;
 
 import com.crypto.bot.telegram.configs.TelegramProperties;
-import com.crypto.bot.telegram.entity.UpdateEntity;
+import com.crypto.bot.telegram.entity.MessageEntity;
 import com.crypto.bot.telegram.repository.TelegramBotRepository;
 import com.crypto.bot.telegram.services.TelegramBotService;
 import com.pengrad.telegrambot.ExceptionHandler;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
-import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.DeleteMessage;
 import com.pengrad.telegrambot.request.EditMessageText;
@@ -43,12 +43,6 @@ public class TelegramBotServiceImpl implements TelegramBotService {
     }
 
     @Override
-    public UpdateEntity saveMessage(Update update) {
-        UpdateEntity entity = conversionService.convert(update, UpdateEntity.class);
-        return telegramBotRepository.save(entity);
-    }
-
-    @Override
     public void setUpdateListener(UpdatesListener updatesListener, ExceptionHandler exceptionHandler) {
         telegramBot.setUpdatesListener(updatesListener, exceptionHandler);
     }
@@ -61,23 +55,23 @@ public class TelegramBotServiceImpl implements TelegramBotService {
     @Override
     public void deleteAllMessages(Long chatId) {
         List<Integer> list = IterableUtils.toList(telegramBotRepository.findAllByChatId(chatId)).stream()
-                .filter(updateEntity -> {
-                    BaseResponse response = deleteMessage(updateEntity.getChatId(), updateEntity.getId());
+                .filter((MessageEntity messageEntity) -> {
+                    BaseResponse response = deleteMessage(messageEntity.getChatId(), messageEntity.getId());
                     return response.isOk();
                 })
-                .map(UpdateEntity::getId)
+                .map(MessageEntity::getId)
                 .collect(Collectors.toList());
         telegramBotRepository.deleteAllById(list);
     }
 
     @Override
     public SendResponse sendMessage(Long chatId, String text) {
-        return telegramBot.execute(new SendMessage(chatId, text));
+        return call(() -> telegramBot.execute(new SendMessage(chatId, text)));
     }
 
     @Override
     public SendResponse sendMessage(Long chatId, String text, ParseMode parseMode) {
-        return telegramBot.execute(new SendMessage(chatId, text).parseMode(parseMode));
+        return call(() -> telegramBot.execute(new SendMessage(chatId, text).parseMode(parseMode)));
     }
 
     @Override
@@ -95,11 +89,23 @@ public class TelegramBotServiceImpl implements TelegramBotService {
         return telegramBot.execute(new DeleteMessage(chatId, messageId));
     }
 
-    private BaseResponse invoke(Callable<BaseResponse> callable) {
+    @Override
+    public MessageEntity saveMessage(Message message) {
+        MessageEntity messageEntity = conversionService.convert(message, MessageEntity.class);
+        return telegramBotRepository.save(messageEntity);
+    }
+
+
+    private SendResponse call(Callable<SendResponse> callable) {
+        SendResponse response = null;
         try {
-            return callable.call();
+            response = callable.call();
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
         }
+        if (response != null && response.isOk()) {
+            saveMessage(response.message());
+        }
+        return response;
     }
 }

@@ -3,8 +3,10 @@ package com.crypto.bot.telegram.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "updates")
-public class UpdateEntity {
+@Document(collection = MessageEntity.COLLECTION_NAME)
+public class MessageEntity {
+    public static final String COLLECTION_NAME = "messages";
+
     @Id
     private Integer id;
     private Long chatId;
@@ -14,7 +16,7 @@ public class UpdateEntity {
         return id;
     }
 
-    public UpdateEntity setId(Integer id) {
+    public MessageEntity setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -23,7 +25,7 @@ public class UpdateEntity {
         return chatId;
     }
 
-    public UpdateEntity setChatId(Long chatId) {
+    public MessageEntity setChatId(Long chatId) {
         this.chatId = chatId;
         return this;
     }
@@ -32,7 +34,7 @@ public class UpdateEntity {
         return text;
     }
 
-    public UpdateEntity setText(String text) {
+    public MessageEntity setText(String text) {
         this.text = text;
         return this;
     }

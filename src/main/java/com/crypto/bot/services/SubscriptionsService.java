@@ -18,9 +18,12 @@ public interface SubscriptionsService {
 
     SubscriptionEntity saveSubscription(SubscriptionEntity subscription);
 
+    List<SubscriptionEntity> findSubscriptions(Integer participantId);
+
     List<SubscriptionEntity> findSubscriptions(Integer participantId, List<String> symbolNames);
 
     List<SubscriptionEntity> findAllSubscriptions();
 
     Optional<SubscriptionEntity> findSubscription(Integer participantId, String symbolName);
+
 }

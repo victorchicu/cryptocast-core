@@ -2,6 +2,7 @@ package com.crypto.bot.picocli.commands.specific;
 
 import com.crypto.bot.binance.services.BinanceService;
 import com.crypto.bot.picocli.commands.BaseCommand;
+import com.crypto.bot.repository.entity.SubscriptionEntity;
 import com.crypto.bot.services.SubscriptionsService;
 import com.crypto.bot.telegram.services.TelegramBotService;
 import com.pengrad.telegrambot.model.Update;
@@ -10,13 +11,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
+import java.util.List;
+
 @Component
 @CommandLine.Command(
-        name = "clear",
-        description = "Clear chat"
+        name = "stop",
+        description = "Stop bot"
 )
-public class ClearCommand extends BaseCommand {
-    private static final Logger LOG = LoggerFactory.getLogger(ClearCommand.class);
+public class StopCommand extends BaseCommand {
+    private static final Logger LOG = LoggerFactory.getLogger(StopCommand.class);
 
     private final BinanceService binanceService;
     private final TelegramBotService telegramBotService;
@@ -25,7 +28,7 @@ public class ClearCommand extends BaseCommand {
     @CommandLine.ParentCommand
     public BotCommand botCommand;
 
-    public ClearCommand(
+    public StopCommand(
             BinanceService binanceService,
             TelegramBotService telegramBotService,
             SubscriptionsService subscriptionsService
@@ -38,7 +41,8 @@ public class ClearCommand extends BaseCommand {
     @Override
     public void run() {
         Update update = botCommand.getUpdate();
-        binanceService.unsubscribe(update.message().from().id());
+        List<SubscriptionEntity> subscriptions = subscriptionsService.findSubscriptions(update.message().from().id());
+        subscriptions.forEach(entity -> binanceService.unsubscribe(entity.getParticipantId(), entity.getSymbolName()));
         telegramBotService.deleteAllMessages(update.message().chat().id());
         subscriptionsService.deleteAllSubscriptions(update.message().from().id());
     }

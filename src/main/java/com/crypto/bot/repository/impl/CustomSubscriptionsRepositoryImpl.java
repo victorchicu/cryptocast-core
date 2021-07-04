@@ -41,6 +41,19 @@ public class CustomSubscriptionsRepositoryImpl implements CustomSubscriptionsRep
     }
 
     @Override
+    public List<SubscriptionEntity> findSubscriptions(Integer participantId) {
+        Query query = Query.query(
+                Criteria.where(SubscriptionEntity.Field.PARTICIPANT_ID)
+                        .is(participantId)
+        );
+        return mongoOperations.find(
+                query,
+                SubscriptionEntity.class,
+                SubscriptionEntity.COLLECTION_NAME
+        );
+    }
+
+    @Override
     public List<SubscriptionEntity> findSubscriptions(Integer participantId, List<String> symbolNames) {
         Query query = Query.query(
                 Criteria.where(SubscriptionEntity.Field.PARTICIPANT_ID)

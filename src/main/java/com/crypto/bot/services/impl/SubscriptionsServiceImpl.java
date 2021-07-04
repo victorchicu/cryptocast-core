@@ -45,6 +45,11 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
     }
 
     @Override
+    public List<SubscriptionEntity> findSubscriptions(Integer participantId) {
+        return subscriptionsRepository.findSubscriptions(participantId);
+    }
+
+    @Override
     public List<SubscriptionEntity> findSubscriptions(Integer participantId, List<String> symbolNames) {
         return subscriptionsRepository.findSubscriptions(participantId, symbolNames);
     }

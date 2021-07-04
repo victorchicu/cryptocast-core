@@ -1,7 +1,6 @@
 package com.crypto.bot;
 
 import com.crypto.bot.picocli.services.PicoCliService;
-import com.crypto.bot.telegram.entity.UpdateEntity;
 import com.crypto.bot.telegram.services.TelegramBotService;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
@@ -12,8 +11,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.convert.ConversionService;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.List;
 
 @SpringBootApplication
@@ -43,7 +40,7 @@ public class CryptoBotApplication implements CommandLineRunner {
         telegramBotService.setUpdateListener((List<Update> list) -> {
             list.forEach((Update update) -> {
                 try {
-                    telegramBotService.saveMessage(update);
+                    telegramBotService.saveMessage(update.message());
                     int exitCode = picoCliService.execute(update.message().text(), update);
                     LOG.info("Bot input command: {} | Execution result: {}", update.message().text(), exitCode);
                 } catch (Exception e) {

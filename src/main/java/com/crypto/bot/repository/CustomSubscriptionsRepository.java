@@ -13,6 +13,8 @@ public interface CustomSubscriptionsRepository {
 
     DeleteResult removeSubscriptions(Integer participantId);
 
+    List<SubscriptionEntity> findSubscriptions(Integer participantId);
+
     List<SubscriptionEntity> findSubscriptions(Integer participantId, List<String> symbolNames);
 
     Optional<SubscriptionEntity> findSubscription(Integer participantId, String symbolName);
