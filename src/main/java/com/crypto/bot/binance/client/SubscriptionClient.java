@@ -45,8 +45,9 @@ public interface SubscriptionClient {
      * Unsubscribe specific socket
      *
      * @param participantId
+     * @param symbolName
      */
-    void unsubscribe(Integer participantId);
+    void unsubscribe(Integer participantId, String symbolName);
 
     /**
      * Unsubscribe all subscription.

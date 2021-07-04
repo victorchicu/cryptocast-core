@@ -14,43 +14,41 @@ import com.crypto.bot.binance.client.domain.event.OrderBookEvent;
 import com.crypto.bot.binance.client.domain.event.SymbolBookTickerEvent;
 import com.crypto.bot.binance.client.domain.event.SymbolMiniTickerEvent;
 import com.crypto.bot.binance.client.domain.event.SymbolTickerEvent;
+import reactor.util.function.Tuple2;
+import reactor.util.function.Tuples;
 
 import java.util.*;
 
 public class WebSocketStreamClientImpl implements SubscriptionClient {
-
     private final SubscriptionOptions options;
-    private WebSocketWatchDog watchDog;
-
     private final WebsocketRequestImpl requestImpl;
-
-    private final Map<Integer, WebSocketConnection> connections = new LinkedHashMap<>();
+    private final Map<Tuple2<Integer, String>, WebSocketConnection> connections = new LinkedHashMap<>();
+    private WebSocketWatchDog watchDog;
 
     WebSocketStreamClientImpl(SubscriptionOptions options) {
         this.watchDog = null;
         this.options = Objects.requireNonNull(options);
-
         this.requestImpl = new WebsocketRequestImpl();
     }
 
-    private <T> void createConnection(Integer participantId, WebsocketRequest<T> request, boolean autoClose) {
+    private <T> void createConnection(Integer participantId, String symbolName, WebsocketRequest<T> request, boolean autoClose) {
         if (watchDog == null) {
             watchDog = new WebSocketWatchDog(options);
         }
         WebSocketConnection connection = new WebSocketConnection(request, watchDog, autoClose);
         if (autoClose == false) {
-            connections.put(participantId, connection);
+            connections.put(Tuples.of(participantId, symbolName), connection);
         }
         connection.connect();
     }
 
-    private <T> void createConnection(Integer participantId, WebsocketRequest<T> request) {
-        createConnection(participantId, request, false);
+    private <T> void createConnection(Integer participantId, String symbolName, WebsocketRequest<T> request) {
+        createConnection(participantId, symbolName, request, false);
     }
 
     @Override
-    public void unsubscribe(Integer participantId) {
-        WebSocketConnection connection = connections.remove(participantId);
+    public void unsubscribe(Integer participantId, String symbolName) {
+        WebSocketConnection connection = connections.remove(Tuples.of(participantId, symbolName));
         if (connection != null) {
             watchDog.onClosedNormally(connection);
             connection.close();
@@ -65,51 +63,53 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
         }
         connections.clear();
     }
-    
+
     @Override
     public void subscribeAggregateTradeEvent(
             Integer participantId,
-            String symbol,
+            String symbolName,
             SubscriptionListener<AggregateTradeEvent> subscriptionListener,
             SubscriptionErrorHandler errorHandler
     ) {
-        createConnection(participantId, requestImpl.subscribeAggregateTradeEvent(symbol, subscriptionListener, errorHandler));
+        createConnection(participantId, symbolName, requestImpl.subscribeAggregateTradeEvent(symbolName, subscriptionListener, errorHandler));
     }
 
     @Override
     public void subscribeMarkPriceEvent(
             Integer participantId,
-            String symbol,
+            String symbolName,
             SubscriptionListener<MarkPriceEvent> subscriptionListener,
             SubscriptionErrorHandler errorHandler
     ) {
-        createConnection(participantId, requestImpl.subscribeMarkPriceEvent(symbol, subscriptionListener, errorHandler));
+        createConnection(participantId, symbolName, requestImpl.subscribeMarkPriceEvent(symbolName, subscriptionListener, errorHandler));
     }
 
     @Override
     public void subscribeCandlestickEvent(
             Integer participantId,
-            String symbol,
+            String symbolName,
             CandlestickInterval interval,
             SubscriptionListener<CandlestickEvent> subscriptionListener,
             SubscriptionErrorHandler errorHandler
     ) {
         createConnection(
                 participantId,
-                requestImpl.subscribeCandlestickEvent(symbol, interval, subscriptionListener, errorHandler)
+                symbolName,
+                requestImpl.subscribeCandlestickEvent(symbolName, interval, subscriptionListener, errorHandler)
         );
     }
 
     @Override
     public void subscribeSymbolMiniTickerEvent(
             Integer participantId,
-            String symbol,
+            String symbolName,
             SubscriptionListener<SymbolMiniTickerEvent> subscriptionListener,
             SubscriptionErrorHandler errorHandler
     ) {
         createConnection(
                 participantId,
-                requestImpl.subscribeSymbolMiniTickerEvent(symbol, subscriptionListener, errorHandler)
+                symbolName,
+                requestImpl.subscribeSymbolMiniTickerEvent(symbolName, subscriptionListener, errorHandler)
         );
     }
 
@@ -121,6 +121,7 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
     ) {
         createConnection(
                 participantId,
+                null,
                 requestImpl.subscribeAllMiniTickerEvent(subscriptionListener, errorHandler)
         );
     }
@@ -128,13 +129,14 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
     @Override
     public void subscribeSymbolTickerEvent(
             Integer participantId,
-            String symbol,
+            String symbolName,
             SubscriptionListener<SymbolTickerEvent> subscriptionListener,
             SubscriptionErrorHandler errorHandler
     ) {
         createConnection(
                 participantId,
-                requestImpl.subscribeSymbolTickerEvent(symbol, subscriptionListener, errorHandler)
+                symbolName,
+                requestImpl.subscribeSymbolTickerEvent(symbolName, subscriptionListener, errorHandler)
         );
     }
 
@@ -146,6 +148,7 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
     ) {
         createConnection(
                 participantId,
+                null,
                 requestImpl.subscribeAllTickerEvent(subscriptionListener, errorHandler)
         );
     }
@@ -153,13 +156,14 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
     @Override
     public void subscribeSymbolBookTickerEvent(
             Integer participantId,
-            String symbol,
+            String symbolName,
             SubscriptionListener<SymbolBookTickerEvent> subscriptionListener,
             SubscriptionErrorHandler errorHandler
     ) {
         createConnection(
                 participantId,
-                requestImpl.subscribeSymbolBookTickerEvent(symbol, subscriptionListener, errorHandler)
+                symbolName,
+                requestImpl.subscribeSymbolBookTickerEvent(symbolName, subscriptionListener, errorHandler)
         );
     }
 
@@ -171,6 +175,7 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
     ) {
         createConnection(
                 participantId,
+                null,
                 requestImpl.subscribeAllBookTickerEvent(subscriptionListener, errorHandler)
         );
     }
@@ -178,13 +183,14 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
     @Override
     public void subscribeSymbolLiquidationOrderEvent(
             Integer participantId,
-            String symbol,
+            String symbolName,
             SubscriptionListener<LiquidationOrderEvent> subscriptionListener,
             SubscriptionErrorHandler errorHandler
     ) {
         createConnection(
                 participantId,
-                requestImpl.subscribeSymbolLiquidationOrderEvent(symbol, subscriptionListener, errorHandler)
+                symbolName,
+                requestImpl.subscribeSymbolLiquidationOrderEvent(symbolName, subscriptionListener, errorHandler)
         );
     }
 
@@ -196,6 +202,7 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
     ) {
         createConnection(
                 participantId,
+                null,
                 requestImpl.subscribeAllLiquidationOrderEvent(subscriptionListener, errorHandler)
         );
     }
@@ -203,27 +210,29 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
     @Override
     public void subscribeBookDepthEvent(
             Integer participantId,
-            String symbol,
+            String symbolName,
             Integer limit,
             SubscriptionListener<OrderBookEvent> subscriptionListener,
             SubscriptionErrorHandler errorHandler
     ) {
         createConnection(
                 participantId,
-                requestImpl.subscribeBookDepthEvent(symbol, limit, subscriptionListener, errorHandler)
+                symbolName,
+                requestImpl.subscribeBookDepthEvent(symbolName, limit, subscriptionListener, errorHandler)
         );
     }
 
     @Override
     public void subscribeDiffDepthEvent(
             Integer participantId,
-            String symbol,
+            String symbolName,
             SubscriptionListener<OrderBookEvent> subscriptionListener,
             SubscriptionErrorHandler errorHandler
     ) {
         createConnection(
                 participantId,
-                requestImpl.subscribeDiffDepthEvent(symbol, subscriptionListener, errorHandler)
+                symbolName,
+                requestImpl.subscribeDiffDepthEvent(symbolName, subscriptionListener, errorHandler)
         );
     }
 
@@ -236,6 +245,7 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
     ) {
         createConnection(
                 participantId,
+                null,
                 requestImpl.subscribeUserDataEvent(listenKey, subscriptionListener, errorHandler)
         );
     }

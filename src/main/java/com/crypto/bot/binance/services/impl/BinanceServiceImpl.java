@@ -27,8 +27,8 @@ public class BinanceServiceImpl implements BinanceService {
     }
 
     @Override
-    public void unsubscribe(Integer participantId) {
-        subscriptionClient.unsubscribe(participantId);
+    public void unsubscribe(Integer participantId, String symbolName) {
+        subscriptionClient.unsubscribe(participantId, symbolName);
     }
 
     @Override
