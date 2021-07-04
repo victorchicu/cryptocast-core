@@ -239,8 +239,10 @@ server:
 spring:
   data:
     mongodb:
-      database: cryptostrophe_bot
       host: 46.101.21.158
       port: 27017
+      username: admin
+      password: QAZwsx123
+      database: cryptostrophe_bot
 telegram:
   token: 1870562257:AAGjZijm2KTSI92kOEDaRDrY9sL7eP_6Gso
