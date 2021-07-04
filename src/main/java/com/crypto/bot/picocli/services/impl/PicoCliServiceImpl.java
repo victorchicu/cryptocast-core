@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 @Service
 public class PicoCliServiceImpl implements PicoCliService {
     private static final String SPLIT_CHARACTER = " ";
+    private static final String BOT_GROUP_SUFFIX = "@cryptostrophebot";
 
     private final ApplicationContext context;
     private final TelegramBotService telegramBotService;
@@ -44,9 +45,8 @@ public class PicoCliServiceImpl implements PicoCliService {
     }
 
     private String[] toArgs(String command) {
-        if (command.startsWith("/")) {
-            command = command.replaceFirst("/", "");
-        }
+        command = command.replaceFirst("/", "");
+        command = command.replace(BOT_GROUP_SUFFIX, "");
         String[] args = command.split(SPLIT_CHARACTER);
         if (command.startsWith("bot")) {
             Stream<String> stream = Arrays.stream(command.split(SPLIT_CHARACTER));
