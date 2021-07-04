@@ -29,7 +29,7 @@ public class PicoCliServiceImpl implements PicoCliService {
     @Override
     public int execute(String command, Update... updates) {
         Update update = updates.length > 0 ? updates[0] : null;
-        String[] args = toArgs(command);
+        String[] args = toArgs(command.toLowerCase());
         CommandLine commandLine = new CommandLine(new BotCommand(update, telegramBotService), new PicocliSpringFactory(context));
         commandLine.setExecutionStrategy(new CommandLine.RunLast());
         return commandLine.execute(args);
