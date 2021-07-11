@@ -1,6 +1,6 @@
 package com.crypto.bot.picocli.commands.specific;
 
-import com.crypto.bot.picocli.commands.BaseCommand;
+import com.crypto.bot.picocli.commands.Command;
 import com.crypto.bot.telegram.services.TelegramBotService;
 import com.pengrad.telegrambot.model.Update;
 import picocli.CommandLine;
@@ -14,7 +14,7 @@ import picocli.CommandLine;
                 TrackSymbolCommand.class
         }
 )
-public class BotCommand extends BaseCommand {
+public class BotCommand extends Command {
     private final Update update;
     private final TelegramBotService telegramBotService;
 

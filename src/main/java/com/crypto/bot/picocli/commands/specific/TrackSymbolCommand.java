@@ -4,7 +4,7 @@ import com.crypto.bot.binance.client.domain.event.SymbolTickerEvent;
 import com.crypto.bot.binance.configs.BinanceProperties;
 import com.crypto.bot.binance.services.BinanceService;
 import com.crypto.bot.freemarker.services.FreeMarkerTemplateService;
-import com.crypto.bot.picocli.commands.BaseCommand;
+import com.crypto.bot.picocli.commands.Command;
 import com.crypto.bot.repository.entity.SubscriptionEntity;
 import com.crypto.bot.services.SubscriptionsService;
 import com.crypto.bot.telegram.services.TelegramBotService;
@@ -30,7 +30,7 @@ import static org.apache.commons.collections4.IteratorUtils.forEach;
         name = "track",
         description = "24hr rolling window mini-ticker statistics for all symbols that changed"
 )
-public class TrackSymbolCommand extends BaseCommand {
+public class TrackSymbolCommand extends Command {
     private static final Logger LOG = LoggerFactory.getLogger(TrackSymbolCommand.class);
 
     private final BinanceService binanceService;
@@ -73,7 +73,7 @@ public class TrackSymbolCommand extends BaseCommand {
             String usageHelp = usage(this);
             telegramBotService.sendMessage(update.message().chat().id(), usageHelp);
         } else {
-            List<String> symbolNames = toBinanceFormatSymbolNames();
+            List<String> symbolNames = toSymbolNames();
             invalidateSubscriptions(update, symbolNames);
             subscribeToSymbolTickerEvents(update, symbolNames);
         }
@@ -102,7 +102,7 @@ public class TrackSymbolCommand extends BaseCommand {
             SubscriptionEntity subscription = optional.get();
             long tumblingTimeWindow = (symbolTickerEvent.getEventTime() - 5000);
             if (tumblingTimeWindow > subscription.getUpdatedAt()) {
-                String templateText = renderTemplate(symbolName, symbolTickerEvent);
+                String templateText = renderTemplate(symbolTickerEvent);
                 telegramBotService.updateMessage(
                         subscription.getChatId(),
                         subscription.getMessageId(),
@@ -122,7 +122,6 @@ public class TrackSymbolCommand extends BaseCommand {
             }
         } else {
             String templateText = renderTemplate(
-                    symbolName,
                     symbolTickerEvent
             );
 
@@ -160,11 +159,11 @@ public class TrackSymbolCommand extends BaseCommand {
         }
     }
 
-    private <T> String renderTemplate(String symbolName, T eventObject) {
-        return freeMarkerTemplateService.render(symbolName + ".ftl", eventObject);
+    private <T> String renderTemplate(T eventObject) {
+        return freeMarkerTemplateService.render("index.ftl", eventObject);
     }
 
-    private List<String> toBinanceFormatSymbolNames() {
+    private List<String> toSymbolNames() {
         return symbols.stream()
                 .map(source -> conversionService.convert(source, String.class))
                 .collect(Collectors.toList());

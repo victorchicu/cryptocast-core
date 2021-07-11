@@ -1,7 +1,7 @@
 package com.crypto.bot.picocli.commands.specific;
 
 import com.crypto.bot.binance.services.BinanceService;
-import com.crypto.bot.picocli.commands.BaseCommand;
+import com.crypto.bot.picocli.commands.Command;
 import com.crypto.bot.repository.entity.SubscriptionEntity;
 import com.crypto.bot.services.SubscriptionsService;
 import com.crypto.bot.telegram.services.TelegramBotService;
@@ -18,7 +18,7 @@ import java.util.List;
         name = "stop",
         description = "Stop bot"
 )
-public class StopCommand extends BaseCommand {
+public class StopCommand extends Command {
     private static final Logger LOG = LoggerFactory.getLogger(StopCommand.class);
 
     private final BinanceService binanceService;
