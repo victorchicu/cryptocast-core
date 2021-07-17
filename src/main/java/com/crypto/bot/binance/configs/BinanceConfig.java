@@ -1,9 +1,10 @@
 package com.crypto.bot.binance.configs;
 
-import com.crypto.bot.binance.client.RequestOptions;
 import com.crypto.bot.binance.client.SubscriptionClient;
 import com.crypto.bot.binance.client.SubscriptionOptions;
 import com.crypto.bot.binance.client.SyncRequestClient;
+import com.crypto.bot.stubs.SubscriptionClientStub;
+import com.crypto.bot.stubs.SyncRequestClientStub;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,18 +12,14 @@ import org.springframework.context.annotation.Configuration;
 public class BinanceConfig {
     @Bean
     public SyncRequestClient syncRequestClient(BinanceProperties binanceProperties) {
-        return SyncRequestClient.create(
-                binanceProperties.getApiKey(),
-                binanceProperties.getSecretKey(),
-                new RequestOptions()
-        );
+        return new SyncRequestClientStub();
+//        return SyncRequestClient.create(binanceProperties.getApiKey(), binanceProperties.getSecretKey(), new RequestOptions());
     }
 
     @Bean
     public SubscriptionClient subscriptionClient(BinanceProperties binanceProperties) {
-        return SubscriptionClient.create(
-                createSubscriptionOptions(binanceProperties)
-        );
+        return new SubscriptionClientStub();
+//        return SubscriptionClient.create(createSubscriptionOptions(binanceProperties));
     }
 
 
