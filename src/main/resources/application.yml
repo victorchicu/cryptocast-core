@@ -1,3 +1,31 @@
+logging:
+  level:
+    root: info
+
+server:
+  port: 8081
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+#      host: 46.101.21.158
+      port: 27017
+#      username: admin
+#      password: QAZwsx123
+      database: cryptostrophe_bot
+
+telegram:
+  token: 1870562257:AAGjZijm2KTSI92kOEDaRDrY9sL7eP_6Gso
+
+rabbitmq:
+  relayHost: localhost
+  relayPort: 61613
+
+notification:
+  mappings:
+    greetings: /topic/greetings
+
 binance:
   apiKey: OIObqAkXmt3COxMZvOmlL802zJTj2o0ImlWpMUbsCnAVhLguYm9bVoUIwrNJYUK5
   secretKey: ep3xSkW6VDuwjeqyC3oh5QvPpkWofucpvbxQPZLfqaIEroaFPtARQdoEGsnZId8B
@@ -231,18 +259,3 @@ binance:
     zrx:
       name: zrxusdt
   url: wss://api.binance.com/
-logging:
-  level:
-    root: info
-server:
-  port: 8080
-spring:
-  data:
-    mongodb:
-      host: 46.101.21.158
-      port: 27017
-      username: admin
-      password: QAZwsx123
-      database: cryptostrophe_bot
-telegram:
-  token: 1870562257:AAGjZijm2KTSI92kOEDaRDrY9sL7eP_6Gso
