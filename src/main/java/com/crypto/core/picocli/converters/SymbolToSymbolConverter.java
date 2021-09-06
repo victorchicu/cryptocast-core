@@ -17,7 +17,7 @@ public class SymbolToSymbolConverter implements Converter<String, String> {
 
     @Override
     public String convert(String source) {
-        return Optional.ofNullable(binanceProperties.getMappings().get(source))
+        return Optional.ofNullable(binanceProperties.getCoinMappings().get(source))
                 .map(mappingsConfig -> mappingsConfig.getName())
                 .orElseThrow(() -> new UnsupportedSymbolNameException(source));
     }
