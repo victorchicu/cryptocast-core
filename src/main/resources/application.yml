@@ -13,7 +13,7 @@ spring:
       database: crypto_core
 
 telegram:
-  token: 1870562257:AAGjZijm2KTSI92kOEDaRDrY9sL7eP_6Gso
+  token: telegram_token
 
 rabbitmq:
   relayHost: localhost
@@ -25,8 +25,8 @@ notification:
 
 binance:
   url: wss://api.binance.com/
-  apiKey: OIObqAkXmt3COxMZvOmlL802zJTj2o0ImlWpMUbsCnAVhLguYm9bVoUIwrNJYUK5
-  secretKey: ep3xSkW6VDuwjeqyC3oh5QvPpkWofucpvbxQPZLfqaIEroaFPtARQdoEGsnZId8B
+  apiKey: binance_api_key
+  secretKey: binance_secret_key
   coinMappings:
     1inch:
       name: 1inchusdt
