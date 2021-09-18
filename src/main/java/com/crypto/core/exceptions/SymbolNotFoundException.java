@@ -1,9 +1,9 @@
 package com.crypto.core.exceptions;
 
-public class UnsupportedSymbolNameException extends RuntimeException {
+public class SymbolNotFoundException extends RuntimeException {
     private final String symbol;
 
-    public UnsupportedSymbolNameException(String symbol) {
+    public SymbolNotFoundException(String symbol) {
         this.symbol = symbol;
     }
 

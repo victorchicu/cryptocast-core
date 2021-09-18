@@ -1,4 +1,4 @@
-package com.crypto.core.stubs;
+package com.crypto.core.utils.stubs;
 
 import com.crypto.core.binance.client.SubscriptionClient;
 import com.crypto.core.binance.client.SubscriptionErrorHandler;

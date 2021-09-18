@@ -1,4 +1,4 @@
-package com.crypto.core.stubs;
+package com.crypto.core.utils.stubs;
 
 import com.alibaba.fastjson.JSONObject;
 import com.crypto.core.binance.client.SyncRequestClient;

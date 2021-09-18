@@ -28,8 +28,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-//        config.setApplicationDestinationPrefixes(APPLICATION_DESTINATION_PREFIXES)
-//                .enableSimpleBroker(STOMP_BROKER_DESTINATION_PREFIXES);
         config.setApplicationDestinationPrefixes(APPLICATION_DESTINATION_PREFIXES)
                 .enableStompBrokerRelay(STOMP_BROKER_DESTINATION_PREFIXES)
                 .setRelayHost(relayHost)

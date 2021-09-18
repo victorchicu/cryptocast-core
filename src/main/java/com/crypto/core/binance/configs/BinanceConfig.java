@@ -3,8 +3,8 @@ package com.crypto.core.binance.configs;
 import com.crypto.core.binance.client.SubscriptionClient;
 import com.crypto.core.binance.client.SubscriptionOptions;
 import com.crypto.core.binance.client.SyncRequestClient;
-import com.crypto.core.stubs.SubscriptionClientStub;
-import com.crypto.core.stubs.SyncRequestClientStub;
+import com.crypto.core.utils.stubs.SubscriptionClientStub;
+import com.crypto.core.utils.stubs.SyncRequestClientStub;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
