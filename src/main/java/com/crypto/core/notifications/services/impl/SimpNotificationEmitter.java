@@ -1,14 +1,13 @@
 package com.crypto.core.notifications.services.impl;
 
 import com.crypto.core.notifications.configs.NotificationProperties;
-import com.crypto.core.notifications.domain.NotificationRequest;
-import com.crypto.core.notifications.dto.NotificationRequestDto;
 import com.crypto.core.notifications.services.NotificationEmitter;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class SimpNotificationEmitter implements NotificationEmitter {
@@ -27,10 +26,11 @@ public class SimpNotificationEmitter implements NotificationEmitter {
     }
 
     @Override
-    public void emit(NotificationRequest notificationRequest) {
-        Map<String, String> mappings = notificationProperties.getMappings();
-        String destination = mappings.get(notificationRequest.getType());
-        NotificationRequestDto notificationRequestDto = conversionService.convert(notificationRequest, NotificationRequestDto.class);
-        simpMessageSendingOperations.convertAndSend(destination, notificationRequestDto);
+    public <T> void emit(String type, T notification) {
+        Map<String, String> simpMappings = notificationProperties.getSimpMappings();
+        Optional.ofNullable(simpMappings.get(type)).ifPresent(destination -> {
+            Map<String, Object> payload = conversionService.convert(notification, Map.class);
+            simpMessageSendingOperations.convertAndSend(destination, payload);
+        });
     }
 }

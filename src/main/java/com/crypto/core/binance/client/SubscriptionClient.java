@@ -44,10 +44,10 @@ public interface SubscriptionClient {
     /**
      * Unsubscribe specific socket
      *
-     * @param participantId
+     * @param requesterId
      * @param symbolName
      */
-    void unsubscribe(Integer participantId, String symbolName);
+    void unsubscribe(String requesterId, String symbolName);
 
     /**
      * Unsubscribe all subscription.
@@ -58,79 +58,85 @@ public interface SubscriptionClient {
      * Subscribe aggregate trade event. If the aggregate trade is updated,
      * server will send the data to client and onReceive in callback will be called.
      *
-     * @param symbol       The symbol, like "btcusdt".
+     * @param requesterId
+     * @param symbolName
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeAggregateTradeEvent(
-            Integer participantId,
-            String symbol,
-            SubscriptionListener<AggregateTradeEvent> callback, SubscriptionErrorHandler errorHandler
+            String requesterId,
+            String symbolName,
+            SubscriptionListener<AggregateTradeEvent> callback,
+            SubscriptionErrorHandler errorHandler
     );
 
     /**
      * Subscribe mark price event. If the mark price is updated,
      * server will send the data to client and onReceive in callback will be called.
      *
-     * @param symbol       The symbol, like "btcusdt".
+     * @param requesterId
+     * @param symbolName
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeMarkPriceEvent(
-            Integer participantId,
-            String symbol,
-            SubscriptionListener<MarkPriceEvent> callback, SubscriptionErrorHandler errorHandler
+            String requesterId,
+            String symbolName,
+            SubscriptionListener<MarkPriceEvent> callback,
+            SubscriptionErrorHandler errorHandler
     );
 
     /**
      * Subscribe candlestick event. If the candlestick is updated,
      * server will send the data to client and onReceive in callback will be called.
      *
-     * @param symbol       The symbol, like "btcusdt".
+     * @param requesterId
+     * @param symbolName
      * @param interval     The candlestick interval, like "ONE_MINUTE".
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeCandlestickEvent(
-            Integer participantId,
-            String symbol,
+            String requesterId,
+            String symbolName,
             CandlestickInterval interval,
-            SubscriptionListener<CandlestickEvent> callback, SubscriptionErrorHandler errorHandler
+            SubscriptionListener<CandlestickEvent> callback,
+            SubscriptionErrorHandler errorHandler
     );
 
     /**
      * Subscribe individual symbol mini ticker event. If the symbol mini ticker is updated,
      * server will send the data to client and onReceive in callback will be called.
      *
-     * @param symbol       The symbol, like "btcusdt".
+     * @param requesterId
+     * @param symbolName
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeSymbolMiniTickerEvent(
-            Integer participantId,
-            String symbol,
-            SubscriptionListener<SymbolMiniTickerEvent> callback, SubscriptionErrorHandler errorHandler
+            String requesterId,
+            String symbolName,
+            SubscriptionListener<SymbolMiniTickerEvent> callback,
+            SubscriptionErrorHandler errorHandler
     );
 
     /**
      * Subscribe all market mini tickers event. If the mini tickers are updated,
      * server will send the data to client and onReceive in callback will be called.
      *
+     * @param requesterId
+     * @param symbolName
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeAllMiniTickerEvent(
-            Integer participantId,
+            String requesterId,
+            String symbolName,
             SubscriptionListener<List<SymbolMiniTickerEvent>> callback,
             SubscriptionErrorHandler errorHandler
     );
@@ -139,59 +145,62 @@ public interface SubscriptionClient {
      * Subscribe individual symbol ticker event. If the symbol ticker is updated,
      * server will send the data to client and onReceive in callback will be called.
      *
-     * @param symbol       The symbol, like "btcusdt".
+     * @param requesterId
+     * @param symbolName   The symbol, like "btcusdt".
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeSymbolTickerEvent(
-            Integer participantId,
-            String symbol,
-            SubscriptionListener<SymbolTickerEvent> callback, SubscriptionErrorHandler errorHandler
+            String requesterId,
+            String symbolName,
+            SubscriptionListener<SymbolTickerEvent> callback,
+            SubscriptionErrorHandler errorHandler
     );
 
     /**
      * Subscribe all market tickers event. If the tickers are updated,
      * server will send the data to client and onReceive in callback will be called.
      *
+     * @param requesterId
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeAllTickerEvent(
-            Integer participantId,
-            SubscriptionListener<List<SymbolTickerEvent>> callback, SubscriptionErrorHandler errorHandler
+            String requesterId,
+            SubscriptionListener<List<SymbolTickerEvent>> callback,
+            SubscriptionErrorHandler errorHandler
     );
 
     /**
      * Subscribe individual symbol book ticker event. If the symbol book ticker is updated,
      * server will send the data to client and onReceive in callback will be called.
      *
-     * @param symbol       The symbol, like "btcusdt".
+     * @param requesterId
+     * @param symbolName
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeSymbolBookTickerEvent(
-            Integer participantId,
-            String symbol,
-            SubscriptionListener<SymbolBookTickerEvent> callback, SubscriptionErrorHandler errorHandler
+            String requesterId,
+            String symbolName,
+            SubscriptionListener<SymbolBookTickerEvent> callback,
+            SubscriptionErrorHandler errorHandler
     );
 
     /**
      * Subscribe all market book tickers event. If the book tickers are updated,
      * server will send the data to client and onReceive in callback will be called.
      *
+     * @param requesterId
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeAllBookTickerEvent(
-            Integer participantId,
+            String requesterId,
             SubscriptionListener<SymbolBookTickerEvent> callback,
             SubscriptionErrorHandler errorHandler
     );
@@ -200,29 +209,30 @@ public interface SubscriptionClient {
      * Subscribe individual symbol book ticker event. If the symbol book ticker is updated,
      * server will send the data to client and onReceive in callback will be called.
      *
-     * @param symbol       The symbol, like "btcusdt".
+     * @param requesterId
+     * @param symbolName
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeSymbolLiquidationOrderEvent(
-            Integer participantId,
-            String symbol,
-            SubscriptionListener<LiquidationOrderEvent> callback, SubscriptionErrorHandler errorHandler
+            String requesterId,
+            String symbolName,
+            SubscriptionListener<LiquidationOrderEvent> callback,
+            SubscriptionErrorHandler errorHandler
     );
 
     /**
      * Subscribe all market book tickers event. If the book tickers are updated,
      * server will send the data to client and onReceive in callback will be called.
      *
+     * @param requesterId
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeAllLiquidationOrderEvent(
-            Integer participantId,
+            String requesterId,
             SubscriptionListener<LiquidationOrderEvent> callback,
             SubscriptionErrorHandler errorHandler
     );
@@ -231,49 +241,51 @@ public interface SubscriptionClient {
      * Subscribe partial book depth event. If the book depth is updated,
      * server will send the data to client and onReceive in callback will be called.
      *
-     * @param symbol       The symbol, like "btcusdt".
+     * @param requesterId
+     * @param symbolName
      * @param limit        The limit.
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeBookDepthEvent(
-            Integer participantId,
-            String symbol,
+            String requesterId,
+            String symbolName,
             Integer limit,
-            SubscriptionListener<OrderBookEvent> callback, SubscriptionErrorHandler errorHandler
+            SubscriptionListener<OrderBookEvent> callback,
+            SubscriptionErrorHandler errorHandler
     );
 
     /**
      * Subscribe diff depth event. If the book depth is updated,
      * server will send the data to client and onReceive in callback will be called.
      *
-     * @param symbol       The symbol, like "btcusdt".
-     * @param callback     The implementation is required. onReceive will be called
-     *                     if receive server's update.
-     * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
+     * @param participantId
+     * @param symbolName
+     * @param callback      The implementation is required. onReceive will be called
+     *                      if receive server's update.
+     * @param errorHandler  The error handler will be called if subscription failed
      */
     void subscribeDiffDepthEvent(
-            Integer participantId,
-            String symbol,
-            SubscriptionListener<OrderBookEvent> callback, SubscriptionErrorHandler errorHandler
-    );
+            String participantId,
+            String symbolName,
+            SubscriptionListener<OrderBookEvent> callback,
+            SubscriptionErrorHandler errorHandler);
 
     /**
      * Subscribe user data event. If the user data is updated,
      * server will send the data to client and onReceive in callback will be called.
      *
+     * @param requesterId
      * @param listenKey    The listenKey.
      * @param callback     The implementation is required. onReceive will be called
      *                     if receive server's update.
      * @param errorHandler The error handler will be called if subscription failed
-     *                     or error happen between client and Binance server.
      */
     void subscribeUserDataEvent(
-            Integer participantId,
+            String requesterId,
             String listenKey,
-            SubscriptionListener<UserDataUpdateEvent> callback, SubscriptionErrorHandler errorHandler
+            SubscriptionListener<UserDataUpdateEvent> callback,
+            SubscriptionErrorHandler errorHandler
     );
 }

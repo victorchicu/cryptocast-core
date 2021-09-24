@@ -1,9 +1,10 @@
 package com.crypto.core.binance.configs;
 
+import com.crypto.core.binance.client.RequestOptions;
 import com.crypto.core.binance.client.SubscriptionClient;
 import com.crypto.core.binance.client.SubscriptionOptions;
 import com.crypto.core.binance.client.SyncRequestClient;
-import com.crypto.core.utils.stubs.SubscriptionClientStub;
+import com.crypto.core.utils.stubs.WebSocketStreamClientStubImpl;
 import com.crypto.core.utils.stubs.SyncRequestClientStub;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,14 +13,14 @@ import org.springframework.context.annotation.Configuration;
 public class BinanceConfig {
     @Bean
     public SyncRequestClient syncRequestClient(BinanceProperties binanceProperties) {
-        return new SyncRequestClientStub();
-//        return SyncRequestClient.create(binanceProperties.getApiKey(), binanceProperties.getSecretKey(), new RequestOptions());
+//        return new SyncRequestClientStub();
+        return SyncRequestClient.create(binanceProperties.getApiKey(), binanceProperties.getSecretKey(), new RequestOptions());
     }
 
     @Bean
     public SubscriptionClient subscriptionClient(BinanceProperties binanceProperties) {
-        return new SubscriptionClientStub();
-//        return SubscriptionClient.create(createSubscriptionOptions(binanceProperties));
+//        return new WebSocketStreamClientStubImpl();
+        return SubscriptionClient.create(createSubscriptionOptions(binanceProperties));
     }
 
 

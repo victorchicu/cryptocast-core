@@ -1,7 +1,7 @@
 package com.crypto.core.notifications.services;
 
-import com.crypto.core.notifications.domain.NotificationRequest;
+import com.crypto.core.notifications.domain.Notification;
 
 public interface NotificationService {
-    NotificationRequest saveNotification(NotificationRequest notificationRequest);
+    Notification saveNotification(Notification notification);
 }

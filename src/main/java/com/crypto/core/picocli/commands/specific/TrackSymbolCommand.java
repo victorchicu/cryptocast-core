@@ -5,25 +5,17 @@ import com.crypto.core.binance.configs.BinanceProperties;
 import com.crypto.core.binance.services.BinanceService;
 import com.crypto.core.freemarker.services.FreeMarkerTemplateService;
 import com.crypto.core.picocli.commands.Command;
-import com.crypto.core.repository.entity.SubscriptionEntity;
-import com.crypto.core.services.SubscriptionsService;
+import com.crypto.core.binance.subscriptions.services.SubscriptionsService;
 import com.crypto.core.telegram.services.TelegramBotService;
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.model.request.ParseMode;
-import com.pengrad.telegrambot.response.SendResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static org.apache.commons.collections4.IteratorUtils.forEach;
 
 @Component
 @CommandLine.Command(
@@ -80,6 +72,7 @@ public class TrackSymbolCommand extends Command {
     }
 
     public void invalidateSubscriptions(Update update, List<String> symbolNames) {
+        /*
         List<SubscriptionEntity> participantSubscriptions = subscriptionsService.findSubscriptions(
                 update.message().from().id(),
                 symbolNames
@@ -93,9 +86,11 @@ public class TrackSymbolCommand extends Command {
                     subscription.getId()
             );
         });
+         */
     }
 
     public void handleSymbolTickerEvent(Update update, String symbolName, SymbolTickerEvent symbolTickerEvent) {
+        /*
         Integer participantId = update.message().from().id();
         Optional<SubscriptionEntity> optional = subscriptionsService.findSubscription(participantId, symbolName);
         if (optional.isPresent()) {
@@ -139,13 +134,13 @@ public class TrackSymbolCommand extends Command {
                             .setSymbolName(symbolName)
                             .setParticipantId(participantId)
             );
-        }
+        } */
     }
 
     public void subscribeToSymbolTickerEvents(Update update, List<String> symbolNames) {
         for (String symbolName : symbolNames) {
-            binanceService.subscribeSymbolTickerEvent(
-                    update.message().from().id(),
+            binanceService.subscribe(
+                    "update.message().from().id()",
                     symbolName.toLowerCase(),
                     ((SymbolTickerEvent symbolTickerEvent) -> {
                         try {

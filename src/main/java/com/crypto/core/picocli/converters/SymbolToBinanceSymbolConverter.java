@@ -17,8 +17,8 @@ public class SymbolToBinanceSymbolConverter implements Converter<String, String>
 
     @Override
     public String convert(String source) {
-        return Optional.ofNullable(binanceProperties.getCoinMappings().get(source))
+        return Optional.ofNullable(binanceProperties.getCryptoMappings().get(source))
                 .map(mappingsConfig -> mappingsConfig.getName())
-                .orElseThrow(() -> new SymbolNotFoundException(source));
+                .orElseThrow(SymbolNotFoundException::new);
     }
 }

@@ -1,8 +1,8 @@
 package com.crypto.core.notifications.services.impl;
 
-import com.crypto.core.notifications.domain.NotificationRequest;
+import com.crypto.core.notifications.domain.Notification;
 import com.crypto.core.notifications.repository.NotificationRepository;
-import com.crypto.core.notifications.repository.entity.NotificationRequestEntity;
+import com.crypto.core.notifications.repository.entity.NotificationEntity;
 import com.crypto.core.notifications.services.NotificationService;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.convert.ConversionService;
@@ -22,9 +22,9 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public NotificationRequest saveNotification(NotificationRequest notificationRequest) {
-        NotificationRequestEntity notificationRequestEntity = toNotificationRequestEntity(notificationRequest);
-        return toNotificationRequest(notificationRepository.save(notificationRequestEntity));
+    public Notification saveNotification(Notification notification) {
+        NotificationEntity notificationEntity = toNotificationRequestEntity(notification);
+        return toNotificationRequest(notificationRepository.save(notificationEntity));
     }
 
     @EventListener
@@ -39,11 +39,11 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
 
-    private NotificationRequest toNotificationRequest(NotificationRequestEntity notificationRequestEntity) {
-        return conversionService.convert(notificationRequestEntity, NotificationRequest.class);
+    private Notification toNotificationRequest(NotificationEntity notificationEntity) {
+        return conversionService.convert(notificationEntity, Notification.class);
     }
 
-    private NotificationRequestEntity toNotificationRequestEntity(NotificationRequest notificationRequest) {
-        return conversionService.convert(notificationRequest, NotificationRequestEntity.class);
+    private NotificationEntity toNotificationRequestEntity(Notification notification) {
+        return conversionService.convert(notification, NotificationEntity.class);
     }
 }

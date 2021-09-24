@@ -8,13 +8,13 @@ import java.util.Map;
 @Configuration
 @ConfigurationProperties(prefix = "notification")
 public class NotificationProperties {
-    private Map<String, String> mappings;
+    private Map<String, String> simpMappings;
 
-    public Map<String, String> getMappings() {
-        return mappings;
+    public Map<String, String> getSimpMappings() {
+        return simpMappings;
     }
 
-    public void setMappings(Map<String, String> mappings) {
-        this.mappings = mappings;
+    public void setSimpMappings(Map<String, String> simpMappings) {
+        this.simpMappings = simpMappings;
     }
 }
