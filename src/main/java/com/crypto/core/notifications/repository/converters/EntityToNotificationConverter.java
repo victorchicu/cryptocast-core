@@ -11,7 +11,7 @@ public class EntityToNotificationConverter implements Converter<NotificationEnti
     public Notification convert(NotificationEntity source) {
         return Notification.newBuilder()
                 .id(source.getId())
-                .type(source.getType())
+                .event(source.getEvent())
                 .payload(source.getPayload())
                 .build();
     }

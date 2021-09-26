@@ -1,11 +1,11 @@
 package com.crypto.core.utils.stubs;
 
 import com.alibaba.fastjson.JSONObject;
-import com.crypto.core.binance.client.SyncRequestClient;
-import com.crypto.core.binance.client.domain.ResponseResult;
-import com.crypto.core.binance.client.domain.enums.*;
-import com.crypto.core.binance.client.domain.market.*;
-import com.crypto.core.binance.client.domain.trade.*;
+import com.crypto.core.exchanges.binance.client.SyncRequestClient;
+import com.crypto.core.exchanges.binance.client.domain.ResponseResult;
+import com.crypto.core.exchanges.binance.client.domain.enums.*;
+import com.crypto.core.exchanges.binance.client.domain.market.*;
+import com.crypto.core.exchanges.binance.client.domain.trade.*;
 
 import java.util.List;
 

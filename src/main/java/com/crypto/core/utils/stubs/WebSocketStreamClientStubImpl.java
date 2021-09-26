@@ -1,11 +1,11 @@
 package com.crypto.core.utils.stubs;
 
-import com.crypto.core.binance.client.SubscriptionClient;
-import com.crypto.core.binance.client.SubscriptionErrorHandler;
-import com.crypto.core.binance.client.SubscriptionListener;
-import com.crypto.core.binance.client.domain.enums.CandlestickInterval;
-import com.crypto.core.binance.client.domain.event.*;
-import com.crypto.core.binance.client.domain.user.UserDataUpdateEvent;
+import com.crypto.core.exchanges.binance.client.SubscriptionClient;
+import com.crypto.core.exchanges.binance.client.SubscriptionErrorHandler;
+import com.crypto.core.exchanges.binance.client.SubscriptionListener;
+import com.crypto.core.exchanges.binance.client.domain.enums.CandlestickInterval;
+import com.crypto.core.exchanges.binance.client.domain.event.*;
+import com.crypto.core.exchanges.binance.client.domain.user.UserDataUpdateEvent;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.crypto.core.picocli.commands.specific;
 
-import com.crypto.core.binance.services.BinanceService;
+import com.crypto.core.exchanges.binance.services.BinanceService;
 import com.crypto.core.picocli.commands.Command;
-import com.crypto.core.binance.subscriptions.services.SubscriptionsService;
+import com.crypto.core.subscriptions.services.SubscriptionsService;
 import com.crypto.core.telegram.services.TelegramBotService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

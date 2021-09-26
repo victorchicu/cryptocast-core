@@ -1,6 +1,6 @@
 package com.crypto.core.handlers;
 
-import com.crypto.core.exceptions.SymbolNotFoundException;
+import com.crypto.core.exchanges.binance.exceptions.SymbolNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

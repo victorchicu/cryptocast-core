@@ -1,15 +1,17 @@
 package com.crypto.core.notifications.domain;
 
+import com.crypto.core.notifications.enums.NotificationEvent;
+
 import java.util.Map;
 
 public class Notification {
     private final String id;
-    private final String type;
+    private final NotificationEvent event;
     private final Map<String, Object> payload;
 
     private Notification(Builder builder) {
         id = builder.id;
-        type = builder.type;
+        event = builder.event;
         payload = builder.payload;
     }
 
@@ -21,8 +23,8 @@ public class Notification {
         return id;
     }
 
-    public String getType() {
-        return type;
+    public NotificationEvent getEvent() {
+        return event;
     }
 
     public Map<String, Object> getPayload() {
@@ -31,7 +33,7 @@ public class Notification {
 
     public static final class Builder {
         private String id;
-        private String type;
+        private NotificationEvent event;
         private Map<String, Object> payload;
 
         private Builder() {}
@@ -41,8 +43,8 @@ public class Notification {
             return this;
         }
 
-        public Builder type(String type) {
-            this.type = type;
+        public Builder event(NotificationEvent event) {
+            this.event = event;
             return this;
         }
 

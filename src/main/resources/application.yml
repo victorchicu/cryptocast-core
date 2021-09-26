@@ -20,14 +20,14 @@ rabbitmq:
   relayPort: 61613
 
 notification:
-  simpMappings:
-    greetings: /topic/greetings
+  eventMappings:
+    SYMBOL_TICKER_EVENT: "'/topic/' + symbolName + '/ohlc/report"
 
 binance:
   url: wss://api.binance.com/
   apiKey: LyxvTzaiaL98gk7pHTvrKgbdYToVVPpCPcyHBNxwRo5sJipiJUvRmHoGKrIAzrTC
   secretKey: TMoocVF0WBKylL8IvGuxGucXUVmWhVUx5r1KGTtJDMg6vyR3NXJVFf54dBBiuNW5
-  cryptoMappings:
+  symbols:
     1inch:
       name: 1inchusdt
     aave:

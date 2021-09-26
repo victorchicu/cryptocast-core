@@ -1,11 +1,11 @@
 package com.crypto.core.picocli.commands.specific;
 
-import com.crypto.core.binance.client.domain.event.SymbolTickerEvent;
-import com.crypto.core.binance.configs.BinanceProperties;
-import com.crypto.core.binance.services.BinanceService;
+import com.crypto.core.exchanges.binance.client.domain.event.SymbolTickerEvent;
+import com.crypto.core.exchanges.binance.configs.BinanceProperties;
+import com.crypto.core.exchanges.binance.services.BinanceService;
 import com.crypto.core.freemarker.services.FreeMarkerTemplateService;
 import com.crypto.core.picocli.commands.Command;
-import com.crypto.core.binance.subscriptions.services.SubscriptionsService;
+import com.crypto.core.subscriptions.services.SubscriptionsService;
 import com.crypto.core.telegram.services.TelegramBotService;
 import com.pengrad.telegrambot.model.Update;
 import org.slf4j.Logger;
@@ -138,6 +138,7 @@ public class TrackSymbolCommand extends Command {
     }
 
     public void subscribeToSymbolTickerEvents(Update update, List<String> symbolNames) {
+        /*
         for (String symbolName : symbolNames) {
             binanceService.subscribe(
                     "update.message().from().id()",
@@ -151,7 +152,7 @@ public class TrackSymbolCommand extends Command {
                     }),
                     e -> LOG.error(e.getMessage(), e)
             );
-        }
+        }*/
     }
 
     private <T> String renderTemplate(T eventObject) {

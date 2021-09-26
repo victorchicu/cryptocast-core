@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 public class NotificationToEntityConverter implements Converter<Notification, NotificationEntity> {
     @Override
     public NotificationEntity convert(Notification source) {
-        NotificationEntity notificationEntity = new NotificationEntity();
-        notificationEntity.setType(source.getType());
-        notificationEntity.setPayload(source.getPayload());
-        return notificationEntity;
+        return NotificationEntity.newBuilder()
+                .event(source.getEvent())
+                .payload(source.getPayload())
+                .build();
     }
 }

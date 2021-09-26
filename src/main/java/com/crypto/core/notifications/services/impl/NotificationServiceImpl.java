@@ -22,9 +22,10 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public Notification saveNotification(Notification notification) {
-        NotificationEntity notificationEntity = toNotificationRequestEntity(notification);
-        return toNotificationRequest(notificationRepository.save(notificationEntity));
+    public <T> Notification saveNotification(T payload) {
+        NotificationEntity notificationEntity = toNotificationEntity(payload);
+        notificationEntity = notificationRepository.save(notificationEntity);
+        return toNotification(notificationEntity);
     }
 
     @EventListener
@@ -39,11 +40,11 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
 
-    private Notification toNotificationRequest(NotificationEntity notificationEntity) {
+    private Notification toNotification(NotificationEntity notificationEntity) {
         return conversionService.convert(notificationEntity, Notification.class);
     }
 
-    private NotificationEntity toNotificationRequestEntity(Notification notification) {
+    private <T> NotificationEntity toNotificationEntity(T notification) {
         return conversionService.convert(notification, NotificationEntity.class);
     }
 }
