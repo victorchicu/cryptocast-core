@@ -1,12 +1,12 @@
 package com.crypto.core;
 
-import com.crypto.core.binance.client.domain.event.SymbolMiniTickerEvent;
-import com.crypto.core.binance.configs.BinanceProperties;
+import com.crypto.core.exchanges.binance.client.domain.event.SymbolMiniTickerEvent;
+import com.crypto.core.exchanges.binance.configs.BinanceProperties;
 import com.crypto.core.freemarker.services.FreeMarkerTemplateService;
 import com.crypto.core.picocli.services.PicoCliService;
-import com.crypto.core.binance.subscriptions.repository.SubscriptionsRepository;
-import com.crypto.core.binance.services.BinanceService;
-import com.crypto.core.binance.subscriptions.services.SubscriptionsService;
+import com.crypto.core.subscriptions.repository.SubscriptionsRepository;
+import com.crypto.core.exchanges.binance.services.BinanceService;
+import com.crypto.core.subscriptions.services.SubscriptionsService;
 import com.crypto.core.telegram.services.TelegramBotService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
@@ -56,7 +56,7 @@ public class BaseTest {
 
     protected SymbolMiniTickerEvent randomSymbolMiniTickerEvent() {
         SymbolMiniTickerEvent symbolMiniTickerEvent = new SymbolMiniTickerEvent();
-        Set<String> symbols = binanceProperties.getCryptoMappings().keySet();
+        Set<String> symbols = binanceProperties.getSymbols().keySet();
         symbolMiniTickerEvent.setLow(new BigDecimal(Math.random()));
         symbolMiniTickerEvent.setHigh(new BigDecimal(Math.random()));
         symbolMiniTickerEvent.setOpen(new BigDecimal(Math.random()));
