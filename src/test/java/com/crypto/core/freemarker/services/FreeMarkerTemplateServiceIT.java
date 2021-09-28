@@ -1,7 +1,7 @@
 package com.crypto.core.freemarker.services;
 
 import com.crypto.core.BaseTest;
-import com.crypto.core.exchanges.binance.client.domain.event.SymbolMiniTickerEvent;
+import com.crypto.core.binance.client.domain.event.SymbolMiniTickerEvent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

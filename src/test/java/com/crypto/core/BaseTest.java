@@ -1,11 +1,11 @@
 package com.crypto.core;
 
-import com.crypto.core.exchanges.binance.client.domain.event.SymbolMiniTickerEvent;
-import com.crypto.core.exchanges.binance.configs.BinanceProperties;
+import com.crypto.core.binance.client.domain.event.SymbolMiniTickerEvent;
+import com.crypto.core.binance.configs.BinanceProperties;
 import com.crypto.core.freemarker.services.FreeMarkerTemplateService;
 import com.crypto.core.picocli.services.PicoCliService;
 import com.crypto.core.subscriptions.repository.SubscriptionsRepository;
-import com.crypto.core.exchanges.binance.services.BinanceService;
+import com.crypto.core.binance.services.BinanceService;
 import com.crypto.core.subscriptions.services.SubscriptionsService;
 import com.crypto.core.telegram.services.TelegramBotService;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,5 +1,6 @@
 package com.crypto.core.utils;
 
+import com.crypto.core.utils.numbers.BigDecimalUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

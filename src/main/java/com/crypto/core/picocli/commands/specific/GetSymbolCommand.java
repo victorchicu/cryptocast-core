@@ -1,9 +1,9 @@
 package com.crypto.core.picocli.commands.specific;
 
-import com.crypto.core.exchanges.binance.client.domain.market.SymbolPrice;
+import com.crypto.core.binance.client.domain.market.SymbolPrice;
 import com.crypto.core.picocli.commands.Command;
 import com.crypto.core.telegram.services.TelegramBotService;
-import com.crypto.core.exchanges.binance.services.BinanceService;
+import com.crypto.core.binance.services.BinanceService;
 import com.pengrad.telegrambot.model.Update;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
@@ -42,7 +42,7 @@ public class GetSymbolCommand extends Command {
             String usageHelp = usage(this);
             telegramBotService.sendMessage(update.message().chat().id(), usageHelp);
         } else {
-            List<SymbolPrice> symbolPrices = binanceService.getSymbolPrices(null);
+            List<SymbolPrice> symbolPrices = binanceService.getAllSymbolPrices();
 
             if (symbols != null) {
                 symbolPrices = symbolPrices.stream()

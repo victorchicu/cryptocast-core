@@ -1,8 +1,8 @@
 package com.crypto.core.picocli.commands.specific;
 
-import com.crypto.core.exchanges.binance.client.domain.event.SymbolTickerEvent;
-import com.crypto.core.exchanges.binance.configs.BinanceProperties;
-import com.crypto.core.exchanges.binance.services.BinanceService;
+import com.crypto.core.binance.client.domain.event.SymbolTickerEvent;
+import com.crypto.core.binance.configs.BinanceProperties;
+import com.crypto.core.binance.services.BinanceService;
 import com.crypto.core.freemarker.services.FreeMarkerTemplateService;
 import com.crypto.core.picocli.commands.Command;
 import com.crypto.core.subscriptions.services.SubscriptionsService;

@@ -9,13 +9,13 @@ import java.util.Map;
 @Configuration
 @ConfigurationProperties(prefix = "notification")
 public class NotificationProperties {
-    private Map<NotificationEvent, String> simpMappings;
+    private Map<NotificationEvent, String> eventMappings;
 
-    public Map<NotificationEvent, String> getSimpMappings() {
-        return simpMappings;
+    public Map<NotificationEvent, String> getEventMappings() {
+        return eventMappings;
     }
 
-    public void setSimpMappings(Map<NotificationEvent, String> simpMappings) {
-        this.simpMappings = simpMappings;
+    public void setEventMappings(Map<NotificationEvent, String> eventMappings) {
+        this.eventMappings = eventMappings;
     }
 }

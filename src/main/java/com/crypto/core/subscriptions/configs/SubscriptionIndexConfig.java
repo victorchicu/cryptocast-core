@@ -20,9 +20,7 @@ public class SubscriptionIndexConfig {
     public void init() {
         mongoOperations.indexOps(SubscriptionEntity.class)
                 .ensureIndex(new CompoundIndexDefinition(
-                        new Document()
-                                .append(SubscriptionEntity.Field.SYMBOL_NAME, 1)
-                        )
+                        new Document().append(SubscriptionEntity.Field.SYMBOL_NAME, 1))
                         .named(SubscriptionEntity.COLLECTION_NAME)
                         .unique()
                         .sparse()

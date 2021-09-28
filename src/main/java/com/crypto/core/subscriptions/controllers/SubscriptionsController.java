@@ -1,10 +1,10 @@
 package com.crypto.core.subscriptions.controllers;
 
-import com.crypto.core.exchanges.binance.client.SubscriptionErrorHandler;
-import com.crypto.core.exchanges.binance.client.SubscriptionListener;
-import com.crypto.core.exchanges.binance.client.domain.event.SymbolTickerEvent;
-import com.crypto.core.exchanges.binance.dto.SymbolTickerEventDto;
-import com.crypto.core.exchanges.binance.services.BinanceService;
+import com.crypto.core.binance.client.SubscriptionErrorHandler;
+import com.crypto.core.binance.client.SubscriptionListener;
+import com.crypto.core.binance.client.domain.event.SymbolTickerEvent;
+import com.crypto.core.binance.dto.SymbolTickerEventDto;
+import com.crypto.core.binance.services.BinanceService;
 import com.crypto.core.notifications.enums.NotificationEvent;
 import com.crypto.core.notifications.services.NotificationEmitter;
 import com.crypto.core.notifications.services.NotificationService;

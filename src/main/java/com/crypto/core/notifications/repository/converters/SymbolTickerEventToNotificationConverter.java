@@ -1,7 +1,6 @@
 package com.crypto.core.notifications.repository.converters;
 
-import com.crypto.core.exchanges.binance.client.domain.event.SymbolTickerEvent;
-import com.crypto.core.notifications.domain.Notification;
+import com.crypto.core.binance.client.domain.event.SymbolTickerEvent;
 import com.crypto.core.notifications.enums.NotificationEvent;
 import com.crypto.core.notifications.repository.entity.NotificationEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
