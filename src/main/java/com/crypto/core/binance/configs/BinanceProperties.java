@@ -13,7 +13,7 @@ public class BinanceProperties {
     private String apiKey;
     private String secretKey;
     private Set<String> blacklist;
-    private Map<String, Symbol> symbols;
+    private Map<String, Coin> coins;
 
     public String getUrl() {
         return url;
@@ -47,25 +47,25 @@ public class BinanceProperties {
         this.blacklist = blacklist;
     }
 
-    public Map<String, Symbol> getSymbols() {
-        return symbols;
+    public Map<String, Coin> getCoins() {
+        return coins;
     }
 
-    public void setSymbols(Map<String, Symbol> symbols) {
-        this.symbols = symbols;
+    public void setCoins(Map<String, Coin> coins) {
+        this.coins = coins;
     }
 
-    public static class Symbol {
-        private Integer idx;
+    public static class Coin {
+        private Integer icon;
         private String name;
         private String alias;
 
-        public Integer getIdx() {
-            return idx;
+        public Integer getIcon() {
+            return icon;
         }
 
-        public void setIdx(Integer idx) {
-            this.idx = idx;
+        public void setIcon(Integer icon) {
+            this.icon = icon;
         }
 
         public String getName() {

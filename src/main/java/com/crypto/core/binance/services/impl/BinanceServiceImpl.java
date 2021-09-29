@@ -13,7 +13,6 @@ import org.apache.commons.collections4.IterableUtils;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,7 +69,7 @@ public class BinanceServiceImpl implements BinanceService {
 
 
     private Optional<String> findSymbol(String symbolName) {
-        return Optional.ofNullable(binanceProperties.getSymbols().get(symbolName))
-                .map(BinanceProperties.Symbol::getName);
+        return Optional.ofNullable(binanceProperties.getCoins().get(symbolName))
+                .map(BinanceProperties.Coin::getName);
     }
 }

@@ -45,8 +45,8 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
     }
 
     @Override
-    public void unsubscribe(String requesterId, String symbolName) {
-        WebSocketConnection connection = connections.remove(requesterId);
+    public void unsubscribe(String userId, String symbolName) {
+        WebSocketConnection connection = connections.remove(userId);
         if (connection != null) {
             watchDog.onClosedNormally(connection);
             connection.close();
@@ -64,33 +64,33 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
 
     @Override
     public void subscribeAggregateTradeEvent(
-            String requesterId,
+            String userId,
             String symbolName,
             SubscriptionListener<AggregateTradeEvent> subscriptionListener,
             SubscriptionErrorHandler errorHandler
     ) {
-        createConnection(requesterId, requestImpl.subscribeAggregateTradeEvent(symbolName, subscriptionListener, errorHandler));
+        createConnection(userId, requestImpl.subscribeAggregateTradeEvent(symbolName, subscriptionListener, errorHandler));
     }
 
     @Override
     public void subscribeMarkPriceEvent(
-            String requesterId,
+            String userId,
             String symbolName,
             SubscriptionListener<MarkPriceEvent> subscriptionListener,
             SubscriptionErrorHandler errorHandler
     ) {
-        createConnection(requesterId, requestImpl.subscribeMarkPriceEvent(symbolName, subscriptionListener, errorHandler));
+        createConnection(userId, requestImpl.subscribeMarkPriceEvent(symbolName, subscriptionListener, errorHandler));
     }
 
     @Override
     public void subscribeCandlestickEvent(
-            String requesterId,
+            String userId,
             String symbolName, CandlestickInterval interval,
             SubscriptionListener<CandlestickEvent> subscriptionListener,
             SubscriptionErrorHandler errorHandler
     ) {
         createConnection(
-                requesterId,
+                userId,
                 requestImpl.subscribeCandlestickEvent(symbolName, interval, subscriptionListener, errorHandler)
         );
     }
