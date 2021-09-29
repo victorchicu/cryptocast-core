@@ -27,7 +27,21 @@ binance:
   url: wss://api.binance.com/
   apiKey: LyxvTzaiaL98gk7pHTvrKgbdYToVVPpCPcyHBNxwRo5sJipiJUvRmHoGKrIAzrTC
   seretKey: TMoocVF0WBKylL8IvGuxGucXUVmWhVUx5r1KGTtJDMg6vyR3NXJVFf54dBBiuNW5
-  blacklist: BTCUSDT_210924, BTCUSDT_211231, BTCUSDT_210625, ETHUSDT_211231, ETHUSDT_210625, ETHUSDT_210924
+  blacklist:
+    - FTTBUSD
+    - ADABUSD
+    - BTCBUSD
+    - BNBBUSD
+    - SOLBUSD
+    - ETHBUSD
+    - XRPBUSD
+    - DOGEBUSD
+    - BTCUSDT_210924
+    - BTCUSDT_211231
+    - BTCUSDT_210625
+    - ETHUSDT_211231
+    - ETHUSDT_210625
+    - ETHUSDT_210924
   coins:
     1INCH:
       icon: 8104
