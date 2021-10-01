@@ -19,26 +19,20 @@ public class SymbolsDto {
 
     public static class Data {
         private final String name;
-        private final BigDecimal price;
-        private final BigDecimal circulatingSupply;
+        private final BigDecimal marketCap;
 
         @JsonCreator
-        public Data(String name, BigDecimal circulatingSupply, BigDecimal price) {
+        public Data(String name, BigDecimal marketCap, BigDecimal price) {
             this.name = name;
-            this.circulatingSupply = circulatingSupply;
-            this.price = price;
+            this.marketCap = marketCap;
         }
 
         public String getName() {
             return name;
         }
 
-        public BigDecimal getPrice() {
-            return price;
-        }
-
-        public BigDecimal getCirculatingSupply() {
-            return circulatingSupply;
+        public BigDecimal getMarketCap() {
+            return marketCap;
         }
     }
 }
