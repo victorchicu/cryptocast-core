@@ -42,7 +42,7 @@ public class CoinAggregatorServiceImpl implements CoinAggregatorService {
         SymbolsDto symbolsDto = binanceClient.fetchSymbols();
         List<CoinDto> coins = symbolsDto.getData().stream()
                 .map(this::toCoinDto)
-                .filter(skipNulls())
+                .filter(skipUnsupportedCoins())
                 .sorted(Comparator.comparing(CoinDto::getPrice).reversed())
                 .skip(pageable.getPageNumber() * pageable.getPageSize())
                 .limit(pageable.getPageSize())
@@ -58,7 +58,7 @@ public class CoinAggregatorServiceImpl implements CoinAggregatorService {
         return null;
     }
 
-    private Predicate<CoinDto> skipNulls() {
+    private Predicate<CoinDto> skipUnsupportedCoins() {
         return (CoinDto coinDto) -> coinDto != null && coinDto.getPrice() != null;
     }
 }
