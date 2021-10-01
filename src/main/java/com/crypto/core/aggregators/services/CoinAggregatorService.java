@@ -1,11 +1,11 @@
-package com.crypto.core.markets.services;
+package com.crypto.core.aggregators.services;
 
-import com.crypto.core.markets.dto.CoinDto;
+import com.crypto.core.aggregators.dto.CoinDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.security.Principal;
 
-public interface CoinMarketService {
+public interface CoinAggregatorService {
     Page<CoinDto> listSupportedCoins(Principal principal, Pageable pageable);
 }

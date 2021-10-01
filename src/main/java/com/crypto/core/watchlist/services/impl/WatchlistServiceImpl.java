@@ -9,7 +9,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -40,11 +40,6 @@ public class WatchlistServiceImpl implements WatchlistService {
     @Override
     public void deleteById(String id) {
         watchlistRepository.deleteById(id);
-    }
-
-    @Override
-    public void deleteAllById(List<String> list) {
-        watchlistRepository.deleteAllById(list);
     }
 
     @Override

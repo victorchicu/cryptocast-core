@@ -16,8 +16,6 @@ public interface WatchlistService {
 
     void deleteById(String id);
 
-    void deleteAllById(List<String> list);
-
     Watchlist save(Watchlist watchlist);
 
     Page<Watchlist> findAll(Principal principal, Pageable pageable);

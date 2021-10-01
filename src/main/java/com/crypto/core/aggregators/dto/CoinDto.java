@@ -1,4 +1,4 @@
-package com.crypto.core.markets.dto;
+package com.crypto.core.aggregators.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 

@@ -1,5 +1,6 @@
 package com.crypto.core.binance.services.impl;
 
+import com.crypto.core.binance.client.domain.market.PriceChangeTicker;
 import com.crypto.core.binance.client.domain.market.SymbolPrice;
 import com.crypto.core.binance.client.SubscriptionClient;
 import com.crypto.core.binance.client.SubscriptionErrorHandler;
@@ -67,9 +68,19 @@ public class BinanceServiceImpl implements BinanceService {
         return syncRequestClient.getSymbolPriceTicker("");
     }
 
+    @Override
+    public PriceChangeTicker get24hrTickerPriceChange(String symbolName) {
+        return IterableUtils.first(syncRequestClient.get24hrTickerPriceChange(symbolName));
+    }
+
+    @Override
+    public List<PriceChangeTicker> list24hrTickerPriceChange() {
+        return syncRequestClient.get24hrTickerPriceChange("");
+    }
+
 
     private Optional<String> findSymbol(String symbolName) {
-        return Optional.ofNullable(binanceProperties.getCoins().get(symbolName))
-                .map(BinanceProperties.Coin::getName);
+        BinanceProperties.Coin coin = binanceProperties.getTetherToSymbol().get(symbolName);
+        return Optional.ofNullable(coin).map(BinanceProperties.Coin::getName);
     }
 }
