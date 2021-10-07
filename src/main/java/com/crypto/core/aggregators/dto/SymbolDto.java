@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.math.BigDecimal;
 
-public class CoinDto {
+public class SymbolDto {
     private final String name;
     private final String alias;
     private final Integer icon;
@@ -12,7 +12,7 @@ public class CoinDto {
     private final BigDecimal price;
 
     @JsonCreator
-    public CoinDto(String name, String alias, Integer icon, Boolean inWatchlist, BigDecimal price) {
+    public SymbolDto(String name, String alias, Integer icon, Boolean inWatchlist, BigDecimal price) {
         this.name = name;
         this.alias = alias;
         this.icon = icon;

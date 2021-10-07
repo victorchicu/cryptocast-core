@@ -80,7 +80,7 @@ public class BinanceServiceImpl implements BinanceService {
 
 
     private Optional<String> findSymbol(String symbolName) {
-        BinanceProperties.Coin coin = binanceProperties.getTetherToSymbol().get(symbolName);
+        BinanceProperties.Coin coin = binanceProperties.getTetherSymbol().get(symbolName);
         return Optional.ofNullable(coin).map(BinanceProperties.Coin::getName);
     }
 }

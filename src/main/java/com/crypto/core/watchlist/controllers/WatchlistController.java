@@ -93,7 +93,7 @@ public class WatchlistController {
     }
 
     private SubscriptionListener<SymbolTickerEvent> emitSymbolTickerEventCallback(Principal principal) {
-        return symbolTickerEvent -> {
+        return (SymbolTickerEvent symbolTickerEvent) -> {
             notificationEmitter.emitNotification(
                     principal,
                     NotificationEvent.SYMBOL_TICKER_EVENT,

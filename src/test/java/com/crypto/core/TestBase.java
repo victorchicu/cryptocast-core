@@ -50,7 +50,7 @@ public class TestBase {
 
     protected SymbolMiniTickerEvent randomSymbolMiniTickerEvent() {
         SymbolMiniTickerEvent symbolMiniTickerEvent = new SymbolMiniTickerEvent();
-        Set<String> symbols = binanceProperties.getTetherToSymbol().keySet();
+        Set<String> symbols = binanceProperties.getTetherSymbol().keySet();
         symbolMiniTickerEvent.setLow(new BigDecimal(Math.random()));
         symbolMiniTickerEvent.setHigh(new BigDecimal(Math.random()));
         symbolMiniTickerEvent.setOpen(new BigDecimal(Math.random()));
