@@ -1,13 +1,13 @@
 package com.crypto.core.auth.configs;
 
-import com.crypto.core.oauth2.filters.TokenAuthenticationFilter;
-import com.crypto.core.oauth2.handlers.OAuth2AuthenticationFailureHandler;
-import com.crypto.core.oauth2.handlers.OAuth2AuthenticationSuccessHandler;
-import com.crypto.core.oauth2.repository.HttpCookieOAuth2AuthorizationRequestRepository;
-import com.crypto.core.oauth2.services.TokenProviderService;
-import com.crypto.core.oauth2.services.impl.CustomOAuth2UserService;
-import com.crypto.core.oauth2.services.impl.CustomUserDetailsService;
-import com.crypto.core.oauth2.services.impl.TokenProviderServiceImpl;
+import com.crypto.core.auth.filters.TokenAuthenticationFilter;
+import com.crypto.core.auth.handlers.OAuth2AuthenticationFailureHandler;
+import com.crypto.core.auth.handlers.OAuth2AuthenticationSuccessHandler;
+import com.crypto.core.users.repository.impl.HttpCookieOAuth2AuthorizationRequestRepository;
+import com.crypto.core.auth.services.TokenProviderService;
+import com.crypto.core.auth.services.impl.CustomOAuth2UserService;
+import com.crypto.core.auth.services.impl.CustomUserDetailsService;
+import com.crypto.core.auth.services.impl.TokenProviderServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -59,6 +59,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    // Used by spring security if CORS is enabled.
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public TokenAuthenticationFilter tokenAuthenticationFilter() {
+        return new TokenAuthenticationFilter(tokenProviderService, customUserDetailsService);
+    }
+
+    /*
+     By default, Spring OAuth2 uses HttpSessionOAuth2AuthorizationRequestRepository to save
+     the authorization request. But, since our service is stateless, we can't save it in
+     the session. We'll save the request in a Base64 encoded cookie instead.
+   */
+    @Bean
+    public HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
+        return new HttpCookieOAuth2AuthorizationRequestRepository();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Enable CORS and disable CSRF
@@ -94,8 +127,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Our public endpoints
-                .antMatchers("/api/login/**").permitAll()
-                .antMatchers("/api/register/**").permitAll()
+                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api/signup/**").permitAll()
+//                .antMatchers("/api/rank/**").permitAll()
                 // Our private endpoints
                 .anyRequest().authenticated();
 
@@ -123,38 +157,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder
                 .userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
-    }
-
-    // Used by spring security if CORS is enabled.
-    @Bean
-    public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public TokenAuthenticationFilter tokenAuthenticationFilter() {
-        return new TokenAuthenticationFilter(tokenProviderService, customUserDetailsService);
-    }
-
-    /*
-     By default, Spring OAuth2 uses HttpSessionOAuth2AuthorizationRequestRepository to save
-     the authorization request. But, since our service is stateless, we can't save it in
-     the session. We'll save the request in a Base64 encoded cookie instead.
-   */
-    @Bean
-    public HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
-        return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
 }
