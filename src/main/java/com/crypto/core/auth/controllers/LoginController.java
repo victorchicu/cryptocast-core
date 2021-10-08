@@ -1,8 +1,8 @@
 package com.crypto.core.auth.controllers;
 
 import com.crypto.core.auth.dto.AccessTokenResponseDto;
-import com.crypto.core.auth.dto.AuthRequestDto;
-import com.crypto.core.users.exceptions.NotFoundUserException;
+import com.crypto.core.auth.dto.LoginRequestDto;
+import com.crypto.core.users.exceptions.EmailAddressNotFoundException;
 import com.crypto.core.users.services.UserService;
 import com.crypto.core.auth.services.TokenProviderService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
-public class AuthController {
+@RequestMapping("/api/login")
+public class LoginController {
     private final UserService userService;
     private final TokenProviderService tokenProviderService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthController(
+    public LoginController(
             UserService userService,
             TokenProviderService tokenProviderService,
             AuthenticationManager authenticationManager
@@ -32,19 +32,19 @@ public class AuthController {
     }
 
     @PostMapping
-    public AccessTokenResponseDto authorize(@RequestBody AuthRequestDto authRequestDto) {
-        return userService.findByEmail(authRequestDto.getEmail())
+    public AccessTokenResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
+        return userService.findByEmail(loginRequestDto.getEmail())
                 .map(user -> {
                     Authentication authentication = authenticationManager.authenticate(
                             new UsernamePasswordAuthenticationToken(
-                                    authRequestDto.getEmail(),
-                                    authRequestDto.getPassword()
+                                    loginRequestDto.getEmail(),
+                                    loginRequestDto.getPassword()
                             )
                     );
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                     String accessToken = tokenProviderService.createToken(authentication);
                     return new AccessTokenResponseDto(accessToken);
                 })
-                .orElseThrow(() -> new NotFoundUserException("Email address provided is not registered"));
+                .orElseThrow(() -> new EmailAddressNotFoundException("Email address provided is not registered"));
     }
 }

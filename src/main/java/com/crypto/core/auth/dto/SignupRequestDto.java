@@ -1,4 +1,4 @@
-package com.crypto.core.signup.dto;
+package com.crypto.core.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 

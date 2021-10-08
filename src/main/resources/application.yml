@@ -21,6 +21,7 @@ feign:
 server:
   port: 8080
 
+
 spring:
   data:
     mongodb:
@@ -65,6 +66,13 @@ spring:
 logging:
   level:
     root: info
+
+routes:
+  publicRoutes:
+#    - "/api/rank/**"
+    - "/api/login/**"
+    - "/api/logout/**"
+    - "/api/signup/**"
 
 rabbitmq:
   relayHost: localhost

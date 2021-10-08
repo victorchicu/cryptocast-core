@@ -1,8 +1,8 @@
-package com.crypto.core.signup.controllers;
+package com.crypto.core.auth.controllers;
 
 import com.crypto.core.users.domain.User;
 import com.crypto.core.auth.dto.AccessTokenResponseDto;
-import com.crypto.core.signup.dto.SignupRequestDto;
+import com.crypto.core.auth.dto.SignupRequestDto;
 import com.crypto.core.users.exceptions.UserException;
 import com.crypto.core.auth.services.TokenProviderService;
 import com.crypto.core.users.services.UserService;
@@ -37,7 +37,7 @@ public class SignupController {
     }
 
     @PostMapping
-    public AccessTokenResponseDto register(@RequestBody SignupRequestDto signupRequestDto) {
+    public AccessTokenResponseDto signup(@RequestBody SignupRequestDto signupRequestDto) {
         if (userService.findByEmail(signupRequestDto.getEmail()).isPresent()) {
             throw new UserException("Email address already in use");
         }

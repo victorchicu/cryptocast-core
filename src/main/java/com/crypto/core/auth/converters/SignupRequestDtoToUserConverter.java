@@ -1,7 +1,7 @@
-package com.crypto.core.signup.converters;
+package com.crypto.core.auth.converters;
 
 import com.crypto.core.users.domain.User;
-import com.crypto.core.signup.dto.SignupRequestDto;
+import com.crypto.core.auth.dto.SignupRequestDto;
 import com.crypto.core.auth.enums.AuthProvider;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.convert.converter.Converter;

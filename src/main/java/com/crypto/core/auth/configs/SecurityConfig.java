@@ -29,14 +29,16 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private TokenProviderService tokenProviderService;
-    private CustomOAuth2UserService customOAuth2UserService;
-    private CustomUserDetailsService customUserDetailsService;
-    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-    private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
-    private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+    private final RoutesConfig routesConfig;
+    private final TokenProviderService tokenProviderService;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+    private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
     public SecurityConfig(
+            RoutesConfig routesConfig,
             TokenProviderServiceImpl tokenProviderService,
             CustomOAuth2UserService customOAuth2UserService,
             CustomUserDetailsService customUserDetailsService,
@@ -44,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler,
             HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository
     ) {
+        this.routesConfig = routesConfig;
         this.tokenProviderService = tokenProviderService;
         this.customOAuth2UserService = customOAuth2UserService;
         this.customUserDetailsService = customUserDetailsService;
@@ -127,9 +130,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Set permissions on endpoints
         http.authorizeRequests()
                 // Our public endpoints
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/signup/**").permitAll()
-//                .antMatchers("/api/rank/**").permitAll()
+                .antMatchers(routesConfig.getPublicRoutes().toArray(new String[0])).permitAll()
                 // Our private endpoints
                 .anyRequest().authenticated();
 
