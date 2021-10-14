@@ -1,30 +1,36 @@
 package com.crypto.core.binance.configs;
 
-import com.crypto.core.binance.client.RequestOptions;
-import com.crypto.core.binance.client.SubscriptionClient;
-import com.crypto.core.binance.client.SubscriptionOptions;
-import com.crypto.core.binance.client.SyncRequestClient;
+import com.crypto.core.binance.client.BinanceApiClientFactory;
+import com.crypto.core.binance.client.BinanceApiRestClient;
+import com.crypto.core.binance.client.exception.BinanceApiException;
+import com.crypto.core.users.services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.context.annotation.SessionScope;
 
 @Configuration
 public class BinanceConfig {
-    @Bean
-    public SyncRequestClient syncRequestClient(BinanceProperties binanceProperties) {
-        return SyncRequestClient.create(binanceProperties.getApiKey(), binanceProperties.getSecretKey(), new RequestOptions());
+    private final UserService userService;
+    private final BinanceProperties binanceProperties;
+
+    public BinanceConfig(UserService userService, BinanceProperties binanceProperties) {
+        this.userService = userService;
+        this.binanceProperties = binanceProperties;
     }
 
     @Bean
-    public SubscriptionClient subscriptionClient(BinanceProperties binanceProperties) {
-        return SubscriptionClient.create(createSubscriptionOptions(binanceProperties));
-    }
-
-
-    private SubscriptionOptions createSubscriptionOptions(BinanceProperties binanceProperties) {
-        SubscriptionOptions subscriptionOptions = new SubscriptionOptions();
-        subscriptionOptions.setUri(binanceProperties.getUrl());
-        subscriptionOptions.setAutoReconnect(true);
-        subscriptionOptions.setReceiveLimitMs(60000);
-        return subscriptionOptions;
+    @SessionScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+    public BinanceApiRestClient binanceApiRestClient() {
+        return userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+                .map(user -> {
+                    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(
+                            user.getApiKey(),
+                            user.getSecretKey()
+                    );
+                    return factory.newRestClient();
+                })
+                .orElseThrow(() -> new BinanceApiException("Could not create Binance rest client"));
     }
 }
