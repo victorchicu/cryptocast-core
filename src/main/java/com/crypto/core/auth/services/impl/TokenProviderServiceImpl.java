@@ -25,8 +25,7 @@ public class TokenProviderServiceImpl implements TokenProviderService {
 
     public String createToken(Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        Date now = new Date();
-        Date expiresAt = new Date(now.getTime() + jwtConfig.getTokenExpiresInMillis());
+        Date expiresAt = new Date(new Date().getTime() + jwtConfig.getTokenExpiresInMillis());
         return JWT.create().withSubject(userPrincipal.getId()).withIssuedAt(new Date()).withExpiresAt(expiresAt).sign(Algorithm.HMAC256(jwtConfig.getTokenSecret()));
     }
 

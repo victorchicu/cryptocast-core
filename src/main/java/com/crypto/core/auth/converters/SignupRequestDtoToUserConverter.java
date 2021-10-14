@@ -22,6 +22,8 @@ public class SignupRequestDtoToUserConverter implements Converter<SignupRequestD
                 .email(source.getEmail())
                 .password(passwordEncoder.encode(source.getPassword()))
                 .provider(AuthProvider.LOCAL)
+                .apiKey(source.getApiKey())
+                .secretKey(source.getSecretKey())
                 .build();
     }
 }

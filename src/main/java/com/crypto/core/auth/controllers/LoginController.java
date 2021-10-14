@@ -2,7 +2,7 @@ package com.crypto.core.auth.controllers;
 
 import com.crypto.core.auth.dto.AccessTokenResponseDto;
 import com.crypto.core.auth.dto.LoginRequestDto;
-import com.crypto.core.users.exceptions.EmailAddressNotFoundException;
+import com.crypto.core.users.exceptions.EmailNotFoundException;
 import com.crypto.core.users.services.UserService;
 import com.crypto.core.auth.services.TokenProviderService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,6 +45,6 @@ public class LoginController {
                     String accessToken = tokenProviderService.createToken(authentication);
                     return new AccessTokenResponseDto(accessToken);
                 })
-                .orElseThrow(() -> new EmailAddressNotFoundException("Email address provided is not registered"));
+                .orElseThrow(() -> new EmailNotFoundException("Email address provided is not registered"));
     }
 }

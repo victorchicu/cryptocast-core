@@ -3,7 +3,7 @@ package com.crypto.core.auth.controllers;
 import com.crypto.core.users.domain.User;
 import com.crypto.core.auth.dto.AccessTokenResponseDto;
 import com.crypto.core.auth.dto.SignupRequestDto;
-import com.crypto.core.users.exceptions.UserException;
+import com.crypto.core.users.exceptions.EmailException;
 import com.crypto.core.auth.services.TokenProviderService;
 import com.crypto.core.users.services.UserService;
 import org.springframework.core.convert.ConversionService;
@@ -39,7 +39,7 @@ public class SignupController {
     @PostMapping
     public AccessTokenResponseDto signup(@RequestBody SignupRequestDto signupRequestDto) {
         if (userService.findByEmail(signupRequestDto.getEmail()).isPresent()) {
-            throw new UserException("Email address already in use");
+            throw new EmailException("Email address already in use");
         }
         userService.save(toUser(signupRequestDto));
         Authentication authentication = authenticationManager.authenticate(
