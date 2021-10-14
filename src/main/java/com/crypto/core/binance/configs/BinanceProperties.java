@@ -12,6 +12,8 @@ public class BinanceProperties {
     private String url;
     private String apiKey;
     private String secretKey;
+    private Boolean useTestnet;
+    private Boolean useTestnetStreaming;
     private Set<String> blacklist;
     private Map<String, Asset> assets;
 
@@ -37,6 +39,22 @@ public class BinanceProperties {
 
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
+    }
+
+    public Boolean getUseTestnet() {
+        return useTestnet;
+    }
+
+    public void setUseTestnet(Boolean useTestnet) {
+        this.useTestnet = useTestnet;
+    }
+
+    public Boolean getUseTestnetStreaming() {
+        return useTestnetStreaming;
+    }
+
+    public void setUseTestnetStreaming(Boolean useTestnetStreaming) {
+        this.useTestnetStreaming = useTestnetStreaming;
     }
 
     public Set<String> getBlacklist() {

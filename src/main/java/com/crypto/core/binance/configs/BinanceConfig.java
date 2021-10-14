@@ -2,6 +2,7 @@ package com.crypto.core.binance.configs;
 
 import com.crypto.core.binance.client.BinanceApiClientFactory;
 import com.crypto.core.binance.client.BinanceApiRestClient;
+import com.crypto.core.binance.client.BinanceApiWebSocketClient;
 import com.crypto.core.binance.client.exception.BinanceApiException;
 import com.crypto.core.users.services.UserService;
 import org.springframework.context.annotation.Bean;
@@ -27,9 +28,27 @@ public class BinanceConfig {
                 .map(user -> {
                     BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(
                             user.getApiKey(),
-                            user.getSecretKey()
+                            user.getSecretKey(),
+                            binanceProperties.getUseTestnet(),
+                            binanceProperties.getUseTestnetStreaming()
                     );
                     return factory.newRestClient();
+                })
+                .orElseThrow(() -> new BinanceApiException("Could not create Binance rest client"));
+    }
+
+    @Bean
+    @SessionScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+    public BinanceApiWebSocketClient binanceApiWebSocketClient() {
+        return userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+                .map(user -> {
+                    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(
+                            user.getApiKey(),
+                            user.getSecretKey(),
+                            binanceProperties.getUseTestnet(),
+                            binanceProperties.getUseTestnetStreaming()
+                    );
+                    return factory.newWebSocketClient();
                 })
                 .orElseThrow(() -> new BinanceApiException("Could not create Binance rest client"));
     }

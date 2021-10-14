@@ -1,20 +1,20 @@
 package com.crypto.core.watchlist.domain;
 
-public class Watchlist {
+public class Subscription {
     private String id;
-    private String symbolName;
+    private String assetName;
 
-    private Watchlist(Builder builder) {
+    private Subscription(Builder builder) {
         id = builder.id;
-        symbolName = builder.symbolName;
+        assetName = builder.assetName;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getSymbolName() {
-        return symbolName;
+    public String getAssetName() {
+        return assetName;
     }
 
     public static Builder newBuilder() {
@@ -23,7 +23,7 @@ public class Watchlist {
 
     public static final class Builder {
         private String id;
-        private String symbolName;
+        private String assetName;
 
         private Builder() {}
 
@@ -32,13 +32,13 @@ public class Watchlist {
             return this;
         }
 
-        public Builder symbolName(String symbolName) {
-            this.symbolName = symbolName;
+        public Builder assetName(String symbolName) {
+            this.assetName = symbolName;
             return this;
         }
 
-        public Watchlist build() {
-            return new Watchlist(this);
+        public Subscription build() {
+            return new Subscription(this);
         }
     }
 }

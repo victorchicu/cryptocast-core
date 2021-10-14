@@ -1,16 +1,15 @@
 package com.crypto.core.watchlist.repository.impl;
 
-import com.crypto.core.watchlist.domain.Watchlist;
+import com.crypto.core.watchlist.domain.Subscription;
+import com.crypto.core.watchlist.entity.SubscriptionEntity;
 import com.crypto.core.watchlist.repository.CustomWatchlistRepository;
-import com.crypto.core.watchlist.entity.WatchlistEntity;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.data.repository.support.PageableExecutionUtils;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import java.security.Principal;
@@ -29,35 +28,26 @@ public class CustomWatchlistRepositoryImpl implements CustomWatchlistRepository 
     }
 
     @Override
-    public void remove(Principal principal) {
+    public void removeWatchlsit(Principal principal) {
         mongoOperations.remove(
-                Query.query(Criteria.where(WatchlistEntity.Field.REQUESTER_ID).is(principal)),
-                WatchlistEntity.class,
-                WatchlistEntity.COLLECTION_NAME
+                Query.query(
+                        Criteria.where(SubscriptionEntity.Field.CREATED_BY)
+                                .is(principal.getName())
+                ),
+                SubscriptionEntity.class,
+                SubscriptionEntity.COLLECTION_NAME
         );
     }
 
     @Override
-    public void update(Query query, String propertyKey, Object propertyValue) {
-        mongoOperations.updateFirst(
-                query,
-                Update.update(propertyKey, propertyValue),
-                WatchlistEntity.class,
-                WatchlistEntity.COLLECTION_NAME
-        );
-    }
+    public Page<Subscription> listSubscriptions(Principal principal, Pageable pageable) {
+        Criteria matchCriteria = Criteria.where(SubscriptionEntity.Field.CREATED_BY).is(principal.getName());
 
-    @Override
-    public Page<Watchlist> list(Principal principal, Pageable pageable) {
-        Criteria matchCriteria = Criteria.where(WatchlistEntity.Field.REQUESTER_ID).is(principal);
-
-        List<WatchlistEntity> watchlist = mongoOperations.find(
+        List<SubscriptionEntity> watchlist = mongoOperations.find(
                 Query.query(matchCriteria),
-                WatchlistEntity.class,
-                WatchlistEntity.COLLECTION_NAME
+                SubscriptionEntity.class,
+                SubscriptionEntity.COLLECTION_NAME
         );
-
-        //TODO:
 
         return PageableExecutionUtils.getPage(
                 watchlist.stream().map(this::toWatchlist).collect(Collectors.toList()),
@@ -67,16 +57,16 @@ public class CustomWatchlistRepositoryImpl implements CustomWatchlistRepository 
     }
 
     @Override
-    public Page<Watchlist> list(Principal principal, List<String> symbolNames, Pageable pageable) {
-        Criteria matchCriteria = Criteria.where(WatchlistEntity.Field.REQUESTER_ID)
-                .is(principal)
-                .and(WatchlistEntity.Field.SYMBOL_NAME)
-                .in(symbolNames);
+    public Page<Subscription> listSubscriptions(Principal principal, List<String> assetNames, Pageable pageable) {
+        Criteria matchCriteria = Criteria.where(SubscriptionEntity.Field.CREATED_BY)
+                .is(principal.getName())
+                .and(SubscriptionEntity.Field.ASSET_NAME)
+                .in(assetNames);
 
-        List<WatchlistEntity> watchlistEntities = mongoOperations.find(
+        List<SubscriptionEntity> watchlistEntities = mongoOperations.find(
                 Query.query(matchCriteria),
-                WatchlistEntity.class,
-                WatchlistEntity.COLLECTION_NAME
+                SubscriptionEntity.class,
+                SubscriptionEntity.COLLECTION_NAME
         );
 
         return PageableExecutionUtils.getPage(
@@ -86,23 +76,23 @@ public class CustomWatchlistRepositoryImpl implements CustomWatchlistRepository 
     }
 
     @Override
-    public Optional<Watchlist> find(Principal principal, String symbolName) {
-        Criteria matchCriteria = Criteria.where(WatchlistEntity.Field.REQUESTER_ID)
-                .is(principal)
-                .and(WatchlistEntity.Field.SYMBOL_NAME)
-                .is(symbolName);
+    public Optional<Subscription> findSubscription(Principal principal, String assetName) {
+        Criteria matchCriteria = Criteria.where(SubscriptionEntity.Field.CREATED_BY)
+                .is(principal.getName())
+                .and(SubscriptionEntity.Field.ASSET_NAME)
+                .is(assetName);
 
-        WatchlistEntity watchlistEntity = mongoOperations.findOne(
+        SubscriptionEntity subscriptionEntity = mongoOperations.findOne(
                 Query.query(matchCriteria),
-                WatchlistEntity.class,
-                WatchlistEntity.COLLECTION_NAME
+                SubscriptionEntity.class,
+                SubscriptionEntity.COLLECTION_NAME
         );
 
-        return Optional.ofNullable(watchlistEntity).map(this::toWatchlist);
+        return Optional.ofNullable(subscriptionEntity).map(this::toWatchlist);
     }
 
 
-    private Watchlist toWatchlist(WatchlistEntity watchlistEntity) {
-        return conversionService.convert(watchlistEntity, Watchlist.class);
+    private Subscription toWatchlist(SubscriptionEntity subscriptionEntity) {
+        return conversionService.convert(subscriptionEntity, Subscription.class);
     }
 }

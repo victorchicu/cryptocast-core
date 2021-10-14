@@ -1,10 +1,9 @@
 package com.crypto.core.watchlist.controllers;
 
+import com.crypto.core.binance.client.domain.event.TickerEvent;
 import com.crypto.core.binance.services.BinanceService;
-import com.crypto.core.notifications.services.NotificationEmitter;
-import com.crypto.core.notifications.services.NotificationService;
-import com.crypto.core.watchlist.domain.Watchlist;
-import com.crypto.core.watchlist.dto.WatchlistDto;
+import com.crypto.core.watchlist.domain.Subscription;
+import com.crypto.core.watchlist.dto.SubscriptionDto;
 import com.crypto.core.watchlist.exceptions.SubscriptionNotFoundException;
 import com.crypto.core.watchlist.services.WatchlistService;
 import org.slf4j.Logger;
@@ -24,78 +23,55 @@ public class WatchlistController {
     private final BinanceService binanceService;
     private final WatchlistService watchlistService;
     private final ConversionService conversionService;
-    private final NotificationService notificationService;
-    private final NotificationEmitter notificationEmitter;
 
     public WatchlistController(
             BinanceService binanceService,
             WatchlistService watchlistService,
-            ConversionService conversionService,
-            NotificationService notificationService,
-            NotificationEmitter notificationEmitter
+            ConversionService conversionService
     ) {
         this.binanceService = binanceService;
         this.conversionService = conversionService;
-        this.notificationService = notificationService;
-        this.notificationEmitter = notificationEmitter;
         this.watchlistService = watchlistService;
     }
 
-    @PutMapping("/{symbolName}/add")
-    public WatchlistDto add(Principal principal, @PathVariable String symbolName) {
-        return watchlistService.find(principal, symbolName)
-                .map(this::toWatchlistDto)
+    @PostMapping("/{assetName}/add")
+    public SubscriptionDto addSubscription(Principal principal, @PathVariable String assetName) {
+        return watchlistService.findSubscription(principal, assetName)
+                .map(this::toSubscriptionDto)
                 .orElseGet(() -> {
-                    Watchlist watchlist = watchlistService.save(
-                            Watchlist.newBuilder()
-                                    .symbolName(symbolName)
+                    Subscription subscription = watchlistService.saveSubscription(
+                            Subscription.newBuilder()
+                                    .assetName(assetName)
                                     .build()
                     );
-//                    binanceService.subscribe(
-//                            principal,
-//                            symbolName,
-//                            emitSymbolTickerEventCallback(principal),
-//                            handleSubscriptionError()
-//                    );
-                    return toWatchlistDto(watchlist);
+                    binanceService.subscribeOnTickerEvent(assetName, (TickerEvent tickerEvent) -> {
+                        //TODO: Push ticker event data to websocket
+                        System.out.println(tickerEvent);
+                    });
+                    return toSubscriptionDto(subscription);
                 });
     }
 
 
-    @DeleteMapping("/{symbolName}/remove")
-    public WatchlistDto remove(Principal principal, @PathVariable String symbolName) {
-        return watchlistService.find(principal, symbolName)
+    @DeleteMapping("/{assetName}/remove")
+    public SubscriptionDto removeSubscription(Principal principal, @PathVariable String assetName) {
+        return watchlistService.findSubscription(principal, assetName)
                 .map(subscription -> {
-//                    binanceService.unsubscribe(principal, symbolName);
-                    watchlistService.deleteById(subscription.getId());
-                    return toWatchlistDto(subscription);
+                    binanceService.unsubscribeFromTickerEvent(assetName);
+                    watchlistService.deleteSubscriptionById(subscription.getId());
+                    return toSubscriptionDto(subscription);
                 })
                 .orElseThrow(SubscriptionNotFoundException::new);
     }
 
     @GetMapping
-    public Page<WatchlistDto> list(Pageable pageable) {
-        return watchlistService.findAll(pageable).map(this::toWatchlistDto);
+    public Page<SubscriptionDto> listSubscriptions(Principal principal, Pageable pageable) {
+        return watchlistService.findSubscriptions(principal, pageable)
+                .map(this::toSubscriptionDto);
     }
 
 
-    private WatchlistDto toWatchlistDto(Watchlist watchlist) {
-        return conversionService.convert(watchlist, WatchlistDto.class);
+    private SubscriptionDto toSubscriptionDto(Subscription subscription) {
+        return conversionService.convert(subscription, SubscriptionDto.class);
     }
-
-//    private SubscriptionErrorHandler handleSubscriptionError() {
-//        return e -> LOGGER.error(e.getMessage(), e);
-//    }
-
-//    private SubscriptionListener<SymbolTickerEvent> emitSymbolTickerEventCallback(Principal principal) {
-//        return (SymbolTickerEvent symbolTickerEvent) -> {
-//            notificationEmitter.emitNotification(
-//                    principal,
-//                    NotificationEvent.SYMBOL_TICKER_EVENT,
-//                    symbolTickerEvent,
-//                    SymbolTickerEventDto.class
-//            );
-//            notificationService.saveNotification(symbolTickerEvent);
-//        };
-//    }
 }

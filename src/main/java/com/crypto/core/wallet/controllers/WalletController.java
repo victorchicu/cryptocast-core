@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,13 +26,10 @@ public class WalletController {
 
     @GetMapping("/assets")
     public List<AssetDto> listAssets() {
-        //TODO: optimize assets call
         return binanceService.listAssets().stream()
-                .filter(coinInfo -> {
-                    BigDecimal free = new BigDecimal(coinInfo.getFree());
-                    return free.compareTo(BigDecimal.ZERO) > 0;
-                })
+                .filter(asset -> new BigDecimal(asset.getFree()).compareTo(BigDecimal.ZERO) > 0)
                 .map(this::toAssetDto)
+                .sorted(Comparator.comparing(AssetDto::getBalance).reversed())
                 .collect(Collectors.toList());
     }
 

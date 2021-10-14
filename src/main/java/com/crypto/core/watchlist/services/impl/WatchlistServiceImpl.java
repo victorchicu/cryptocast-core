@@ -1,15 +1,14 @@
 package com.crypto.core.watchlist.services.impl;
 
-import com.crypto.core.watchlist.domain.Watchlist;
-import com.crypto.core.watchlist.entity.WatchlistEntity;
+import com.crypto.core.watchlist.domain.Subscription;
+import com.crypto.core.watchlist.entity.SubscriptionEntity;
 import com.crypto.core.watchlist.repository.WatchlistRepository;
 import com.crypto.core.watchlist.services.WatchlistService;
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.repository.support.PageableExecutionUtils;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -28,58 +27,43 @@ public class WatchlistServiceImpl implements WatchlistService {
     }
 
     @Override
-    public void update(Query query, String updateKey, Object updateValue) {
-        watchlistRepository.update(query, updateKey, updateValue);
+    public void deleteWatchlist(Principal principal) {
+        watchlistRepository.removeWatchlsit(principal);
     }
 
     @Override
-    public void deleteAll(Principal principal) {
-        watchlistRepository.remove(principal);
+    public void deleteSubscriptionById(String watchlistId) {
+        watchlistRepository.deleteById(watchlistId);
     }
 
     @Override
-    public void deleteById(String id) {
-        watchlistRepository.deleteById(id);
+    public Subscription saveSubscription(Subscription subscription) {
+        SubscriptionEntity subscriptionEntity = toSubscriptionEntity(subscription);
+        subscription = toSubscription(watchlistRepository.save(subscriptionEntity));
+        return subscription;
     }
 
     @Override
-    public Watchlist save(Watchlist watchlist) {
-        WatchlistEntity watchlistEntity = toWatchlistEntity(watchlist);
-        watchlist = toWatchlist(watchlistRepository.save(watchlistEntity));
-        return watchlist;
+    public Page<Subscription> findSubscriptions(Principal principal, Pageable pageable) {
+        return watchlistRepository.listSubscriptions(principal, pageable);
     }
 
     @Override
-    public Page<Watchlist> findAll(Principal principal, Pageable pageable) {
-        return watchlistRepository.list(principal, pageable);
+    public Page<Subscription> findSubscriptions(Principal principal, List<String> assetNames, Pageable pageable) {
+        return watchlistRepository.listSubscriptions(principal, assetNames, pageable);
     }
 
     @Override
-    public Page<Watchlist> findAll(Principal principal, List<String> symbolNames, Pageable pageable) {
-        return watchlistRepository.list(principal, symbolNames, pageable);
-    }
-
-    @Override
-    public Page<Watchlist> findAll(Pageable pageable) {
-        List<WatchlistEntity> watchlist = IterableUtils.toList(watchlistRepository.findAll());
-        return PageableExecutionUtils.getPage(
-                watchlist.stream().map(this::toWatchlist).collect(Collectors.toList()),
-                pageable,
-                () -> watchlist.size()
-        );
-    }
-
-    @Override
-    public Optional<Watchlist> find(Principal principal, String symbolName) {
-        return watchlistRepository.find(principal, symbolName);
+    public Optional<Subscription> findSubscription(Principal principal, String assetName) {
+        return watchlistRepository.findSubscription(principal, assetName);
     }
 
 
-    private Watchlist toWatchlist(WatchlistEntity watchlistEntity) {
-        return conversionService.convert(watchlistEntity, Watchlist.class);
+    private Subscription toSubscription(SubscriptionEntity subscriptionEntity) {
+        return conversionService.convert(subscriptionEntity, Subscription.class);
     }
 
-    private WatchlistEntity toWatchlistEntity(Watchlist watchlist) {
-        return conversionService.convert(watchlist, WatchlistEntity.class);
+    private SubscriptionEntity toSubscriptionEntity(Subscription subscription) {
+        return conversionService.convert(subscription, SubscriptionEntity.class);
     }
 }

@@ -2,14 +2,14 @@ package com.crypto.core.watchlist.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class WatchlistDto {
+public class SubscriptionDto {
     private final String id;
-    private final String coinName;
+    private final String assetName;
 
     @JsonCreator
-    public WatchlistDto(String id, String coinName) {
+    public SubscriptionDto(String id, String assetName) {
         this.id = id;
-        this.coinName = coinName;
+        this.assetName = assetName;
     }
 
     public String getId() {
@@ -17,6 +17,6 @@ public class WatchlistDto {
     }
 
     public String getCoinName() {
-        return coinName;
+        return assetName;
     }
 }

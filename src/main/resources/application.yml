@@ -85,6 +85,8 @@ binance:
   url: wss://api.binance.com/
   apiKey: Zqxi5MgLBbAHQa20Lp9E9xQEW5BmI3sxzpR1se3zHaoSpmoO2thq5q7z8Zt9xm2v
   secretKey: EApcbO0IZx72dPnbACq3ND8VoGH2mTJ031Wncb8hDaJ3nNews7O1yNneAgI2BUDS
+  useTestnet: false
+  useTestnetStreaming: false
   blacklist:
     - FTTBUSD
     - ADABUSD
