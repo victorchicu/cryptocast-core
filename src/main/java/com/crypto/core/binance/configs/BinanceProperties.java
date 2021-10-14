@@ -13,8 +13,7 @@ public class BinanceProperties {
     private String apiKey;
     private String secretKey;
     private Set<String> blacklist;
-    private Map<String, Coin> tetherSymbol;
-    private Map<String, Coin> symbolTether;
+    private Map<String, Asset> assets;
 
     public String getUrl() {
         return url;
@@ -48,23 +47,15 @@ public class BinanceProperties {
         this.blacklist = blacklist;
     }
 
-    public Map<String, Coin> getTetherSymbol() {
-        return tetherSymbol;
+    public Map<String, Asset> getAssets() {
+        return assets;
     }
 
-    public void setTetherSymbol(Map<String, Coin> tetherSymbol) {
-        this.tetherSymbol = tetherSymbol;
+    public void setAssets(Map<String, Asset> assets) {
+        this.assets = assets;
     }
 
-    public Map<String, Coin> getSymbolTether() {
-        return symbolTether;
-    }
-
-    public void setSymbolTether(Map<String, Coin> symbolTether) {
-        this.symbolTether = symbolTether;
-    }
-
-    public static class Coin {
+    public static class Asset {
         private Integer icon;
         private String name;
         private String alias;
