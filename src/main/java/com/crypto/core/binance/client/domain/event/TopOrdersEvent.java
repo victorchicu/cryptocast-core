@@ -1,37 +1,26 @@
-package com.crypto.core.binance.client.domain.market;
+package com.crypto.core.binance.client.domain.event;
 
 import com.crypto.core.binance.client.constant.BinanceApiConstants;
+import com.crypto.core.binance.client.domain.market.OrderBookEntry;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;
 
 /**
- * Order book of a symbol in Binance.
+ * Top bids and asks from Partial Book Depth event
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OrderBook {
-
-  /**
-   * Last update id of this order book.
-   */
-  private long lastUpdateId;
-
-  /**
-   * List of bids (price/qty).
-   */
+public class TopOrdersEvent {
+  private Long lastUpdateId;
   private List<OrderBookEntry> bids;
-
-  /**
-   * List of asks (price/qty).
-   */
   private List<OrderBookEntry> asks;
 
-  public long getLastUpdateId() {
+  public Long getLastUpdateId() {
     return lastUpdateId;
   }
 
-  public void setLastUpdateId(long lastUpdateId) {
+  public void setLastUpdateId(Long lastUpdateId) {
     this.lastUpdateId = lastUpdateId;
   }
 

@@ -69,6 +69,10 @@ dependencies {
     implementation group: 'io.github.openfeign', name: 'feign-okhttp', version: '11.6'
     // https://mvnrepository.com/artifact/io.github.openfeign/feign-httpclient
     implementation group: 'io.github.openfeign', name: 'feign-httpclient', version: '11.6'
+    // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
+    implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.4.0'
+    // https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-jackson
+    implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.4.0'
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 

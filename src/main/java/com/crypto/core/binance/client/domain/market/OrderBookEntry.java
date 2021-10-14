@@ -1,35 +1,43 @@
 package com.crypto.core.binance.client.domain.market;
 
 import com.crypto.core.binance.client.constant.BinanceApiConstants;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.math.BigDecimal;
-
+/**
+ * An order book entry consisting of price and quantity.
+ */
+@JsonDeserialize(using = OrderBookEntryDeserializer.class)
+@JsonSerialize(using = OrderBookEntrySerializer.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderBookEntry {
 
-    private BigDecimal price;
+  private String price;
+  private String qty;
 
-    private BigDecimal qty;
+  public String getPrice() {
+    return price;
+  }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
+  public void setPrice(String price) {
+    this.price = price;
+  }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+  public String getQty() {
+    return qty;
+  }
 
-    public BigDecimal getQty() {
-        return qty;
-    }
+  public void setQty(String qty) {
+    this.qty = qty;
+  }
 
-    public void setQty(BigDecimal qty) {
-        this.qty = qty;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE).append("price", price)
-                .append("qty", qty).toString();
-    }
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
+        .append("price", price)
+        .append("qty", qty)
+        .toString();
+  }
 }
