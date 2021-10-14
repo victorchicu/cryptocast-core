@@ -20,7 +20,7 @@ public class RankController {
     }
 
     @GetMapping
-    public Page<SymbolDto> listSupportedSymbols(Principal principal, Pageable pageable) {
-        return rankService.listSupportedSymbols(principal, pageable);
+    public Page<SymbolDto> rank(Principal principal, Pageable pageable) {
+        return rankService.rankCoins(principal, pageable);
     }
 }

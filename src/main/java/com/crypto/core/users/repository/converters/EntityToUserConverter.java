@@ -16,6 +16,8 @@ public class EntityToUserConverter implements Converter<UserEntity, User> {
                 .imageUrl(source.getImageUrl())
                 .provider(source.getProvider())
                 .providerId(source.getProviderId())
+                .apiKey(source.getApiKey())
+                .secretKey(source.getSecretKey())
                 .build();
     }
 }

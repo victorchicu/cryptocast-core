@@ -3,6 +3,7 @@ package com.crypto.core.rank.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class SymbolDto {
     private final String name;
@@ -38,5 +39,18 @@ public class SymbolDto {
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SymbolDto symbolDto = (SymbolDto) o;
+        return Objects.equals(name, symbolDto.name) && Objects.equals(alias, symbolDto.alias) && Objects.equals(icon, symbolDto.icon) && Objects.equals(inWatchlist, symbolDto.inWatchlist) && Objects.equals(price, symbolDto.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, alias, icon, inWatchlist, price);
     }
 }

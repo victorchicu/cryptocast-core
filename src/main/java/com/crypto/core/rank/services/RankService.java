@@ -7,5 +7,5 @@ import org.springframework.data.domain.Pageable;
 import java.security.Principal;
 
 public interface RankService {
-    Page<SymbolDto> listSupportedSymbols(Principal principal, Pageable pageable);
+    Page<SymbolDto> rankCoins(Principal principal, Pageable pageable);
 }

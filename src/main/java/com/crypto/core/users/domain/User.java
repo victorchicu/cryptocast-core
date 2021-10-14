@@ -8,6 +8,8 @@ public class User {
     private String password;
     private String imageUrl;
     private String providerId;
+    private String apiKey;
+    private String secretKey;
     private AuthProvider provider;
 
     private User(Builder builder) {
@@ -16,6 +18,8 @@ public class User {
         password = builder.password;
         imageUrl = builder.imageUrl;
         providerId = builder.providerId;
+        apiKey = builder.apiKey;
+        secretKey = builder.secretKey;
         provider = builder.provider;
     }
 
@@ -63,6 +67,22 @@ public class User {
         this.providerId = providerId;
     }
 
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+    }
+
     public AuthProvider getProvider() {
         return provider;
     }
@@ -77,6 +97,8 @@ public class User {
         private String password;
         private String imageUrl;
         private String providerId;
+        private String apiKey;
+        private String secretKey;
         private AuthProvider provider;
 
         private Builder() {}
@@ -103,6 +125,16 @@ public class User {
 
         public Builder providerId(String providerId) {
             this.providerId = providerId;
+            return this;
+        }
+
+        public Builder apiKey(String apiKey) {
+            this.apiKey = apiKey;
+            return this;
+        }
+
+        public Builder secretKey(String secretKey) {
+            this.secretKey = secretKey;
             return this;
         }
 

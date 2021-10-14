@@ -38,27 +38,27 @@ public class RankServiceImpl implements RankService {
     }
 
     @Override
-    public Page<SymbolDto> listSupportedSymbols(Principal principal, Pageable pageable) {
+    public Page<SymbolDto> rankCoins(Principal principal, Pageable pageable) {
         SymbolsDto symbolsDto = binanceClient.fetchSymbols();
         List<SymbolDto> symbols = symbolsDto.getData().stream()
-                .map(this::toCoinDto)
-                .filter(skipUnsupportedCoins())
+                .map(this::toSymbolDto)
+                .filter(skipUnsupportedSymbols())
                 .sorted(Comparator.comparing(SymbolDto::getPrice).reversed())
                 .skip(pageable.getPageNumber() * pageable.getPageSize())
                 .limit(pageable.getPageSize())
                 .collect(Collectors.toList());
-        return PageableExecutionUtils.getPage(symbols, pageable, () -> binanceProperties.getSymbolTether().size());
+        return PageableExecutionUtils.getPage(symbols, pageable, () -> binanceProperties.getAssets().size());
     }
 
-    private SymbolDto toCoinDto(SymbolsDto.Data data) {
-        BinanceProperties.Coin coin = binanceProperties.getSymbolTether().get(data.getName());
-        if (coin != null) {
-            return new SymbolDto(data.getName(), coin.getAlias(), coin.getIcon(), false, data.getMarketCap());
+    private SymbolDto toSymbolDto(SymbolsDto.Data data) {
+        BinanceProperties.Asset asset = binanceProperties.getAssets().get(data.getName());
+        if (asset != null) {
+            return new SymbolDto(data.getName(), asset.getAlias(), asset.getIcon(), false, data.getMarketCap());
         }
         return null;
     }
 
-    private Predicate<SymbolDto> skipUnsupportedCoins() {
+    private Predicate<SymbolDto> skipUnsupportedSymbols() {
         return (SymbolDto symbolDto) -> symbolDto != null && symbolDto.getPrice() != null;
     }
 }

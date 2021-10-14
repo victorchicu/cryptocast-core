@@ -1,7 +1,7 @@
 package com.crypto.core.handlers;
 
 import com.crypto.core.binance.exceptions.SymbolNotFoundException;
-import com.crypto.core.users.exceptions.EmailAddressNotFoundException;
+import com.crypto.core.users.exceptions.EmailNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,8 @@ import java.util.List;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler({EmailAddressNotFoundException.class})
-    public ResponseEntity<Object> emailAddressNotFoundException(EmailAddressNotFoundException ex, WebRequest webRequest) {
+    @ExceptionHandler({EmailNotFoundException.class})
+    public ResponseEntity<Object> emailAddressNotFoundException(EmailNotFoundException ex, WebRequest webRequest) {
         LOGGER.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorDto(

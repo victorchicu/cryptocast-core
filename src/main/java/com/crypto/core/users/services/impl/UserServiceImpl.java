@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
                 .map(this::toAccount);
     }
 
+
     private User toAccount(UserEntity accountEntity) {
         return conversionService.convert(accountEntity, User.class);
     }

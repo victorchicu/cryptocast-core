@@ -1,11 +1,6 @@
 package com.crypto.core.watchlist.controllers;
 
-import com.crypto.core.binance.client.SubscriptionErrorHandler;
-import com.crypto.core.binance.client.SubscriptionListener;
-import com.crypto.core.binance.client.domain.event.SymbolTickerEvent;
-import com.crypto.core.binance.dto.SymbolTickerEventDto;
 import com.crypto.core.binance.services.BinanceService;
-import com.crypto.core.notifications.enums.NotificationEvent;
 import com.crypto.core.notifications.services.NotificationEmitter;
 import com.crypto.core.notifications.services.NotificationService;
 import com.crypto.core.watchlist.domain.Watchlist;
@@ -56,12 +51,12 @@ public class WatchlistController {
                                     .symbolName(symbolName)
                                     .build()
                     );
-                    binanceService.subscribe(
-                            principal,
-                            symbolName,
-                            emitSymbolTickerEventCallback(principal),
-                            handleSubscriptionError()
-                    );
+//                    binanceService.subscribe(
+//                            principal,
+//                            symbolName,
+//                            emitSymbolTickerEventCallback(principal),
+//                            handleSubscriptionError()
+//                    );
                     return toWatchlistDto(watchlist);
                 });
     }
@@ -71,7 +66,7 @@ public class WatchlistController {
     public WatchlistDto remove(Principal principal, @PathVariable String symbolName) {
         return watchlistService.find(principal, symbolName)
                 .map(subscription -> {
-                    binanceService.unsubscribe(principal, symbolName);
+//                    binanceService.unsubscribe(principal, symbolName);
                     watchlistService.deleteById(subscription.getId());
                     return toWatchlistDto(subscription);
                 })
@@ -88,19 +83,19 @@ public class WatchlistController {
         return conversionService.convert(watchlist, WatchlistDto.class);
     }
 
-    private SubscriptionErrorHandler handleSubscriptionError() {
-        return e -> LOGGER.error(e.getMessage(), e);
-    }
+//    private SubscriptionErrorHandler handleSubscriptionError() {
+//        return e -> LOGGER.error(e.getMessage(), e);
+//    }
 
-    private SubscriptionListener<SymbolTickerEvent> emitSymbolTickerEventCallback(Principal principal) {
-        return (SymbolTickerEvent symbolTickerEvent) -> {
-            notificationEmitter.emitNotification(
-                    principal,
-                    NotificationEvent.SYMBOL_TICKER_EVENT,
-                    symbolTickerEvent,
-                    SymbolTickerEventDto.class
-            );
-            notificationService.saveNotification(symbolTickerEvent);
-        };
-    }
+//    private SubscriptionListener<SymbolTickerEvent> emitSymbolTickerEventCallback(Principal principal) {
+//        return (SymbolTickerEvent symbolTickerEvent) -> {
+//            notificationEmitter.emitNotification(
+//                    principal,
+//                    NotificationEvent.SYMBOL_TICKER_EVENT,
+//                    symbolTickerEvent,
+//                    SymbolTickerEventDto.class
+//            );
+//            notificationService.saveNotification(symbolTickerEvent);
+//        };
+//    }
 }
