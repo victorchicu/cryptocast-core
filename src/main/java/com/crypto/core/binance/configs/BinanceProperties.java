@@ -74,16 +74,16 @@ public class BinanceProperties {
     }
 
     public static class Asset {
-        private Integer icon;
+        private String coin;
         private String name;
-        private String alias;
+        private Integer icon;
 
-        public Integer getIcon() {
-            return icon;
+        public String getCoin() {
+            return coin;
         }
 
-        public void setIcon(Integer icon) {
-            this.icon = icon;
+        public void setCoin(String coin) {
+            this.coin = coin;
         }
 
         public String getName() {
@@ -94,12 +94,12 @@ public class BinanceProperties {
             this.name = name;
         }
 
-        public String getAlias() {
-            return alias;
+        public Integer getIcon() {
+            return icon;
         }
 
-        public void setAlias(String alias) {
-            this.alias = alias;
+        public void setIcon(Integer icon) {
+            this.icon = icon;
         }
     }
 }

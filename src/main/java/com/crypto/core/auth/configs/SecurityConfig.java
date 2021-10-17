@@ -3,11 +3,11 @@ package com.crypto.core.auth.configs;
 import com.crypto.core.auth.filters.TokenAuthenticationFilter;
 import com.crypto.core.auth.handlers.OAuth2AuthenticationFailureHandler;
 import com.crypto.core.auth.handlers.OAuth2AuthenticationSuccessHandler;
-import com.crypto.core.users.repository.impl.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.crypto.core.auth.services.TokenProviderService;
 import com.crypto.core.auth.services.impl.CustomOAuth2UserService;
 import com.crypto.core.auth.services.impl.CustomUserDetailsService;
 import com.crypto.core.auth.services.impl.TokenProviderServiceImpl;
+import com.crypto.core.users.repository.impl.HttpCookieOAuth2AuthorizationRequestRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -25,6 +25,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
@@ -66,10 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOriginPatterns(Collections.singletonList("http://localhost:4200"));
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);

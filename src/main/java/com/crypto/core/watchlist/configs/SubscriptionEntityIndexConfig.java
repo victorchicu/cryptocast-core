@@ -9,10 +9,10 @@ import org.springframework.data.mongodb.core.index.CompoundIndexDefinition;
 import javax.annotation.PostConstruct;
 
 @Configuration
-public class WatchlistEntityIndexConfig {
+public class SubscriptionEntityIndexConfig {
     private final MongoOperations mongoOperations;
 
-    public WatchlistEntityIndexConfig(MongoOperations mongoOperations) {
+    public SubscriptionEntityIndexConfig(MongoOperations mongoOperations) {
         this.mongoOperations = mongoOperations;
     }
 

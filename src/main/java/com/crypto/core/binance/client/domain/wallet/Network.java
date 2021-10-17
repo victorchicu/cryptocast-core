@@ -2,35 +2,29 @@ package com.crypto.core.binance.client.domain.wallet;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.math.BigDecimal;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Network {
-    private String addressRegex;
     private String coin;
-    private String depositDesc;
-    private Boolean depositEnable;
-    private Boolean isDefault;
-    private String memoRegex;
-    private Integer minConfirm;
     private String name;
     private String network;
-    private Boolean resetAddressStatus;
+    private String memoRegex;
+    private String depositDesc;
     private String specialTips;
-    private Integer unLockConfirm;
+    private String addressRegex;
     private String withdrawDesc;
-    private Boolean withdrawEnable;
-    private String withdrawFee;
-    private String withdrawIntegerMultiple;
-    private String withdrawMax;
-    private String withdrawMin;
+    private Integer minConfirm;
+    private Integer unLockConfirm;
+    private Boolean isDefault;
     private Boolean sameAddress;
-
-    public String getAddressRegex() {
-        return addressRegex;
-    }
-
-    public void setAddressRegex(String addressRegex) {
-        this.addressRegex = addressRegex;
-    }
+    private Boolean depositEnable;
+    private Boolean withdrawEnable;
+    private Boolean resetAddressStatus;
+    private BigDecimal withdrawFee;
+    private BigDecimal withdrawIntegerMultiple;
+    private BigDecimal withdrawMax;
+    private BigDecimal withdrawMin;
 
     public String getCoin() {
         return coin;
@@ -38,46 +32,6 @@ public class Network {
 
     public void setCoin(String coin) {
         this.coin = coin;
-    }
-
-    public String getDepositDesc() {
-        return depositDesc;
-    }
-
-    public void setDepositDesc(String depositDesc) {
-        this.depositDesc = depositDesc;
-    }
-
-    public Boolean getDepositEnable() {
-        return depositEnable;
-    }
-
-    public void setDepositEnable(Boolean depositEnable) {
-        this.depositEnable = depositEnable;
-    }
-
-    public Boolean getDefault() {
-        return isDefault;
-    }
-
-    public void setDefault(Boolean aDefault) {
-        isDefault = aDefault;
-    }
-
-    public String getMemoRegex() {
-        return memoRegex;
-    }
-
-    public void setMemoRegex(String memoRegex) {
-        this.memoRegex = memoRegex;
-    }
-
-    public Integer getMinConfirm() {
-        return minConfirm;
-    }
-
-    public void setMinConfirm(Integer minConfirm) {
-        this.minConfirm = minConfirm;
     }
 
     public String getName() {
@@ -96,12 +50,20 @@ public class Network {
         this.network = network;
     }
 
-    public Boolean getResetAddressStatus() {
-        return resetAddressStatus;
+    public String getMemoRegex() {
+        return memoRegex;
     }
 
-    public void setResetAddressStatus(Boolean resetAddressStatus) {
-        this.resetAddressStatus = resetAddressStatus;
+    public void setMemoRegex(String memoRegex) {
+        this.memoRegex = memoRegex;
+    }
+
+    public String getDepositDesc() {
+        return depositDesc;
+    }
+
+    public void setDepositDesc(String depositDesc) {
+        this.depositDesc = depositDesc;
     }
 
     public String getSpecialTips() {
@@ -112,12 +74,12 @@ public class Network {
         this.specialTips = specialTips;
     }
 
-    public Integer getUnLockConfirm() {
-        return unLockConfirm;
+    public String getAddressRegex() {
+        return addressRegex;
     }
 
-    public void setUnLockConfirm(Integer unLockConfirm) {
-        this.unLockConfirm = unLockConfirm;
+    public void setAddressRegex(String addressRegex) {
+        this.addressRegex = addressRegex;
     }
 
     public String getWithdrawDesc() {
@@ -128,44 +90,28 @@ public class Network {
         this.withdrawDesc = withdrawDesc;
     }
 
-    public Boolean getWithdrawEnable() {
-        return withdrawEnable;
+    public Integer getMinConfirm() {
+        return minConfirm;
     }
 
-    public void setWithdrawEnable(Boolean withdrawEnable) {
-        this.withdrawEnable = withdrawEnable;
+    public void setMinConfirm(Integer minConfirm) {
+        this.minConfirm = minConfirm;
     }
 
-    public String getWithdrawFee() {
-        return withdrawFee;
+    public Integer getUnLockConfirm() {
+        return unLockConfirm;
     }
 
-    public void setWithdrawFee(String withdrawFee) {
-        this.withdrawFee = withdrawFee;
+    public void setUnLockConfirm(Integer unLockConfirm) {
+        this.unLockConfirm = unLockConfirm;
     }
 
-    public String getWithdrawIntegerMultiple() {
-        return withdrawIntegerMultiple;
+    public Boolean getDefault() {
+        return isDefault;
     }
 
-    public void setWithdrawIntegerMultiple(String withdrawIntegerMultiple) {
-        this.withdrawIntegerMultiple = withdrawIntegerMultiple;
-    }
-
-    public String getWithdrawMax() {
-        return withdrawMax;
-    }
-
-    public void setWithdrawMax(String withdrawMax) {
-        this.withdrawMax = withdrawMax;
-    }
-
-    public String getWithdrawMin() {
-        return withdrawMin;
-    }
-
-    public void setWithdrawMin(String withdrawMin) {
-        this.withdrawMin = withdrawMin;
+    public void setDefault(Boolean aDefault) {
+        isDefault = aDefault;
     }
 
     public Boolean getSameAddress() {
@@ -174,5 +120,61 @@ public class Network {
 
     public void setSameAddress(Boolean sameAddress) {
         this.sameAddress = sameAddress;
+    }
+
+    public Boolean getDepositEnable() {
+        return depositEnable;
+    }
+
+    public void setDepositEnable(Boolean depositEnable) {
+        this.depositEnable = depositEnable;
+    }
+
+    public Boolean getWithdrawEnable() {
+        return withdrawEnable;
+    }
+
+    public void setWithdrawEnable(Boolean withdrawEnable) {
+        this.withdrawEnable = withdrawEnable;
+    }
+
+    public Boolean getResetAddressStatus() {
+        return resetAddressStatus;
+    }
+
+    public void setResetAddressStatus(Boolean resetAddressStatus) {
+        this.resetAddressStatus = resetAddressStatus;
+    }
+
+    public BigDecimal getWithdrawFee() {
+        return withdrawFee;
+    }
+
+    public void setWithdrawFee(BigDecimal withdrawFee) {
+        this.withdrawFee = withdrawFee;
+    }
+
+    public BigDecimal getWithdrawIntegerMultiple() {
+        return withdrawIntegerMultiple;
+    }
+
+    public void setWithdrawIntegerMultiple(BigDecimal withdrawIntegerMultiple) {
+        this.withdrawIntegerMultiple = withdrawIntegerMultiple;
+    }
+
+    public BigDecimal getWithdrawMax() {
+        return withdrawMax;
+    }
+
+    public void setWithdrawMax(BigDecimal withdrawMax) {
+        this.withdrawMax = withdrawMax;
+    }
+
+    public BigDecimal getWithdrawMin() {
+        return withdrawMin;
+    }
+
+    public void setWithdrawMin(BigDecimal withdrawMin) {
+        this.withdrawMin = withdrawMin;
     }
 }

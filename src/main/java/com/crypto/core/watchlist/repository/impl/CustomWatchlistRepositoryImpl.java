@@ -28,7 +28,7 @@ public class CustomWatchlistRepositoryImpl implements CustomWatchlistRepository 
     }
 
     @Override
-    public void removeWatchlsit(Principal principal) {
+    public void removeWatchlist(Principal principal) {
         mongoOperations.remove(
                 Query.query(
                         Criteria.where(SubscriptionEntity.Field.CREATED_BY)

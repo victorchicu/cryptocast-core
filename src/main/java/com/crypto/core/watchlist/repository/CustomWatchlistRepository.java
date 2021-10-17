@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CustomWatchlistRepository {
-    void removeWatchlsit(Principal principal);
+    void removeWatchlist(Principal principal);
 
     Page<Subscription> listSubscriptions(Principal principal, Pageable pageable);
 

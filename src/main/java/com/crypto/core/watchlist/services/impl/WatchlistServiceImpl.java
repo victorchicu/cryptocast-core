@@ -4,17 +4,14 @@ import com.crypto.core.watchlist.domain.Subscription;
 import com.crypto.core.watchlist.entity.SubscriptionEntity;
 import com.crypto.core.watchlist.repository.WatchlistRepository;
 import com.crypto.core.watchlist.services.WatchlistService;
-import org.apache.commons.collections4.IterableUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class WatchlistServiceImpl implements WatchlistService {
@@ -28,7 +25,7 @@ public class WatchlistServiceImpl implements WatchlistService {
 
     @Override
     public void deleteWatchlist(Principal principal) {
-        watchlistRepository.removeWatchlsit(principal);
+        watchlistRepository.removeWatchlist(principal);
     }
 
     @Override

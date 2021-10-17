@@ -8,6 +8,8 @@ public class SubscriptionEntity extends BaseEntity {
 
     private String assetName;
 
+    public SubscriptionEntity() {}
+
     private SubscriptionEntity(Builder builder) {assetName = builder.assetName;}
 
     public static Builder newBuilder() {
@@ -24,9 +26,9 @@ public class SubscriptionEntity extends BaseEntity {
 
     public static class Field {
         public static final String ID = "_id";
-        public static final String CREATED_AT = "createdAt";
-        public static final String CREATED_BY = "createdBy";
         public static final String ASSET_NAME = "assetName";
+        public static final String CREATED_BY = "createdBy";
+        public static final String CREATED_AT = "createdAt";
     }
 
     public static final class Builder {

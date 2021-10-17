@@ -2,24 +2,26 @@ package com.crypto.core.binance.client.domain.wallet;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Asset {
     private String coin;
-    private Boolean depositAllEnable;
-    private String free;
-    private String freeze;
-    private String ipoable;
-    private String ipoing;
-    private Boolean isLegalMoney;
-    private String locked;
     private String name;
-    private List<Network> networkList;
-    private String storage;
     private Boolean trading;
+    private Boolean flagged;
+    private Boolean isLegalMoney;
+    private Boolean depositAllEnable;
     private Boolean withdrawAllEnable;
-    private String withdrawing;
+    private BigDecimal free;
+    private BigDecimal freeze;
+    private BigDecimal ipoing;
+    private BigDecimal locked;
+    private BigDecimal ipoable;
+    private BigDecimal storage;
+    private BigDecimal withdrawing;
+    private List<Network> networkList;
 
     public String getCoin() {
         return coin;
@@ -27,62 +29,6 @@ public class Asset {
 
     public void setCoin(String coin) {
         this.coin = coin;
-    }
-
-    public Boolean getDepositAllEnable() {
-        return depositAllEnable;
-    }
-
-    public void setDepositAllEnable(Boolean depositAllEnable) {
-        this.depositAllEnable = depositAllEnable;
-    }
-
-    public String getFree() {
-        return free;
-    }
-
-    public void setFree(String free) {
-        this.free = free;
-    }
-
-    public String getFreeze() {
-        return freeze;
-    }
-
-    public void setFreeze(String freeze) {
-        this.freeze = freeze;
-    }
-
-    public String getIpoable() {
-        return ipoable;
-    }
-
-    public void setIpoable(String ipoable) {
-        this.ipoable = ipoable;
-    }
-
-    public String getIpoing() {
-        return ipoing;
-    }
-
-    public void setIpoing(String ipoing) {
-        this.ipoing = ipoing;
-    }
-
-    public Boolean getLegalMoney() {
-        return isLegalMoney;
-    }
-
-    public void setLegalMoney(Boolean legalMoney) {
-        isLegalMoney = legalMoney;
-    }
-
-    public String getLocked() {
-        return locked;
-    }
-
-    public void setLocked(String locked) {
-        this.locked = locked;
     }
 
     public String getName() {
@@ -93,28 +39,36 @@ public class Asset {
         this.name = name;
     }
 
-    public List<Network> getNetworkList() {
-        return networkList;
-    }
-
-    public void setNetworkList(List<Network> networkList) {
-        this.networkList = networkList;
-    }
-
-    public String getStorage() {
-        return storage;
-    }
-
-    public void setStorage(String storage) {
-        this.storage = storage;
-    }
-
     public Boolean getTrading() {
         return trading;
     }
 
     public void setTrading(Boolean trading) {
         this.trading = trading;
+    }
+
+    public Boolean getFlagged() {
+        return flagged;
+    }
+
+    public void setFlagged(Boolean flagged) {
+        this.flagged = flagged;
+    }
+
+    public Boolean getLegalMoney() {
+        return isLegalMoney;
+    }
+
+    public void setLegalMoney(Boolean legalMoney) {
+        isLegalMoney = legalMoney;
+    }
+
+    public Boolean getDepositAllEnable() {
+        return depositAllEnable;
+    }
+
+    public void setDepositAllEnable(Boolean depositAllEnable) {
+        this.depositAllEnable = depositAllEnable;
     }
 
     public Boolean getWithdrawAllEnable() {
@@ -125,11 +79,67 @@ public class Asset {
         this.withdrawAllEnable = withdrawAllEnable;
     }
 
-    public String getWithdrawing() {
+    public BigDecimal getFree() {
+        return free;
+    }
+
+    public void setFree(BigDecimal free) {
+        this.free = free;
+    }
+
+    public BigDecimal getFreeze() {
+        return freeze;
+    }
+
+    public void setFreeze(BigDecimal freeze) {
+        this.freeze = freeze;
+    }
+
+    public BigDecimal getIpoing() {
+        return ipoing;
+    }
+
+    public void setIpoing(BigDecimal ipoing) {
+        this.ipoing = ipoing;
+    }
+
+    public BigDecimal getLocked() {
+        return locked;
+    }
+
+    public void setLocked(BigDecimal locked) {
+        this.locked = locked;
+    }
+
+    public BigDecimal getIpoable() {
+        return ipoable;
+    }
+
+    public void setIpoable(BigDecimal ipoable) {
+        this.ipoable = ipoable;
+    }
+
+    public BigDecimal getStorage() {
+        return storage;
+    }
+
+    public void setStorage(BigDecimal storage) {
+        this.storage = storage;
+    }
+
+    public BigDecimal getWithdrawing() {
         return withdrawing;
     }
 
-    public void setWithdrawing(String withdrawing) {
+    public void setWithdrawing(BigDecimal withdrawing) {
         this.withdrawing = withdrawing;
+    }
+
+    public List<Network> getNetworkList() {
+        return networkList;
+    }
+
+    public void setNetworkList(List<Network> networkList) {
+        this.networkList = networkList;
     }
 }

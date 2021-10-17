@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TickerEvent {
+public class   TickerEvent {
 
     @JsonProperty("e")
     private String eventType;

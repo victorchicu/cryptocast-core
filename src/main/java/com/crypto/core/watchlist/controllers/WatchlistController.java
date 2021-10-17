@@ -2,6 +2,8 @@ package com.crypto.core.watchlist.controllers;
 
 import com.crypto.core.binance.client.domain.event.TickerEvent;
 import com.crypto.core.binance.services.BinanceService;
+import com.crypto.core.notifications.enums.NotificationType;
+import com.crypto.core.notifications.services.NotificationTemplate;
 import com.crypto.core.watchlist.domain.Subscription;
 import com.crypto.core.watchlist.dto.SubscriptionDto;
 import com.crypto.core.watchlist.exceptions.SubscriptionNotFoundException;
@@ -23,31 +25,44 @@ public class WatchlistController {
     private final BinanceService binanceService;
     private final WatchlistService watchlistService;
     private final ConversionService conversionService;
+    private final NotificationTemplate notificationTemplate;
 
     public WatchlistController(
             BinanceService binanceService,
             WatchlistService watchlistService,
-            ConversionService conversionService
+            ConversionService conversionService,
+            NotificationTemplate notificationTemplate
     ) {
         this.binanceService = binanceService;
         this.conversionService = conversionService;
         this.watchlistService = watchlistService;
+        this.notificationTemplate = notificationTemplate;
     }
 
     @PostMapping("/{assetName}/add")
     public SubscriptionDto addSubscription(Principal principal, @PathVariable String assetName) {
         return watchlistService.findSubscription(principal, assetName)
-                .map(this::toSubscriptionDto)
+                .map(subscription -> {
+                    watchlistService.deleteSubscriptionById(subscription.getId());
+                    return toSubscriptionDto(subscription);
+                })
                 .orElseGet(() -> {
                     Subscription subscription = watchlistService.saveSubscription(
                             Subscription.newBuilder()
                                     .assetName(assetName)
                                     .build()
                     );
-                    binanceService.subscribeOnTickerEvent(assetName, (TickerEvent tickerEvent) -> {
-                        //TODO: Push ticker event data to websocket
-                        System.out.println(tickerEvent);
+
+                    binanceService.registerTickerEvent(assetName, (TickerEvent tickerEvent) -> {
+                        notificationTemplate.sendNotification(
+                                principal,
+                                NotificationType.TICKER_EVENT,
+                                tickerEvent,
+                                TickerEvent.class
+                        );
+                        LOGGER.info(tickerEvent.toString());
                     });
+
                     return toSubscriptionDto(subscription);
                 });
     }
@@ -57,7 +72,7 @@ public class WatchlistController {
     public SubscriptionDto removeSubscription(Principal principal, @PathVariable String assetName) {
         return watchlistService.findSubscription(principal, assetName)
                 .map(subscription -> {
-                    binanceService.unsubscribeFromTickerEvent(assetName);
+                    binanceService.removeTickerEvent(assetName);
                     watchlistService.deleteSubscriptionById(subscription.getId());
                     return toSubscriptionDto(subscription);
                 })
