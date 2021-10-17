@@ -68,18 +68,18 @@ logging:
 
 routes:
   publicRoutes:
-#    - "/api/rank/**"
     - "/api/login/**"
     - "/api/logout/**"
     - "/api/signup/**"
+    - "/websocket/**"
 
 rabbitmq:
   relayHost: localhost
   relayPort: 61613
 
 notification:
-  eventMappings:
-    SYMBOL_TICKER_EVENT: "'/topic/' + coinName + '/ticker"
+  destinations:
+    TICKER_EVENT: "'/topic/' + symbol + '-ticker'"
 
 binance:
   url: wss://api.binance.com/
@@ -88,538 +88,525 @@ binance:
   useTestnet: false
   useTestnetStreaming: false
   blacklist:
-    - FTTBUSD
-    - ADABUSD
-    - BTCBUSD
-    - BNBBUSD
-    - SOLBUSD
-    - ETHBUSD
-    - XRPBUSD
-    - DOGEBUSD
-    - BTCUSDT_210924
-    - BTCUSDT_211231
-    - BTCUSDT_210625
-    - ETHUSDT_211231
-    - ETHUSDT_210625
-    - ETHUSDT_210924
+    - NFT
   assets:
     1INCH:
       icon: 8104
-      name: 1INCHUSDT
-      alias: 1inch
+      coin: 1INCHUSDT
+      name: 1inch
     AAVE:
       icon: 7278
-      name: AAVEUSDT
-      alias: Aave
+      coin: AAVEUSDT
+      name: Aave
     ADA:
       icon: 2010
-      name: ADAUSDT
-      alias: Cardano
+      coin: ADAUSDT
+      name: Cardano
     AKRO:
       icon: 4134
-      name: AKROUSDT
-      alias: Akropolis
+      coin: AKROUSDT
+      name: Akropolis
     ALGO:
       icon: 4030
-      name: ALGOUSDT
-      alias: Algorand
+      coin: ALGOUSDT
+      name: Algorand
     ALICE:
       icon: 8766
-      name: ALICEUSDT
-      alias: MyNeighborAlice
+      coin: ALICEUSDT
+      name: MyNeighborAlice
     AlPHA:
       icon: 7232
-      name: ALPHAUSDT
-      alias: Alpha Finance Lab
+      coin: ALPHAUSDT
+      name: Alpha Finance Lab
     ANKR:
       icon: 3783
-      name: ANKRUSDT
-      alias: Ankr
+      coin: ANKRUSDT
+      name: Ankr
     ATOM:
       icon: 3794
-      name: ATOMUSDT
-      alias: Cosmos
+      coin: ATOMUSDT
+      name: Cosmos
     AVAX:
       icon: 5805
-      name: AVAXUSDT
-      alias: Avalanche
+      coin: AVAXUSDT
+      name: Avalanche
     AXS:
       icon: 6783
-      name: AXSUSDT
-      alias: Axie Infinity
+      coin: AXSUSDT
+      name: Axie Infinity
     BAKE:
       icon: 7064
-      name: BAKEUSDT
-      alias: BakeryToken
+      coin: BAKEUSDT
+      name: BakeryToken
     BAL:
       icon: 5728
-      name: BALUSDT
-      alias: Balanceer
+      coin: BALUSDT
+      name: Balanceer
     BAND:
       icon: 4679
-      name: BANDUSDT
-      alias: Band Protocol
+      coin: BANDUSDT
+      name: Band Protocol
     BAT:
       icon: 1697
-      name: BATUSDT
-      alias: Basic Attention Token
+      coin: BATUSDT
+      name: Basic Attention Token
     BCH:
       icon: 1831
-      name: BCHUSDT
-      alias: Bitcoin Cash
+      coin: BCHUSDT
+      name: Bitcoin Cash
     BEL:
       icon: 6928
-      name: BEL
-      alias: Bella Protocol
+      coin: BEL
+      name: Bella Protocol
     BLZ:
       icon: 2505
-      name: BLZUSDT
-      alias: Bluzelle
+      coin: BLZUSDT
+      name: Bluzelle
     BTC:
       icon: 4023
-      name: BTCUSDT
-      alias: Bitcoin
+      coin: BTCUSDT
+      name: Bitcoin
     BTS:
       icon: 463
-      name: BTSUSDT
-      alias: BitShares
+      coin: BTSUSDT
+      name: BitShares
     BTT:
       icon: 3718
-      name: BTTUSDT
-      alias: BitTorrent
+      coin: BTTUSDT
+      name: BitTorrent
     BZR:
       icon: 5810
-      name: BZRXUSDT
-      alias: bZx Protocol
+      coin: BZRXUSDT
+      name: bZx Protocol
     CELR:
       icon: 3814
-      name: CELRUSDT
-      alias: Celer Network
+      coin: CELRUSDT
+      name: Celer Network
     CHR:
       icon: 3978
-      name: CHRUSDT
-      alias: Chromia
+      coin: CHRUSDT
+      name: Chromia
     CHZ:
       icon: 4066
-      name: CHZUSDT
-      alias: Chilliz
+      coin: CHZUSDT
+      name: Chilliz
     COMP:
       icon: 5692
-      name: COMPUSDT
-      alias: Compound
+      coin: COMPUSDT
+      name: Compound
     COTI:
       icon: 3992
-      name: COTIUSDT
-      alias: COTI
+      coin: COTIUSDT
+      name: COTI
     CRV:
       icon: 6538
-      name: CRVUSDT
-      alias: Curve DAO Token
+      coin: CRVUSDT
+      name: Curve DAO Token
     CTK:
       icon: 4807
-      name: CTKUSDT
-      alias: CertiK
+      coin: CTKUSDT
+      name: CertiK
     CVC:
       icon: 1816
-      name: CVCUSDT
-      alias: Civic
+      coin: CVCUSDT
+      name: Civic
     DASH:
       icon: 131
-      name: DASHUSDT
-      alias: Dash
+      coin: DASHUSDT
+      name: Dash
     DEFI:
       icon: 4276
-      name: DEFIUSDT
-      alias: Defi
+      coin: DEFIUSDT
+      name: Defi
     DENT:
       icon: 1886
-      name: DENTUSDT
-      alias: Dent
+      coin: DENTUSDT
+      name: Dent
     DGB:
       icon: 109
-      name: DGBUSDT
-      alias: DigiByte
+      coin: DGBUSDT
+      name: DigiByte
     DIT:
       icon: 3264
-      name: DITUSDT
-      alias: Digital Insurance Token
+      coin: DITUSDT
+      name: Digital Insurance Token
     DODO:
       icon: 7224
-      name: DODOUSDT
-      alias: DODO
+      coin: DODOUSDT
+      name: DODO
     DOGE:
       icon: 74
-      name: DOGEUSDT
-      alias: Dogecoin
+      coin: DOGEUSDT
+      name: Dogecoin
     EGLD:
       icon: 6892
-      name: EGLDUSDT
-      alias: Elrond
+      coin: EGLDUSDT
+      name: Elrond
     ENJ:
       icon: 2130
-      name: ENJUSDT
-      alias: Enjin Coin
+      coin: ENJUSDT
+      name: Enjin Coin
     EOS:
       icon: 1765
-      name: EOSUSDT
-      alias: EOS
+      coin: EOSUSDT
+      name: EOS
     ETC:
       icon: 1321
-      name: ETCUSDT
-      alias: Etherium Classic
+      coin: ETCUSDT
+      name: Etherium Classic
     ETH:
       icon: 1027
-      name: ETHUSDT
-      alias: Ethereum
+      coin: ETHUSDT
+      name: Ethereum
     FIL:
       icon: 2280
-      name: FILUSDT
-      alias: Filecoin
+      coin: FILUSDT
+      name: Filecoin
     FLM:
       icon: 7150
-      name: FLMUSDT
-      alias: Flamingo
+      coin: FLMUSDT
+      name: Flamingo
     FTM:
       icon: 3513
-      name: FTMUSDT
-      alias: Fantom
+      coin: FTMUSDT
+      name: Fantom
     GRT:
       icon: 6719
-      name: GRTUSDT
-      alias: The Graph
+      coin: GRTUSDT
+      name: The Graph
     HBAR:
       icon: 4642
-      name: HBARUSDT
-      alias: Hedera Hashgraph
+      coin: HBARUSDT
+      name: Hedera Hashgraph
     HNT:
       icon: 5665
-      name: HNTUSDT
-      alias: Helium
+      coin: HNTUSDT
+      name: Helium
     HOT:
       icon: 2682
-      name: HOTUSDT
-      alias: Holo
+      coin: HOTUSDT
+      name: Holo
     ICP:
       icon: 8916
-      name: ICPUSDT
-      alias: Internet Computer
+      coin: ICPUSDT
+      name: Internet Computer
     ICX:
       icon: 2099
-      name: ICXUSDT
-      alias: ICON
+      coin: ICXUSDT
+      name: ICON
     IOS:
       icon: 2405
-      name: IOSTUSDT
-      alias: IOST
+      coin: IOSTUSDT
+      name: IOST
     IOTA:
       icon: 1720
-      name: IOTAUSDT
-      alias: MIOTA
+      coin: IOTAUSDT
+      name: MIOTA
     KAVA:
       icon: 4846
-      name: KAVAUSDT
-      alias: KAVA
+      coin: KAVAUSDT
+      name: KAVA
     KNC:
       icon: 9444
-      name: KNCUSDT
-      alias: Kyber Network Crystal v2
+      coin: KNCUSDT
+      name: Kyber Network Crystal v2
     KSM:
       icon: 5034
-      name: KSMUSDT
-      alias: Kusama
+      coin: KSMUSDT
+      name: Kusama
     LINA:
       icon: 7102
-      name: LINAUSDT
-      alias: Linear
+      coin: LINAUSDT
+      name: Linear
     LINK:
       icon: 1975
-      name: LINKUSDT
-      alias: Chainlink
+      coin: LINKUSDT
+      name: Chainlink
     LIT:
       icon: 6833
-      name: LITUSDT
-      alias: Litentry
+      coin: LITUSDT
+      name: Litentry
     LRC:
       icon: 1934
-      name: LRCUSDT
-      alias: Loopring
+      coin: LRCUSDT
+      name: Loopring
     LTC:
       icon: 2
-      name: LTCUSDT
-      alias: Litecoin
+      coin: LTCUSDT
+      name: Litecoin
     LUNA:
       icon: 4172
-      name: LUNAUSDT
-      alias: Terra
+      coin: LUNAUSDT
+      name: Terra
     MANA:
       icon: 1966
-      name: MANAUSDT
-      alias: Decentraland
+      coin: MANAUSDT
+      name: Decentraland
     MATIC:
       icon: 3890
-      name: MATICUSDT
-      alias: Polygon
+      coin: MATICUSDT
+      name: Polygon
     MKR:
       icon: 1518
-      name: MKRUSDT
-      alias: Maker
+      coin: MKRUSDT
+      name: Maker
     MTL:
       icon: 1788
-      name: MTLUSDT
-      alias: Metal
+      coin: MTLUSDT
+      name: Metal
     NEAR:
       icon: 6535
-      name: NEARUSDT
-      alias: NEAR Protocol
+      coin: NEARUSDT
+      name: NEAR Protocol
     NEO:
       icon: 1376
-      name: NEOUSDT
-      alias: Neo
+      coin: NEOUSDT
+      name: Neo
     NKN:
       icon: 2780
-      name: NKNUSDT
-      alias: NKN
+      coin: NKNUSDT
+      name: NKN
     OCEAN:
       icon: 3911
-      name: OCEANUSDT
-      alias: Ocean Protocol
+      coin: OCEANUSDT
+      name: Ocean Protocol
     OGN:
       icon: 5117
-      name: OGNUSDT
-      alias: Origin Protocol
+      coin: OGNUSDT
+      name: Origin Protocol
     OMG:
       icon: 8104
-      name: OMGUSDT
-      alias: OMG Network
+      coin: OMGUSDT
+      name: OMG Network
     ONE:
       icon: 3945
-      name: ONEUSDT
-      alias: Harmony
+      coin: ONEUSDT
+      name: Harmony
     ONT:
       icon: 2566
-      name: ONTUSDT
-      alias: Ontology
+      coin: ONTUSDT
+      name: Ontology
     QTUM:
       icon: 1684
-      name: QTUMUSDT
-      alias: Qtum
+      coin: QTUMUSDT
+      name: Qtum
     REEF:
       icon: 6951
-      name: REEFUSDT
-      alias: Reef
+      coin: REEFUSDT
+      name: Reef
     REN:
       icon: 2539
-      name: RENUSDT
-      alias: Ren
+      coin: RENUSDT
+      name: Ren
     RLC:
       icon: 1637
-      name: RLCUSDT
-      alias: iExec RLC
+      coin: RLCUSDT
+      name: iExec RLC
     RSR:
       icon: 3964
-      name: RSRUSDT
-      alias: Reserve Rights
+      coin: RSRUSDT
+      name: Reserve Rights
     RUNE:
       icon: 4157
-      name: RUNEUSDT
-      alias: THORChain
+      coin: RUNEUSDT
+      name: THORChain
     RVN:
       icon: 2577
-      name: RVNUSDT
-      alias: Ravecoin
+      coin: RVNUSDT
+      name: Ravecoin
     SAND:
       icon: 6210
-      name: SANDUSDT
-      alias: The Sandbox
+      coin: SANDUSDT
+      name: The Sandbox
     SC:
       icon: 1042
-      name: SCUSDT
-      alias: Siacoin
+      coin: SCUSDT
+      name: Siacoin
     SFP:
       icon: 8119
-      name: SFPUSDT
-      alias: SafePal
+      coin: SFPUSDT
+      name: SafePal
     SHIB:
       icon: 5994
-      name: 1000SHIBUSDT
-      alias: SHIBA INU
+      coin: 1000SHIBUSDT
+      name: SHIBA INU
     SKL:
       icon: 5691
-      name: SKLUSDT
-      alias: SKALE Network
+      coin: SKLUSDT
+      name: SKALE Network
     SNX:
       icon: 2586
-      name: SNXUSDT
-      alias: Synthetix
+      coin: SNXUSDT
+      name: Synthetix
     SRM:
       icon: 6187
-      name: SRMUSDT
-      alias: Serum
+      coin: SRMUSDT
+      name: Serum
     STMX:
       icon: 2297
-      name: STMXUSDT
-      alias: StormX
+      coin: STMXUSDT
+      name: StormX
     STORJ:
       icon: 1772
-      name: STORJUSDT
-      alias: Storj
+      coin: STORJUSDT
+      name: Storj
     SUSHI:
       icon: 6758
-      name: SUSHIUSDT
-      alias: SushiSwap
+      coin: SUSHIUSDT
+      name: SushiSwap
     SXP:
       icon: 4279
-      name: SXPUSDT
-      alias: Swipe
+      coin: SXPUSDT
+      name: Swipe
     THETA:
       icon: 2416
-      name: THETAUSDT
-      alias: THETA
+      coin: THETAUSDT
+      name: THETA
     TOMO:
       icon: 2570
-      name: TOMOUSDT
-      alias: TomoChain
+      coin: TOMOUSDT
+      name: TomoChain
     TRB:
       icon: 4944
-      name: TRBUSDT
-      alias: Tellor
+      coin: TRBUSDT
+      name: Tellor
     TRX:
       icon: 1958
-      name: TRXUSDT
-      alias: TRON
+      coin: TRXUSDT
+      name: TRON
     UNFI:
       icon: 7672
-      name: UNFIUSDT
-      alias: Unifi Protocol DAO
+      coin: UNFIUSDT
+      name: Unifi Protocol DAO
     UNI:
       icon: 7083
-      name: UNIUSDT
-      alias: Uniswap
+      coin: UNIUSDT
+      name: Uniswap
     VET:
       icon: 3077
-      name: VETUSDT
-      alias: VeChain
+      coin: VETUSDT
+      name: VeChain
     XEM:
       icon: 873
-      name: XEMUSDT
-      alias: NEM
+      coin: XEMUSDT
+      name: NEM
     XLM:
       icon: 512
-      name: XLMUSDT
-      alias: Stellar
+      coin: XLMUSDT
+      name: Stellar
     XMR:
       icon: 328
-      name: XMRUSDT
-      alias: Monero
+      coin: XMRUSDT
+      name: Monero
     XTZ:
       icon: 2011
-      name: XTZUSDT
-      alias: Tezos
+      coin: XTZUSDT
+      name: Tezos
     YFI:
       icon: 5864
-      name: YFIUSDT
-      alias: yearn.finance
+      coin: YFIUSDT
+      name: yearn.finance
     YFII:
       icon: 5957
-      name: YFIIUSDT
-      alias: DFI.Money
+      coin: YFIIUSDT
+      name: DFI.Money
     ZEC:
       icon: 1437
-      name: ZECUSDT
-      alias: Zcash
+      coin: ZECUSDT
+      name: Zcash
     ZEN:
       icon: 1698
-      name: ZENUSDT
-      alias: Horizen
+      coin: ZENUSDT
+      name: Horizen
     ZIL:
       icon: 2469
-      name: ZILUSDT
-      alias: Zilliqa
+      coin: ZILUSDT
+      name: Zilliqa
     ZRX:
       icon: 1896
-      name: ZRXUSDT
-      alias: Ox
+      coin: ZRXUSDT
+      name: Ox
     XEC:
       icon: 10791
-      name: 1000XECUSDT
-      alias: eCash
+      coin: 1000XECUSDT
+      name: eCash
     C98:
       icon: 10903
-      name: C98USDT
-      alias: Coin98
+      coin: C98USDT
+      name: Coin98
     KEEP:
       icon: 5566
-      name: KEEPUSDT
-      alias: Keep Network4
+      coin: KEEPUSDT
+      name: Keep Network4
     AR:
       icon: 5632
-      name: ARUSDT
-      alias: Arweave
+      coin: ARUSDT
+      name: Arweave
     CELO:
       icon: 5567
-      name: CELOUSDT
-      alias: Celo
+      coin: CELOUSDT
+      name: Celo
     GTC:
       icon: 10052
-      name: GTCUSDT
-      alias: Gitcoin
+      coin: GTCUSDT
+      name: Gitcoin
     TLM:
       icon: 9119
-      name: TLMUSDT
-      alias: Alien Worlds
+      coin: TLMUSDT
+      name: Alien Worlds
     AUDIO:
       icon: 7455
-      name: AUDIOUSDT
-      alias: Audius
+      coin: AUDIOUSDT
+      name: Audius
     RAY:
       icon: 8526
-      name: RAYUSDT
-      alias: Raydium
+      coin: RAYUSDT
+      name: Raydium
     DOT:
       icon: 6636
-      name: DOTUSDT
-      alias: Polkadot
+      coin: DOTUSDT
+      name: Polkadot
     BNB:
       icon: 1839
-      name: BNBUSDT
-      alias: Binance Coin
+      coin: BNBUSDT
+      name: Binance Coin
     SOL:
       icon: 5426
-      name: SOLUSDT
-      alias: Solana
+      coin: SOLUSDT
+      name: Solana
     WAVES:
       icon: 1274
-      name: WAVESUSDT
-      alias: Waves
+      coin: WAVESUSDT
+      name: Waves
     MASK:
       icon: 8536
-      name: MASKUSDT
-      alias: Mask Network
+      coin: MASKUSDT
+      name: Mask Network
     XRP:
       icon: 52
-      name: XRPUSDT
-      alias: XRP
+      coin: XRPUSDT
+      name: XRP
     DYDX:
       icon: 11156
-      name: DYDXUSDT
-      alias: dYdX
+      coin: DYDXUSDT
+      name: dYdX
     ATA:
       icon: 10188
-      name: ATAUSDT
-      alias: Automata Network
+      coin: ATAUSDT
+      name: Automata Network
     IOTX:
       icon: 2777
-      name: IOTXUSDT
-      alias: IoTeX
+      coin: IOTXUSDT
+      name: IoTeX
     GALA:
       icon: 7080
-      name: GALAUSDT
-      alias: Gala
+      coin: GALAUSDT
+      name: Gala
     USDT:
       icon: 825
-      name: USDT
-      alias: Tether
+      coin: USDT
+      name: Tether
     NFT:
       icon: 9816
-      name: NFTUSDT
-      alias: APENNFT
+      coin: NFTUSDT
+      name: APENNFT
