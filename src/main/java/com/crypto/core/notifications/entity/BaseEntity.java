@@ -1,4 +1,4 @@
-package com.crypto.core.notifications.repository.entity;
+package com.crypto.core.notifications.entity;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,7 +10,7 @@ public abstract class BaseEntity {
     @Id
     private String id;
     @CreatedBy
-    private String owner;
+    private String createdBy;
     @CreatedDate
     private Instant createdAt;
 
@@ -22,12 +22,12 @@ public abstract class BaseEntity {
         this.id = id;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Instant getCreatedAt() {

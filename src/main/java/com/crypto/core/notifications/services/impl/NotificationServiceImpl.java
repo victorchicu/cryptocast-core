@@ -2,7 +2,7 @@ package com.crypto.core.notifications.services.impl;
 
 import com.crypto.core.notifications.domain.Notification;
 import com.crypto.core.notifications.repository.NotificationRepository;
-import com.crypto.core.notifications.repository.entity.NotificationEntity;
+import com.crypto.core.notifications.entity.NotificationEntity;
 import com.crypto.core.notifications.services.NotificationService;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.convert.ConversionService;

@@ -1,17 +1,17 @@
-package com.crypto.core.notifications.repository.entity;
+package com.crypto.core.notifications.entity;
 
-import com.crypto.core.notifications.enums.NotificationEvent;
+import com.crypto.core.notifications.enums.NotificationType;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
 
 @Document(collection = "notifications")
 public class NotificationEntity extends BaseEntity {
-    private NotificationEvent event;
+    private NotificationType type;
     private Map<String, Object> payload;
 
     private NotificationEntity(Builder builder) {
-        event = builder.event;
+        type = builder.type;
         payload = builder.payload;
     }
 
@@ -19,12 +19,12 @@ public class NotificationEntity extends BaseEntity {
         return new Builder();
     }
 
-    public NotificationEvent getEvent() {
-        return event;
+    public NotificationType getType() {
+        return type;
     }
 
-    public void setEvent(NotificationEvent event) {
-        this.event = event;
+    public void setType(NotificationType type) {
+        this.type = type;
     }
 
     public Map<String, Object> getPayload() {
@@ -36,13 +36,13 @@ public class NotificationEntity extends BaseEntity {
     }
 
     public static final class Builder {
-        private NotificationEvent event;
+        private NotificationType type;
         private Map<String, Object> payload;
 
         private Builder() {}
 
-        public Builder event(NotificationEvent event) {
-            this.event = event;
+        public Builder event(NotificationType type) {
+            this.type = type;
             return this;
         }
 
