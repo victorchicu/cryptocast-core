@@ -16,6 +16,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+//TODO: listAssets is used in a not optimized way due to no alternative API at the moment on Binance platform.
+
 @Service
 public class WalletServiceImpl implements WalletService {
     private final BinanceService binanceService;
@@ -29,14 +31,16 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public List<Asset> listAssets(Principal principal) {
         Page<Subscription> page = watchlistService.findSubscriptions(principal, Pageable.unpaged());
-        Set<String> subscriptions = page.getContent().stream().map(Subscription::getAssetName).collect(Collectors.toSet());
+        Set<String> assetNames = page.getContent().stream().map(Subscription::getAssetName).collect(Collectors.toSet());
         List<Asset> assets = ListUtils.emptyIfNull(binanceService.listAssets(principal));
-        assets.forEach(asset -> asset.setFlagged(subscriptions.contains(asset.getCoin())));
+        assets.forEach(asset -> asset.setFlagged(assetNames.contains(asset.getCoin())));
         return assets;
     }
 
     @Override
     public Optional<Asset> findAssetByName(Principal principal, String assetName) {
-        return listAssets(principal).stream().filter(asset -> asset.getCoin().equals(assetName)).findFirst();
+        return listAssets(principal).stream()
+                .filter(asset -> asset.getCoin().equals(assetName))
+                .findFirst();
     }
 }

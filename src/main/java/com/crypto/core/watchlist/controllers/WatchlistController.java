@@ -55,29 +55,27 @@ public class WatchlistController {
     @PostMapping("/{assetName}/add")
     public SubscriptionDto addSubscription(Principal principal, @PathVariable String assetName) {
         return walletService.findAssetByName(principal, assetName)
-                .map((Asset asset) -> {
-                    return watchlistService.findSubscription(principal, assetName)
-                            .map(subscription -> {
-                                binanceService.removeTickerEvent(assetName);
-                                watchlistService.deleteSubscriptionById(subscription.getId());
-                                return toSubscriptionDto(subscription);
-                            })
-                            .orElseGet(() -> {
-                                Subscription subscription = watchlistService.saveSubscription(
-                                        Subscription.newBuilder()
-                                                .assetName(assetName)
-                                                .build()
-                                );
+                .map((Asset asset) -> watchlistService.findSubscription(principal, assetName)
+                        .map(subscription -> {
+                            binanceService.removeTickerEvent(assetName);
+                            watchlistService.deleteSubscriptionById(subscription.getId());
+                            return toSubscriptionDto(subscription);
+                        })
+                        .orElseGet(() -> {
+                            Subscription subscription = watchlistService.saveSubscription(
+                                    Subscription.newBuilder()
+                                            .assetName(assetName)
+                                            .build()
+                            );
 
-                                binanceService.registerTickerEvent(assetName, (TickerEvent tickerEvent) -> {
-                                    AssetDto assetDto = toAssetDto(asset, tickerEvent);
-                                    notificationTemplate.sendNotification(principal, NotificationType.TICKER_EVENT, assetDto);
-                                    LOGGER.info(tickerEvent.toString());
-                                });
-
-                                return toSubscriptionDto(subscription);
+                            binanceService.registerTickerEvent(assetName, (TickerEvent tickerEvent) -> {
+                                AssetDto assetDto = toAssetDto(asset, tickerEvent);
+                                notificationTemplate.sendNotification(principal, NotificationType.TICKER_EVENT, assetDto);
+                                LOGGER.info(tickerEvent.toString());
                             });
-                })
+
+                            return toSubscriptionDto(subscription);
+                        }))
                 .orElseThrow(AssetNotFoundException::new);
     }
 
