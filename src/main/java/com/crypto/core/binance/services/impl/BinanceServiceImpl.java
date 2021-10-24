@@ -7,7 +7,7 @@ import com.crypto.core.binance.client.domain.event.TickerEvent;
 import com.crypto.core.binance.client.domain.wallet.Asset;
 import com.crypto.core.binance.configs.BinanceProperties;
 import com.crypto.core.binance.services.BinanceService;
-import com.crypto.core.watchlist.services.WatchlistService;
+import com.crypto.core.subscriptions.services.SubscriptionService;
 import org.springframework.stereotype.Service;
 
 import java.io.Closeable;
@@ -23,18 +23,18 @@ public class BinanceServiceImpl implements BinanceService {
     private static final long DEFAULT_RECEIVE_WINDOW = 30000L;
     private static final Map<String, Closeable> tickerEvents = new HashMap<>();
 
-    private final WatchlistService watchlistService;
+    private final SubscriptionService subscriptionService;
     private final BinanceProperties binanceProperties;
     private final BinanceApiRestClient binanceApiRestClient;
     private final BinanceApiWebSocketClient binanceApiWebSocketClient;
 
     public BinanceServiceImpl(
-            WatchlistService watchlistService,
+            SubscriptionService subscriptionService,
             BinanceProperties binanceProperties,
             BinanceApiRestClient binanceApiRestClient,
             BinanceApiWebSocketClient binanceApiWebSocketClient
     ) {
-        this.watchlistService = watchlistService;
+        this.subscriptionService = subscriptionService;
         this.binanceProperties = binanceProperties;
         this.binanceApiRestClient = binanceApiRestClient;
         this.binanceApiWebSocketClient = binanceApiWebSocketClient;

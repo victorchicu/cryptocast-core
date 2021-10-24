@@ -1,7 +1,7 @@
-package com.crypto.core.watchlist.converters;
+package com.crypto.core.subscriptions.converters;
 
-import com.crypto.core.watchlist.domain.Subscription;
-import com.crypto.core.watchlist.dto.SubscriptionDto;
+import com.crypto.core.subscriptions.domain.Subscription;
+import com.crypto.core.subscriptions.dto.SubscriptionDto;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.crypto.core.watchlist.entity;
+package com.crypto.core.subscriptions.entity;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;

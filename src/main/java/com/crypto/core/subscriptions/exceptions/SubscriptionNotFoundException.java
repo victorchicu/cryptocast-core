@@ -1,4 +1,4 @@
-package com.crypto.core.watchlist.exceptions;
+package com.crypto.core.subscriptions.exceptions;
 
 public class SubscriptionNotFoundException extends RuntimeException {
 }

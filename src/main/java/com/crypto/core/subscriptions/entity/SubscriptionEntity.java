@@ -1,10 +1,10 @@
-package com.crypto.core.watchlist.entity;
+package com.crypto.core.subscriptions.entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = SubscriptionEntity.COLLECTION_NAME)
 public class SubscriptionEntity extends BaseEntity {
-    public static final String COLLECTION_NAME = "watchlist";
+    public static final String COLLECTION_NAME = "subscriptions";
 
     private String assetName;
 

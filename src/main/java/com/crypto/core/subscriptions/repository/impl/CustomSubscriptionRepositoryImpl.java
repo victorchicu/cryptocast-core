@@ -1,8 +1,8 @@
-package com.crypto.core.watchlist.repository.impl;
+package com.crypto.core.subscriptions.repository.impl;
 
-import com.crypto.core.watchlist.domain.Subscription;
-import com.crypto.core.watchlist.entity.SubscriptionEntity;
-import com.crypto.core.watchlist.repository.CustomWatchlistRepository;
+import com.crypto.core.subscriptions.domain.Subscription;
+import com.crypto.core.subscriptions.entity.SubscriptionEntity;
+import com.crypto.core.subscriptions.repository.CustomSubscriptionRepository;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,17 +18,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-public class CustomWatchlistRepositoryImpl implements CustomWatchlistRepository {
+public class CustomSubscriptionRepositoryImpl implements CustomSubscriptionRepository {
     private final MongoOperations mongoOperations;
     private final ConversionService conversionService;
 
-    public CustomWatchlistRepositoryImpl(MongoOperations mongoOperations, ConversionService conversionService) {
+    public CustomSubscriptionRepositoryImpl(MongoOperations mongoOperations, ConversionService conversionService) {
         this.mongoOperations = mongoOperations;
         this.conversionService = conversionService;
     }
 
     @Override
-    public void removeWatchlist(Principal principal) {
+    public void removeSubscriptions(Principal principal) {
         mongoOperations.remove(
                 Query.query(
                         Criteria.where(SubscriptionEntity.Field.CREATED_BY)
@@ -43,14 +43,14 @@ public class CustomWatchlistRepositoryImpl implements CustomWatchlistRepository 
     public Page<Subscription> listSubscriptions(Principal principal, Pageable pageable) {
         Criteria matchCriteria = Criteria.where(SubscriptionEntity.Field.CREATED_BY).is(principal.getName());
 
-        List<SubscriptionEntity> watchlist = mongoOperations.find(
+        List<SubscriptionEntity> list = mongoOperations.find(
                 Query.query(matchCriteria),
                 SubscriptionEntity.class,
                 SubscriptionEntity.COLLECTION_NAME
         );
 
         return PageableExecutionUtils.getPage(
-                watchlist.stream().map(this::toWatchlist).collect(Collectors.toList()),
+                list.stream().map(this::toSubscription).collect(Collectors.toList()),
                 pageable,
                 () -> 0
         );
@@ -63,14 +63,14 @@ public class CustomWatchlistRepositoryImpl implements CustomWatchlistRepository 
                 .and(SubscriptionEntity.Field.ASSET_NAME)
                 .in(assetNames);
 
-        List<SubscriptionEntity> watchlistEntities = mongoOperations.find(
+        List<SubscriptionEntity> list = mongoOperations.find(
                 Query.query(matchCriteria),
                 SubscriptionEntity.class,
                 SubscriptionEntity.COLLECTION_NAME
         );
 
         return PageableExecutionUtils.getPage(
-                watchlistEntities.stream().map(this::toWatchlist).collect(Collectors.toList()),
+                list.stream().map(this::toSubscription).collect(Collectors.toList()),
                 pageable, () -> 0
         );
     }
@@ -88,11 +88,11 @@ public class CustomWatchlistRepositoryImpl implements CustomWatchlistRepository 
                 SubscriptionEntity.COLLECTION_NAME
         );
 
-        return Optional.ofNullable(subscriptionEntity).map(this::toWatchlist);
+        return Optional.ofNullable(subscriptionEntity).map(this::toSubscription);
     }
 
 
-    private Subscription toWatchlist(SubscriptionEntity subscriptionEntity) {
+    private Subscription toSubscription(SubscriptionEntity subscriptionEntity) {
         return conversionService.convert(subscriptionEntity, Subscription.class);
     }
 }

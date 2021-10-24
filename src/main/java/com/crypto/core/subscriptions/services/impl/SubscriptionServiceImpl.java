@@ -1,9 +1,9 @@
-package com.crypto.core.watchlist.services.impl;
+package com.crypto.core.subscriptions.services.impl;
 
-import com.crypto.core.watchlist.domain.Subscription;
-import com.crypto.core.watchlist.entity.SubscriptionEntity;
-import com.crypto.core.watchlist.repository.WatchlistRepository;
-import com.crypto.core.watchlist.services.WatchlistService;
+import com.crypto.core.subscriptions.domain.Subscription;
+import com.crypto.core.subscriptions.entity.SubscriptionEntity;
+import com.crypto.core.subscriptions.repository.SubscriptionRepository;
+import com.crypto.core.subscriptions.services.SubscriptionService;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,45 +14,45 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class WatchlistServiceImpl implements WatchlistService {
+public class SubscriptionServiceImpl implements SubscriptionService {
     private final ConversionService conversionService;
-    private final WatchlistRepository watchlistRepository;
+    private final SubscriptionRepository subscriptionRepository;
 
-    public WatchlistServiceImpl(ConversionService conversionService, WatchlistRepository watchlistRepository) {
+    public SubscriptionServiceImpl(ConversionService conversionService, SubscriptionRepository subscriptionRepository) {
         this.conversionService = conversionService;
-        this.watchlistRepository = watchlistRepository;
+        this.subscriptionRepository = subscriptionRepository;
     }
 
     @Override
-    public void deleteWatchlist(Principal principal) {
-        watchlistRepository.removeWatchlist(principal);
+    public void deleteSubscriptions(Principal principal) {
+        subscriptionRepository.removeSubscriptions(principal);
     }
 
     @Override
-    public void deleteSubscriptionById(String watchlistId) {
-        watchlistRepository.deleteById(watchlistId);
+    public void deleteSubscriptionById(String subscriptionId) {
+        subscriptionRepository.deleteById(subscriptionId);
     }
 
     @Override
     public Subscription saveSubscription(Subscription subscription) {
         SubscriptionEntity subscriptionEntity = toSubscriptionEntity(subscription);
-        subscription = toSubscription(watchlistRepository.save(subscriptionEntity));
+        subscription = toSubscription(subscriptionRepository.save(subscriptionEntity));
         return subscription;
     }
 
     @Override
     public Page<Subscription> findSubscriptions(Principal principal, Pageable pageable) {
-        return watchlistRepository.listSubscriptions(principal, pageable);
+        return subscriptionRepository.listSubscriptions(principal, pageable);
     }
 
     @Override
     public Page<Subscription> findSubscriptions(Principal principal, List<String> assetNames, Pageable pageable) {
-        return watchlistRepository.listSubscriptions(principal, assetNames, pageable);
+        return subscriptionRepository.listSubscriptions(principal, assetNames, pageable);
     }
 
     @Override
     public Optional<Subscription> findSubscription(Principal principal, String assetName) {
-        return watchlistRepository.findSubscription(principal, assetName);
+        return subscriptionRepository.findSubscription(principal, assetName);
     }
 
 

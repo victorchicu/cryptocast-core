@@ -1,12 +1,12 @@
-package com.crypto.core.watchlist.repository.converters;
+package com.crypto.core.subscriptions.repository.converters;
 
-import com.crypto.core.watchlist.domain.Subscription;
-import com.crypto.core.watchlist.entity.SubscriptionEntity;
+import com.crypto.core.subscriptions.domain.Subscription;
+import com.crypto.core.subscriptions.entity.SubscriptionEntity;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WatchlistToEntityConverter implements Converter<Subscription, SubscriptionEntity> {
+public class SubscriptionToEntityConverter implements Converter<Subscription, SubscriptionEntity> {
     @Override
     public SubscriptionEntity convert(Subscription source) {
         return SubscriptionEntity.newBuilder()

@@ -2,9 +2,8 @@ package com.crypto.core;
 
 import com.crypto.core.binance.configs.BinanceProperties;
 import com.crypto.core.binance.services.BinanceService;
-import com.crypto.core.freemarker.services.FreeMarkerTemplateService;
-import com.crypto.core.watchlist.repository.WatchlistRepository;
-import com.crypto.core.watchlist.services.WatchlistService;
+import com.crypto.core.subscriptions.repository.SubscriptionRepository;
+import com.crypto.core.subscriptions.services.SubscriptionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +36,9 @@ public class TestBase {
     @Autowired
     protected BinanceProperties binanceProperties;
     @Autowired
-    protected WatchlistService watchlistService;
+    protected SubscriptionService subscriptionService;
     @Autowired
-    protected WatchlistRepository participantsRepository;
-    @Autowired
-    protected FreeMarkerTemplateService freeMarkerTemplateService;
+    protected SubscriptionRepository participantsRepository;
 
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {

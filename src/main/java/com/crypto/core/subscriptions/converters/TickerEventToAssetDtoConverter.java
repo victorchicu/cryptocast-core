@@ -1,4 +1,4 @@
-package com.crypto.core.watchlist.converters;
+package com.crypto.core.subscriptions.converters;
 
 import com.crypto.core.binance.client.domain.event.TickerEvent;
 import com.crypto.core.wallet.dto.AssetDto;

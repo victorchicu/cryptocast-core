@@ -1,4 +1,4 @@
-package com.crypto.core.watchlist.domain;
+package com.crypto.core.subscriptions.domain;
 
 public class Subscription {
     private String id;

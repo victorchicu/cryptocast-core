@@ -1,4 +1,4 @@
-package com.crypto.core.watchlist.dto;
+package com.crypto.core.subscriptions.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 

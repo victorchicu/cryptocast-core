@@ -1,4 +1,4 @@
-package com.crypto.core.watchlist.controllers;
+package com.crypto.core.subscriptions.controllers;
 
 import com.crypto.core.binance.client.domain.event.TickerEvent;
 import com.crypto.core.binance.client.domain.wallet.Asset;
@@ -9,10 +9,10 @@ import com.crypto.core.notifications.services.NotificationTemplate;
 import com.crypto.core.wallet.dto.AssetDto;
 import com.crypto.core.wallet.exceptions.AssetNotFoundException;
 import com.crypto.core.wallet.services.WalletService;
-import com.crypto.core.watchlist.domain.Subscription;
-import com.crypto.core.watchlist.dto.SubscriptionDto;
-import com.crypto.core.watchlist.exceptions.SubscriptionNotFoundException;
-import com.crypto.core.watchlist.services.WatchlistService;
+import com.crypto.core.subscriptions.domain.Subscription;
+import com.crypto.core.subscriptions.dto.SubscriptionDto;
+import com.crypto.core.subscriptions.exceptions.SubscriptionNotFoundException;
+import com.crypto.core.subscriptions.services.SubscriptionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
@@ -25,21 +25,21 @@ import java.security.Principal;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/watchlist")
-public class WatchlistController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WatchlistController.class);
+@RequestMapping("/api/subscriptions")
+public class SubscriptionController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SubscriptionController.class);
 
     private final WalletService walletService;
     private final BinanceService binanceService;
-    private final WatchlistService watchlistService;
+    private final SubscriptionService subscriptionService;
     private final ConversionService conversionService;
     private final BinanceProperties binanceProperties;
     private final NotificationTemplate notificationTemplate;
 
-    public WatchlistController(
+    public SubscriptionController(
             WalletService walletService,
             BinanceService binanceService,
-            WatchlistService watchlistService,
+            SubscriptionService subscriptionService,
             ConversionService conversionService,
             BinanceProperties binanceProperties,
             NotificationTemplate notificationTemplate
@@ -47,7 +47,7 @@ public class WatchlistController {
         this.walletService = walletService;
         this.binanceService = binanceService;
         this.conversionService = conversionService;
-        this.watchlistService = watchlistService;
+        this.subscriptionService = subscriptionService;
         this.binanceProperties = binanceProperties;
         this.notificationTemplate = notificationTemplate;
     }
@@ -55,14 +55,14 @@ public class WatchlistController {
     @PostMapping("/{assetName}/add")
     public SubscriptionDto addSubscription(Principal principal, @PathVariable String assetName) {
         return walletService.findAssetByName(principal, assetName)
-                .map((Asset asset) -> watchlistService.findSubscription(principal, assetName)
+                .map((Asset asset) -> subscriptionService.findSubscription(principal, assetName)
                         .map(subscription -> {
                             binanceService.removeTickerEvent(assetName);
-                            watchlistService.deleteSubscriptionById(subscription.getId());
+                            subscriptionService.deleteSubscriptionById(subscription.getId());
                             return toSubscriptionDto(subscription);
                         })
                         .orElseGet(() -> {
-                            Subscription subscription = watchlistService.saveSubscription(
+                            Subscription subscription = subscriptionService.saveSubscription(
                                     Subscription.newBuilder()
                                             .assetName(assetName)
                                             .build()
@@ -82,10 +82,10 @@ public class WatchlistController {
 
     @DeleteMapping("/{assetName}/remove")
     public SubscriptionDto removeSubscription(Principal principal, @PathVariable String assetName) {
-        return watchlistService.findSubscription(principal, assetName)
+        return subscriptionService.findSubscription(principal, assetName)
                 .map(subscription -> {
                     binanceService.removeTickerEvent(assetName);
-                    watchlistService.deleteSubscriptionById(subscription.getId());
+                    subscriptionService.deleteSubscriptionById(subscription.getId());
                     return toSubscriptionDto(subscription);
                 })
                 .orElseThrow(SubscriptionNotFoundException::new);
@@ -93,7 +93,7 @@ public class WatchlistController {
 
     @GetMapping
     public Page<SubscriptionDto> listSubscriptions(Principal principal, Pageable pageable) {
-        return watchlistService.findSubscriptions(principal, pageable)
+        return subscriptionService.findSubscriptions(principal, pageable)
                 .map(this::toSubscriptionDto);
     }
 

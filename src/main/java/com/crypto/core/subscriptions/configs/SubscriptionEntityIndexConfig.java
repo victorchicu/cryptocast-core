@@ -1,6 +1,6 @@
-package com.crypto.core.watchlist.configs;
+package com.crypto.core.subscriptions.configs;
 
-import com.crypto.core.watchlist.entity.SubscriptionEntity;
+import com.crypto.core.subscriptions.entity.SubscriptionEntity;
 import org.bson.Document;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoOperations;
