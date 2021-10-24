@@ -12,7 +12,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -37,19 +36,12 @@ public class SimpNotificationTemplate implements NotificationTemplate {
     }
 
     @Override
-    public <T> void sendNotification(
-            Principal principal,
-            NotificationType type,
-            T object,
-            Class<?> classType
-    ) {
+    public <T> void sendNotification(Principal principal, NotificationType type, T object) {
         Optional.ofNullable(notificationProperties.getDestinations().get(type))
                 .ifPresent(destination -> {
-                    Map<String, Object> payload = conversionService.convert(object, Map.class);
                     Expression expression = spelExpressionParser.parseExpression(destination);
                     destination = expression.getValue(object, String.class);
-                    LOGGER.info("Send notification to destination: " + destination);
-                    simpMessagingTemplate.convertAndSend(destination, payload);
+                    simpMessagingTemplate.convertAndSend(destination, object);
                 });
     }
 }

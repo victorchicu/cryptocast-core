@@ -10,17 +10,18 @@ import com.crypto.core.binance.services.BinanceService;
 import com.crypto.core.watchlist.services.WatchlistService;
 import org.springframework.stereotype.Service;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.Instant;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class BinanceServiceImpl implements BinanceService {
-    private static final long DEFAULT_RECV_WINDOW = 30000L;
+    private static final long DEFAULT_RECEIVE_WINDOW = 30000L;
+    private static final Map<String, Closeable> tickerEvents = new HashMap<>();
 
     private final WatchlistService watchlistService;
     private final BinanceProperties binanceProperties;
@@ -42,17 +43,24 @@ public class BinanceServiceImpl implements BinanceService {
     @Override
     public void registerTickerEvent(String assetName, BinanceApiCallback<TickerEvent> callback) {
         String symbolName = getSymbol(assetName);
-        binanceApiWebSocketClient.onTickerEvent(symbolName, callback);
+        tickerEvents.put(assetName, binanceApiWebSocketClient.onTickerEvent(symbolName, callback));
     }
 
     @Override
     public void removeTickerEvent(String assetName) {
-        //TODO:
+        Closeable tickerEvent = tickerEvents.remove(assetName);
+        if (tickerEvent != null) {
+            try {
+                tickerEvent.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public List<Asset> listAssets(Principal principal) {
-        return binanceApiRestClient.listAssets(DEFAULT_RECV_WINDOW, Instant.now().toEpochMilli()).stream()
+        return binanceApiRestClient.listAssets(DEFAULT_RECEIVE_WINDOW, Instant.now().toEpochMilli()).stream()
                 .filter(asset -> !binanceProperties.getBlacklist().contains(asset.getCoin()) && asset.getFree().compareTo(BigDecimal.ZERO) > 0)
                 .sorted(Comparator.comparing(Asset::getFree).reversed())
                 .collect(Collectors.toList());

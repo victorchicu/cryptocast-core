@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,5 +33,10 @@ public class WalletServiceImpl implements WalletService {
         List<Asset> assets = ListUtils.emptyIfNull(binanceService.listAssets(principal));
         assets.forEach(asset -> asset.setFlagged(subscriptions.contains(asset.getCoin())));
         return assets;
+    }
+
+    @Override
+    public Optional<Asset> findAssetByName(Principal principal, String assetName) {
+        return listAssets(principal).stream().filter(asset -> asset.getCoin().equals(assetName)).findFirst();
     }
 }

@@ -67,7 +67,7 @@ public class BinanceApiWebSocketClientImpl implements BinanceApiWebSocketClient,
 
     public Closeable onAllMarketTickersEvent(BinanceApiCallback<List<TickerEvent>> callback) {
         final String channel = "!ticker@arr";
-        return createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, new TypeReference<List<TickerEvent>>() {}));
+        return createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, new TypeReference<>() {}));
     }
 
     @Override

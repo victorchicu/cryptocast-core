@@ -21,6 +21,7 @@ public class Asset {
     private BigDecimal ipoable;
     private BigDecimal storage;
     private BigDecimal withdrawing;
+    private BigDecimal fiatBalance;
     private List<Network> networkList;
 
     public String getCoin() {
@@ -133,6 +134,14 @@ public class Asset {
 
     public void setWithdrawing(BigDecimal withdrawing) {
         this.withdrawing = withdrawing;
+    }
+
+    public BigDecimal getFiatBalance() {
+        return fiatBalance;
+    }
+
+    public void setFiatBalance(BigDecimal fiatBalance) {
+        this.fiatBalance = fiatBalance;
     }
 
     public List<Network> getNetworkList() {

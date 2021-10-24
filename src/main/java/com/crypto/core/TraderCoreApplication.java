@@ -8,8 +8,8 @@ import org.springframework.data.mongodb.config.EnableMongoAuditing;
 @EnableFeignClients
 @EnableMongoAuditing
 @SpringBootApplication
-public class CryptoCoreApplication {
+public class TraderCoreApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CryptoCoreApplication.class, args);
+        SpringApplication.run(TraderCoreApplication.class, args);
     }
 }

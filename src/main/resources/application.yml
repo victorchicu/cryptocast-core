@@ -26,7 +26,7 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: crypto_core
+      database: trader_core
   session:
     mongodb:
       collection-name: sessions
@@ -79,7 +79,7 @@ rabbitmq:
 
 notification:
   destinations:
-    TICKER_EVENT: "'/topic/' + symbol + '-ticker'"
+    TICKER_EVENT: "'/topic/' + coin + '-ticker'"
 
 binance:
   url: wss://api.binance.com/
