@@ -3,6 +3,10 @@ package com.crypto.core.binance.services.impl;
 import com.crypto.core.binance.client.BinanceApiCallback;
 import com.crypto.core.binance.client.BinanceApiRestClient;
 import com.crypto.core.binance.client.BinanceApiWebSocketClient;
+import com.crypto.core.binance.client.domain.OrderSide;
+import com.crypto.core.binance.client.domain.OrderType;
+import com.crypto.core.binance.client.domain.TimeInForce;
+import com.crypto.core.binance.client.domain.account.NewOrder;
 import com.crypto.core.binance.client.domain.event.TickerEvent;
 import com.crypto.core.binance.client.domain.wallet.Asset;
 import com.crypto.core.binance.configs.BinanceProperties;
@@ -23,25 +27,27 @@ public class BinanceServiceImpl implements BinanceService {
     private static final long DEFAULT_RECEIVE_WINDOW = 30000L;
     private static final Map<String, Closeable> tickerEvents = new HashMap<>();
 
-    private final SubscriptionService subscriptionService;
     private final BinanceProperties binanceProperties;
     private final BinanceApiRestClient binanceApiRestClient;
     private final BinanceApiWebSocketClient binanceApiWebSocketClient;
 
     public BinanceServiceImpl(
-            SubscriptionService subscriptionService,
             BinanceProperties binanceProperties,
             BinanceApiRestClient binanceApiRestClient,
             BinanceApiWebSocketClient binanceApiWebSocketClient
     ) {
-        this.subscriptionService = subscriptionService;
         this.binanceProperties = binanceProperties;
         this.binanceApiRestClient = binanceApiRestClient;
         this.binanceApiWebSocketClient = binanceApiWebSocketClient;
     }
 
     @Override
-    public void registerTickerEvent(String assetName, BinanceApiCallback<TickerEvent> callback) {
+    public void createOrder(String assetName) {
+        binanceApiRestClient.newOrderTest(new NewOrder(assetName, OrderSide.SELL, OrderType.TAKE_PROFIT_LIMIT, TimeInForce.GTC, ""));
+    }
+
+    @Override
+    public void addTickerEvent(String assetName, BinanceApiCallback<TickerEvent> callback) {
         String symbolName = getSymbol(assetName);
         tickerEvents.put(assetName, binanceApiWebSocketClient.onTickerEvent(symbolName, callback));
     }
@@ -65,6 +71,7 @@ public class BinanceServiceImpl implements BinanceService {
                 .sorted(Comparator.comparing(Asset::getFree).reversed())
                 .collect(Collectors.toList());
     }
+
 
     private String getSymbol(String assetName) {
         return Optional.ofNullable(binanceProperties.getAssets().get(assetName))

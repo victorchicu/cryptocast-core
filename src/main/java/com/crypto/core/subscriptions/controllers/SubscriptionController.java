@@ -1,6 +1,10 @@
 package com.crypto.core.subscriptions.controllers;
 
+import com.crypto.core.binance.client.BinanceApiRestClient;
+import com.crypto.core.binance.client.BinanceApiWebSocketClient;
+import com.crypto.core.binance.client.domain.account.Account;
 import com.crypto.core.binance.client.domain.event.TickerEvent;
+import com.crypto.core.binance.client.domain.event.UserDataUpdateEvent;
 import com.crypto.core.binance.client.domain.wallet.Asset;
 import com.crypto.core.binance.configs.BinanceProperties;
 import com.crypto.core.binance.services.BinanceService;
@@ -22,7 +26,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/subscriptions")
@@ -35,6 +41,9 @@ public class SubscriptionController {
     private final ConversionService conversionService;
     private final BinanceProperties binanceProperties;
     private final NotificationTemplate notificationTemplate;
+    private final BinanceApiRestClient binanceApiRestClient;
+    private final BinanceApiWebSocketClient binanceApiWebSocketClient;
+
 
     public SubscriptionController(
             WalletService walletService,
@@ -42,7 +51,9 @@ public class SubscriptionController {
             SubscriptionService subscriptionService,
             ConversionService conversionService,
             BinanceProperties binanceProperties,
-            NotificationTemplate notificationTemplate
+            NotificationTemplate notificationTemplate,
+            BinanceApiRestClient binanceApiRestClient,
+            BinanceApiWebSocketClient binanceApiWebSocketClient
     ) {
         this.walletService = walletService;
         this.binanceService = binanceService;
@@ -50,33 +61,47 @@ public class SubscriptionController {
         this.subscriptionService = subscriptionService;
         this.binanceProperties = binanceProperties;
         this.notificationTemplate = notificationTemplate;
+        this.binanceApiRestClient = binanceApiRestClient;
+        this.binanceApiWebSocketClient = binanceApiWebSocketClient;
     }
 
     @PostMapping("/{assetName}/add")
     public SubscriptionDto addSubscription(Principal principal, @PathVariable String assetName) {
-        return walletService.findAssetByName(principal, assetName)
-                .map((Asset asset) -> subscriptionService.findSubscription(principal, assetName)
-                        .map(subscription -> {
-                            binanceService.removeTickerEvent(assetName);
-                            subscriptionService.deleteSubscriptionById(subscription.getId());
-                            return toSubscriptionDto(subscription);
-                        })
-                        .orElseGet(() -> {
-                            Subscription subscription = subscriptionService.saveSubscription(
-                                    Subscription.newBuilder()
-                                            .assetName(assetName)
-                                            .build()
-                            );
+        Account p = binanceApiRestClient.getAccount();
 
-                            binanceService.registerTickerEvent(assetName, (TickerEvent tickerEvent) -> {
-                                AssetDto assetDto = toAssetDto(asset, tickerEvent);
-                                notificationTemplate.sendNotification(principal, NotificationType.TICKER_EVENT, assetDto);
-                                LOGGER.info(tickerEvent.toString());
-                            });
+        List<Asset> q = binanceApiRestClient.getAllAssets();
 
-                            return toSubscriptionDto(subscription);
-                        }))
-                .orElseThrow(AssetNotFoundException::new);
+        System.out.println();
+
+//        String listenKey = binanceApiRestClient.startUserDataStream();
+//        binanceApiWebSocketClient.onUserDataUpdateEvent(listenKey, (UserDataUpdateEvent response) -> {
+//            System.out.println(response);
+//        });
+
+        return new SubscriptionDto(UUID.randomUUID().toString(), assetName);
+//        return walletService.findAssetByName(principal, assetName)
+//                .map((Asset asset) -> subscriptionService.findSubscription(principal, assetName)
+//                        .map(subscription -> {
+//                            binanceService.removeTickerEvent(assetName);
+//                            subscriptionService.deleteSubscriptionById(subscription.getId());
+//                            return toSubscriptionDto(subscription);
+//                        })
+//                        .orElseGet(() -> {
+//                            Subscription subscription = subscriptionService.saveSubscription(
+//                                    Subscription.newBuilder()
+//                                            .assetName(assetName)
+//                                            .build()
+//                            );
+//
+//                            binanceService.addTickerEvent(assetName, (TickerEvent tickerEvent) -> {
+//                                AssetDto assetDto = toAssetDto(asset, tickerEvent);
+//                                notificationTemplate.sendNotification(principal, NotificationType.TICKER_EVENT, assetDto);
+//                                LOGGER.info(tickerEvent.toString());
+//                            });
+//
+//                            return toSubscriptionDto(subscription);
+//                        }))
+//                .orElseThrow(AssetNotFoundException::new);
     }
 
 
