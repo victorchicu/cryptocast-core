@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 /**
  * Custom deserializer for an AssetBalance, since the streaming API returns an object in the format {"a":"symbol","f":"free","l":"locked"},
@@ -25,8 +26,8 @@ public class AssetBalanceDeserializer extends JsonDeserializer<AssetBalance> {
 
     AssetBalance assetBalance = new AssetBalance();
     assetBalance.setAsset(asset);
-    assetBalance.setFree(free);
-    assetBalance.setLocked(locked);
+    assetBalance.setFree(new BigDecimal(free));
+    assetBalance.setLocked(new BigDecimal(locked));
     return assetBalance;
   }
 }

@@ -1,10 +1,10 @@
-package com.crypto.core.wallet.dto;
+package com.crypto.core.binance.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.math.BigDecimal;
 
-public class AssetDto {
+public class AssetBalanceDto {
     private final String coin;
     private final String name;
     private final Integer icon;
@@ -16,7 +16,7 @@ public class AssetDto {
     private final BigDecimal averagePrice;
 
     @JsonCreator
-    public AssetDto(
+    public AssetBalanceDto(
             String coin,
             String name,
             Integer icon,

@@ -7,8 +7,8 @@ import com.crypto.core.binance.client.domain.OrderType;
 import com.crypto.core.binance.client.domain.TimeInForce;
 import com.crypto.core.binance.client.domain.account.NewOrder;
 import com.crypto.core.binance.configs.BinanceProperties;
+import com.crypto.core.binance.exceptions.AssetNotFoundException;
 import com.crypto.core.orders.OrderService;
-import com.crypto.core.wallet.exceptions.AssetNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

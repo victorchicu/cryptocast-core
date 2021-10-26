@@ -4,6 +4,7 @@ import com.crypto.core.binance.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -143,8 +144,8 @@ public class Account {
     }
     AssetBalance emptyBalance = new AssetBalance();
     emptyBalance.setAsset(symbol);
-    emptyBalance.setFree("0");
-    emptyBalance.setLocked("0");
+    emptyBalance.setFree(BigDecimal.ZERO);
+    emptyBalance.setLocked(BigDecimal.ZERO);
     return emptyBalance;
   }
 

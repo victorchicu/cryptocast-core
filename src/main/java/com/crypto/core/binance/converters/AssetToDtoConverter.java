@@ -1,8 +1,8 @@
-package com.crypto.core.wallet.converters;
+package com.crypto.core.binance.converters;
 
-import com.crypto.core.binance.client.domain.wallet.Asset;
+import com.crypto.core.binance.client.domain.account.AssetBalance;
 import com.crypto.core.binance.configs.BinanceProperties;
-import com.crypto.core.wallet.dto.AssetDto;
+import com.crypto.core.binance.dto.AssetBalanceDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
@@ -10,10 +10,9 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @Component
-public class AssetToDtoConverter implements Converter<Asset, AssetDto> {
+public class AssetToDtoConverter implements Converter<AssetBalance, AssetBalanceDto> {
     private static final Logger LOGGER = LoggerFactory.getLogger(AssetToDtoConverter.class);
 
     private final BinanceProperties binanceProperties;
@@ -23,11 +22,11 @@ public class AssetToDtoConverter implements Converter<Asset, AssetDto> {
     }
 
     @Override
-    public AssetDto convert(Asset source) {
-        return new AssetDto(
-                source.getCoin(),
+    public AssetBalanceDto convert(AssetBalance source) {
+        return new AssetBalanceDto(
+                source.getAsset(),
                 source.getName(),
-                getIconOrDefault(source.getCoin()),
+                source.getIcon(),
                 source.getFlagged(),
                 source.getFree(),
                 BigDecimal.ZERO,
@@ -35,14 +34,5 @@ public class AssetToDtoConverter implements Converter<Asset, AssetDto> {
                 BigDecimal.ZERO,
                 BigDecimal.ZERO
         );
-    }
-
-    private Integer getIconOrDefault(String coin) {
-        return Optional.ofNullable(binanceProperties.getAssets().get(coin))
-                .map(symbol -> symbol.getIcon())
-                .orElseGet(() -> {
-                    LOGGER.warn("No image icon found for {0}", coin);
-                    return 0;
-                });
     }
 }

@@ -4,6 +4,8 @@ import com.crypto.core.binance.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.math.BigDecimal;
+
 /**
  * An asset balance in an Account.
  *
@@ -11,52 +13,96 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AssetBalance {
+    /*
+      Asset full name
+     */
+    private String name;
 
-  /**
-   * Asset symbol.
-   */
-  private String asset;
+    /**
+     * Asset symbol.
+     */
+    private String asset;
 
-  /**
-   * Available balance.
-   */
-  private String free;
 
-  /**
-   * Locked by open orders.
-   */
-  private String locked;
+    /*
+      Icon index. Specific to Binance
+     */
+    private Integer icon;
 
-  public String getAsset() {
-    return asset;
-  }
 
-  public void setAsset(String asset) {
-    this.asset = asset;
-  }
+    /**
+     * Added to watchlist
+     */
+    private Boolean flagged;
 
-  public String getFree() {
-    return free;
-  }
 
-  public void setFree(String free) {
-    this.free = free;
-  }
+    /**
+     * Available balance.
+     */
+    private BigDecimal free;
 
-  public String getLocked() {
-    return locked;
-  }
+    /**
+     * Locked by open orders.
+     */
+    private BigDecimal locked;
 
-  public void setLocked(String locked) {
-    this.locked = locked;
-  }
+    public String getName() {
+        return name;
+    }
 
-  @Override
-  public String toString() {
-    return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
-        .append("asset", asset)
-        .append("free", free)
-        .append("locked", locked)
-        .toString();
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAsset() {
+        return asset;
+    }
+
+    public void setAsset(String asset) {
+        this.asset = asset;
+    }
+
+    public Integer getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Integer icon) {
+        this.icon = icon;
+    }
+
+    public Boolean getFlagged() {
+        return flagged;
+    }
+
+    public void setFlagged(Boolean flagged) {
+        this.flagged = flagged;
+    }
+
+    public BigDecimal getFree() {
+        return free;
+    }
+
+    public void setFree(BigDecimal free) {
+        this.free = free;
+    }
+
+    public BigDecimal getLocked() {
+        return locked;
+    }
+
+    public void setLocked(BigDecimal locked) {
+        this.locked = locked;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
+                .append("asset", asset)
+                .append("name", name)
+                .append("free", free)
+                .append("locked", locked)
+                .append("flagged", flagged)
+                .append("icon", icon)
+                .toString();
+    }
 }
