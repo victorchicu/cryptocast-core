@@ -14,7 +14,7 @@ jar {
     enabled(false)
     manifest {
         attributes(
-                'Main-Class': 'com.crypto.bot.CryptoBotApplication'
+                'Main-Class': 'com.trader.core.TraderCoreApplication'
         )
     }
 }
@@ -35,7 +35,7 @@ compileJava {
     options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
 }
 
-group = 'com.crypto'
+group = 'com.trader'
 version = '0.0.1'
 sourceCompatibility = "1.9"
 
