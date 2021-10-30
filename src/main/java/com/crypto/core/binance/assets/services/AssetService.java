@@ -1,15 +1,13 @@
-package com.crypto.core.binance.services;
+package com.crypto.core.binance.assets.services;
 
-import com.crypto.core.binance.client.BinanceApiCallback;
 import com.crypto.core.binance.client.domain.account.AssetBalance;
-import com.crypto.core.binance.client.domain.event.TickerEvent;
 
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
-public interface BinanceService {
-    void addTickerEvent(String assetName, BinanceApiCallback<TickerEvent> callback);
+public interface AssetService {
+    void addTickerEvent(Principal principal, String assetName);
 
     void removeTickerEvent(String assetName);
 

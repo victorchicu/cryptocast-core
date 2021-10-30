@@ -1,8 +1,8 @@
-package com.crypto.core.binance.controllers;
+package com.crypto.core.binance.assets.controllers;
 
 import com.crypto.core.binance.client.domain.account.AssetBalance;
-import com.crypto.core.binance.dto.AssetBalanceDto;
-import com.crypto.core.binance.services.BinanceService;
+import com.crypto.core.binance.assets.dto.AssetBalanceDto;
+import com.crypto.core.binance.assets.services.AssetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
@@ -19,17 +19,17 @@ import java.util.stream.Collectors;
 public class AssetController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AssetController.class);
 
-    private final BinanceService binanceService;
+    private final AssetService assetService;
     private final ConversionService conversionService;
 
-    public AssetController(BinanceService binanceService, ConversionService conversionService) {
-        this.binanceService = binanceService;
+    public AssetController(AssetService assetService, ConversionService conversionService) {
+        this.assetService = assetService;
         this.conversionService = conversionService;
     }
 
     @GetMapping
     public List<AssetBalanceDto> listAssets(Principal principal) {
-        return binanceService.listAssets(principal).stream()
+        return assetService.listAssets(principal).stream()
                 .map(this::toAssetBalanceDto)
                 .collect(Collectors.toList());
     }

@@ -1,7 +1,7 @@
 package com.crypto.core;
 
 import com.crypto.core.binance.configs.BinanceProperties;
-import com.crypto.core.binance.services.BinanceService;
+import com.crypto.core.binance.assets.services.AssetService;
 import com.crypto.core.subscriptions.repository.SubscriptionRepository;
 import com.crypto.core.subscriptions.services.SubscriptionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +30,7 @@ public class TestBase {
     @Autowired
     protected ObjectMapper objectMapper;
     @Autowired
-    protected BinanceService binanceService;
+    protected AssetService assetService;
     @Autowired
     protected ConversionService conversionService;
     @Autowired

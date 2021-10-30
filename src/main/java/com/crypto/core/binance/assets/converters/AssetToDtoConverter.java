@@ -1,8 +1,8 @@
-package com.crypto.core.binance.converters;
+package com.crypto.core.binance.assets.converters;
 
 import com.crypto.core.binance.client.domain.account.AssetBalance;
 import com.crypto.core.binance.configs.BinanceProperties;
-import com.crypto.core.binance.dto.AssetBalanceDto;
+import com.crypto.core.binance.assets.dto.AssetBalanceDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
@@ -29,9 +29,6 @@ public class AssetToDtoConverter implements Converter<AssetBalance, AssetBalance
                 source.getIcon(),
                 source.getFlagged(),
                 source.getFree(),
-                BigDecimal.ZERO,
-                BigDecimal.ZERO,
-                BigDecimal.ZERO,
                 BigDecimal.ZERO
         );
     }

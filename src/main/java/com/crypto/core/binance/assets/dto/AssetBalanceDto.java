@@ -1,4 +1,4 @@
-package com.crypto.core.binance.dto;
+package com.crypto.core.binance.assets.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
@@ -10,10 +10,7 @@ public class AssetBalanceDto {
     private final Integer icon;
     private final Boolean flagged;
     private final BigDecimal balance;
-    private final BigDecimal openPrice;
-    private final BigDecimal highPrice;
-    private final BigDecimal lowPrice;
-    private final BigDecimal averagePrice;
+    private final BigDecimal usdtValue;
 
     @JsonCreator
     public AssetBalanceDto(
@@ -22,20 +19,14 @@ public class AssetBalanceDto {
             Integer icon,
             Boolean flagged,
             BigDecimal balance,
-            BigDecimal openPrice,
-            BigDecimal highPrice,
-            BigDecimal lowPrice,
-            BigDecimal averagePrice
+            BigDecimal usdtValue
     ) {
         this.coin = coin;
         this.name = name;
         this.icon = icon;
         this.flagged = flagged;
         this.balance = balance;
-        this.openPrice = openPrice;
-        this.highPrice = highPrice;
-        this.lowPrice = lowPrice;
-        this.averagePrice = averagePrice;
+        this.usdtValue = usdtValue;
     }
 
     public String getCoin() {
@@ -58,19 +49,19 @@ public class AssetBalanceDto {
         return balance;
     }
 
-    public BigDecimal getOpenPrice() {
-        return openPrice;
+    public BigDecimal getUsdtValue() {
+        return usdtValue;
     }
 
-    public BigDecimal getHighPrice() {
-        return highPrice;
-    }
-
-    public BigDecimal getLowPrice() {
-        return lowPrice;
-    }
-
-    public BigDecimal getAveragePrice() {
-        return averagePrice;
+    @Override
+    public String toString() {
+        return "AssetBalanceDto{" +
+                "coin='" + coin + '\'' +
+                ", name='" + name + '\'' +
+                ", icon=" + icon +
+                ", flagged=" + flagged +
+                ", balance=" + balance +
+                ", usdtValue=" + usdtValue +
+                '}';
     }
 }

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.math.BigDecimal;
+
 /**
  *
  */
@@ -21,49 +23,49 @@ public class TickerEvent {
     private String symbol;
 
     @JsonProperty("p")
-    private String priceChange;
+    private BigDecimal priceChange;
 
     @JsonProperty("P")
-    private String priceChangePercent;
+    private BigDecimal priceChangePercent;
 
     @JsonProperty("w")
-    private String weightedAveragePrice;
+    private BigDecimal weightedAveragePrice;
 
     @JsonProperty("x")
-    private String previousDaysClosePrice;
+    private BigDecimal previousDaysClosePrice;
 
     @JsonProperty("c")
-    private String currentDaysClosePrice;
+    private BigDecimal currentDaysClosePrice;
 
     @JsonProperty("Q")
-    private String closeTradesQuantity;
+    private BigDecimal closeTradesQuantity;
 
     @JsonProperty("b")
-    private String bestBidPrice;
+    private BigDecimal bestBidPrice;
 
     @JsonProperty("B")
-    private String bestBidQuantity;
+    private BigDecimal bestBidQuantity;
 
     @JsonProperty("a")
-    private String bestAskPrice;
+    private BigDecimal bestAskPrice;
 
     @JsonProperty("A")
-    private String bestAskQuantity;
+    private BigDecimal bestAskQuantity;
 
     @JsonProperty("o")
-    private String openPrice;
+    private BigDecimal openPrice;
 
     @JsonProperty("h")
-    private String highPrice;
+    private BigDecimal highPrice;
 
     @JsonProperty("l")
-    private String lowPrice;
+    private BigDecimal lowPrice;
 
     @JsonProperty("v")
-    private String totalTradedBaseAssetVolume;
+    private BigDecimal totalTradedBaseAssetVolume;
 
     @JsonProperty("q")
-    private String totalTradedQuoteAssetVolume;
+    private BigDecimal totalTradedQuoteAssetVolume;
 
     @JsonProperty("O")
     private long statisticsOpenTime;
@@ -104,123 +106,123 @@ public class TickerEvent {
         this.symbol = symbol;
     }
 
-    public String getPriceChange() {
+    public BigDecimal getPriceChange() {
         return priceChange;
     }
 
-    public void setPriceChange(String priceChange) {
+    public void setPriceChange(BigDecimal priceChange) {
         this.priceChange = priceChange;
     }
 
-    public String getPriceChangePercent() {
+    public BigDecimal getPriceChangePercent() {
         return priceChangePercent;
     }
 
-    public void setPriceChangePercent(String priceChangePercent) {
+    public void setPriceChangePercent(BigDecimal priceChangePercent) {
         this.priceChangePercent = priceChangePercent;
     }
 
-    public String getWeightedAveragePrice() {
+    public BigDecimal getWeightedAveragePrice() {
         return weightedAveragePrice;
     }
 
-    public void setWeightedAveragePrice(String weightedAveragePrice) {
+    public void setWeightedAveragePrice(BigDecimal weightedAveragePrice) {
         this.weightedAveragePrice = weightedAveragePrice;
     }
 
-    public String getPreviousDaysClosePrice() {
+    public BigDecimal getPreviousDaysClosePrice() {
         return previousDaysClosePrice;
     }
 
-    public void setPreviousDaysClosePrice(String previousDaysClosePrice) {
+    public void setPreviousDaysClosePrice(BigDecimal previousDaysClosePrice) {
         this.previousDaysClosePrice = previousDaysClosePrice;
     }
 
-    public String getCurrentDaysClosePrice() {
+    public BigDecimal getCurrentDaysClosePrice() {
         return currentDaysClosePrice;
     }
 
-    public void setCurrentDaysClosePrice(String currentDaysClosePrice) {
+    public void setCurrentDaysClosePrice(BigDecimal currentDaysClosePrice) {
         this.currentDaysClosePrice = currentDaysClosePrice;
     }
 
-    public String getCloseTradesQuantity() {
+    public BigDecimal getCloseTradesQuantity() {
         return closeTradesQuantity;
     }
 
-    public void setCloseTradesQuantity(String closeTradesQuantity) {
+    public void setCloseTradesQuantity(BigDecimal closeTradesQuantity) {
         this.closeTradesQuantity = closeTradesQuantity;
     }
 
-    public String getBestBidPrice() {
+    public BigDecimal getBestBidPrice() {
         return bestBidPrice;
     }
 
-    public void setBestBidPrice(String bestBidPrice) {
+    public void setBestBidPrice(BigDecimal bestBidPrice) {
         this.bestBidPrice = bestBidPrice;
     }
 
-    public String getBestBidQuantity() {
+    public BigDecimal getBestBidQuantity() {
         return bestBidQuantity;
     }
 
-    public void setBestBidQuantity(String bestBidQuantity) {
+    public void setBestBidQuantity(BigDecimal bestBidQuantity) {
         this.bestBidQuantity = bestBidQuantity;
     }
 
-    public String getBestAskPrice() {
+    public BigDecimal getBestAskPrice() {
         return bestAskPrice;
     }
 
-    public void setBestAskPrice(String bestAskPrice) {
+    public void setBestAskPrice(BigDecimal bestAskPrice) {
         this.bestAskPrice = bestAskPrice;
     }
 
-    public String getBestAskQuantity() {
+    public BigDecimal getBestAskQuantity() {
         return bestAskQuantity;
     }
 
-    public void setBestAskQuantity(String bestAskQuantity) {
+    public void setBestAskQuantity(BigDecimal bestAskQuantity) {
         this.bestAskQuantity = bestAskQuantity;
     }
 
-    public String getOpenPrice() {
+    public BigDecimal getOpenPrice() {
         return openPrice;
     }
 
-    public void setOpenPrice(String openPrice) {
+    public void setOpenPrice(BigDecimal openPrice) {
         this.openPrice = openPrice;
     }
 
-    public String getHighPrice() {
+    public BigDecimal getHighPrice() {
         return highPrice;
     }
 
-    public void setHighPrice(String highPrice) {
+    public void setHighPrice(BigDecimal highPrice) {
         this.highPrice = highPrice;
     }
 
-    public String getLowPrice() {
+    public BigDecimal getLowPrice() {
         return lowPrice;
     }
 
-    public void setLowPrice(String lowPrice) {
+    public void setLowPrice(BigDecimal lowPrice) {
         this.lowPrice = lowPrice;
     }
 
-    public String getTotalTradedBaseAssetVolume() {
+    public BigDecimal getTotalTradedBaseAssetVolume() {
         return totalTradedBaseAssetVolume;
     }
 
-    public void setTotalTradedBaseAssetVolume(String totalTradedBaseAssetVolume) {
+    public void setTotalTradedBaseAssetVolume(BigDecimal totalTradedBaseAssetVolume) {
         this.totalTradedBaseAssetVolume = totalTradedBaseAssetVolume;
     }
 
-    public String getTotalTradedQuoteAssetVolume() {
+    public BigDecimal getTotalTradedQuoteAssetVolume() {
         return totalTradedQuoteAssetVolume;
     }
 
-    public void setTotalTradedQuoteAssetVolume(String totalTradedQuoteAssetVolume) {
+    public void setTotalTradedQuoteAssetVolume(BigDecimal totalTradedQuoteAssetVolume) {
         this.totalTradedQuoteAssetVolume = totalTradedQuoteAssetVolume;
     }
 
