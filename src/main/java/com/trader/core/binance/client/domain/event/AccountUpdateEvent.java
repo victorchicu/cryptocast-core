@@ -1,10 +1,10 @@
 package com.trader.core.binance.client.domain.event;
 
-import com.trader.core.binance.client.constant.BinanceApiConstants;
-import com.trader.core.binance.client.domain.account.AssetBalance;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.trader.core.binance.client.constant.BinanceApiConstants;
+import com.trader.core.binance.client.domain.account.AssetBalance;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.List;

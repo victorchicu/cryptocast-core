@@ -1,12 +1,14 @@
 package com.trader.core.binance.assets.services.impl;
 
 import com.trader.core.binance.assets.dto.AssetBalanceDto;
+import com.trader.core.binance.assets.enums.Quotation;
 import com.trader.core.binance.assets.exceptions.AssetNotFoundException;
 import com.trader.core.binance.assets.services.AssetService;
 import com.trader.core.binance.client.BinanceApiRestClient;
 import com.trader.core.binance.client.BinanceApiWebSocketClient;
 import com.trader.core.binance.client.domain.account.AssetBalance;
 import com.trader.core.binance.client.domain.event.TickerEvent;
+import com.trader.core.binance.client.domain.market.TickerPrice;
 import com.trader.core.binance.configs.BinanceProperties;
 import com.trader.core.notifications.enums.NotificationType;
 import com.trader.core.notifications.services.NotificationTemplate;
@@ -26,15 +28,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.Principal;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
 public class AssetServiceImpl implements AssetService {
     private static final Logger LOG = LoggerFactory.getLogger(SubscriptionController.class);
+    private static final String USDT = "USDT";
 
-    private static final long DEFAULT_RECEIVE_WINDOW = 30000L;
-    private static final Map<String, Closeable> tickerEvents = new HashMap<>();
+    private static final Map<String, Closeable> events = new HashMap<>();
 
     private final BinanceProperties binanceProperties;
     private final ConversionService conversionService;
@@ -60,73 +61,147 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public void addTickerEvent(Principal principal, String assetName) {
-        findAssetByName(principal, assetName).ifPresentOrElse(assetBalance -> {
-            BinanceProperties.Asset asset = getAsset(assetName);
-            tickerEvents.put(assetName, binanceApiWebSocketClient.onTickerEvent(asset.getCoin().toLowerCase(), tickerEvent -> {
-                try {
-                    AssetBalanceDto assetDto = toAssetBalanceDto(asset, assetBalance, tickerEvent);
-                    notificationTemplate.sendNotification(principal, NotificationType.TICKER_EVENT, assetDto);
-                } catch (Exception e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }));
-        }, AssetNotFoundException::new);
+    public void addAssetTickerEvent(Principal principal, String assetName) {
+        findAssetByName(principal, assetName)
+                .map(assetBalance -> {
+                    BinanceProperties.AssetConfig assetConfig = findAssetConfigByName(assetName);
+                    events.computeIfAbsent(assetName, (String name) ->
+                            binanceApiWebSocketClient.onTickerEvent(
+                                    assetConfig.getSymbol().toLowerCase(),
+                                    tickerEvent -> {
+                                        try {
+                                            LOG.info(tickerEvent.toString());
+                                            sendNotification(principal, assetBalance, tickerEvent);
+                                        } catch (Exception e) {
+                                            LOG.error(e.getMessage(), e);
+                                        }
+                                    }
+                            ));
+                    return assetBalance;
+                })
+                .orElseThrow(AssetNotFoundException::new);
     }
 
+
     @Override
-    public void removeTickerEvent(String assetName) {
-        Closeable tickerEvent = tickerEvents.remove(assetName);
+    public void removeAssetTickerEvent(String assetName) {
+        Closeable tickerEvent = events.remove(assetName);
         if (tickerEvent != null) {
             try {
                 tickerEvent.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage(), e);
             }
         }
     }
 
     @Override
     public List<AssetBalance> listAssets(Principal principal) {
-        Page<Subscription> page = subscriptionService.findSubscriptions(principal, Pageable.unpaged());
-
-        Set<String> assetNames = page.getContent().stream()
-                .map(Subscription::getAssetName)
-                .collect(Collectors.toSet());
-
-        List<AssetBalance> assets = binanceApiRestClient.getAccount().getBalances().stream()
-                .filter(hideSmallBalance())
+        List<AssetBalance> assetBalances = binanceApiRestClient.getAccount().getBalances().stream()
+                .filter(this::onlyEffectiveBalance)
                 .sorted(Comparator.comparing(AssetBalance::getFree).reversed())
-                .map((AssetBalance assetBalance) -> {
-                    BinanceProperties.Asset asset = getAsset(assetBalance.getAsset());
-                    assetBalance.setName(asset.getName());
-                    assetBalance.setIcon(asset.getIcon());
-                    assetBalance.setFlagged(assetNames.contains(assetBalance.getAsset()));
-                    return assetBalance;
+                .map(assetBalance -> {
+                    if (assetBalance.getAsset().equals(USDT)) {
+                        assetBalance.setPrice(BigDecimal.ONE);
+                        assetBalance.setQuotation(Quotation.EQUAL);
+                        assetBalance.setBalance(assetBalance.getFree());
+                        return assetBalance;
+                    } else {
+                        BinanceProperties.AssetConfig assetConfig = findAssetConfigByName(assetBalance.getAsset());
+                        TickerPrice tickerPrice = binanceApiRestClient.getPrice(assetConfig.getSymbol());
+                        return updateAssetBalance(assetBalance, tickerPrice.getPrice());
+                    }
                 })
                 .collect(Collectors.toList());
 
-        return assets;
+        Page<Subscription> page = subscriptionService.findSubscriptions(principal, Pageable.unpaged());
+
+        List<Subscription> subscriptions = page.getContent();
+
+        if (subscriptions.size() > 0) {
+            assetBalances.forEach(assetBalance -> {
+                assetBalance.setFlagged(
+                        subscriptions.stream()
+                                .anyMatch(subscription -> subscription.getAssetName().equals(assetBalance.getAsset()))
+                );
+                if (assetBalance.getFlagged()) {
+                    addAssetTickerEvent(principal, assetBalance.getAsset());
+                }
+            });
+        }
+
+        return assetBalances;
     }
 
     @Override
     public Optional<AssetBalance> findAssetByName(Principal principal, String assetName) {
-        return listAssets(principal).stream()
-                .filter(asset -> asset.getAsset().equals(assetName))
+        return binanceApiRestClient.getAccount().getBalances().stream()
+                .filter(assetBalance -> assetBalance.getAsset().equals(assetName))
                 .findFirst();
     }
 
-    private AssetBalanceDto toAssetBalanceDto(BinanceProperties.Asset asset, AssetBalance assetBalance, TickerEvent tickerEvent) {
-        BigDecimal balance = assetBalance.getFree().setScale(8, RoundingMode.UNNECESSARY);
-        BigDecimal usdtValue = assetBalance.getFree().multiply(tickerEvent.getWeightedAveragePrice()).setScale(8, RoundingMode.HALF_EVEN);
-        return new AssetBalanceDto(assetBalance.getAsset(), assetBalance.getName(), asset.getIcon(), Boolean.TRUE, balance, usdtValue);
+
+    private void sendNotification(Principal principal, AssetBalance assetBalance, TickerEvent tickerEvent) {
+        AssetBalanceDto assetBalanceDto = toAssetBalanceDto(
+                updateAssetBalance(
+                        assetBalance,
+                        tickerEvent.getCurrentDaysClosePrice()
+                )
+        );
+        notificationTemplate.sendNotification(
+                principal,
+                NotificationType.TICKER_EVENT,
+                assetBalanceDto
+        );
     }
 
-    private Predicate<AssetBalance> hideSmallBalance() {
-        return assetBalance -> !binanceProperties.getBlacklist().contains(assetBalance.getAsset()) && assetBalance.getFree().compareTo(BigDecimal.valueOf(0.00000002)) > 0 ;
+    private boolean onlyEffectiveBalance(AssetBalance assetBalance) {
+        if (binanceProperties.getBlacklist().contains(assetBalance.getAsset())) {
+            return false;
+        }
+
+        if (assetBalance.getLocked().compareTo(BigDecimal.ZERO) > 0) {
+            return true;
+        }
+
+        if (assetBalance.getFree().compareTo(BigDecimal.valueOf(0.00000002)) > 0) {
+            return true;
+        }
+
+        return false;
     }
 
-    private BinanceProperties.Asset getAsset(String assetName) {
+    private AssetBalance updateAssetBalance(AssetBalance assetBalance, BigDecimal price) {
+        assetBalance.setQuotation(
+                assetBalance.getPrice() == null
+                        ? Quotation.EQUAL
+                        : Quotation.valueOf(price.compareTo(assetBalance.getPrice()))
+        );
+        assetBalance.setPrice(price);
+        BigDecimal balance = BigDecimal.ZERO;
+        if (assetBalance.getFree().compareTo(BigDecimal.ZERO) > 0) {
+            balance = balance.add(
+                    assetBalance.getFree()
+                            .multiply(price)
+                            .setScale(2, RoundingMode.HALF_EVEN)
+            );
+        }
+        if (assetBalance.getLocked().compareTo(BigDecimal.ZERO) > 0) {
+            balance = balance.add(
+                    assetBalance.getLocked()
+                            .multiply(price)
+                            .setScale(2, RoundingMode.HALF_EVEN)
+            );
+        }
+        assetBalance.setBalance(balance);
+        return assetBalance;
+    }
+
+    private AssetBalanceDto toAssetBalanceDto(AssetBalance assetBalance) {
+        return conversionService.convert(assetBalance, AssetBalanceDto.class);
+    }
+
+    private BinanceProperties.AssetConfig findAssetConfigByName(String assetName) {
         return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
                 .orElseThrow(AssetNotFoundException::new);
     }

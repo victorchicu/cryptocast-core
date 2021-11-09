@@ -3,7 +3,6 @@ package com.trader.core.binance.orders.services;
 import com.trader.core.binance.assets.exceptions.AssetNotFoundException;
 import com.trader.core.binance.configs.BinanceProperties;
 import com.trader.core.binance.orders.domain.Order;
-import com.trader.core.binance.orders.dto.OrderDto;
 import org.springframework.data.domain.Page;
 
 import java.security.Principal;
@@ -17,13 +16,13 @@ public abstract class OrderServiceImpl<T extends Order> implements OrderService<
     }
 
     @Override
-    public Page<OrderDto> listOrders(Principal principal) {
+    public Page<T> listOrders(Principal principal) {
         return null;
     }
 
     protected final String getSymbolName(String assetName) {
         return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
-                .map(asset -> asset.getCoin())
+                .map(asset -> asset.getSymbol())
                 .orElseThrow(AssetNotFoundException::new);
     }
 }

@@ -4,6 +4,8 @@ import com.trader.core.binance.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.math.BigDecimal;
+
 /**
  * 24 hour price change statistics for a ticker.
  */
@@ -18,57 +20,57 @@ public class TickerStatistics {
   /**
    * Price change during the last 24 hours.
    */
-  private String priceChange;
+  private BigDecimal priceChange;
 
   /**
    * Price change, in percentage, during the last 24 hours.
    */
-  private String priceChangePercent;
+  private BigDecimal priceChangePercent;
 
   /**
    * Weighted average price.
    */
-  private String weightedAvgPrice;
+  private BigDecimal weightedAvgPrice;
 
   /**
    * Previous close price.
    */
-  private String prevClosePrice;
+  private BigDecimal prevClosePrice;
 
   /**
    * Last price.
    */
-  private String lastPrice;
+  private BigDecimal lastPrice;
 
   /**
    * Bid price.
    */
-  private String bidPrice;
+  private BigDecimal bidPrice;
 
   /**
    * Ask price.
    */
-  private String askPrice;
+  private BigDecimal askPrice;
 
   /**
    * Open price 24 hours ago.
    */
-  private String openPrice;
+  private BigDecimal openPrice;
 
   /**
    * Highest price during the past 24 hours.
    */
-  private String highPrice;
+  private BigDecimal highPrice;
 
   /**
    * Lowest price during the past 24 hours.
    */
-  private String lowPrice;
+  private BigDecimal lowPrice;
 
   /**
    * Total volume during the past 24 hours.
    */
-  private String volume;
+  private BigDecimal volume;
 
   /**
    * Open time.
@@ -95,91 +97,91 @@ public class TickerStatistics {
    */
   private long count;
 
-  public String getPriceChange() {
+  public BigDecimal getPriceChange() {
     return priceChange;
   }
 
-  public void setPriceChange(String priceChange) {
+  public void setPriceChange(BigDecimal priceChange) {
     this.priceChange = priceChange;
   }
 
-  public String getPriceChangePercent() {
+  public BigDecimal getPriceChangePercent() {
     return priceChangePercent;
   }
 
-  public void setPriceChangePercent(String priceChangePercent) {
+  public void setPriceChangePercent(BigDecimal priceChangePercent) {
     this.priceChangePercent = priceChangePercent;
   }
 
-  public String getWeightedAvgPrice() {
+  public BigDecimal getWeightedAvgPrice() {
     return weightedAvgPrice;
   }
 
-  public void setWeightedAvgPrice(String weightedAvgPrice) {
+  public void setWeightedAvgPrice(BigDecimal weightedAvgPrice) {
     this.weightedAvgPrice = weightedAvgPrice;
   }
 
-  public String getPrevClosePrice() {
+  public BigDecimal getPrevClosePrice() {
     return prevClosePrice;
   }
 
-  public void setPrevClosePrice(String prevClosePrice) {
+  public void setPrevClosePrice(BigDecimal prevClosePrice) {
     this.prevClosePrice = prevClosePrice;
   }
 
-  public String getLastPrice() {
+  public BigDecimal getLastPrice() {
     return lastPrice;
   }
 
-  public void setLastPrice(String lastPrice) {
+  public void setLastPrice(BigDecimal lastPrice) {
     this.lastPrice = lastPrice;
   }
 
-  public String getBidPrice() {
+  public BigDecimal getBidPrice() {
     return bidPrice;
   }
 
-  public void setBidPrice(String bidPrice) {
+  public void setBidPrice(BigDecimal bidPrice) {
     this.bidPrice = bidPrice;
   }
 
-  public String getAskPrice() {
+  public BigDecimal getAskPrice() {
     return askPrice;
   }
 
-  public void setAskPrice(String askPrice) {
+  public void setAskPrice(BigDecimal askPrice) {
     this.askPrice = askPrice;
   }
 
-  public String getOpenPrice() {
+  public BigDecimal getOpenPrice() {
     return openPrice;
   }
 
-  public void setOpenPrice(String openPrice) {
+  public void setOpenPrice(BigDecimal openPrice) {
     this.openPrice = openPrice;
   }
 
-  public String getHighPrice() {
+  public BigDecimal getHighPrice() {
     return highPrice;
   }
 
-  public void setHighPrice(String highPrice) {
+  public void setHighPrice(BigDecimal highPrice) {
     this.highPrice = highPrice;
   }
 
-  public String getLowPrice() {
+  public BigDecimal getLowPrice() {
     return lowPrice;
   }
 
-  public void setLowPrice(String lowPrice) {
+  public void setLowPrice(BigDecimal lowPrice) {
     this.lowPrice = lowPrice;
   }
 
-  public String getVolume() {
+  public BigDecimal getVolume() {
     return volume;
   }
 
-  public void setVolume(String volume) {
+  public void setVolume(BigDecimal volume) {
     this.volume = volume;
   }
 

@@ -34,11 +34,11 @@ public class SubscriptionController {
     public SubscriptionDto addSubscription(Principal principal, @PathVariable String assetName) {
         return subscriptionService.findSubscription(principal, assetName)
                 .map(subscription -> {
-                    assetService.removeTickerEvent(assetName);
+                    assetService.removeAssetTickerEvent(assetName);
                     subscriptionService.deleteSubscriptionById(subscription.getId());
                     return toSubscriptionDto(subscription);
                 }).orElseGet(() -> {
-                    assetService.addTickerEvent(principal, assetName);
+                    assetService.addAssetTickerEvent(principal, assetName);
                     return toSubscriptionDto(subscriptionService.saveSubscription(
                             Subscription.newBuilder()
                                     .assetName(assetName)
@@ -51,7 +51,7 @@ public class SubscriptionController {
     public SubscriptionDto removeSubscription(Principal principal, @PathVariable String assetName) {
         return subscriptionService.findSubscription(principal, assetName)
                 .map(subscription -> {
-                    assetService.removeTickerEvent(assetName);
+                    assetService.removeAssetTickerEvent(assetName);
                     subscriptionService.deleteSubscriptionById(subscription.getId());
                     return toSubscriptionDto(subscription);
                 })
@@ -61,7 +61,10 @@ public class SubscriptionController {
     @GetMapping
     public Page<SubscriptionDto> listSubscriptions(Principal principal, Pageable pageable) {
         return subscriptionService.findSubscriptions(principal, pageable)
-                .map(this::toSubscriptionDto);
+                .map(subscription -> {
+                    assetService.addAssetTickerEvent(principal, subscription.getAssetName());
+                    return toSubscriptionDto(subscription);
+                });
     }
 
 

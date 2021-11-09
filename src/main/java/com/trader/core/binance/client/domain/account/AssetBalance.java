@@ -1,7 +1,8 @@
 package com.trader.core.binance.client.domain.account;
 
-import com.trader.core.binance.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.trader.core.binance.assets.enums.Quotation;
+import com.trader.core.binance.client.constant.BinanceApiConstants;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.math.BigDecimal;
@@ -13,28 +14,15 @@ import java.math.BigDecimal;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AssetBalance {
-    /*
-      Asset full name
-     */
-    private String name;
-
     /**
      * Asset symbol.
      */
     private String asset;
 
-
-    /*
-      Icon index. Specific to Binance
-     */
-    private Integer icon;
-
-
     /**
-     * Added to watchlist
+     * In watchlist
      */
     private Boolean flagged;
-
 
     /**
      * Available balance.
@@ -46,13 +34,21 @@ public class AssetBalance {
      */
     private BigDecimal locked;
 
-    public String getName() {
-        return name;
-    }
+    /**
+     * Asset market price
+     */
+    private BigDecimal price;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    /**
+     * Asset balance price
+     */
+    private BigDecimal balance;
+
+    /**
+     * Asset quotation
+     */
+    private Quotation quotation;
+
 
     public String getAsset() {
         return asset;
@@ -60,14 +56,6 @@ public class AssetBalance {
 
     public void setAsset(String asset) {
         this.asset = asset;
-    }
-
-    public Integer getIcon() {
-        return icon;
-    }
-
-    public void setIcon(Integer icon) {
-        this.icon = icon;
     }
 
     public Boolean getFlagged() {
@@ -94,15 +82,36 @@ public class AssetBalance {
         this.locked = locked;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public Quotation getQuotation() {
+        return quotation;
+    }
+
+    public void setQuotation(Quotation quotation) {
+        this.quotation = quotation;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
                 .append("asset", asset)
-                .append("name", name)
                 .append("free", free)
                 .append("locked", locked)
-                .append("flagged", flagged)
-                .append("icon", icon)
                 .toString();
     }
 }

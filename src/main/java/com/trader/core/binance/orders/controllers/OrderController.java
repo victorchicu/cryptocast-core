@@ -21,15 +21,16 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping
-    public Page<? extends OrderDto> listOrders(Principal principal) {
-        return orderService.listOrders(principal);
-    }
-
     @PostMapping("/{assetName}")
     public OrderDto createOrder(Principal principal, @PathVariable String assetName, @RequestBody OrderDto orderDto) {
         Order order = toOrder(orderDto);
         return toOrderDto(orderService.testOrder(principal, assetName, CastUtils.cast(order)));
+    }
+
+    @GetMapping
+    public Page<? extends OrderDto> listOrders(Principal principal) {
+        return orderService.listOrders(principal)
+                .map(this::toOrderDto);
     }
 
     private Order toOrder(OrderDto orderDto) {

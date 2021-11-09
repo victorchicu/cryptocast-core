@@ -4,6 +4,8 @@ import com.trader.core.binance.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.math.BigDecimal;
+
 /**
  * Wraps a symbol and its corresponding latest price.
  */
@@ -18,7 +20,7 @@ public class TickerPrice {
   /**
    * Latest price.
    */
-  private String price;
+  private BigDecimal price;
 
   public String getSymbol() {
     return symbol;
@@ -28,11 +30,11 @@ public class TickerPrice {
     this.symbol = symbol;
   }
 
-  public String getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
-  public void setPrice(String price) {
+  public void setPrice(BigDecimal price) {
     this.price = price;
   }
 

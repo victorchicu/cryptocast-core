@@ -1,67 +1,67 @@
 package com.trader.core.binance.assets.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.trader.core.binance.assets.enums.Quotation;
 
 import java.math.BigDecimal;
 
 public class AssetBalanceDto {
-    private final String coin;
-    private final String name;
-    private final Integer icon;
+    private final String asset;
+    private final String fullName;
+    private final Integer iconIndex;
     private final Boolean flagged;
+    private final BigDecimal free;
+    private final BigDecimal frozen;
+    private final BigDecimal price;
     private final BigDecimal balance;
-    private final BigDecimal usdtValue;
+    private final Quotation quotation;
 
     @JsonCreator
-    public AssetBalanceDto(
-            String coin,
-            String name,
-            Integer icon,
-            Boolean flagged,
-            BigDecimal balance,
-            BigDecimal usdtValue
-    ) {
-        this.coin = coin;
-        this.name = name;
-        this.icon = icon;
+    public AssetBalanceDto(String asset, String fullName, Integer iconIndex, Boolean flagged, BigDecimal free, BigDecimal frozen, BigDecimal price, BigDecimal balance, Quotation quotation) {
+        this.asset = asset;
+        this.fullName = fullName;
+        this.iconIndex = iconIndex;
         this.flagged = flagged;
+        this.free = free;
+        this.frozen = frozen;
+        this.price = price;
         this.balance = balance;
-        this.usdtValue = usdtValue;
+        this.quotation = quotation;
     }
 
-    public String getCoin() {
-        return coin;
+    public String getAsset() {
+        return asset;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public Integer getIcon() {
-        return icon;
+    public Integer getIconIndex() {
+        return iconIndex;
     }
 
     public Boolean getFlagged() {
         return flagged;
     }
 
+    public BigDecimal getFree() {
+        return free;
+    }
+
+    public BigDecimal getFrozen() {
+        return frozen;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
     public BigDecimal getBalance() {
         return balance;
     }
 
-    public BigDecimal getUsdtValue() {
-        return usdtValue;
-    }
-
-    @Override
-    public String toString() {
-        return "AssetBalanceDto{" +
-                "coin='" + coin + '\'' +
-                ", name='" + name + '\'' +
-                ", icon=" + icon +
-                ", flagged=" + flagged +
-                ", balance=" + balance +
-                ", usdtValue=" + usdtValue +
-                '}';
+    public Quotation getQuotation() {
+        return quotation;
     }
 }

@@ -1,15 +1,16 @@
 package com.trader.core.binance.assets.converters;
 
+import com.trader.core.binance.assets.dto.AssetBalanceDto;
+import com.trader.core.binance.assets.exceptions.AssetNotFoundException;
 import com.trader.core.binance.client.domain.account.AssetBalance;
 import com.trader.core.binance.configs.BinanceProperties;
-import com.trader.core.binance.assets.dto.AssetBalanceDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
+import java.util.Optional;
 
 @Component
 public class AssetToDtoConverter implements Converter<AssetBalance, AssetBalanceDto> {
@@ -23,13 +24,22 @@ public class AssetToDtoConverter implements Converter<AssetBalance, AssetBalance
 
     @Override
     public AssetBalanceDto convert(AssetBalance source) {
+        BinanceProperties.AssetConfig assetConfig = findAssetByName(source.getAsset());
         return new AssetBalanceDto(
                 source.getAsset(),
-                source.getName(),
-                source.getIcon(),
+                assetConfig.getFullName(),
+                assetConfig.getIcon(),
                 source.getFlagged(),
                 source.getFree(),
-                BigDecimal.ZERO
+                source.getLocked(),
+                source.getPrice(),
+                source.getBalance(),
+                source.getQuotation()
         );
+    }
+
+    private BinanceProperties.AssetConfig findAssetByName(String assetName) {
+        return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
+                .orElseThrow(AssetNotFoundException::new);
     }
 }

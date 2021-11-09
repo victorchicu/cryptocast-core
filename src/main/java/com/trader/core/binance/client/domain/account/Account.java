@@ -142,11 +142,11 @@ public class Account {
         return assetBalance;
       }
     }
-    AssetBalance emptyBalance = new AssetBalance();
-    emptyBalance.setAsset(symbol);
-    emptyBalance.setFree(BigDecimal.ZERO);
-    emptyBalance.setLocked(BigDecimal.ZERO);
-    return emptyBalance;
+    AssetBalance assetBalance = new AssetBalance();
+    assetBalance.setAsset(symbol);
+    assetBalance.setFree(BigDecimal.ZERO);
+    assetBalance.setLocked(BigDecimal.ZERO);
+    return assetBalance;
   }
 
   @Override

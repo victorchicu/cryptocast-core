@@ -7,22 +7,16 @@ import com.trader.core.binance.orders.dto.OrderDto;
 
 import java.math.BigDecimal;
 
-public class LimitOrderDto extends OrderDto {
+public class MarketOrderDto extends OrderDto {
     private final BigDecimal qty;
-    private final BigDecimal price;
 
     @JsonCreator
-    public LimitOrderDto(OrderType type, OrderSide side, BigDecimal qty, BigDecimal price) {
+    public MarketOrderDto(OrderType type, OrderSide side, BigDecimal qty) {
         super(type, side);
         this.qty = qty;
-        this.price = price;
     }
 
     public BigDecimal getQty() {
         return qty;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
     }
 }

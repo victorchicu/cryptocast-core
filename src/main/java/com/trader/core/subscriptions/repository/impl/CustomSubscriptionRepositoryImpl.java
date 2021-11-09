@@ -43,14 +43,14 @@ public class CustomSubscriptionRepositoryImpl implements CustomSubscriptionRepos
     public Page<Subscription> listSubscriptions(Principal principal, Pageable pageable) {
         Criteria matchCriteria = Criteria.where(SubscriptionEntity.Field.CREATED_BY).is(principal.getName());
 
-        List<SubscriptionEntity> list = mongoOperations.find(
+        List<SubscriptionEntity> subscriptions = mongoOperations.find(
                 Query.query(matchCriteria),
                 SubscriptionEntity.class,
                 SubscriptionEntity.COLLECTION_NAME
         );
 
         return PageableExecutionUtils.getPage(
-                list.stream().map(this::toSubscription).collect(Collectors.toList()),
+                subscriptions.stream().map(this::toSubscription).collect(Collectors.toList()),
                 pageable,
                 () -> 0
         );

@@ -22,12 +22,11 @@ public class AssetBalanceDeserializer extends JsonDeserializer<AssetBalance> {
     JsonNode node = oc.readTree(jp);
     final String asset = node.get("a").asText();
     final String free = node.get("f").asText();
-    final String locked = node.get("l").asText();
-
+    final String frozen = node.get("l").asText();
     AssetBalance assetBalance = new AssetBalance();
     assetBalance.setAsset(asset);
     assetBalance.setFree(new BigDecimal(free));
-    assetBalance.setLocked(new BigDecimal(locked));
+    assetBalance.setLocked(new BigDecimal(frozen));
     return assetBalance;
   }
 }

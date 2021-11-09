@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AssetService {
-    void addTickerEvent(Principal principal, String assetName);
+    void addAssetTickerEvent(Principal principal, String assetName);
 
-    void removeTickerEvent(String assetName);
+    void removeAssetTickerEvent(String assetName);
 
     List<AssetBalance> listAssets(Principal principal);
 

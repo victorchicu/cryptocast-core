@@ -1,8 +1,8 @@
 package com.trader.core.binance.assets.controllers;
 
-import com.trader.core.binance.client.domain.account.AssetBalance;
 import com.trader.core.binance.assets.dto.AssetBalanceDto;
 import com.trader.core.binance.assets.services.AssetService;
+import com.trader.core.binance.client.domain.account.AssetBalance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
