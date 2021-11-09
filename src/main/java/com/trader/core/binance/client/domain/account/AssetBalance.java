@@ -1,7 +1,7 @@
 package com.trader.core.binance.client.domain.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.trader.core.binance.assets.enums.Quotation;
+import com.trader.core.assets.enums.Quotation;
 import com.trader.core.binance.client.constant.BinanceApiConstants;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 

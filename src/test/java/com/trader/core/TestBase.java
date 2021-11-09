@@ -1,7 +1,7 @@
 package com.trader.core;
 
 import com.trader.core.binance.configs.BinanceProperties;
-import com.trader.core.binance.assets.services.AssetService;
+import com.trader.core.assets.services.AssetService;
 import com.trader.core.subscriptions.repository.SubscriptionRepository;
 import com.trader.core.subscriptions.services.SubscriptionService;
 import com.fasterxml.jackson.databind.ObjectMapper;

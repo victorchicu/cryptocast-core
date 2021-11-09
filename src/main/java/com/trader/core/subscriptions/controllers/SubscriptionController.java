@@ -1,6 +1,6 @@
 package com.trader.core.subscriptions.controllers;
 
-import com.trader.core.binance.assets.services.AssetService;
+import com.trader.core.assets.services.AssetService;
 import com.trader.core.subscriptions.domain.Subscription;
 import com.trader.core.subscriptions.dto.SubscriptionDto;
 import com.trader.core.subscriptions.exceptions.SubscriptionNotFoundException;
