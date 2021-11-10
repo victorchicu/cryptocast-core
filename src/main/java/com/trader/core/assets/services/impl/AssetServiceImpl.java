@@ -125,6 +125,7 @@ public class AssetServiceImpl implements AssetService {
                                 .anyMatch(subscription -> subscription.getAssetName().equals(assetBalance.getAsset()))
                 );
                 if (assetBalance.getFlagged()) {
+                    removeAssetTickerEvent(assetBalance.getAsset());
                     addAssetTickerEvent(principal, assetBalance.getAsset());
                 }
             });

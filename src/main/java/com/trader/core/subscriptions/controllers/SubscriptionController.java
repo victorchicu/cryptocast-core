@@ -61,10 +61,7 @@ public class SubscriptionController {
     @GetMapping
     public Page<SubscriptionDto> listSubscriptions(Principal principal, Pageable pageable) {
         return subscriptionService.findSubscriptions(principal, pageable)
-                .map(subscription -> {
-                    assetService.addAssetTickerEvent(principal, subscription.getAssetName());
-                    return toSubscriptionDto(subscription);
-                });
+                .map(this::toSubscriptionDto);
     }
 
 
