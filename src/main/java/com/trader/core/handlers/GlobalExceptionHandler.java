@@ -1,7 +1,7 @@
 package com.trader.core.handlers;
 
 import com.trader.core.exceptions.SymbolNotFoundException;
-import com.trader.core.users.exceptions.EmailNotFoundException;
+import com.trader.core.exceptions.EmailNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

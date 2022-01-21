@@ -1,9 +1,9 @@
 package com.trader.core;
 
-import com.trader.core.binance.configs.BinanceProperties;
-import com.trader.core.assets.services.AssetService;
-import com.trader.core.subscriptions.repository.SubscriptionRepository;
-import com.trader.core.subscriptions.services.SubscriptionService;
+import com.trader.core.configs.BinanceProperties;
+import com.trader.core.services.AssetService;
+import com.trader.core.repository.SubscriptionRepository;
+import com.trader.core.services.SubscriptionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
