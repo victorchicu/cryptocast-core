@@ -1,11 +1,11 @@
 package com.trader.core.binance.client.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.trader.core.binance.client.BinanceApiCallback;
 import com.trader.core.binance.client.BinanceApiWebSocketClient;
 import com.trader.core.binance.client.config.BinanceApiConfig;
 import com.trader.core.binance.client.domain.event.*;
 import com.trader.core.binance.client.domain.market.CandlestickInterval;
-import com.fasterxml.jackson.core.type.TypeReference;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;

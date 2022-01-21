@@ -1,6 +1,7 @@
 package com.trader.core.users.domain;
 
-import com.trader.core.auth.enums.AuthProvider;
+import com.trader.core.enums.ExchangeProvider;
+import com.trader.core.enums.OAuth2Provider;
 
 public class User {
     private String id;
@@ -10,7 +11,8 @@ public class User {
     private String providerId;
     private String apiKey;
     private String secretKey;
-    private AuthProvider provider;
+    private OAuth2Provider provider;
+    private ExchangeProvider exchange;
 
     private User(Builder builder) {
         id = builder.id;
@@ -21,6 +23,7 @@ public class User {
         apiKey = builder.apiKey;
         secretKey = builder.secretKey;
         provider = builder.provider;
+        exchange = builder.exchange;
     }
 
     public static Builder newBuilder() {
@@ -83,12 +86,20 @@ public class User {
         this.secretKey = secretKey;
     }
 
-    public AuthProvider getProvider() {
+    public OAuth2Provider getProvider() {
         return provider;
     }
 
-    public void setProvider(AuthProvider provider) {
+    public void setProvider(OAuth2Provider provider) {
         this.provider = provider;
+    }
+
+    public ExchangeProvider getExchange() {
+        return exchange;
+    }
+
+    public void setExchange(ExchangeProvider exchange) {
+        this.exchange = exchange;
     }
 
     public static final class Builder {
@@ -99,7 +110,8 @@ public class User {
         private String providerId;
         private String apiKey;
         private String secretKey;
-        private AuthProvider provider;
+        private OAuth2Provider provider;
+        private ExchangeProvider exchange;
 
         private Builder() {}
 
@@ -138,8 +150,13 @@ public class User {
             return this;
         }
 
-        public Builder provider(AuthProvider provider) {
+        public Builder provider(OAuth2Provider provider) {
             this.provider = provider;
+            return this;
+        }
+
+        public Builder exchange(ExchangeProvider exchange) {
+            this.exchange = exchange;
             return this;
         }
 

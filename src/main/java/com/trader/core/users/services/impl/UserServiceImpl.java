@@ -21,29 +21,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
-        UserEntity accountEntity = toAccountEntity(user);
-        accountEntity = userRepository.save(accountEntity);
-        return toAccount(accountEntity);
+        UserEntity userEntity = toUserEntity(user);
+        userEntity = userRepository.save(userEntity);
+        return toUser(userEntity);
     }
 
     @Override
     public Optional<User> findById(String id) {
         return userRepository.findById(id)
-                .map(this::toAccount);
+                .map(this::toUser);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return userRepository.findAccountEntityByEmail(email)
-                .map(this::toAccount);
+        return userRepository.findByEmail(email)
+                .map(this::toUser);
     }
 
 
-    private User toAccount(UserEntity accountEntity) {
+    private User toUser(UserEntity accountEntity) {
         return conversionService.convert(accountEntity, User.class);
     }
 
-    private UserEntity toAccountEntity(User user) {
+    private UserEntity toUserEntity(User user) {
         return conversionService.convert(user, UserEntity.class);
     }
 }

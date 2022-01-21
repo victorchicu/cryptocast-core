@@ -9,14 +9,15 @@ import org.springframework.stereotype.Component;
 public class UserToEntityConverter implements Converter<User, UserEntity> {
     @Override
     public UserEntity convert(User source) {
-        UserEntity accountEntity = new UserEntity();
-        accountEntity.setEmail(source.getEmail());
-        accountEntity.setPassword(source.getPassword());
-        accountEntity.setImageUrl(source.getImageUrl());
-        accountEntity.setProvider(source.getProvider());
-        accountEntity.setProviderId(source.getProviderId());
-        accountEntity.setApiKey(source.getApiKey());
-        accountEntity.setSecretKey(source.getSecretKey());
-        return accountEntity;
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(source.getEmail());
+        userEntity.setPassword(source.getPassword());
+        userEntity.setImageUrl(source.getImageUrl());
+        userEntity.setProvider(source.getProvider());
+        userEntity.setProviderId(source.getProviderId());
+        userEntity.setApiKey(source.getApiKey());
+        userEntity.setSecretKey(source.getSecretKey());
+        userEntity.setExchange(source.getExchange());
+        return userEntity;
     }
 }

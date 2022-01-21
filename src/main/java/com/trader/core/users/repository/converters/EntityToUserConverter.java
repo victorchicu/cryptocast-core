@@ -18,6 +18,7 @@ public class EntityToUserConverter implements Converter<UserEntity, User> {
                 .providerId(source.getProviderId())
                 .apiKey(source.getApiKey())
                 .secretKey(source.getSecretKey())
+                .exchange(source.getExchange())
                 .build();
     }
 }

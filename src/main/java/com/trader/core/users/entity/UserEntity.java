@@ -1,20 +1,27 @@
 package com.trader.core.users.entity;
 
-import com.trader.core.auth.enums.AuthProvider;
+import com.trader.core.enums.ExchangeProvider;
+import com.trader.core.enums.OAuth2Provider;
 import com.trader.core.users.BaseEntity;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "users")
+@CompoundIndexes({@CompoundIndex(
+        name = "email_exchange_idx",
+        def = "{'email' : 1, 'exchange' : 1}",
+        unique = true
+)})
 public class UserEntity extends BaseEntity {
-    @Indexed(name = "email", unique = true, sparse = true)
     private String email;
     private String password;
     private String imageUrl;
     private String providerId;
     private String apiKey;
     private String secretKey;
-    private AuthProvider provider;
+    private OAuth2Provider provider;
+    private ExchangeProvider exchange;
 
     public String getEmail() {
         return email;
@@ -48,14 +55,6 @@ public class UserEntity extends BaseEntity {
         this.providerId = providerId;
     }
 
-    public AuthProvider getProvider() {
-        return provider;
-    }
-
-    public void setProvider(AuthProvider provider) {
-        this.provider = provider;
-    }
-
     public String getApiKey() {
         return apiKey;
     }
@@ -70,6 +69,22 @@ public class UserEntity extends BaseEntity {
 
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
+    }
+
+    public OAuth2Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(OAuth2Provider provider) {
+        this.provider = provider;
+    }
+
+    public ExchangeProvider getExchange() {
+        return exchange;
+    }
+
+    public void setExchange(ExchangeProvider exchange) {
+        this.exchange = exchange;
     }
 
     public static final class Field {

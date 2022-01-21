@@ -1,6 +1,6 @@
 package com.trader.core.users.repository.impl;
 
-import com.trader.core.auth.utils.CookieUtils;
+import com.trader.core.oauth2.utils.CookieUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;

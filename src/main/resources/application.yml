@@ -610,3 +610,7 @@ binance:
       icon: 9816
       symbol: NFTUSDT
       fullName: APENNFT
+    LPT:
+      icon: 3640
+      symbol: LPTUSDT
+      fullName: Livepeer

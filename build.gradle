@@ -37,13 +37,15 @@ compileJava {
 
 group = 'com.trader'
 version = '0.0.1'
-sourceCompatibility = "1.9"
+sourceCompatibility = "15"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+//    compile 'io.gate:gate-api:6.23.2'
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -87,4 +89,4 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-targetCompatibility = JavaVersion.VERSION_1_9
+targetCompatibility = JavaVersion.VERSION_15

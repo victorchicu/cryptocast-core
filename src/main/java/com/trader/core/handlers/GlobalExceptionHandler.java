@@ -19,11 +19,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler({EmailNotFoundException.class})
-    public ResponseEntity<Object> emailAddressNotFoundException(EmailNotFoundException ex, WebRequest webRequest) {
+    public ResponseEntity<Object> emailNotFoundException(EmailNotFoundException ex, WebRequest webRequest) {
         LOGGER.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorDto(
-                        Collections.singletonList(new ErrorDto.Details("EmailAddressNotFoundException", null, ex.getMessage()))
+                        Collections.singletonList(new ErrorDto.Details("EmailNotFoundException", null, ex.getMessage()))
                 ),
                 HttpStatus.NOT_FOUND
         );
