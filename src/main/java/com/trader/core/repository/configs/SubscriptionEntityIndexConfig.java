@@ -1,4 +1,4 @@
-package com.trader.core.configs;
+package com.trader.core.repository.configs;
 
 import com.trader.core.entity.SubscriptionEntity;
 import org.bson.Document;
@@ -18,12 +18,10 @@ public class SubscriptionEntityIndexConfig {
 
     @PostConstruct
     public void init() {
+        CompoundIndexDefinition idx = new CompoundIndexDefinition(new Document()
+                .append(SubscriptionEntity.Field.ASSET_NAME, 1)
+        );
         mongoOperations.indexOps(SubscriptionEntity.class)
-                .ensureIndex(new CompoundIndexDefinition(
-                        new Document().append(SubscriptionEntity.Field.ASSET_NAME, 1))
-                        .named(SubscriptionEntity.COLLECTION_NAME)
-                        .unique()
-                        .sparse()
-                );
+                .ensureIndex(idx.named(SubscriptionEntity.COLLECTION_NAME).unique().sparse());
     }
 }

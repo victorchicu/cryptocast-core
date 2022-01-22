@@ -29,7 +29,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
-
         try {
             return processOAuth2User(oAuth2UserRequest, oAuth2User);
         } catch (AuthenticationException ex) {
@@ -50,9 +49,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User account;
         if (userOptional.isPresent()) {
             account = userOptional.get();
-            if (!account.getProvider().equals(OAuth2Provider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
+            if (!account.getAuth2Provider().equals(OAuth2Provider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
                 throw new OAuth2AuthenticationProcessingException("Looks like you're signed up with " +
-                        account.getProvider() + " account. Please use your " + account.getProvider() +
+                        account.getAuth2Provider() + " account. Please use your " + account.getAuth2Provider() +
                         " account to login.");
             }
             account = updateExistingUser(account, oAuth2UserInfo);
@@ -67,7 +66,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .id(oAuth2UserInfo.getName())
                 .email(oAuth2UserInfo.getEmail())
                 .imageUrl(oAuth2UserInfo.getImageUrl())
-                .provider(OAuth2Provider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))
+                .auth2Provider(OAuth2Provider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))
                 .providerId(oAuth2UserInfo.getId())
                 .build();
         return userService.save(account);

@@ -2,7 +2,8 @@ package com.trader.core.controllers;
 
 import com.trader.core.domain.User;
 import com.trader.core.dto.AccessTokenDto;
-import com.trader.core.dto.SignupDto;
+import com.trader.core.dto.SignupRequestDto;
+import com.trader.core.enums.ExchangeProvider;
 import com.trader.core.exceptions.EmailNotFoundException;
 import com.trader.core.services.TokenProviderService;
 import com.trader.core.services.UserService;
@@ -37,16 +38,18 @@ public class SignupController {
     }
 
     @PostMapping
-    public AccessTokenDto signup(@RequestBody SignupDto signupDto) {
-        if (userService.findByEmail(signupDto.getEmail()).isPresent()) {
+    public AccessTokenDto signup(@RequestBody SignupRequestDto signupRequestDto) {
+        String email = signupRequestDto.getEmail();
+        ExchangeProvider provider = signupRequestDto.getExchangeProvider();
+        if (userService.findByEmailAndExchangeProvider(email, provider).isPresent()) {
             throw new EmailNotFoundException();
         }
-        User user = toUser(signupDto);
+        User user = toUser(signupRequestDto);
         user = userService.save(user);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getEmail(),
-                        signupDto.getPassword().getBytes()
+                        signupRequestDto.getPassword()
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -54,7 +57,7 @@ public class SignupController {
         return new AccessTokenDto(accessToken);
     }
 
-    private User toUser(SignupDto signupDto) {
-        return conversionService.convert(signupDto, User.class);
+    private User toUser(SignupRequestDto signupRequestDto) {
+        return conversionService.convert(signupRequestDto, User.class);
     }
 }

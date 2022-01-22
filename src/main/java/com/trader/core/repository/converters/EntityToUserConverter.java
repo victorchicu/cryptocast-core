@@ -14,11 +14,11 @@ public class EntityToUserConverter implements Converter<UserEntity, User> {
                 .email(source.getEmail())
                 .password(source.getPassword())
                 .imageUrl(source.getImageUrl())
-                .provider(source.getProvider())
+                .auth2Provider(source.getProvider())
                 .providerId(source.getProviderId())
                 .apiKey(source.getApiKey())
                 .secretKey(source.getSecretKey())
-                .exchange(source.getExchange())
+                .exchangeProvider(source.getExchangeProvider())
                 .build();
     }
 }

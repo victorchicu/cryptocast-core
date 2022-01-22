@@ -1,6 +1,7 @@
 package com.trader.core.services.impl;
 
 import com.trader.core.domain.User;
+import com.trader.core.enums.ExchangeProvider;
 import com.trader.core.repository.UserRepository;
 import com.trader.core.entity.UserEntity;
 import com.trader.core.services.UserService;
@@ -35,6 +36,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email)
+                .map(this::toUser);
+    }
+
+    @Override
+    public Optional<User> findByEmailAndExchangeProvider(String email, ExchangeProvider exchangeProvider) {
+        return userRepository.findByEmailAndExchangeProvider(email, exchangeProvider)
                 .map(this::toUser);
     }
 

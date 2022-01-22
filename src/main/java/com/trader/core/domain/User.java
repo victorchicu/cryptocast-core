@@ -11,8 +11,8 @@ public class User {
     private String providerId;
     private String apiKey;
     private String secretKey;
-    private OAuth2Provider provider;
-    private ExchangeProvider exchange;
+    private OAuth2Provider auth2Provider;
+    private ExchangeProvider exchangeProvider;
 
     private User(Builder builder) {
         id = builder.id;
@@ -22,8 +22,8 @@ public class User {
         providerId = builder.providerId;
         apiKey = builder.apiKey;
         secretKey = builder.secretKey;
-        provider = builder.provider;
-        exchange = builder.exchange;
+        auth2Provider = builder.auth2Provider;
+        exchangeProvider = builder.exchangeProvider;
     }
 
     public static Builder newBuilder() {
@@ -86,20 +86,20 @@ public class User {
         this.secretKey = secretKey;
     }
 
-    public OAuth2Provider getProvider() {
-        return provider;
+    public OAuth2Provider getAuth2Provider() {
+        return auth2Provider;
     }
 
-    public void setProvider(OAuth2Provider provider) {
-        this.provider = provider;
+    public void setAuth2Provider(OAuth2Provider auth2Provider) {
+        this.auth2Provider = auth2Provider;
     }
 
-    public ExchangeProvider getExchange() {
-        return exchange;
+    public ExchangeProvider getExchangeProvider() {
+        return exchangeProvider;
     }
 
-    public void setExchange(ExchangeProvider exchange) {
-        this.exchange = exchange;
+    public void setExchangeProvider(ExchangeProvider exchangeProvider) {
+        this.exchangeProvider = exchangeProvider;
     }
 
     public static final class Builder {
@@ -110,8 +110,8 @@ public class User {
         private String providerId;
         private String apiKey;
         private String secretKey;
-        private OAuth2Provider provider;
-        private ExchangeProvider exchange;
+        private OAuth2Provider auth2Provider;
+        private ExchangeProvider exchangeProvider;
 
         private Builder() {}
 
@@ -150,13 +150,13 @@ public class User {
             return this;
         }
 
-        public Builder provider(OAuth2Provider provider) {
-            this.provider = provider;
+        public Builder auth2Provider(OAuth2Provider auth2Provider) {
+            this.auth2Provider = auth2Provider;
             return this;
         }
 
-        public Builder exchange(ExchangeProvider exchange) {
-            this.exchange = exchange;
+        public Builder exchangeProvider(ExchangeProvider exchangeProvider) {
+            this.exchangeProvider = exchangeProvider;
             return this;
         }
 

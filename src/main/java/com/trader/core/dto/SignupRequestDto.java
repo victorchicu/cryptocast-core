@@ -3,26 +3,26 @@ package com.trader.core.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.trader.core.enums.ExchangeProvider;
 
-public class SignupDto {
+public class SignupRequestDto {
     private final String email;
     private final String password;
     private final String apiKey;
     private final String secretKey;
-    private final ExchangeProvider exchange;
+    private final ExchangeProvider exchangeProvider;
 
     @JsonCreator
-    public SignupDto(
+    public SignupRequestDto(
             String email,
             String password,
             String apiKey,
             String secretKey,
-            ExchangeProvider exchange
+            ExchangeProvider exchangeProvider
     ) {
         this.email = email;
         this.password = password;
         this.apiKey = apiKey;
         this.secretKey = secretKey;
-        this.exchange = exchange;
+        this.exchangeProvider = exchangeProvider;
     }
 
     public String getEmail() {
@@ -41,7 +41,7 @@ public class SignupDto {
         return secretKey;
     }
 
-    public ExchangeProvider getExchange() {
-        return exchange;
+    public ExchangeProvider getExchangeProvider() {
+        return exchangeProvider;
     }
 }

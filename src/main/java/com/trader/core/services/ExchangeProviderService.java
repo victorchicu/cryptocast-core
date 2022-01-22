@@ -1,17 +1,17 @@
 package com.trader.core.services;
 
 import com.trader.core.binance.domain.account.AssetBalance;
+import com.trader.core.domain.User;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 public interface ExchangeProviderService {
-    void createAssetTicker(Principal principal, String assetName);
+    void createAssetTicker(User user, String assetName);
 
     void removeAssetTicker(String assetName);
 
-    List<AssetBalance> listAssetBalances(Principal principal);
+    List<AssetBalance> listAssetBalances(User user);
 
-    Optional<AssetBalance> findAssetBalanceByName(Principal principal, String assetName);
+    Optional<AssetBalance> findAssetBalanceByName(User user, String assetName);
 }

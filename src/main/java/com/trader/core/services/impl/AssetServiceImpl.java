@@ -1,5 +1,6 @@
 package com.trader.core.services.impl;
 
+import com.trader.core.domain.User;
 import com.trader.core.services.AssetService;
 import com.trader.core.binance.domain.account.AssetBalance;
 import com.trader.core.enums.ExchangeProvider;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -28,11 +28,11 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public void addAssetTickerEvent(Principal principal, String assetName) {
+    public void addAssetTickerEvent(User user, String assetName) {
         ExchangeProviderService provider = exchangeProviderServiceStrategy.getExchangeProvider(
                 ExchangeProvider.BINANCE
         );
-        provider.createAssetTicker(principal, assetName);
+        provider.createAssetTicker(user, assetName);
     }
 
 
@@ -45,15 +45,15 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public List<AssetBalance> listAssetBalances(Principal principal) {
+    public List<AssetBalance> listAssetBalances(User user) {
         ExchangeProviderService provider = exchangeProviderServiceStrategy.getExchangeProvider(
-                ExchangeProvider.BINANCE
+                user.getExchangeProvider()
         );
         Page<Subscription> page = subscriptionService.findSubscriptions(
-                principal,
+                user,
                 Pageable.unpaged()
         );
-        List<AssetBalance> assetBalances = provider.listAssetBalances(principal);
+        List<AssetBalance> assetBalances = provider.listAssetBalances(user);
         List<Subscription> subscriptions = page.getContent();
         if (!subscriptions.isEmpty()) {
             assetBalances.forEach(assetBalance -> {
@@ -65,7 +65,7 @@ public class AssetServiceImpl implements AssetService {
                 );
                 if (assetBalance.getFlagged()) {
                     removeAssetTickerEvent(assetBalance.getAsset());
-                    addAssetTickerEvent(principal, assetBalance.getAsset());
+                    addAssetTickerEvent(user, assetBalance.getAsset());
                 }
             });
         }

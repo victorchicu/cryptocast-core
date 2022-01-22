@@ -20,7 +20,7 @@ public class UserEntity extends BaseEntity {
     private String apiKey;
     private String secretKey;
     private OAuth2Provider provider;
-    private ExchangeProvider exchange;
+    private ExchangeProvider exchangeProvider;
 
     public String getEmail() {
         return email;
@@ -78,12 +78,12 @@ public class UserEntity extends BaseEntity {
         this.provider = provider;
     }
 
-    public ExchangeProvider getExchange() {
-        return exchange;
+    public ExchangeProvider getExchangeProvider() {
+        return exchangeProvider;
     }
 
-    public void setExchange(ExchangeProvider exchange) {
-        this.exchange = exchange;
+    public void setExchangeProvider(ExchangeProvider exchangeProvider) {
+        this.exchangeProvider = exchangeProvider;
     }
 
     public static final class Field {
@@ -94,5 +94,6 @@ public class UserEntity extends BaseEntity {
         public static final String PROVIDER_ID = "providerId";
         public static final String API_KEY = "apiKey";
         public static final String SECRET_KEY = "secretKey";
+        public static final String EXCHANGE_PROVIDER = "exchangeProvider";
     }
 }

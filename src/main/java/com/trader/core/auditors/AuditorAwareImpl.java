@@ -1,4 +1,4 @@
-package com.trader.core.services.impl;
+package com.trader.core.auditors;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.context.SecurityContextHolder;

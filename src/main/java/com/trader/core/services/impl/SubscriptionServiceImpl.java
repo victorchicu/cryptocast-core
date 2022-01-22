@@ -1,6 +1,7 @@
 package com.trader.core.services.impl;
 
 import com.trader.core.domain.Subscription;
+import com.trader.core.domain.User;
 import com.trader.core.entity.SubscriptionEntity;
 import com.trader.core.repository.SubscriptionRepository;
 import com.trader.core.services.SubscriptionService;
@@ -9,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +24,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public void deleteSubscriptions(Principal principal) {
-        subscriptionRepository.removeSubscriptions(principal);
+    public void deleteSubscriptions(User user) {
+        subscriptionRepository.removeSubscriptions(user);
     }
 
     @Override
@@ -41,18 +41,18 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public Page<Subscription> findSubscriptions(Principal principal, Pageable pageable) {
-        return subscriptionRepository.listSubscriptions(principal, pageable);
+    public Page<Subscription> findSubscriptions(User user, Pageable pageable) {
+        return subscriptionRepository.listSubscriptions(user, pageable);
     }
 
     @Override
-    public Page<Subscription> findSubscriptions(Principal principal, List<String> assetNames, Pageable pageable) {
-        return subscriptionRepository.listSubscriptions(principal, assetNames, pageable);
+    public Page<Subscription> findSubscriptions(User user, List<String> assetNames, Pageable pageable) {
+        return subscriptionRepository.listSubscriptions(user, assetNames, pageable);
     }
 
     @Override
-    public Optional<Subscription> findSubscription(Principal principal, String assetName) {
-        return subscriptionRepository.findSubscription(principal, assetName);
+    public Optional<Subscription> findSubscription(User user, String assetName) {
+        return subscriptionRepository.findSubscription(user, assetName);
     }
 
 

@@ -1,16 +1,17 @@
 package com.trader.core.services.impl;
 
-import com.trader.core.dto.AssetBalanceDto;
-import com.trader.core.enums.Quotation;
-import com.trader.core.exceptions.AssetNotFoundException;
 import com.trader.core.binance.BinanceApiRestClient;
 import com.trader.core.binance.BinanceApiWebSocketClient;
 import com.trader.core.binance.domain.account.AssetBalance;
 import com.trader.core.binance.domain.event.TickerEvent;
 import com.trader.core.binance.domain.market.TickerPrice;
 import com.trader.core.configs.BinanceProperties;
-import com.trader.core.services.ExchangeProviderService;
+import com.trader.core.domain.User;
+import com.trader.core.dto.AssetBalanceDto;
 import com.trader.core.enums.NotificationType;
+import com.trader.core.enums.Quotation;
+import com.trader.core.exceptions.AssetNotFoundException;
+import com.trader.core.services.ExchangeProviderService;
 import com.trader.core.services.NotificationTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -52,8 +52,8 @@ public class BinanceExchangeProviderService implements ExchangeProviderService {
     }
 
     @Override
-    public void createAssetTicker(Principal principal, String assetName) {
-        findAssetBalanceByName(principal, assetName)
+    public void createAssetTicker(User user, String assetName) {
+        findAssetBalanceByName(user, assetName)
                 .map(assetBalance -> {
                     BinanceProperties.AssetConfig assetConfig = findAssetConfigByName(assetName);
                     events.computeIfAbsent(assetName, (String name) ->
@@ -62,7 +62,7 @@ public class BinanceExchangeProviderService implements ExchangeProviderService {
                                     tickerEvent -> {
                                         try {
                                             LOG.info(tickerEvent.toString());
-                                            sendNotification(principal, assetBalance, tickerEvent);
+                                            sendNotification(user, assetBalance, tickerEvent);
                                         } catch (Exception e) {
                                             LOG.error(e.getMessage(), e);
                                         }
@@ -86,7 +86,7 @@ public class BinanceExchangeProviderService implements ExchangeProviderService {
     }
 
     @Override
-    public List<AssetBalance> listAssetBalances(Principal principal) {
+    public List<AssetBalance> listAssetBalances(User user) {
         return binanceApiRestClient.getAccount().getBalances().stream()
                 .filter(this::onlyEffectiveBalance)
                 .sorted(Comparator.comparing(AssetBalance::getFree).reversed())
@@ -106,12 +106,18 @@ public class BinanceExchangeProviderService implements ExchangeProviderService {
     }
 
     @Override
-    public Optional<AssetBalance> findAssetBalanceByName(Principal principal, String assetName) {
+    public Optional<AssetBalance> findAssetBalanceByName(User user, String assetName) {
         return binanceApiRestClient.getAccount().getBalances().stream()
                 .filter(assetBalance -> assetBalance.getAsset().equals(assetName))
                 .findFirst();
     }
 
+
+    private void sendNotification(User user, AssetBalance assetBalance, TickerEvent tickerEvent) {
+        assetBalance = updateAssetBalance(assetBalance, tickerEvent.getCurrentDaysClosePrice());
+        AssetBalanceDto assetBalanceDto = toAssetBalanceDto(assetBalance);
+        notificationTemplate.sendNotification(user, NotificationType.TICKER_EVENT, assetBalanceDto);
+    }
 
     private boolean onlyEffectiveBalance(AssetBalance assetBalance) {
         if (binanceProperties.getBlacklist().contains(assetBalance.getAsset())) {
@@ -155,26 +161,12 @@ public class BinanceExchangeProviderService implements ExchangeProviderService {
         return assetBalance;
     }
 
+    private AssetBalanceDto toAssetBalanceDto(AssetBalance assetBalance) {
+        return conversionService.convert(assetBalance, AssetBalanceDto.class);
+    }
+
     private BinanceProperties.AssetConfig findAssetConfigByName(String assetName) {
         return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
                 .orElseThrow(AssetNotFoundException::new);
-    }
-
-    private void sendNotification(Principal principal, AssetBalance assetBalance, TickerEvent tickerEvent) {
-        AssetBalanceDto assetBalanceDto = toAssetBalanceDto(
-                updateAssetBalance(
-                        assetBalance,
-                        tickerEvent.getCurrentDaysClosePrice()
-                )
-        );
-        notificationTemplate.sendNotification(
-                principal,
-                NotificationType.TICKER_EVENT,
-                assetBalanceDto
-        );
-    }
-
-    private AssetBalanceDto toAssetBalanceDto(AssetBalance assetBalance) {
-        return conversionService.convert(assetBalance, AssetBalanceDto.class);
     }
 }
