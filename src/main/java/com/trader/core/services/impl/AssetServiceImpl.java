@@ -16,15 +16,15 @@ import java.util.List;
 
 @Service
 public class AssetServiceImpl implements AssetService {
-    private final SubscriptionService subscriptionService;
     private final ExchangeStrategy exchangeStrategy;
+    private final SubscriptionService subscriptionService;
 
     public AssetServiceImpl(
-            SubscriptionService subscriptionService,
-            ExchangeStrategy exchangeStrategy
+            ExchangeStrategy exchangeStrategy,
+            SubscriptionService subscriptionService
     ) {
-        this.subscriptionService = subscriptionService;
         this.exchangeStrategy = exchangeStrategy;
+        this.subscriptionService = subscriptionService;
     }
 
     @Override
