@@ -29,31 +29,31 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public void addAssetTickerEvent(User user, String assetName) {
-        ExchangeService provider = exchangeStrategy.getExchangeService(
+        ExchangeService exchangeService = exchangeStrategy.getExchangeService(
                 ExchangeProvider.BINANCE
         );
-        provider.createAssetTicker(user, assetName);
+        exchangeService.createAssetTicker(user, assetName);
     }
 
 
     @Override
     public void removeAssetTickerEvent(String assetName) {
-        ExchangeService provider = exchangeStrategy.getExchangeService(
+        ExchangeService exchangeService = exchangeStrategy.getExchangeService(
                 ExchangeProvider.BINANCE
         );
-        provider.removeAssetTicker(assetName);
+        exchangeService.removeAssetTicker(assetName);
     }
 
     @Override
     public List<AssetBalance> listAssetBalances(User user) {
-        ExchangeService provider = exchangeStrategy.getExchangeService(
+        ExchangeService exchangeService = exchangeStrategy.getExchangeService(
                 user.getExchangeProvider()
         );
         Page<Subscription> page = subscriptionService.findSubscriptions(
                 user,
                 Pageable.unpaged()
         );
-        List<AssetBalance> assetBalances = provider.listAssetBalances(user);
+        List<AssetBalance> assetBalances = exchangeService.listAssetBalances(user);
         List<Subscription> subscriptions = page.getContent();
         if (!subscriptions.isEmpty()) {
             assetBalances.forEach(assetBalance -> {
