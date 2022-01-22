@@ -28,7 +28,7 @@ public class ApiRestClientConfig {
     @Bean
     @SessionScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
     public ApiRestClient apiRestClient() {
-        return userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+        return userService.findById(SecurityContextHolder.getContext().getAuthentication().getName())
                 .map(user -> {
                     ExchangeService exchangeService = exchangeStrategy.getExchangeService(
                             user.getExchangeProvider()
@@ -41,7 +41,7 @@ public class ApiRestClientConfig {
     @Bean
     @SessionScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
     public ApiWebSocketClient apiWebSocketClient() {
-        return userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+        return userService.findById(SecurityContextHolder.getContext().getAuthentication().getName())
                 .map(user -> {
                     ExchangeService exchangeService = exchangeStrategy.getExchangeService(
                             user.getExchangeProvider()

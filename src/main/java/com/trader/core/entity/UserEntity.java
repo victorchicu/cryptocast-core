@@ -19,7 +19,7 @@ public class UserEntity extends BaseEntity {
     private String providerId;
     private String apiKey;
     private String secretKey;
-    private OAuth2Provider provider;
+    private OAuth2Provider auth2Provider;
     private ExchangeProvider exchangeProvider;
 
     public String getEmail() {
@@ -70,12 +70,12 @@ public class UserEntity extends BaseEntity {
         this.secretKey = secretKey;
     }
 
-    public OAuth2Provider getProvider() {
-        return provider;
+    public OAuth2Provider getAuth2Provider() {
+        return auth2Provider;
     }
 
-    public void setProvider(OAuth2Provider provider) {
-        this.provider = provider;
+    public void setAuth2Provider(OAuth2Provider auth2Provider) {
+        this.auth2Provider = auth2Provider;
     }
 
     public ExchangeProvider getExchangeProvider() {

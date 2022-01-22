@@ -6,13 +6,13 @@ import com.trader.core.enums.ExchangeProvider;
 public class LoginRequestDto {
     private final String email;
     private final String password;
-    private final ExchangeProvider exchange;
+    private final ExchangeProvider exchangeProvider;
 
     @JsonCreator
-    public LoginRequestDto(String email, String password, ExchangeProvider exchange) {
+    public LoginRequestDto(String email, String password, ExchangeProvider exchangeProvider) {
         this.email = email;
         this.password = password;
-        this.exchange = exchange;
+        this.exchangeProvider = exchangeProvider;
     }
 
     public String getEmail() {
@@ -23,7 +23,7 @@ public class LoginRequestDto {
         return password;
     }
 
-    public ExchangeProvider getExchange() {
-        return exchange;
+    public ExchangeProvider getExchangeProvider() {
+        return exchangeProvider;
     }
 }

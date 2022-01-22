@@ -29,7 +29,7 @@ public class AssetController {
 
     @GetMapping
     public List<AssetBalanceDto> listAssets(Principal principal) {
-        return userService.findByEmail(principal.getName())
+        return userService.findById(principal.getName())
                 .map(user ->
                         assetService.listAssetBalances(user).stream()
                                 .map(this::toAssetBalanceDto)

@@ -37,7 +37,7 @@ public class SubscriptionController {
 
     @PostMapping("/{assetName}/add")
     public SubscriptionDto addSubscription(Principal principal, @PathVariable String assetName) {
-        return userService.findByEmail(principal.getName())
+        return userService.findById(principal.getName())
                 .map(user ->
                         subscriptionService.findSubscription(user, assetName)
                                 .map(subscription -> {
@@ -57,7 +57,8 @@ public class SubscriptionController {
 
     @DeleteMapping("/{assetName}/remove")
     public SubscriptionDto removeSubscription(Principal principal, @PathVariable String assetName) {
-        return userService.findByEmail(principal.getName())
+        //TODO: Changed to find by id
+        return userService.findById(principal.getName())
                 .map(user ->
                         subscriptionService.findSubscription(user, assetName)
                                 .map(subscription -> {
@@ -72,7 +73,7 @@ public class SubscriptionController {
 
     @GetMapping
     public Page<SubscriptionDto> listSubscriptions(Principal principal, Pageable pageable) {
-        return userService.findByEmail(principal.getName())
+        return userService.findById(principal.getName())
                 .map(user ->
                         subscriptionService.findSubscriptions(user, pageable)
                                 .map(this::toSubscriptionDto)

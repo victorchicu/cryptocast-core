@@ -11,15 +11,15 @@ import java.util.Optional;
 
 @Service
 public class ExchangeStrategyImpl implements ExchangeStrategy {
-    private final Map<ExchangeProvider, ExchangeService> exchangeServices;
+    private final Map<ExchangeProvider, ExchangeService> exchanges;
 
-    public ExchangeStrategyImpl(Map<ExchangeProvider, ExchangeService> exchangeServices) {
-        this.exchangeServices = exchangeServices;
+    public ExchangeStrategyImpl(Map<ExchangeProvider, ExchangeService> exchanges) {
+        this.exchanges = exchanges;
     }
 
     @Override
     public ExchangeService getExchangeService(ExchangeProvider exchangeProvider) {
-        return Optional.ofNullable(exchangeServices.get(exchangeProvider))
+        return Optional.ofNullable(exchanges.get(exchangeProvider))
                 .orElseThrow(UnsupportedExchangeProviderService::new);
     }
 }

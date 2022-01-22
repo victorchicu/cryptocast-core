@@ -48,7 +48,7 @@ public class SignupController {
         user = userService.save(user);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        user.getEmail(),
+                        user.getId(),
                         signupRequestDto.getPassword()
                 )
         );

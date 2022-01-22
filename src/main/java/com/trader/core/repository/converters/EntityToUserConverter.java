@@ -14,7 +14,7 @@ public class EntityToUserConverter implements Converter<UserEntity, User> {
                 .email(source.getEmail())
                 .password(source.getPassword())
                 .imageUrl(source.getImageUrl())
-                .auth2Provider(source.getProvider())
+                .auth2Provider(source.getAuth2Provider())
                 .providerId(source.getProviderId())
                 .apiKey(source.getApiKey())
                 .secretKey(source.getSecretKey())

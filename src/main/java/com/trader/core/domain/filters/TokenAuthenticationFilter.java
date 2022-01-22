@@ -23,7 +23,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private final TokenProviderService tokenProviderService;
     private final CustomUserDetailsService customUserDetailsService;
 
-    public TokenAuthenticationFilter(TokenProviderService tokenProviderService, CustomUserDetailsService customUserDetailsService) {
+    public TokenAuthenticationFilter(
+            TokenProviderService tokenProviderService,
+            CustomUserDetailsService customUserDetailsService
+    ) {
         this.tokenProviderService = tokenProviderService;
         this.customUserDetailsService = customUserDetailsService;
     }
@@ -34,9 +37,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             String bearerToken = getBearerTokenFromRequest(request);
             if (StringUtils.hasText(bearerToken) && tokenProviderService.validateToken(bearerToken)) {
                 String subject = tokenProviderService.decodeSubject(bearerToken);
+                Object credentials = null;
                 UserDetails userDetails = customUserDetailsService.loadUserById(subject);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
+                        userDetails,
+                        credentials,
+                        userDetails.getAuthorities()
                 );
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -13,7 +13,7 @@ public class UserToEntityConverter implements Converter<User, UserEntity> {
         userEntity.setEmail(source.getEmail());
         userEntity.setPassword(source.getPassword());
         userEntity.setImageUrl(source.getImageUrl());
-        userEntity.setProvider(source.getAuth2Provider());
+        userEntity.setAuth2Provider(source.getAuth2Provider());
         userEntity.setProviderId(source.getProviderId());
         userEntity.setApiKey(source.getApiKey());
         userEntity.setSecretKey(source.getSecretKey());

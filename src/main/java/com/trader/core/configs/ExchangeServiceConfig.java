@@ -10,15 +10,15 @@ import java.util.stream.Collectors;
 
 @Configuration
 public class ExchangeServiceConfig {
-    private final Map<String, ExchangeService> exchangeServices;
+    private final Map<String, ExchangeService> exchanges;
 
-    public ExchangeServiceConfig(Map<String, ExchangeService> exchangeServices) {
-        this.exchangeServices = exchangeServices;
+    public ExchangeServiceConfig(Map<String, ExchangeService> exchanges) {
+        this.exchanges = exchanges;
     }
 
     @Bean
     public Map<ExchangeProvider, ExchangeService> exchangeProviders() {
-        return exchangeServices.entrySet().stream()
+        return exchanges.entrySet().stream()
                 .collect(Collectors.toMap(
                         entryKey -> ExchangeProvider.valueOf(entryKey.getKey()),
                         Map.Entry::getValue)

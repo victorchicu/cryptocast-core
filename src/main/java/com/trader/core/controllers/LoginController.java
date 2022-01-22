@@ -33,14 +33,13 @@ public class LoginController {
 
     @PostMapping
     public AccessTokenDto login(@RequestBody LoginRequestDto loginRequestDto) {
-        return userService.findByEmail(loginRequestDto.getEmail())
+        return userService.findByEmailAndExchangeProvider(loginRequestDto.getEmail(), loginRequestDto.getExchangeProvider())
                 .map(user -> {
-                    Authentication authentication = authenticationManager.authenticate(
-                            new UsernamePasswordAuthenticationToken(
-                                    loginRequestDto.getEmail(),
-                                    loginRequestDto.getPassword()
-                            )
+                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                            user.getId(),
+                            loginRequestDto.getPassword()
                     );
+                    Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                     String accessToken = tokenProviderService.createToken(authentication);
                     return new AccessTokenDto(accessToken);
