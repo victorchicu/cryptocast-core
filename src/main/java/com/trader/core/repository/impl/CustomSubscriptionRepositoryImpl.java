@@ -32,7 +32,7 @@ public class CustomSubscriptionRepositoryImpl implements CustomSubscriptionRepos
         mongoOperations.remove(
                 Query.query(
                         Criteria.where(SubscriptionEntity.Field.CREATED_BY)
-                                .is(user.getId())
+                                .is(user.getEmail())
                 ),
                 SubscriptionEntity.class,
                 SubscriptionEntity.COLLECTION_NAME
@@ -41,7 +41,7 @@ public class CustomSubscriptionRepositoryImpl implements CustomSubscriptionRepos
 
     @Override
     public Page<Subscription> listSubscriptions(User user, Pageable pageable) {
-        Criteria matchCriteria = Criteria.where(SubscriptionEntity.Field.CREATED_BY).is(user.getId());
+        Criteria matchCriteria = Criteria.where(SubscriptionEntity.Field.CREATED_BY).is(user.getEmail());
 
         List<SubscriptionEntity> subscriptions = mongoOperations.find(
                 Query.query(matchCriteria),
@@ -59,7 +59,7 @@ public class CustomSubscriptionRepositoryImpl implements CustomSubscriptionRepos
     @Override
     public Page<Subscription> listSubscriptions(User user, List<String> assetNames, Pageable pageable) {
         Criteria matchCriteria = Criteria.where(SubscriptionEntity.Field.CREATED_BY)
-                .is(user.getId())
+                .is(user.getEmail())
                 .and(SubscriptionEntity.Field.ASSET_NAME)
                 .in(assetNames);
 
@@ -78,7 +78,7 @@ public class CustomSubscriptionRepositoryImpl implements CustomSubscriptionRepos
     @Override
     public Optional<Subscription> findSubscription(User user, String assetName) {
         Criteria matchCriteria = Criteria.where(SubscriptionEntity.Field.CREATED_BY)
-                .is(user.getId())
+                .is(user.getEmail())
                 .and(SubscriptionEntity.Field.ASSET_NAME)
                 .is(assetName);
 

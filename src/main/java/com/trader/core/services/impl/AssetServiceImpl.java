@@ -4,8 +4,8 @@ import com.trader.core.domain.User;
 import com.trader.core.services.AssetService;
 import com.trader.core.binance.domain.account.AssetBalance;
 import com.trader.core.enums.ExchangeProvider;
-import com.trader.core.services.ExchangeProviderService;
-import com.trader.core.strategy.ExchangeProviderServiceStrategy;
+import com.trader.core.services.ExchangeService;
+import com.trader.core.strategy.ExchangeStrategy;
 import com.trader.core.domain.Subscription;
 import com.trader.core.services.SubscriptionService;
 import org.springframework.data.domain.Page;
@@ -17,19 +17,19 @@ import java.util.List;
 @Service
 public class AssetServiceImpl implements AssetService {
     private final SubscriptionService subscriptionService;
-    private final ExchangeProviderServiceStrategy exchangeProviderServiceStrategy;
+    private final ExchangeStrategy exchangeStrategy;
 
     public AssetServiceImpl(
             SubscriptionService subscriptionService,
-            ExchangeProviderServiceStrategy exchangeProviderServiceStrategy
+            ExchangeStrategy exchangeStrategy
     ) {
         this.subscriptionService = subscriptionService;
-        this.exchangeProviderServiceStrategy = exchangeProviderServiceStrategy;
+        this.exchangeStrategy = exchangeStrategy;
     }
 
     @Override
     public void addAssetTickerEvent(User user, String assetName) {
-        ExchangeProviderService provider = exchangeProviderServiceStrategy.getExchangeProvider(
+        ExchangeService provider = exchangeStrategy.getExchangeService(
                 ExchangeProvider.BINANCE
         );
         provider.createAssetTicker(user, assetName);
@@ -38,7 +38,7 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public void removeAssetTickerEvent(String assetName) {
-        ExchangeProviderService provider = exchangeProviderServiceStrategy.getExchangeProvider(
+        ExchangeService provider = exchangeStrategy.getExchangeService(
                 ExchangeProvider.BINANCE
         );
         provider.removeAssetTicker(assetName);
@@ -46,7 +46,7 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public List<AssetBalance> listAssetBalances(User user) {
-        ExchangeProviderService provider = exchangeProviderServiceStrategy.getExchangeProvider(
+        ExchangeService provider = exchangeStrategy.getExchangeService(
                 user.getExchangeProvider()
         );
         Page<Subscription> page = subscriptionService.findSubscriptions(

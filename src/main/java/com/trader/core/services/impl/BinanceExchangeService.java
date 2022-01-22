@@ -1,17 +1,20 @@
 package com.trader.core.services.impl;
 
-import com.trader.core.binance.BinanceApiRestClient;
-import com.trader.core.binance.BinanceApiWebSocketClient;
+import com.trader.core.binance.BinanceApiClientFactory;
 import com.trader.core.binance.domain.account.AssetBalance;
 import com.trader.core.binance.domain.event.TickerEvent;
 import com.trader.core.binance.domain.market.TickerPrice;
+import com.trader.core.clients.impl.ExtendedBinanceApiRestClient;
+import com.trader.core.clients.impl.ExtendedBinanceApiWebSocketClient;
 import com.trader.core.configs.BinanceProperties;
 import com.trader.core.domain.User;
 import com.trader.core.dto.AssetBalanceDto;
 import com.trader.core.enums.NotificationType;
 import com.trader.core.enums.Quotation;
 import com.trader.core.exceptions.AssetNotFoundException;
-import com.trader.core.services.ExchangeProviderService;
+import com.trader.core.clients.ApiRestClient;
+import com.trader.core.clients.ApiWebSocketClient;
+import com.trader.core.services.ExchangeService;
 import com.trader.core.services.NotificationTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,29 +29,29 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("BINANCE")
-public class BinanceExchangeProviderService implements ExchangeProviderService {
+public class BinanceExchangeService implements ExchangeService {
     private static final String USDT = "USDT";
-    private static final Logger LOG = LoggerFactory.getLogger(BinanceExchangeProviderService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BinanceExchangeService.class);
     private static final Map<String, Closeable> events = new HashMap<>();
 
+    private final ApiRestClient apiRestClient;
+    private final ApiWebSocketClient apiWebSocketClient;
     private final ConversionService conversionService;
     private final BinanceProperties binanceProperties;
-    private final BinanceApiRestClient binanceApiRestClient;
     private final NotificationTemplate notificationTemplate;
-    private final BinanceApiWebSocketClient binanceApiWebSocketClient;
 
-    public BinanceExchangeProviderService(
+    public BinanceExchangeService(
+            ApiRestClient apiRestClient,
+            ApiWebSocketClient apiWebSocketClient,
             ConversionService conversionService,
             BinanceProperties binanceProperties,
-            BinanceApiRestClient binanceApiRestClient,
-            NotificationTemplate notificationTemplate,
-            BinanceApiWebSocketClient binanceApiWebSocketClient
+            NotificationTemplate notificationTemplate
     ) {
+        this.apiRestClient = apiRestClient;
+        this.apiWebSocketClient = apiWebSocketClient;
         this.conversionService = conversionService;
         this.binanceProperties = binanceProperties;
-        this.binanceApiRestClient = binanceApiRestClient;
         this.notificationTemplate = notificationTemplate;
-        this.binanceApiWebSocketClient = binanceApiWebSocketClient;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class BinanceExchangeProviderService implements ExchangeProviderService {
                 .map(assetBalance -> {
                     BinanceProperties.AssetConfig assetConfig = findAssetConfigByName(assetName);
                     events.computeIfAbsent(assetName, (String name) ->
-                            binanceApiWebSocketClient.onTickerEvent(
+                            apiWebSocketClient.onTickerEvent(
                                     assetConfig.getSymbol().toLowerCase(),
                                     tickerEvent -> {
                                         try {
@@ -86,8 +89,30 @@ public class BinanceExchangeProviderService implements ExchangeProviderService {
     }
 
     @Override
+    public ApiRestClient newApiRestClient(User user) {
+        BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(
+                user.getApiKey(),
+                user.getSecretKey(),
+                binanceProperties.getUseTestnet(),
+                binanceProperties.getUseTestnetStreaming()
+        );
+        return new ExtendedBinanceApiRestClient(binanceProperties, factory.newRestClient());
+    }
+
+    @Override
+    public ApiWebSocketClient newApiWebSocketClient(User user) {
+        BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(
+                user.getApiKey(),
+                user.getSecretKey(),
+                binanceProperties.getUseTestnet(),
+                binanceProperties.getUseTestnetStreaming()
+        );
+        return new ExtendedBinanceApiWebSocketClient(factory.newWebSocketClient());
+    }
+
+    @Override
     public List<AssetBalance> listAssetBalances(User user) {
-        return binanceApiRestClient.getAccount().getBalances().stream()
+        return apiRestClient.getAccount().getBalances().stream()
                 .filter(this::onlyEffectiveBalance)
                 .sorted(Comparator.comparing(AssetBalance::getFree).reversed())
                 .map(assetBalance -> {
@@ -98,7 +123,7 @@ public class BinanceExchangeProviderService implements ExchangeProviderService {
                         return assetBalance;
                     } else {
                         BinanceProperties.AssetConfig assetConfig = findAssetConfigByName(assetBalance.getAsset());
-                        TickerPrice tickerPrice = binanceApiRestClient.getPrice(assetConfig.getSymbol());
+                        TickerPrice tickerPrice = apiRestClient.getPrice(assetConfig.getSymbol());
                         return updateAssetBalance(assetBalance, tickerPrice.getPrice());
                     }
                 })
@@ -107,7 +132,7 @@ public class BinanceExchangeProviderService implements ExchangeProviderService {
 
     @Override
     public Optional<AssetBalance> findAssetBalanceByName(User user, String assetName) {
-        return binanceApiRestClient.getAccount().getBalances().stream()
+        return apiRestClient.getAccount().getBalances().stream()
                 .filter(assetBalance -> assetBalance.getAsset().equals(assetName))
                 .findFirst();
     }
