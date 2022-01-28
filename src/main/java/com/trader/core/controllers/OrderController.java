@@ -24,12 +24,13 @@ public abstract class OrderController<T extends OrderDto> {
     @PostMapping("/{assetName}")
     public OrderDto createOrder(Principal principal, @PathVariable String assetName, @RequestBody OrderDto orderDto) {
         Order order = toOrder(orderDto);
-        order = orderService.testOrder(principal, assetName, order);
+        //TODO: Remove test order
+        orderService.testOrder(principal, assetName, order);
         return toOrderDto(order);
     }
 
-    @GetMapping("/{assetName}")
-    public Page<OrderDto> listOrders(Principal principal, @PathVariable String assetName, Pageable pageable) {
+    @GetMapping
+    public Page<OrderDto> listOrders(Principal principal, @RequestParam("assetName") String assetName, Pageable pageable) {
         return orderService.listOrders(principal, assetName, pageable)
                 .map(this::toOrderDto);
     }

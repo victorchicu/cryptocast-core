@@ -11,19 +11,19 @@ import com.trader.core.binance.domain.OrderType;
         @JsonSubTypes.Type(value = MarketOrderDto.class, name = "MARKET")
 })
 public abstract class OrderDto {
-    private final OrderType type;
-    private final OrderSide side;
+    private final OrderType orderType;
+    private final OrderSide orderSide;
 
-    public OrderDto(OrderType type, OrderSide side) {
-        this.type = type;
-        this.side = side;
+    public OrderDto(OrderType orderType, OrderSide orderSide) {
+        this.orderType = orderType;
+        this.orderSide = orderSide;
     }
 
-    public OrderType getType() {
-        return type;
+    public OrderType getOrderType() {
+        return orderType;
     }
 
-    public OrderSide getSide() {
-        return side;
+    public OrderSide getOrderSide() {
+        return orderSide;
     }
 }

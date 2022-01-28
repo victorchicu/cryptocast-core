@@ -3,26 +3,25 @@ package com.trader.core.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.trader.core.binance.domain.OrderSide;
 import com.trader.core.binance.domain.OrderType;
-import com.trader.core.dto.OrderDto;
 
 import java.math.BigDecimal;
 
 public class LimitOrderDto extends OrderDto {
-    private final BigDecimal qty;
-    private final BigDecimal price;
+    private final BigDecimal orderQty;
+    private final BigDecimal orderPrice;
 
     @JsonCreator
-    public LimitOrderDto(OrderType type, OrderSide side, BigDecimal qty, BigDecimal price) {
+    public LimitOrderDto(OrderType type, OrderSide side, BigDecimal orderQty, BigDecimal orderPrice) {
         super(type, side);
-        this.qty = qty;
-        this.price = price;
+        this.orderQty = orderQty;
+        this.orderPrice = orderPrice;
     }
 
-    public BigDecimal getQty() {
-        return qty;
+    public BigDecimal getOrderQty() {
+        return orderQty;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getOrderPrice() {
+        return orderPrice;
     }
 }

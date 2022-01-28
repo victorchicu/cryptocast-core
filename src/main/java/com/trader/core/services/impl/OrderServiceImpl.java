@@ -3,7 +3,6 @@ package com.trader.core.services.impl;
 import com.trader.core.binance.domain.account.NewOrder;
 import com.trader.core.binance.domain.account.Order;
 import com.trader.core.binance.domain.account.request.AllOrdersRequest;
-import com.trader.core.binance.domain.account.request.OrderStatusRequest;
 import com.trader.core.clients.ApiRestClient;
 import com.trader.core.services.OrderService;
 import org.springframework.data.domain.Page;
@@ -24,19 +23,24 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<Order> listOrders(Principal principal, String assetName, Pageable pageable) {
-        //TODO: link pageable with AllOrderListRequest
-        List<Order> orders = apiRestClient.getAllOrders(new AllOrdersRequest(assetName));
-        Order orderStatus = apiRestClient.getOrderStatus(new OrderStatusRequest(assetName, 0L));
+        String symbol = getSymbolName(assetName);
+        List<Order> orders = apiRestClient.getAllOrders(new AllOrdersRequest(symbol));
         return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
     }
 
     @Override
-    public Order testOrder(Principal principal, String assetName, Order order) {
+    public void testOrder(Principal principal, String assetName, Order order) {
         String symbolName = getSymbolName(assetName);
-        apiRestClient.newOrderTest(new NewOrder(order.getSymbol(), order.getSide(), order.getType(), order.getTimeInForce(), order.getOrigQty(), order.getPrice()));
-        List<Order> p = apiRestClient.getAllOrders(new AllOrdersRequest(symbolName));
-        System.out.println(p);
-        return null;
+        apiRestClient.newOrderTest(
+                new NewOrder(
+                        symbolName,
+                        order.getSide(),
+                        order.getType(),
+                        order.getTimeInForce(),
+                        order.getOrigQty(),
+                        order.getPrice()
+                )
+        );
     }
 
     protected final String getSymbolName(String assetName) {

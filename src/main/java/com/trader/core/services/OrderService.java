@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.security.Principal;
 
 public interface OrderService {
-    Order testOrder(Principal principal, String assetName, Order order);
+    void testOrder(Principal principal, String assetName, Order order);
 
     Page<Order> listOrders(Principal principal, String assetName, Pageable pageable);
 }
