@@ -41,7 +41,7 @@ public class SubscriptionController {
                 .map(user ->
                         subscriptionService.findSubscription(user, assetName)
                                 .map(subscription -> {
-                                    assetService.removeAssetTickerEvent(assetName);
+                                    assetService.removeAssetTickerEvent(user, assetName);
                                     subscriptionService.deleteSubscriptionById(subscription.getId());
                                     return toSubscriptionDto(subscription);
                                 }).orElseGet(() -> {
@@ -62,7 +62,7 @@ public class SubscriptionController {
                 .map(user ->
                         subscriptionService.findSubscription(user, assetName)
                                 .map(subscription -> {
-                                    assetService.removeAssetTickerEvent(assetName);
+                                    assetService.removeAssetTickerEvent(user, assetName);
                                     subscriptionService.deleteSubscriptionById(subscription.getId());
                                     return toSubscriptionDto(subscription);
                                 })

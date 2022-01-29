@@ -1,12 +1,11 @@
 package com.trader.core.services.impl;
 
+import com.trader.core.binance.domain.account.AssetBalance;
+import com.trader.core.domain.Subscription;
 import com.trader.core.domain.User;
 import com.trader.core.services.AssetService;
-import com.trader.core.binance.domain.account.AssetBalance;
-import com.trader.core.enums.ExchangeProvider;
 import com.trader.core.services.ExchangeService;
 import com.trader.core.services.ExchangeStrategy;
-import com.trader.core.domain.Subscription;
 import com.trader.core.services.SubscriptionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,26 +28,20 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public void addAssetTickerEvent(User user, String assetName) {
-        ExchangeService exchangeService = exchangeStrategy.getExchangeService(
-                ExchangeProvider.BINANCE
-        );
+        ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
         exchangeService.createAssetTicker(user, assetName);
     }
 
 
     @Override
-    public void removeAssetTickerEvent(String assetName) {
-        ExchangeService exchangeService = exchangeStrategy.getExchangeService(
-                ExchangeProvider.BINANCE
-        );
+    public void removeAssetTickerEvent(User user, String assetName) {
+        ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
         exchangeService.removeAssetTicker(assetName);
     }
 
     @Override
     public List<AssetBalance> listAssetBalances(User user) {
-        ExchangeService exchangeService = exchangeStrategy.getExchangeService(
-                user.getExchangeProvider()
-        );
+        ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
         Page<Subscription> page = subscriptionService.findSubscriptions(
                 user,
                 Pageable.unpaged()
@@ -64,7 +57,7 @@ public class AssetServiceImpl implements AssetService {
                                 )
                 );
                 if (assetBalance.getFlagged()) {
-                    removeAssetTickerEvent(assetBalance.getAsset());
+                    removeAssetTickerEvent(user, assetBalance.getAsset());
                     addAssetTickerEvent(user, assetBalance.getAsset());
                 }
             });

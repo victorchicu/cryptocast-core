@@ -36,10 +36,13 @@ public class LogoutServiceImpl implements LogoutService {
         if (authentication != null) {
             userService.findById(authentication.getName())
                     .ifPresent(user -> {
-                        Page<Subscription> subscriptions = subscriptionService.findSubscriptions(user, Pageable.unpaged());
-                        subscriptions.forEach(subscription -> {
-                            assetService.removeAssetTickerEvent(subscription.getAssetName());
-                        });
+                        Page<Subscription> subscriptions = subscriptionService.findSubscriptions(
+                                user,
+                                Pageable.unpaged()
+                        );
+                        subscriptions.forEach(subscription ->
+                                assetService.removeAssetTickerEvent(user, subscription.getAssetName())
+                        );
                     });
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
