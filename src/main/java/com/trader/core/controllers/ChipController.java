@@ -66,7 +66,7 @@ public class ChipController {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    @GetMapping
+    @GetMapping("/available")
     public List<ChipDto> availableChips(Principal principal) {
         return userService.findById(principal.getName())
                 .map(user -> {
