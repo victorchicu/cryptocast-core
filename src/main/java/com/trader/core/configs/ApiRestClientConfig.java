@@ -5,7 +5,7 @@ import com.trader.core.clients.ApiRestClient;
 import com.trader.core.exceptions.ApiClientException;
 import com.trader.core.services.ExchangeService;
 import com.trader.core.services.UserService;
-import com.trader.core.strategy.ExchangeStrategy;
+import com.trader.core.services.ExchangeStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ScopedProxyMode;

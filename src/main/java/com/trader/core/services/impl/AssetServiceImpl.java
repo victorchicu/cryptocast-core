@@ -5,7 +5,7 @@ import com.trader.core.services.AssetService;
 import com.trader.core.binance.domain.account.AssetBalance;
 import com.trader.core.enums.ExchangeProvider;
 import com.trader.core.services.ExchangeService;
-import com.trader.core.strategy.ExchangeStrategy;
+import com.trader.core.services.ExchangeStrategy;
 import com.trader.core.domain.Subscription;
 import com.trader.core.services.SubscriptionService;
 import org.springframework.data.domain.Page;

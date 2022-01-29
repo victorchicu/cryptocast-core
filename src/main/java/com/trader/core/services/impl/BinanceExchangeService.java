@@ -89,6 +89,11 @@ public class BinanceExchangeService implements ExchangeService {
     }
 
     @Override
+    public Set<String> listSymbols() {
+        return binanceProperties.getAssets().keySet();
+    }
+
+    @Override
     public ApiRestClient newApiRestClient(User user) {
         BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(
                 user.getApiKey(),

@@ -7,11 +7,14 @@ import com.trader.core.domain.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface ExchangeService {
     void createAssetTicker(User user, String assetName);
 
     void removeAssetTicker(String assetName);
+
+    Set<String> listSymbols();
 
     ApiRestClient newApiRestClient(User user);
 

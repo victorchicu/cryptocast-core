@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service("GATE")
 public class GateExchangeService implements ExchangeService {
@@ -20,6 +21,11 @@ public class GateExchangeService implements ExchangeService {
     @Override
     public void removeAssetTicker(String assetName) {
         throw new UnsupportedOperationException("Gate not support remove asset ticker");
+    }
+
+    @Override
+    public Set<String> listSymbols() {
+        throw new UnsupportedOperationException("Gate not support list symbols");
     }
 
     @Override
