@@ -12,7 +12,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/orders")
-public abstract class OrderController<T extends OrderDto> {
+public class OrderController {
     private final OrderService orderService;
     private final ConversionService conversionService;
 
@@ -30,7 +30,7 @@ public abstract class OrderController<T extends OrderDto> {
     }
 
     @GetMapping
-    public Page<OrderDto> listOrders(Principal principal, @RequestParam("assetName") String assetName, Pageable pageable) {
+    public Page<OrderDto> listOrders(Principal principal, @RequestParam String assetName, Pageable pageable) {
         return orderService.listOrders(principal, assetName, pageable)
                 .map(this::toOrderDto);
     }
