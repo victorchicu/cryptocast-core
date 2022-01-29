@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -75,7 +76,7 @@ public class ChipController {
                     );
                     return exchangeService.listSymbols();
                 })
-                .map(symbols -> symbols.stream()
+                .map((Set<String> symbols) -> symbols.stream()
                         .map(ChipDto::new)
                         .collect(Collectors.toList())
                 )

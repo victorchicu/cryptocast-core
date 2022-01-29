@@ -3,14 +3,14 @@ package com.trader.core.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class ChipDto {
-    private final String assetName;
+    private final String name;
 
     @JsonCreator
-    public ChipDto(String assetName) {
-        this.assetName = assetName;
+    public ChipDto(String name) {
+        this.name = name;
     }
 
-    public String getAssetName() {
-        return assetName;
+    public String getName() {
+        return name;
     }
 }
