@@ -2,11 +2,11 @@ package com.trader.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class AssetChipDto {
+public class ChipDto {
     private final String assetName;
 
     @JsonCreator
-    public AssetChipDto(String assetName) {
+    public ChipDto(String assetName) {
         this.assetName = assetName;
     }
 

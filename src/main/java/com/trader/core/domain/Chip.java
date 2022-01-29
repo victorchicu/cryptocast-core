@@ -1,6 +1,6 @@
-package com.trader.core.entity;
+package com.trader.core.domain;
 
-public class AssetChipEntity extends BaseEntity {
+public class Chip {
     private String assetName;
 
     public String getAssetName() {
