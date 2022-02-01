@@ -6,5 +6,5 @@ import java.io.Closeable;
 import java.util.function.Consumer;
 
 public interface ApiWebSocketClient {
-    Closeable onTickerEvent(String symbol, Consumer<TickerEvent> consumer);
+    Closeable onTickerEvent(String assetName, Consumer<TickerEvent> consumer);
 }

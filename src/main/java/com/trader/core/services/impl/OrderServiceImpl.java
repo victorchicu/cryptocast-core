@@ -1,8 +1,6 @@
 package com.trader.core.services.impl;
 
-import com.trader.core.binance.domain.account.NewOrder;
 import com.trader.core.binance.domain.account.Order;
-import com.trader.core.binance.domain.account.request.AllOrdersRequest;
 import com.trader.core.clients.ApiRestClient;
 import com.trader.core.services.OrderService;
 import org.springframework.data.domain.Page;
@@ -22,28 +20,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<Order> listOrders(Principal principal, String assetName, Pageable pageable) {
-        String symbol = getSymbolName(assetName);
-        List<Order> orders = apiRestClient.getAllOrders(new AllOrdersRequest(symbol));
+    public void testOrder(Principal principal, String assetName, Order order) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Page<Order> openOrder(Principal principal, String assetName, Long orderId, Pageable pageable) {
+        List<Order> orders = apiRestClient.getOpenOrders(assetName, orderId);
         return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
     }
 
     @Override
-    public void testOrder(Principal principal, String assetName, Order order) {
-        String symbolName = getSymbolName(assetName);
-        apiRestClient.newOrderTest(
-                new NewOrder(
-                        symbolName,
-                        order.getSide(),
-                        order.getType(),
-                        order.getTimeInForce(),
-                        order.getOrigQty(),
-                        order.getPrice()
-                )
-        );
-    }
-
-    protected final String getSymbolName(String assetName) {
-        return apiRestClient.getSymbolName(assetName);
+    public Page<Order> listOrders(Principal principal, String assetName, Pageable pageable) {
+        List<Order> orders = apiRestClient.getAllOrders(assetName);
+        return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
     }
 }

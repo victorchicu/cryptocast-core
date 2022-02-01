@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 
 public class ExtendedGateApiWebSocketClient implements ApiWebSocketClient {
     @Override
-    public Closeable onTickerEvent(String symbol, Consumer<TickerEvent> consumer) {
+    public Closeable onTickerEvent(String assetName, Consumer<TickerEvent> consumer) {
         throw new UnsupportedOperationException("Gate not support on ticker event");
     }
 }

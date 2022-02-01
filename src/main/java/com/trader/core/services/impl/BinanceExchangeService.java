@@ -58,10 +58,9 @@ public class BinanceExchangeService implements ExchangeService {
     public void createAssetTicker(User user, String assetName) {
         findAssetBalanceByName(user, assetName)
                 .map(assetBalance -> {
-                    BinanceProperties.AssetConfig assetConfig = findAssetConfigByName(assetName);
                     events.computeIfAbsent(assetName, (String name) ->
                             apiWebSocketClient.onTickerEvent(
-                                    assetConfig.getSymbol().toLowerCase(),
+                                    assetBalance.getAsset(),
                                     tickerEvent -> {
                                         try {
                                             LOG.info(tickerEvent.toString());
@@ -112,7 +111,7 @@ public class BinanceExchangeService implements ExchangeService {
                 binanceProperties.getUseTestnet(),
                 binanceProperties.getUseTestnetStreaming()
         );
-        return new ExtendedBinanceApiWebSocketClient(factory.newWebSocketClient());
+        return new ExtendedBinanceApiWebSocketClient(binanceProperties, factory.newWebSocketClient());
     }
 
     @Override
@@ -127,8 +126,7 @@ public class BinanceExchangeService implements ExchangeService {
                         assetBalance.setBalance(assetBalance.getFree());
                         return assetBalance;
                     } else {
-                        BinanceProperties.AssetConfig assetConfig = findAssetConfigByName(assetBalance.getAsset());
-                        TickerPrice tickerPrice = apiRestClient.getPrice(assetConfig.getSymbol());
+                        TickerPrice tickerPrice = apiRestClient.getPrice(assetBalance.getAsset());
                         return updateAssetBalance(assetBalance, tickerPrice.getPrice());
                     }
                 })
@@ -193,10 +191,5 @@ public class BinanceExchangeService implements ExchangeService {
 
     private AssetBalanceDto toAssetBalanceDto(AssetBalance assetBalance) {
         return conversionService.convert(assetBalance, AssetBalanceDto.class);
-    }
-
-    private BinanceProperties.AssetConfig findAssetConfigByName(String assetName) {
-        return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
-                .orElseThrow(AssetNotFoundException::new);
     }
 }

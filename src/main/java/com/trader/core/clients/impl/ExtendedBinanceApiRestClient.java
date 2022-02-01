@@ -2,7 +2,6 @@ package com.trader.core.clients.impl;
 
 import com.trader.core.binance.BinanceApiRestClient;
 import com.trader.core.binance.domain.account.Account;
-import com.trader.core.binance.domain.account.NewOrder;
 import com.trader.core.binance.domain.account.Order;
 import com.trader.core.binance.domain.account.request.AllOrdersRequest;
 import com.trader.core.binance.domain.account.request.OrderStatusRequest;
@@ -27,34 +26,32 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     }
 
     @Override
-    public void newOrderTest(NewOrder newOrder) {
-        binanceApiRestClient.newOrderTest(newOrder);
-    }
-
-    @Override
-    public Order getOrderStatus(OrderStatusRequest orderStatusRequest) {
-        return binanceApiRestClient.getOrderStatus(orderStatusRequest);
-    }
-
-    @Override
-    public String getSymbolName(String assetName) {
-        return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
-                .map(asset -> asset.getSymbol())
-                .orElseThrow(AssetNotFoundException::new);
-    }
-
-    @Override
     public Account getAccount() {
         return binanceApiRestClient.getAccount();
     }
 
     @Override
-    public TickerPrice getPrice(String symbol) {
-        return binanceApiRestClient.getPrice(symbol);
+    public TickerPrice getPrice(String assetName) {
+        String symbolName = getSymbolName(assetName);
+        return binanceApiRestClient.getPrice(symbolName);
     }
 
     @Override
-    public List<Order> getAllOrders(AllOrdersRequest allOrdersRequest) {
-        return binanceApiRestClient.getAllOrders(allOrdersRequest);
+    public List<Order> getAllOrders(String assetName) {
+        String symbolName = getSymbolName(assetName);
+        return binanceApiRestClient.getAllOrders(new AllOrdersRequest(symbolName));
+    }
+
+    @Override
+    public List<Order> getOpenOrders(String assetName, Long orderId) {
+        String symbolName = getSymbolName(assetName);
+        return binanceApiRestClient.getOpenOrders(new OrderStatusRequest(symbolName, orderId));
+    }
+
+
+    private String getSymbolName(String assetName) {
+        return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
+                .map(BinanceProperties.AssetConfig::getSymbol)
+                .orElseThrow(AssetNotFoundException::new);
     }
 }
