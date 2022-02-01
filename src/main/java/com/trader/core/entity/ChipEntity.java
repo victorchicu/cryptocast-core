@@ -1,5 +1,8 @@
 package com.trader.core.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "chips")
 public class ChipEntity extends BaseEntity {
     private String name;
 
