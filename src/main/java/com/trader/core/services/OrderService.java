@@ -9,7 +9,7 @@ import java.security.Principal;
 public interface OrderService {
     void testOrder(Principal principal, String fundsName, Order order);
 
-    Page<Order> openOrder(Principal principal, String fundsName, Pageable pageable);
+    Page<Order> getAllOrders(Principal principal, String fundsName, Pageable pageable);
 
-    Page<Order> listOrders(Principal principal, String fundsName, Pageable pageable);
+    Page<Order> getOpenOrders(Principal principal, String fundsName, Pageable pageable);
 }

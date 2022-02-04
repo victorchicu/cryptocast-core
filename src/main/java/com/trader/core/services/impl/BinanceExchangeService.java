@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 
 @Service("BINANCE")
 public class BinanceExchangeService implements ExchangeService {
-    private static final String USDT = "USDT";
     private static final Logger LOG = LoggerFactory.getLogger(BinanceExchangeService.class);
     private static final Map<String, Closeable> events = new HashMap<>();
 
@@ -57,20 +56,20 @@ public class BinanceExchangeService implements ExchangeService {
     @Override
     public void createFundsTicker(User user, String fundsName) {
         findFundsByName(user, fundsName)
-                .map(assetBalance -> {
+                .map(fundsBalance -> {
                     events.computeIfAbsent(fundsName, (String name) ->
                             apiWebSocketClient.onTickerEvent(
-                                    assetBalance.getAsset(),
+                                    fundsBalance.getAsset(),
                                     tickerEvent -> {
                                         try {
                                             LOG.info(tickerEvent.toString());
-                                            sendNotification(user, assetBalance, tickerEvent);
+                                            sendNotification(user, fundsBalance, tickerEvent);
                                         } catch (Exception e) {
                                             LOG.error(e.getMessage(), e);
                                         }
                                     }
                             ));
-                    return assetBalance;
+                    return fundsBalance;
                 })
                 .orElseThrow(() -> new FundsNotFoundException(fundsName));
     }

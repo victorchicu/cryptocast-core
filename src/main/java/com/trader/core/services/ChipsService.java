@@ -5,10 +5,10 @@ import com.trader.core.domain.User;
 
 import java.util.List;
 
-public interface ChipService {
-    void removeChip(String name, User user);
-
+public interface ChipsService {
     Chip addChip(Chip chip);
+
+    void removeChip(String name, User user);
 
     List<Chip> listChips(User user);
 }

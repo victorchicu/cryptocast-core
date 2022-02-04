@@ -12,11 +12,11 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/orders")
-public class OrderController {
+public class OrdersController {
     private final OrderService orderService;
     private final ConversionService conversionService;
 
-    public OrderController(OrderService orderService, ConversionService conversionService) {
+    public OrdersController(OrderService orderService, ConversionService conversionService) {
         this.orderService = orderService;
         this.conversionService = conversionService;
     }
@@ -29,12 +29,17 @@ public class OrderController {
         return toOrderDto(order);
     }
 
-    @GetMapping
-    public Page<OrderDto> listOrders(Principal principal, @RequestParam String fundsName, Pageable pageable) {
-        return orderService.listOrders(principal, fundsName, pageable)
+    @GetMapping("/{fundsName}")
+    public Page<OrderDto> getAllOrders(Principal principal, @PathVariable String fundsName, Pageable pageable) {
+        return orderService.getAllOrders(principal, fundsName, pageable)
                 .map(this::toOrderDto);
     }
 
+    @GetMapping("/open/{fundsName}")
+    public Page<OrderDto> getOpenOrders(Principal principal, @PathVariable String fundsName, Pageable pageable) {
+        return orderService.getOpenOrders(principal, fundsName, pageable)
+                .map(this::toOrderDto);
+    }
 
     private Order toOrder(OrderDto orderDto) {
         return conversionService.convert(orderDto, Order.class);

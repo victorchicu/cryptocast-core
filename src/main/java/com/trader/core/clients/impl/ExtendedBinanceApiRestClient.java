@@ -42,11 +42,11 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
             return binanceApiRestClient.getPrice(symbolName);
         } catch (Exception e) {
             LOG.warn(e.getMessage(), e);
+            TickerPrice tickerPrice = new TickerPrice();
+            tickerPrice.setSymbol(symbolName);
+            tickerPrice.setPrice(BigDecimal.ONE.toPlainString());
+            return tickerPrice;
         }
-        TickerPrice tickerPrice = new TickerPrice();
-        tickerPrice.setSymbol(symbolName);
-        tickerPrice.setPrice(BigDecimal.ONE.toPlainString());
-        return tickerPrice;
     }
 
     @Override

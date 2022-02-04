@@ -36,10 +36,7 @@ public class LogoutServiceImpl implements LogoutService {
         if (authentication != null) {
             userService.findById(authentication.getName())
                     .ifPresent(user -> {
-                        Page<Subscription> subscriptions = subscriptionService.findSubscriptions(
-                                user,
-                                Pageable.unpaged()
-                        );
+                        Page<Subscription> subscriptions = subscriptionService.findSubscriptions(user, Pageable.unpaged());
                         subscriptions.forEach(subscription ->
                                 fundsService.removeFundsTickerEvent(user, subscription.getFundsName())
                         );

@@ -25,7 +25,7 @@ public class ExtendedBinanceApiWebSocketClient implements ApiWebSocketClient {
     @Override
     public Closeable onTickerEvent(String fundsName, Consumer<TickerEvent> consumer) {
         String symbolName = getSymbolName(fundsName);
-        return binanceApiWebSocketClient.onTickerEvent(symbolName, consumer::accept);
+        return binanceApiWebSocketClient.onTickerEvent(symbolName.toLowerCase(), consumer::accept);
     }
 
 

@@ -42,12 +42,8 @@ public class FundsServiceImpl implements FundsService {
     @Override
     public List<FundsBalance> listFundsBalances(User user) {
         ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
+        Page<Subscription> subscriptions = subscriptionService.findSubscriptions(user, Pageable.unpaged());
         List<FundsBalance> fundsBalances = exchangeService.listFundsBalances(user);
-        Page<Subscription> page = subscriptionService.findSubscriptions(
-                user,
-                Pageable.unpaged()
-        );
-        List<Subscription> subscriptions = page.getContent();
         if (!subscriptions.isEmpty()) {
             fundsBalances.forEach(fundsBalance -> {
                 fundsBalance.setFlagged(

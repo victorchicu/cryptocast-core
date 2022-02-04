@@ -3,7 +3,7 @@ package com.trader.core.controllers;
 import com.trader.core.domain.Chip;
 import com.trader.core.dto.ChipDto;
 import com.trader.core.exceptions.UserNotFoundException;
-import com.trader.core.services.ChipService;
+import com.trader.core.services.ChipsService;
 import com.trader.core.services.UserService;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
@@ -15,18 +15,18 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/chips")
-public class ChipController {
+public class ChipsController {
     private final UserService userService;
-    private final ChipService chipService;
+    private final ChipsService chipsService;
     private final ConversionService conversionService;
 
-    public ChipController(
+    public ChipsController(
             UserService userService,
-            ChipService chipService,
+            ChipsService chipsService,
             ConversionService conversionService
     ) {
         this.userService = userService;
-        this.chipService = chipService;
+        this.chipsService = chipsService;
         this.conversionService = conversionService;
     }
 
@@ -35,7 +35,7 @@ public class ChipController {
     public void removeChip(Principal principal, @PathVariable String name) {
         userService.findById(principal.getName())
                 .ifPresent(user ->
-                        chipService.removeChip(name, user)
+                        chipsService.removeChip(name, user)
                 );
     }
 
@@ -44,7 +44,7 @@ public class ChipController {
         return userService.findById(principal.getName())
                 .map(user -> {
                     Chip chip = toChip(chipDto);
-                    return chipService.addChip(chip);
+                    return chipsService.addChip(chip);
                 })
                 .map(this::toChipDto)
                 .orElseThrow(UserNotFoundException::new);
@@ -53,7 +53,7 @@ public class ChipController {
     @GetMapping
     public List<ChipDto> listChips(Principal principal) {
         return userService.findById(principal.getName())
-                .map(chipService::listChips)
+                .map(chipsService::listChips)
                 .map(chips -> chips.stream()
                         .map(this::toChipDto)
                         .collect(Collectors.toList())

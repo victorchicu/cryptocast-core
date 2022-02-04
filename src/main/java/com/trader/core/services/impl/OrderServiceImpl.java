@@ -25,14 +25,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<Order> openOrder(Principal principal, String fundsName, Pageable pageable) {
-        List<Order> orders = apiRestClient.getOpenOrders(fundsName);
+    public Page<Order> getAllOrders(Principal principal, String fundsName, Pageable pageable) {
+        List<Order> orders = apiRestClient.getAllOrders(fundsName);
         return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
     }
 
     @Override
-    public Page<Order> listOrders(Principal principal, String fundsName, Pageable pageable) {
-        List<Order> orders = apiRestClient.getAllOrders(fundsName);
+    public Page<Order> getOpenOrders(Principal principal, String fundsName, Pageable pageable) {
+        List<Order> orders = apiRestClient.getOpenOrders(fundsName);
         return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
     }
 }

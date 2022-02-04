@@ -4,7 +4,7 @@ import com.trader.core.domain.Chip;
 import com.trader.core.domain.User;
 import com.trader.core.entity.ChipEntity;
 import com.trader.core.repository.ChipRepository;
-import com.trader.core.services.ChipService;
+import com.trader.core.services.ChipsService;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
@@ -12,21 +12,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ChipServiceImpl implements ChipService {
-    private final ConversionService conversionService;
+public class ChipsServiceImpl implements ChipsService {
     private final ChipRepository chipRepository;
+    private final ConversionService conversionService;
 
-    public ChipServiceImpl(
-            ConversionService conversionService,
-            ChipRepository chipRepository
-    ) {
-        this.conversionService = conversionService;
+    public ChipsServiceImpl(ChipRepository chipRepository, ConversionService conversionService) {
         this.chipRepository = chipRepository;
-    }
-
-    @Override
-    public void removeChip(String name, User user) {
-        chipRepository.deleteByNameAndCreatedBy(name, user.getId());
+        this.conversionService = conversionService;
     }
 
     @Override
@@ -34,6 +26,11 @@ public class ChipServiceImpl implements ChipService {
         ChipEntity chipEntity = toChipEntity(chip);
         chipEntity = chipRepository.save(chipEntity);
         return toChip(chipEntity);
+    }
+
+    @Override
+    public void removeChip(String name, User user) {
+        chipRepository.deleteByNameAndCreatedBy(name, user.getId());
     }
 
     @Override
