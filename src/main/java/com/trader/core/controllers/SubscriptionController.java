@@ -57,7 +57,6 @@ public class SubscriptionController {
 
     @DeleteMapping("/{fundsName}/remove")
     public SubscriptionDto removeSubscription(Principal principal, @PathVariable String fundsName) {
-        //TODO: Changed to find by id
         return userService.findById(principal.getName())
                 .map(user ->
                         subscriptionService.findSubscription(user, fundsName)
