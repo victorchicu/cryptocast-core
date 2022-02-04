@@ -1,10 +1,10 @@
 package com.trader.core.clients.impl;
 
-import com.trader.core.binance.BinanceApiWebSocketClient;
-import com.trader.core.binance.domain.event.TickerEvent;
+import com.binance.api.client.BinanceApiWebSocketClient;
+import com.binance.api.client.domain.event.TickerEvent;
 import com.trader.core.clients.ApiWebSocketClient;
 import com.trader.core.configs.BinanceProperties;
-import com.trader.core.exceptions.AssetNotFoundException;
+import com.trader.core.exceptions.FundsNotFoundException;
 
 import java.io.Closeable;
 import java.util.Optional;
@@ -23,18 +23,15 @@ public class ExtendedBinanceApiWebSocketClient implements ApiWebSocketClient {
     }
 
     @Override
-    public Closeable onTickerEvent(String assetName, Consumer<TickerEvent> consumer) {
-        String symbolName = getSymbolName(assetName);
-        return binanceApiWebSocketClient.onTickerEvent(
-                symbolName,
-                response -> consumer.accept(response)
-        );
+    public Closeable onTickerEvent(String fundsName, Consumer<TickerEvent> consumer) {
+        String symbolName = getSymbolName(fundsName);
+        return binanceApiWebSocketClient.onTickerEvent(symbolName, consumer::accept);
     }
 
 
-    private String getSymbolName(String assetName) {
-        return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
-                .map(BinanceProperties.AssetConfig::getSymbol)
-                .orElseThrow(AssetNotFoundException::new);
+    private String getSymbolName(String fundsName) {
+        return Optional.ofNullable(binanceProperties.getFunds().get(fundsName))
+                .map(BinanceProperties.FundsConfig::getSymbol)
+                .orElseThrow(() -> new FundsNotFoundException(fundsName));
     }
 }

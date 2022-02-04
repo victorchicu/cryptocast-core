@@ -10,7 +10,7 @@ public class DtoToChipConverter implements Converter<ChipDto, Chip> {
     @Override
     public Chip convert(ChipDto source) {
         Chip chip = new Chip();
-        chip.setAssetName(source.getName());
+        chip.setName(source.getName());
         return chip;
     }
 }

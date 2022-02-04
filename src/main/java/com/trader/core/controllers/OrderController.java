@@ -1,6 +1,6 @@
 package com.trader.core.controllers;
 
-import com.trader.core.binance.domain.account.Order;
+import com.binance.api.client.domain.account.Order;
 import com.trader.core.dto.OrderDto;
 import com.trader.core.services.OrderService;
 import org.springframework.core.convert.ConversionService;
@@ -21,21 +21,19 @@ public class OrderController {
         this.conversionService = conversionService;
     }
 
-    @PostMapping("/{assetName}")
-    public OrderDto createOrder(Principal principal, @PathVariable String assetName, @RequestBody OrderDto orderDto) {
+    @PostMapping("/{fundsName}")
+    public OrderDto createOrder(Principal principal, @PathVariable String fundsName, @RequestBody OrderDto orderDto) {
         Order order = toOrder(orderDto);
         //TODO: Remove test order
-        orderService.testOrder(principal, assetName, order);
+        orderService.testOrder(principal, fundsName, order);
         return toOrderDto(order);
     }
 
     @GetMapping
-    public Page<OrderDto> listOrders(Principal principal, @RequestParam String assetName, Pageable pageable) {
-        return orderService.listOrders(principal, assetName, pageable)
+    public Page<OrderDto> listOrders(Principal principal, @RequestParam String fundsName, Pageable pageable) {
+        return orderService.listOrders(principal, fundsName, pageable)
                 .map(this::toOrderDto);
     }
-
-
 
 
     private Order toOrder(OrderDto orderDto) {

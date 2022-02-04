@@ -11,7 +11,7 @@ public class EntityToSubscriptionConverter implements Converter<SubscriptionEnti
     public Subscription convert(SubscriptionEntity source) {
         return Subscription.newBuilder()
                 .id(source.getId())
-                .assetName(source.getAssetName())
+                .fundsName(source.getFundsName())
                 .build();
     }
 }

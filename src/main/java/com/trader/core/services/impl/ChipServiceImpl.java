@@ -25,8 +25,8 @@ public class ChipServiceImpl implements ChipService {
     }
 
     @Override
-    public void removeChip(String assetName, User user) {
-        chipRepository.deleteByNameAndCreatedBy(assetName, user.getId());
+    public void removeChip(String name, User user) {
+        chipRepository.deleteByNameAndCreatedBy(name, user.getId());
     }
 
     @Override

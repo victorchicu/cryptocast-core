@@ -1,8 +1,8 @@
 package com.trader.core.services;
 
-import com.trader.core.binance.domain.account.AssetBalance;
 import com.trader.core.clients.ApiRestClient;
 import com.trader.core.clients.ApiWebSocketClient;
+import com.trader.core.domain.FundsBalance;
 import com.trader.core.domain.User;
 
 import java.util.List;
@@ -10,9 +10,9 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface ExchangeService {
-    void createAssetTicker(User user, String assetName);
+    void createFundsTicker(User user, String fundsName);
 
-    void removeAssetTicker(String assetName);
+    void removeFundsTicker(String fundsName);
 
     Set<String> listSymbols();
 
@@ -20,7 +20,7 @@ public interface ExchangeService {
 
     ApiWebSocketClient newApiWebSocketClient(User user);
 
-    List<AssetBalance> listAssetBalances(User user);
+    List<FundsBalance> listFundsBalances(User user);
 
-    Optional<AssetBalance> findAssetBalanceByName(User user, String assetName);
+    Optional<FundsBalance> findFundsByName(User user, String fundsName);
 }

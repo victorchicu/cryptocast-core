@@ -15,7 +15,7 @@ public class BinanceProperties {
     private Boolean useTestnet;
     private Boolean useTestnetStreaming;
     private Set<String> blacklist;
-    private Map<String, AssetConfig> assets;
+    private Map<String, FundsConfig> funds;
 
     public String getUrl() {
         return url;
@@ -65,15 +65,15 @@ public class BinanceProperties {
         this.blacklist = blacklist;
     }
 
-    public Map<String, AssetConfig> getAssets() {
-        return assets;
+    public Map<String, FundsConfig> getFunds() {
+        return funds;
     }
 
-    public void setAssets(Map<String, AssetConfig> assets) {
-        this.assets = assets;
+    public void setFunds(Map<String, FundsConfig> funds) {
+        this.funds = funds;
     }
 
-    public static class AssetConfig {
+    public static class FundsConfig {
         private String symbol;
         private String fullName;
         private Integer icon;

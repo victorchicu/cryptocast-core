@@ -1,6 +1,7 @@
 package com.trader.core.controllers;
 
-import com.trader.core.binance.domain.account.Order;
+import com.binance.api.client.domain.account.Order;
+import com.trader.core.dto.OrderDto;
 import com.trader.core.services.OrderService;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api/orders/{orderId}")
+@RequestMapping("/api/orders/open")
 public class OpenOrderController {
     private final OrderService orderService;
     private final ConversionService conversionService;
@@ -23,8 +24,14 @@ public class OpenOrderController {
         this.conversionService = conversionService;
     }
 
-    @GetMapping("/{assetName}")
-    public Page<Order> openOrder(Principal principal, @PathVariable Long orderId, @PathVariable String assetName, Pageable pageable) {
-        return orderService.openOrder(principal, assetName, orderId, pageable);
+    @GetMapping("/{fundsName}")
+    public Page<OrderDto> openOrders(Principal principal, @PathVariable String fundsName, Pageable pageable) {
+        return orderService.openOrder(principal, fundsName, pageable)
+                .map(this::toOrderDto);
+    }
+
+
+    private OrderDto toOrderDto(Order order) {
+        return conversionService.convert(order, OrderDto.class);
     }
 }

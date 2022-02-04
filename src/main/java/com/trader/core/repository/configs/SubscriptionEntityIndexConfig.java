@@ -19,7 +19,7 @@ public class SubscriptionEntityIndexConfig {
     @PostConstruct
     public void init() {
         CompoundIndexDefinition idx = new CompoundIndexDefinition(new Document()
-                .append(SubscriptionEntity.Field.ASSET_NAME, 1)
+                .append(SubscriptionEntity.Field.FUNDS_NAME, 1)
         );
         mongoOperations.indexOps(SubscriptionEntity.class)
                 .ensureIndex(idx.named(SubscriptionEntity.COLLECTION_NAME).unique().sparse());

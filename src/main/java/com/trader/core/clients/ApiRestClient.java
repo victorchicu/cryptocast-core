@@ -1,17 +1,17 @@
 package com.trader.core.clients;
 
-import com.trader.core.binance.domain.account.Account;
-import com.trader.core.binance.domain.account.Order;
-import com.trader.core.binance.domain.market.TickerPrice;
+import com.binance.api.client.domain.account.Order;
+import com.binance.api.client.domain.market.TickerPrice;
+import com.trader.core.domain.FundsBalance;
 
 import java.util.List;
 
 public interface ApiRestClient {
-    Account getAccount();
+    TickerPrice getPrice(String fundsName);
 
-    TickerPrice getPrice(String assetName);
+    List<Order> getAllOrders(String fundsName);
 
-    List<Order> getAllOrders(String assetName);
+    List<Order> getOpenOrders(String fundsName);
 
-    List<Order> getOpenOrders(String assetName, Long orderId);
+    List<FundsBalance> getFundsBalances();
 }

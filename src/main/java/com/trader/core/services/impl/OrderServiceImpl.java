@@ -1,6 +1,6 @@
 package com.trader.core.services.impl;
 
-import com.trader.core.binance.domain.account.Order;
+import com.binance.api.client.domain.account.Order;
 import com.trader.core.clients.ApiRestClient;
 import com.trader.core.services.OrderService;
 import org.springframework.data.domain.Page;
@@ -20,19 +20,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void testOrder(Principal principal, String assetName, Order order) {
+    public void testOrder(Principal principal, String fundsName, Order order) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Page<Order> openOrder(Principal principal, String assetName, Long orderId, Pageable pageable) {
-        List<Order> orders = apiRestClient.getOpenOrders(assetName, orderId);
+    public Page<Order> openOrder(Principal principal, String fundsName, Pageable pageable) {
+        List<Order> orders = apiRestClient.getOpenOrders(fundsName);
         return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
     }
 
     @Override
-    public Page<Order> listOrders(Principal principal, String assetName, Pageable pageable) {
-        List<Order> orders = apiRestClient.getAllOrders(assetName);
+    public Page<Order> listOrders(Principal principal, String fundsName, Pageable pageable) {
+        List<Order> orders = apiRestClient.getAllOrders(fundsName);
         return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
     }
 }

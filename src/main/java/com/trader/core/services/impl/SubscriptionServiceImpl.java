@@ -46,13 +46,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public Page<Subscription> findSubscriptions(User user, List<String> assetNames, Pageable pageable) {
-        return subscriptionRepository.listSubscriptions(user, assetNames, pageable);
+    public Page<Subscription> findSubscriptions(User user, List<String> fundsNames, Pageable pageable) {
+        return subscriptionRepository.listSubscriptions(user, fundsNames, pageable);
     }
 
     @Override
-    public Optional<Subscription> findSubscription(User user, String assetName) {
-        return subscriptionRepository.findSubscription(user, assetName);
+    public Optional<Subscription> findSubscription(User user, String fundsName) {
+        return subscriptionRepository.findSubscription(user, fundsName);
     }
 
 

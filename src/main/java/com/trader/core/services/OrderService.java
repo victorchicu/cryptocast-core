@@ -1,15 +1,15 @@
 package com.trader.core.services;
 
-import com.trader.core.binance.domain.account.Order;
+import com.binance.api.client.domain.account.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.security.Principal;
 
 public interface OrderService {
-    void testOrder(Principal principal, String assetName, Order order);
+    void testOrder(Principal principal, String fundsName, Order order);
 
-    Page<Order> openOrder(Principal principal, String assetName, Long orderId, Pageable pageable);
+    Page<Order> openOrder(Principal principal, String fundsName, Pageable pageable);
 
-    Page<Order> listOrders(Principal principal, String assetName, Pageable pageable);
+    Page<Order> listOrders(Principal principal, String fundsName, Pageable pageable);
 }

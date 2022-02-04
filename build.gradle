@@ -41,6 +41,9 @@ sourceCompatibility = "15"
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
@@ -55,6 +58,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-reactor-netty'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.springframework.security:spring-security-oauth2-client'
+
+    implementation files('libs/binance-api-client-1.0.1.jar')
 
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
@@ -78,6 +83,8 @@ dependencies {
     implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.4.0'
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-jackson
     implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.4.0'
+    // https://mvnrepository.com/artifact/commons-configuration/commons-configuration
+    implementation group: 'commons-configuration', name: 'commons-configuration', version: '1.10'
 
     testImplementation 'io.projectreactor:reactor-test'
     testImplementation 'org.testcontainers:mongodb:1.15.3'

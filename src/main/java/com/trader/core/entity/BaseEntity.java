@@ -37,4 +37,10 @@ public abstract class BaseEntity {
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
+
+    public static class Field {
+        public static final String ID = "_id";
+        public static final String CREATED_BY = "createdBy";
+        public static final String CREATED_AT = "createdAt";
+    }
 }

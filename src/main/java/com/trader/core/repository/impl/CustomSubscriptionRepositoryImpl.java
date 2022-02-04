@@ -2,6 +2,7 @@ package com.trader.core.repository.impl;
 
 import com.trader.core.domain.Subscription;
 import com.trader.core.domain.User;
+import com.trader.core.entity.BaseEntity;
 import com.trader.core.entity.SubscriptionEntity;
 import com.trader.core.repository.CustomSubscriptionRepository;
 import org.springframework.core.convert.ConversionService;
@@ -31,7 +32,7 @@ public class CustomSubscriptionRepositoryImpl implements CustomSubscriptionRepos
     public void removeSubscriptions(User user) {
         mongoOperations.remove(
                 Query.query(
-                        Criteria.where(SubscriptionEntity.Field.CREATED_BY)
+                        Criteria.where(BaseEntity.Field.CREATED_BY)
                                 .is(user.getId())
                 ),
                 SubscriptionEntity.class,
@@ -41,7 +42,7 @@ public class CustomSubscriptionRepositoryImpl implements CustomSubscriptionRepos
 
     @Override
     public Page<Subscription> listSubscriptions(User user, Pageable pageable) {
-        Criteria matchCriteria = Criteria.where(SubscriptionEntity.Field.CREATED_BY).is(user.getId());
+        Criteria matchCriteria = Criteria.where(BaseEntity.Field.CREATED_BY).is(user.getId());
 
         List<SubscriptionEntity> subscriptions = mongoOperations.find(
                 Query.query(matchCriteria),
@@ -57,11 +58,11 @@ public class CustomSubscriptionRepositoryImpl implements CustomSubscriptionRepos
     }
 
     @Override
-    public Page<Subscription> listSubscriptions(User user, List<String> assetNames, Pageable pageable) {
-        Criteria matchCriteria = Criteria.where(SubscriptionEntity.Field.CREATED_BY)
+    public Page<Subscription> listSubscriptions(User user, List<String> fundsNames, Pageable pageable) {
+        Criteria matchCriteria = Criteria.where(BaseEntity.Field.CREATED_BY)
                 .is(user.getId())
-                .and(SubscriptionEntity.Field.ASSET_NAME)
-                .in(assetNames);
+                .and(SubscriptionEntity.Field.FUNDS_NAME)
+                .in(fundsNames);
 
         List<SubscriptionEntity> list = mongoOperations.find(
                 Query.query(matchCriteria),
@@ -76,11 +77,11 @@ public class CustomSubscriptionRepositoryImpl implements CustomSubscriptionRepos
     }
 
     @Override
-    public Optional<Subscription> findSubscription(User user, String assetName) {
-        Criteria matchCriteria = Criteria.where(SubscriptionEntity.Field.CREATED_BY)
+    public Optional<Subscription> findSubscription(User user, String fundsName) {
+        Criteria matchCriteria = Criteria.where(BaseEntity.Field.CREATED_BY)
                 .is(user.getId())
-                .and(SubscriptionEntity.Field.ASSET_NAME)
-                .is(assetName);
+                .and(SubscriptionEntity.Field.FUNDS_NAME)
+                .is(fundsName);
 
         SubscriptionEntity subscriptionEntity = mongoOperations.findOne(
                 Query.query(matchCriteria),

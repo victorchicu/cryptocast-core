@@ -16,11 +16,11 @@ import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler({EmailNotFoundException.class})
     public ResponseEntity<Object> emailNotFoundException(EmailNotFoundException ex, WebRequest webRequest) {
-        LOGGER.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
+        LOG.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorDto(
                         Collections.singletonList(new ErrorDto.Details("EmailNotFoundException", null, ex.getMessage()))
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({SymbolNotFoundException.class})
     public ResponseEntity<Object> handleSymbolNotFoundException(SymbolNotFoundException ex, WebRequest webRequest) {
-        LOGGER.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
+        LOG.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorDto(
                         Collections.singletonList(new ErrorDto.Details("SymbolNotFoundException", null, ex.getMessage()))

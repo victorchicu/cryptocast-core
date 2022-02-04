@@ -1,13 +1,13 @@
 package com.trader.core.domain;
 
 public class Chip {
-    private String assetName;
+    private String name;
 
-    public String getAssetName() {
-        return assetName;
+    public String getName() {
+        return name;
     }
 
-    public void setAssetName(String assetName) {
-        this.assetName = assetName;
+    public void setName(String name) {
+        this.name = name;
     }
 }

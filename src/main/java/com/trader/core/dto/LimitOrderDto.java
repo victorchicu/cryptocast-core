@@ -1,9 +1,9 @@
 package com.trader.core.dto;
 
-import com.trader.core.binance.domain.OrderSide;
-import com.trader.core.binance.domain.OrderStatus;
-import com.trader.core.binance.domain.OrderType;
-import com.trader.core.binance.domain.TimeInForce;
+import com.binance.api.client.domain.OrderSide;
+import com.binance.api.client.domain.OrderStatus;
+import com.binance.api.client.domain.OrderType;
+import com.binance.api.client.domain.TimeInForce;
 
 import java.math.BigDecimal;
 

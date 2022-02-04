@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 public class ChipToDtoConverter implements Converter<Chip, ChipDto> {
     @Override
     public ChipDto convert(Chip source) {
-        return new ChipDto(source.getAssetName());
+        return new ChipDto(source.getName());
     }
 }

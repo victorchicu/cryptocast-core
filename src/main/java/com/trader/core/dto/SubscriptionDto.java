@@ -4,19 +4,19 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class SubscriptionDto {
     private final String id;
-    private final String assetName;
+    private final String fundsName;
 
     @JsonCreator
-    public SubscriptionDto(String id, String assetName) {
+    public SubscriptionDto(String id, String fundsName) {
         this.id = id;
-        this.assetName = assetName;
+        this.fundsName = fundsName;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getCoinName() {
-        return assetName;
+    public String getFundsName() {
+        return fundsName;
     }
 }

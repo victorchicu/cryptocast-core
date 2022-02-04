@@ -10,7 +10,7 @@ public class ChipToEntityConverter implements Converter<Chip, ChipEntity> {
     @Override
     public ChipEntity convert(Chip source) {
         ChipEntity chipEntity = new ChipEntity();
-        chipEntity.setName(source.getAssetName());
+        chipEntity.setName(source.getName());
         return chipEntity;
     }
 }

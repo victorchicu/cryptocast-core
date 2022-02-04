@@ -6,7 +6,7 @@ import com.trader.core.domain.User;
 import java.util.List;
 
 public interface ChipService {
-    void removeChip(String assetName, User user);
+    void removeChip(String name, User user);
 
     Chip addChip(Chip chip);
 

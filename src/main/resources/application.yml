@@ -31,6 +31,8 @@ spring:
     mongodb:
       collection-name: sessions
     store-type: mongodb
+  config:
+    location: application.yml
   security:
     oauth2:
       client:
@@ -89,7 +91,7 @@ binance:
   useTestnetStreaming: false
   blacklist:
     - NFT
-  assets:
+  funds:
     1INCH:
       icon: 8104
       symbol: 1INCHUSDT
@@ -614,3 +616,1487 @@ binance:
       icon: 3640
       symbol: LPTUSDT
       fullName: Livepeer
+    SNT:
+      icon: 1759
+      symbol: SNTUSDT
+      fullName: Status
+    BNT:
+      icon: 1727
+      symbol: BNTUSDT
+      fullName: Bancor
+    GAS:
+      icon: 1785
+      symbol: GASUSDT
+      fullName: Gas
+    BCC:
+      icon: 17644
+      symbol: BCCUSDT
+      fullName: BlueChip Capital Token
+    HSR:
+      icon: 0
+      symbol: HSRUSDT
+      fullName: HSR
+    OAX:
+      icon: 1853
+      symbol: OAXUSDT
+      fullName: OAX
+    DNT:
+      icon: 1856
+      symbol: DNTUSDT
+      fullName: district0x
+    MCO:
+      icon: 1776
+      symbol: MCOUSDT
+      fullName: MCO
+    ICN:
+      icon: 3431
+      symbol: ICNUSDT
+      fullName: Iconic Token
+    WTC:
+      icon: 1925
+      symbol: WTCUSDT
+      fullName: Waltonchain
+    YOYO:
+      icon: -1
+      symbol: YOYOUSDT
+      fullName: YOYO
+    SNGLS:
+      icon: 1409
+      symbol: SNGLSUSDT
+      fullName: SingularDTV
+    STRAT:
+      icon: -1
+      symbol: STRATUSDT
+      fullName: STRAT
+    BQX:
+      icon: -1
+      symbol: BQXUSDT
+      fullName: BQX
+    FUN:
+      icon: 1757
+      symbol: FUNUSDT
+      fullName: FUNToken
+    CDT:
+      icon: 14489
+      symbol: CDTUSDT
+      fullName: CheckDot
+    XVG:
+      icon: 693
+      symbol: XVGUSDT
+      fullName: Verge
+    SNM:
+      icon: 9931
+      symbol: SNMUSDT
+      fullName: SONM (BEP-20)
+    TNT:
+      icon: 1923
+      symbol: TNTUSDT
+      fullName: Tierion
+    REP:
+      icon: 1104
+      symbol: REPUSDT
+      fullName: Augur
+    MDA:
+      icon: 1954
+      symbol: MDAUSDT
+      fullName: Moeda Loyalty Points
+    SALT:
+      icon:
+      symbol: SALTUSDT
+      fullName:
+    NULS:
+      icon: 2092
+      symbol: NULSUSDT
+      fullName: NULS
+    SUB:
+      icon: 1984
+      symbol: SUBUSDT
+      fullName: Substratum
+    STX:
+      icon: 4847
+      symbol: STXUSDT
+      fullName: Stacks
+    MTH:
+      icon: 1947
+      symbol: MTHUSDT
+      fullName: Monetha
+    ADX:
+      icon: 1768
+      symbol: ADXUSDT
+      fullName: Ambire AdEx
+    ENG:
+      icon: 2044
+      symbol: ENGUSDT
+      fullName: Enigma
+    AST:
+      icon: 2058
+      symbol: ASTUSDT
+      fullName: AirSwap
+    GNT:
+      icon: 9533
+      symbol: GNTUSDT
+      fullName: GreenTrust
+    DGD:
+      icon: 1229
+      symbol: DGDUSDT
+      fullName: DigixDAO
+    POWR:
+      icon: 2132
+      symbol: POWRUSDT
+      fullName: Powerledger
+    BTG:
+      icon: 2083
+      symbol: BTGUSDT
+      fullName: Bitcoin Gold
+    REQ:
+      icon: 2071
+      symbol: REQUSDT
+      fullName: Request
+    EVX:
+      icon: 2034
+      symbol: EVXUSDT
+      fullName: Everex
+    VIB:
+      icon: 2019
+      symbol: VIBUSDT
+      fullName: Viberate
+    VEN:
+      icon: 8908
+      symbol: VENUSDT
+      fullName: ImpulseVen
+    ARK:
+      icon: 1586
+      symbol: ARKUSDT
+      fullName: Ark
+    MOD:
+      icon: 8494
+      symbol: MODUSDT
+      fullName: Modefi
+    KMD:
+      icon: 1521
+      symbol: KMDUSDT
+      fullName: Komodo
+    RCN:
+      icon: 2096
+      symbol: RCNUSDT
+      fullName: Ripio Credit Network
+    EDO:
+      icon: 2057
+      symbol: EDOUSDT
+      fullName: Eidoo {Old}
+    DATA:
+      icon: 2143
+      symbol: DATAUSDT
+      fullName: Streamr
+    DLT:
+      icon: 1949
+      symbol: DLTUSDT
+      fullName: Agrello
+    PPT:
+      icon: 1789
+      symbol: PPTUSDT
+      fullName: Populous
+    RDN:
+      icon: 2161
+      symbol: RDNUSDT
+      fullName: Raiden Network Token
+    GXS:
+      icon: -1
+      symbol: GXSUSDT
+      fullName: GXS
+    AMB:
+      icon: 2081
+      symbol: AMBUSDT
+      fullName: Ambrosus
+    ARN:
+      icon: 16476
+      symbol: ARNUSDT
+      fullName: Arenum
+    BCPT:
+      icon: 2061
+      symbol: BCPTUSDT
+      fullName: Blockmason Credit Protocol
+    CND:
+      icon: 2043
+      symbol: CNDUSDT
+      fullName: Cindicator
+    GVT:
+      icon: 2181
+      symbol: GVTUSDT
+      fullName: Genesis Vision
+    POE:
+      icon: 1937
+      symbol: POEUSDT
+      fullName: Po.et
+    FUEL:
+      icon: 2120
+      symbol: FUELUSDT
+      fullName: Etherparty
+    XZC:
+      icon: -1
+      symbol: XZCUSDT
+      fullName: XZC
+    QSP:
+      icon: 2212
+      symbol: QSPUSDT
+      fullName: Quantstamp
+    LSK:
+      icon: 1214
+      symbol: LSKUSDT
+      fullName: Lisk
+    BCD:
+      icon: 2222
+      symbol: BCDUSDT
+      fullName: Bitcoin Diamond
+    TNB:
+      icon: 2235
+      symbol: TNBUSDT
+      fullName: Time New Bank
+    LEND:
+      icon: 2239
+      symbol: LENDUSDT
+      fullName: Aave [old]
+    CMT:
+      icon: 2246
+      symbol: CMTUSDT
+      fullName: CyberMiles
+    WABI:
+      icon: 2267
+      symbol: WABIUSDT
+      fullName: Wabi
+    GTO:
+      icon: 2289
+      symbol: GTOUSDT
+      fullName: Gifto
+    OST:
+      icon: 2296
+      symbol: OSTUSDT
+      fullName: OST
+    ELF:
+      icon: 2299
+      symbol: ELFUSDT
+      fullName: aelf
+    AION:
+      icon: 2062
+      symbol: AIONUSDT
+      fullName: Aion
+    WINGS:
+      icon: 1500
+      symbol: WINGSUSDT
+      fullName: Wings
+    BRD:
+      icon: 2306
+      symbol: BRDUSDT
+      fullName: Bread
+    NEBL:
+      icon: 1955
+      symbol: NEBLUSDT
+      fullName: Neblio
+    NAV:
+      icon: 377
+      symbol: NAVUSDT
+      fullName: Navcoin
+    VIBE:
+      icon: 1983
+      symbol: VIBEUSDT
+      fullName: VIBE
+    LUN:
+      icon: 1658
+      symbol: LUNUSDT
+      fullName: Lunyr
+    TRIG:
+      icon: -1
+      symbol: TRIGUSDT
+      fullName: TRIG
+    APPC:
+      icon: 2344
+      symbol: APPCUSDT
+      fullName: AppCoins
+    CHAT:
+      icon: 2427
+      symbol: CHATUSDT
+      fullName: ChatCoin
+    INS:
+      icon: 3602
+      symbol: INSUSDT
+      fullName: Bitcoin SV
+    PIVX:
+      icon: 1169
+      symbol: PIVXUSDT
+      fullName: PIVX
+    IOST:
+      icon: 2405
+      symbol: IOSTUSDT
+      fullName: IOST
+    STEEM:
+      icon: 1230
+      symbol: STEEMUSDT
+      fullName: Steem
+    NANO:
+      icon: -1
+      symbol: NANOUSDT
+      fullName: NANO
+    AE:
+      icon: 1700
+      symbol: AEUSDT
+      fullName: Aeternity
+    VIA:
+      icon: 470
+      symbol: VIAUSDT
+      fullName: Viacoin
+    SYS:
+      icon: 541
+      symbol: SYSUSDT
+      fullName: Syscoin
+    RPX:
+      icon: -1
+      symbol: RPXUSDT
+      fullName: RPX
+    NCASH:
+      icon: 2544
+      symbol: NCASHUSDT
+      fullName: Nitro Network
+    POA:
+      icon: 2548
+      symbol: POAUSDT
+      fullName: POA Network
+    STORM:
+      icon: 11655
+      symbol: STORMUSDT
+      fullName: Storm Token
+    WAN:
+      icon: 2606
+      symbol: WANUSDT
+      fullName: Wanchain
+    WPR:
+      icon: 2511
+      symbol: WPRUSDT
+      fullName: WePower
+    QLC:
+      icon: 2321
+      symbol: QLCUSDT
+      fullName: QLC Chain
+    GRS:
+      icon: 258
+      symbol: GRSUSDT
+      fullName: Groestlcoin
+    CLOAK:
+      icon: 362
+      symbol: CLOAKUSDT
+      fullName: CloakCoin
+    LOOM:
+      icon: 2588
+      symbol: LOOMUSDT
+      fullName: Loom Network
+    BCN:
+      icon: 372
+      symbol: BCNUSDT
+      fullName: Bytecoin
+    TUSD:
+      icon: 2563
+      symbol: TUSDUSDT
+      fullName: TrueUSD
+    SKY:
+      icon: 1619
+      symbol: SKYUSDT
+      fullName: Skycoin
+    QKC:
+      icon: 2840
+      symbol: QKCUSDT
+      fullName: QuarkChain
+    AGI:
+      icon: -1
+      symbol: AGIUSDT
+      fullName: AGI
+    NXS:
+      icon: 789
+      symbol: NXSUSDT
+      fullName: Nexus
+    NPXS:
+      icon: 2603
+      symbol: NPXSUSDT
+      fullName: Pundi X (Old)
+    KEY:
+      icon: 2398
+      symbol: KEYUSDT
+      fullName: Selfkey
+    NAS:
+      icon: 1908
+      symbol: NASUSDT
+      fullName: Nebulas
+    MFT:
+      icon: 2896
+      symbol: MFTUSDT
+      fullName: Hifi Finance
+    IQ:
+      icon: 2930
+      symbol: IQUSDT
+      fullName: Everipedia
+    ARDR:
+      icon: 1320
+      symbol: ARDRUSDT
+      fullName: Ardor
+    DOCK:
+      icon: 2675
+      symbol: DOCKUSDT
+      fullName: Dock
+    POLY:
+      icon: 2496
+      symbol: POLYUSDT
+      fullName: Polymath
+    VTHO:
+      icon: 3012
+      symbol: VTHOUSDT
+      fullName: VeThor Token
+    ONG:
+      icon: 3217
+      symbol: ONGUSDT
+      fullName: Ontology Gas
+    PHX:
+      icon: 11727
+      symbol: PHXUSDT
+      fullName: Phoenix Token
+    HC:
+      icon: 1903
+      symbol: HCUSDT
+      fullName: HyperCash
+    GO:
+      icon: 2861
+      symbol: GOUSDT
+      fullName: GoChain
+    PAX:
+      icon: -1
+      symbol: PAXUSDT
+      fullName: PAX
+    DCR:
+      icon:  1168
+      symbol: DCRUSDT
+      fullName: Decred
+    USDC:
+      icon: 3408
+      symbol: USDCUSDT
+      fullName: USD Coin
+    MITH:
+      icon: 2608
+      symbol: MITHUSDT
+      fullName: Mithril
+    BCHABC:
+      icon: -1
+      symbol: BCHABCUSDT
+      fullName: BCHABC
+    BCHSV:
+      icon: -1
+      symbol: BCHSVUSDT
+      fullName: BCHSV
+    USDS:
+      icon:
+      symbol: USDSUSDT
+      fullName:
+    FET:
+      icon: 3773
+      symbol: FETUSDT
+      fullName: Fetch.ai
+    TFUEL:
+      icon: 3822
+      symbol: TFUELUSDT
+      fullName: Theta Fuel
+    PHB:
+      icon: 13969
+      symbol: PHBUSDT
+      fullName: Phoenix Global (new)
+    BTCB:
+      icon: 4023
+      symbol: BTCBUSDT
+      fullName: BTCB
+    USDSB:
+      icon: -1
+      symbol: USDSBUSDT
+      fullName: USDSB
+    COS:
+      icon: 4036
+      symbol: COSUSDT
+      fullName: Contentos
+    ERD:
+      icon: 4961
+      symbol: ERDUSDT
+      fullName: ELDORADO TOKEN
+    BGBP:
+      icon: 4186
+      symbol: BGBPUSDT
+      fullName: Binance GBP Stable Coin
+    DUSK:
+      icon: 4092
+      symbol: DUSKUSDT
+      fullName: Dusk Network
+    WIN:
+      icon: 4206
+      symbol: WINUSDT
+      fullName: WINkLink
+    TUSDB:
+      icon: -1
+      symbol: TUSDBUSDT
+      fullName: TUSDB
+    COCOS:
+      icon: 4275
+      symbol: COCOSUSDT
+      fullName: Cocos-BCX
+    PERL:
+      icon: 4293
+      symbol: PERLUSDT
+      fullName: PERL.eco
+    BUSD:
+      icon: 4687
+      symbol: BUSDUSDT
+      fullName: Binance USD
+    BEAM:
+      icon: 3702
+      symbol: BEAMUSDT
+      fullName: Beam
+    NGN:
+      icon: 13941
+      symbol: NGNUSDT
+      fullName: CryptoNijigen
+    GBP:
+      icon: 6897
+      symbol: GBPUSDT
+      fullName: Good Boy Points
+    EUR:
+      icon: 2989
+      symbol: EURUSDT
+      fullName: STASIS EURO
+    RUB:
+      icon: -1
+      symbol: RUBUSDT
+      fullName: RUB
+    UAH:
+      icon: -1
+      symbol: UAHUSDT
+      fullName: UAH
+    ARPA:
+      icon: 4039
+      symbol: ARPAUSDT
+      fullName: ARPA Chain
+    TRY:
+      icon: 9097
+      symbol: TRYUSDT
+      fullName: Try.Finance
+    CTXC:
+      icon: 2638
+      symbol: CTXCUSDT
+      fullName: Cortex
+    AERGO:
+      icon: 3637
+      symbol: AERGOUSDT
+      fullName: Aergo
+    TROY:
+      icon: 5007
+      symbol: TROYUSDT
+      fullName: TROY
+    BRL:
+      icon: 16660
+      symbol: BRLUSDT
+      fullName: Borealis
+    VITE:
+      icon: 2937
+      symbol: VITEUSDT
+      fullName: VITE
+    FTT:
+      icon: 4195
+      symbol: FTTUSDT
+      fullName: FTX Token
+    AUD:
+      icon: -1
+      symbol: AUDUSDT
+      fullName: AUD
+    DREP:
+      icon: 9148
+      symbol: DREPUSDT
+      fullName: Drep [new]
+    BULL:
+      icon: 5157
+      symbol: BULLUSDT
+      fullName: 3X Long Bitcoin Token
+    BEAR:
+      icon: 5158
+      symbol: BEARUSDT
+      fullName: 3X Short Bitcoin Token
+    ETHBULL:
+      icon: 5217
+      symbol: ETHBULLUSDT
+      fullName: 3X Long Ethereum Token
+    ETHBEAR:
+      icon: 5216
+      symbol: ETHBEARUSDT
+      fullName: 3X Short Ethereum Token
+    XRPBULL:
+      icon: 5412
+      symbol: XRPBULLUSDT
+      fullName: 3x Long XRP Token
+    XRPBEAR:
+      icon: 5413
+      symbol: XRPBEARUSDT
+      fullName: 3x Short XRP Token
+    EOSBULL:
+      icon: 5414
+      symbol: EOSBULLUSDT
+      fullName: 3x Long EOS Token
+    EOSBEAR:
+      icon: 5415
+      symbol: EOSBEARUSDT
+      fullName: 3x Short EOS Token
+    TCT:
+      icon: 2364
+      symbol: TCTUSDT
+      fullName: TokenClub
+    WRX:
+      icon: 5161
+      symbol: WRXUSDT
+      fullName: WazirX
+    LTO:
+      icon: 3714
+      symbol: LTOUSDT
+      fullName: LTO Network
+    ZAR:
+      icon: -1
+      symbol: ZARUSDT
+      fullName: ZAR
+    MBL:
+      icon: 4038
+      symbol: MBLUSDT
+      fullName: MovieBloc
+    BKRW:
+      icon: 5483
+      symbol: BKRWUSDT
+      fullName: Binance KRW
+    BNBBULL:
+      icon: 5295
+      symbol: BNBBULLUSDT
+      fullName: 3X Long BNB Token
+    BNBBEAR:
+      icon: 5294
+      symbol: BNBBEARUSDT
+      fullName: 3X Short BNB Token
+    HIVE:
+      icon: 5370
+      symbol: HIVEUSDT
+      fullName: Hive
+    STPT:
+      icon: 4006
+      symbol: STPTUSDT
+      fullName: Standard Tokenization Protocol
+    IDRT:
+      icon: 4702
+      symbol: IDRTUSDT
+      fullName: Rupiah Token
+    CTSI:
+      icon: 5444
+      symbol: CTSIUSDT
+      fullName: Cartesi
+    BTCUP:
+      icon: 5608
+      symbol: BTCUPUSDT
+      fullName: BTCUP
+    BTCDOWN:
+      icon: 5609
+      symbol: BTCDOWNUSDT
+      fullName: BTCDOWN
+    JST:
+      icon: 5488
+      symbol: JSTUSDT
+      fullName: JUST
+    FIO:
+      icon: 5865
+      symbol: FIOUSDT
+      fullName: FIO Protocol
+    BIDR:
+      icon: 6855
+      symbol: BIDRUSDT
+      fullName: BIDR
+    MDT:
+      icon: 2348
+      symbol: MDTUSDT
+      fullName: Measurable Data Token
+    PNT:
+      icon: 5794
+      symbol: PNTUSDT
+      fullName: pNetwork
+    IRIS:
+      icon: 3874
+      symbol: IRISUSDT
+      fullName: IRISnet
+    DAI:
+      icon: 4943
+      symbol: DAIUSDT
+      fullName: Dai
+    ETHUP:
+      icon: 7016
+      symbol: ETHUPUSDT
+      fullName: ETHUP
+    ETHDOWN:
+      icon: 10853
+      symbol: ETHDOWNUSDT
+      fullName: ETHDOWN
+    ADAUP:
+      icon: 7013
+      symbol: ADAUPUSDT
+      fullName: ADAUP
+    ADADOWN:
+      icon: 7014
+      symbol: ADADOWNUSDT
+      fullName: ADADOWN
+    LINKUP:
+      icon: 7011
+      symbol: LINKUPUSDT
+      fullName: LINKUP
+    LINKDOWN:
+      icon: 7012
+      symbol: LINKDOWNUSDT
+      fullName: LINKDOWN
+    BNBUP:
+      icon: 7009
+      symbol: BNBUPUSDT
+      fullName: BNBUP
+    BNBDOWN:
+      icon: 7010
+      symbol: BNBDOWNUSDT
+      fullName: BNBDOWN
+    XTZUP:
+      icon: 7007
+      symbol: XTZUPUSDT
+      fullName: XTZUP
+    XTZDOWN:
+      icon: 7008
+      symbol: XTZDOWNUSDT
+      fullName: XTZDOWN
+    AVA:
+      icon:
+      symbol: AVAUSDT
+      fullName: Travala.com
+    ANT:
+      icon: 2776
+      symbol: ANTUSDT
+      fullName:
+    NMR:
+      icon: 1732
+      symbol: NMRUSDT
+      fullName: Numeraire
+    IDEX:
+      icon: 3928
+      symbol: IDEXUSDT
+      fullName: IDEX
+    PAXG:
+      icon: 4705
+      symbol: PAXGUSDT
+      fullName: PAX Gold
+    WNXM:
+      icon: 5939
+      symbol: WNXMUSDT
+      fullName: Wrapped NXM
+    BZRX:
+      icon: 5810
+      symbol: BZRXUSDT
+      fullName: bZx Protocol
+    WBTC:
+      icon: 3717
+      symbol: WBTCUSDT
+      fullName: Wrapped Bitcoin
+    DIA:
+      icon: 6138
+      symbol: DIAUSDT
+      fullName: DIA
+    UMA:
+      icon: 5617
+      symbol: UMAUSDT
+      fullName: UMA
+    EOSUP:
+      icon: 6999
+      symbol: EOSUPUSDT
+      fullName: EOSUP
+    TRXUP:
+      icon: 7005
+      symbol: TRXUPUSDT
+      fullName: TRXUP
+    EOSDOWN:
+      icon: 7000
+      symbol: EOSDOWNUSDT
+      fullName: EOSDOWN
+    TRXDOWN:
+      icon: 7004
+      symbol: TRXDOWNUSDT
+      fullName: TRXDOWN
+    XRPUP:
+      icon: 7001
+      symbol: XRPUPUSDT
+      fullName: XRPUP
+    XRPDOWN:
+      icon: 7002
+      symbol: XRPDOWNUSDT
+      fullName: XRPDOWN
+    DOTUP:
+      icon: 7003
+      symbol: DOTUPUSDT
+      fullName: DOTUP
+    DOTDOWN:
+      icon:
+      symbol: DOTDOWNUSDT
+      fullName: DOTDOWN
+    NBS:
+      icon: 7006
+      symbol: NBSUSDT
+      fullName:
+    WING:
+      icon: 7048
+      symbol: WINGUSDT
+      fullName: Wing Finance
+    SWRV:
+      icon: 6901
+      symbol: SWRVUSDT
+      fullName: Swerve
+    LTCUP:
+      icon: 7526
+      symbol: LTCUPUSDT
+      fullName: LTCUP
+    LTCDOWN:
+      icon: 7527
+      symbol: LTCDOWNUSDT
+      fullName: LTCDOWN
+    CREAM:
+      icon: 6193
+      symbol: CREAMUSDT
+      fullName: Cream Finance
+    OXT:
+      icon: 5026
+      symbol: OXTUSDT
+      fullName: Orchid
+    SUN:
+      icon: 10529
+      symbol: SUNUSDT
+      fullName: Sun (New)
+    BURGER:
+      icon: 7158
+      symbol: BURGERUSDT
+      fullName: Burger Swap
+    SCRT:
+      icon: 5604
+      symbol: SCRTUSDT
+      fullName: Secret
+    XVS:
+      icon: 7288
+      symbol: XVSUSDT
+      fullName: Venus
+    CAKE:
+      icon: 7186
+      symbol: CAKEUSDT
+      fullName: PancakeSwap
+    SPARTA:
+      icon: 6992
+      symbol: SPARTAUSDT
+      fullName: Spartan Protocol
+    UNIUP:
+      icon: 7524
+      symbol: UNIUPUSDT
+      fullName: UNIUP
+    UNIDOWN:
+      icon: 7525
+      symbol: UNIDOWNUSDT
+      fullName: UNIDOWN
+    ALPHA:
+      icon: 7232
+      symbol: ALPHAUSDT
+      fullName: Alpha Finance Lab
+    ORN:
+      icon: 5631
+      symbol: ORNUSDT
+      fullName: Orion Protocol
+    UTK:
+      icon: 2320
+      symbol: UTKUSDT
+      fullName: Utrust
+    VIDT:
+      icon: 3845
+      symbol: VIDTUSDT
+      fullName: VIDT Datalink
+    SXPUP:
+      icon: 7528
+      symbol: SXPUPUSDT
+      fullName: SXPUP
+    SXPDOWN:
+      icon: 7529
+      symbol: SXPDOWNUSDT
+      fullName: SXPDOWN
+    INJ:
+      icon: 7226
+      symbol: INJUSDT
+      fullName: Injective
+    FILDOWN:
+      icon: 8051
+      symbol: FILDOWNUSDT
+      fullName: FILDOWN
+    FILUP:
+      icon: 8050
+      symbol: FILUPUSDT
+      fullName: FILUP
+    YFIUP:
+      icon: 7452
+      symbol: YFIUPUSDT
+      fullName: YFIUP
+    YFIDOWN:
+      icon: 7453
+      symbol: YFIDOWNUSDT
+      fullName: YFIDOWN
+    EASY:
+      icon: -1
+      symbol: EASYUSDT
+      fullName: EASY
+    BCHUP:
+      icon: 7522
+      symbol: BCHUPUSDT
+      fullName: BCHUP
+    BCHDOWN:
+      icon: 7523
+      symbol: BCHDOWNUSDT
+      fullName: BCHDOWN
+    BOT:
+      icon: 16262
+      symbol: BOTUSDT
+      fullName: Starbots
+    HARD:
+      icon: 7576
+      symbol: HARDUSDT
+      fullName: Kava Lend
+    KP3R:
+      icon: 7535
+      symbol: KP3RUSDT
+      fullName: Keep3rV1
+    RENBTC:
+      icon: 5777
+      symbol: RENBTCUSDT
+      fullName: renBTC
+    SLP:
+      icon: 5824
+      symbol: SLPUSDT
+      fullName: Smooth Love Potion
+    STRAX:
+      icon: 1343
+      symbol: STRAXUSDT
+      fullName: Stratis
+    CVP:
+      icon: 6669
+      symbol: CVPUSDT
+      fullName: PowerPool
+    BCHA:
+      icon: -1
+      symbol: BCHAUSDT
+      fullName: BCHA
+    FOR:
+      icon: 4118
+      symbol: FORUSDT
+      fullName: ForTube
+    FRONT:
+      icon: 5893
+      symbol: FRONTUSDT
+      fullName: Frontier
+    ROSE:
+      icon: 7653
+      symbol: ROSEUSDT
+      fullName: Oasis Network
+    MDX:
+      icon: 8335
+      symbol: MDXUSDT
+      fullName: Mdex
+    HEGIC:
+      icon: 6929
+      symbol: HEGICUSDT
+      fullName: Hegic
+    AAVEUP:
+      icon: 7774
+      symbol: AAVEUPUSDT
+      fullName: AAVEUP
+    AAVEDOWN:
+      icon: 7775
+      symbol: AAVEDOWNUSDT
+      fullName: AAVEDOWN
+    PROM:
+      icon: 4120
+      symbol: PROMUSDT
+      fullName: Prometeus
+    BETH:
+      icon: 8353
+      symbol: BETHUSDT
+      fullName: Beacon ETH
+    GLM:
+      icon: 1455
+      symbol: GLMUSDT
+      fullName: Golem
+    SUSD:
+      icon: 2927
+      symbol: SUSDUSDT
+      fullName: sUSD
+    COVER:
+      icon: 8175
+      symbol: COVERUSDT
+      fullName: COVER Protocol
+    GHST:
+      icon: 7046
+      symbol: GHSTUSDT
+      fullName: Aavegotchi
+    SUSHIUP:
+      icon: 8053
+      symbol: SUSHIUPUSDT
+      fullName: SUSHIUP
+    SUSHIDOWN:
+      icon: 8052
+      symbol: SUSHIDOWNUSDT
+      fullName: SUSHIDOWN
+    XLMUP:
+      icon: 8055
+      symbol: XLMUPUSDT
+      fullName: XLMUP
+    XLMDOWN:
+      icon: 8054
+      symbol: XLMDOWNUSDT
+      fullName: XLMDOWN
+    DF:
+      icon: 4758
+      symbol: DFUSDT
+      fullName: dForce
+    JUV:
+      icon: 5224
+      symbol: JUVUSDT
+      fullName: Juventus Fan Token
+    PSG:
+      icon: 5226
+      symbol: PSGUSDT
+      fullName: Paris Saint-Germain Fan Token
+    BVND:
+      icon: 8058
+      symbol: BVNDUSDT
+      fullName: Binance VND
+    TWT:
+      icon: 5964
+      symbol: TWTUSDT
+      fullName: Trust Wallet Token
+    OG:
+      icon: 5309
+      symbol: OGUSDT
+      fullName: OG Fan Token
+    ATM:
+      icon: 5227
+      symbol: ATMUSDT
+      fullName: Atletico De Madrid Fan Token
+    ASR:
+      icon: 5229
+      symbol: ASRUSDT
+      fullName: AS Roma Fan Token
+    RIF:
+      icon: 3701
+      symbol: RIFUSDT
+      fullName: RSK Infrastructure Framework
+    BTCST:
+      icon: 8891
+      symbol: BTCSTUSDT
+      fullName: Bitcoin Standard Hashrate Token
+    TRU:
+      icon: 7725
+      symbol: TRUUSDT
+      fullName: TrueFi
+    DEXE:
+      icon: 7326
+      symbol: DEXEUSDT
+      fullName: DeXe
+    CKB:
+      icon: 4948
+      symbol: CKBUSDT
+      fullName: Nervos Network
+    FIRO:
+      icon: 1414
+      symbol: FIROUSDT
+      fullName: Firo
+    PROS:
+      icon: 8255
+      symbol: PROSUSDT
+      fullName: Prosper
+    VAI:
+      icon: 7824
+      symbol: VAIUSDT
+      fullName: Vai
+    FXS:
+      icon: 6953
+      symbol: FXSUSDT
+      fullName: Frax Share
+    AUCTION:
+      icon: 8602
+      symbol: AUCTIONUSDT
+      fullName: Bounce Finance Governance Token
+    UFT:
+      icon: 7412
+      symbol: UFTUSDT
+      fullName: UniLend
+    ACM:
+      icon: 8538
+      symbol: ACMUSDT
+      fullName: AC Milan Fan Token
+    PHA:
+      icon: 6841
+      symbol: PHAUSDT
+      fullName: Phala Network
+    TVK:
+      icon: 8037
+      symbol: TVKUSDT
+      fullName: Terra Virtua Kolect
+    BADGER:
+      icon: 7859
+      symbol: BADGERUSDT
+      fullName: Badger DAO
+    FIS:
+      icon: 5882
+      symbol: FISUSDT
+      fullName: Stafi
+    QI:
+      icon: 9288
+      symbol: QIUSDT
+      fullName: BENQI
+    OM:
+      icon: 6536
+      symbol: OMUSDT
+      fullName: MANTRA DAO
+    POND:
+      icon: 7497
+      symbol: PONDUSDT
+      fullName: Marlin
+    DEGO:
+      icon: 7087
+      symbol: DEGOUSDT
+      fullName: Dego Finance
+    BIFI:
+      icon: 7311
+      symbol: BIFIUSDT
+      fullName: Beefy Finance
+    PERP:
+      icon: 6950
+      symbol: PERPUSDT
+      fullName: Perpetual Protocol
+    RAMP:
+      icon: 7463
+      symbol: RAMPUSDT
+      fullName: RAMP
+    SUPER:
+      icon: 8290
+      symbol: SUPERUSDT
+      fullName: SuperFarm
+    CFX:
+      icon: 7334
+      symbol: CFXUSDT
+      fullName: Conflux
+    TKO:
+      icon: 9020
+      symbol: TKOUSDT
+      fullName: Toko Token
+    AUTO:
+      icon: 8387
+      symbol: AUTOUSDT
+      fullName: Auto
+    EPS:
+      icon: 8938
+      symbol: EPSUSDT
+      fullName: Ellipsis
+    PUNDIX:
+      icon: 9040
+      symbol: PUNDIXUSDT
+      fullName: Pundi X (New)
+    1INCHUP:
+      icon: 11956
+      symbol: 1INCHUPUSDT
+      fullName: 1INCHUP
+    1INCHDOWN:
+      icon: 11957
+      symbol: 1INCHDOWNUSDT
+      fullName: 1INCHDOWN
+    MIR:
+      icon: 7857
+      symbol: MIRUSDT
+      fullName: Mirror Protocol
+    BAR:
+      icon: 5225
+      symbol: BARUSDT
+      fullName: FC Barcelona Fan Token
+    FORTH:
+      icon: 9421
+      symbol: FORTHUSDT
+      fullName: Ampleforth Governance Token
+    EZ:
+      icon: 7332
+      symbol: EZUSDT
+      fullName: EasyFi
+    GYEN:
+      icon: 8771
+      symbol: GYENUSDT
+      fullName: GYEN
+    POLS:
+      icon: 7208
+      symbol: POLSUSDT
+      fullName: Polkastarter
+    AGIX:
+      icon: 2424
+      symbol: AGIXUSDT
+      fullName: SingularityNET
+    NU:
+      icon: 4761
+      symbol: NUUSDT
+      fullName: NuCypher
+    KLAY:
+      icon: 4256
+      symbol: KLAYUSDT
+      fullName: Klaytn
+    TORN:
+      icon: 8049
+      symbol: TORNUSDT
+      fullName: Tornado Cash
+    ERN:
+      icon: 8615
+      symbol: ERNUSDT
+      fullName: Ethernity Chain
+    BOND:
+      icon: 7440
+      symbol: BONDUSDT
+      fullName: BarnBridge
+    MLN:
+      icon: 1552
+      symbol: MLNUSDT
+      fullName: Enzyme
+    FLOW:
+      icon: 4558
+      symbol: FLOWUSDT
+      fullName: Flow
+    QUICK:
+      icon: 8206
+      symbol: QUICKUSDT
+      fullName: QuickSwap
+    MINA:
+      icon: 8646
+      symbol: MINAUSDT
+      fullName: Mina
+    QNT:
+      icon: 3155
+      symbol: QNTUSDT
+      fullName: Quant
+    CLV:
+      icon: 8384
+      symbol: CLVUSDT
+      fullName: Clover Finance
+    ALPACA:
+      icon: 8707
+      symbol: ALPACAUSDT
+      fullName: Alpaca Finance
+    FARM:
+      icon: 6859
+      symbol: FARMUSDT
+      fullName: Harvest Finance
+    VGX:
+      icon: 1817
+      symbol: VGXUSDT
+      fullName: Voyager Token
+    MBOX:
+      icon: 9175
+      symbol: MBOXUSDT
+      fullName: MOBOX
+    WAXP:
+      icon: 2300
+      symbol: WAXPUSDT
+      fullName: WAX
+    TRIBE:
+      icon: 9025
+      symbol: TRIBEUSDT
+      fullName: Tribe
+    GNO:
+      icon: 1659
+      symbol: GNOUSDT
+      fullName: Gnosis
+    USDP:
+      icon: 3330
+      symbol: USDPUSDT
+      fullName: Pax Dollar
+    ILV:
+      icon: 8719
+      symbol: ILVUSDT
+      fullName: Illuvium
+    YGG:
+      icon: 10688
+      symbol: YGGUSDT
+      fullName: Yield Guild Games
+    FIDA:
+      icon: 7978
+      symbol: FIDAUSDT
+      fullName: Bonfida
+    AGLD:
+      icon: 11568
+      symbol: AGLDUSDT
+      fullName: Adventure Gold
+    BETA:
+      icon: 11307
+      symbol: BETAUSDT
+      fullName: Beta Finance
+    RAD:
+      icon: 6843
+      symbol: RADUSDT
+      fullName: Radicle
+    RARE:
+      icon: 11294
+      symbol: RAREUSDT
+      fullName: SuperRare
+    SSV:
+      icon: 12999
+      symbol: SSVUSDT
+      fullName: ssv.network
+    LAZIO:
+      icon: 12687
+      symbol: LAZIOUSDT
+      fullName: S.S. Lazio Fan Token
+    MOVR:
+      icon: 9285
+      symbol: MOVRUSDT
+      fullName: Moonriver
+    CHESS:
+      icon: 10974
+      symbol: CHESSUSDT
+      fullName: Tranchess
+    DAR:
+      icon: 11374
+      symbol: DARUSDT
+      fullName: Mines of Dalarnia
+    ACA:
+      icon: 6756
+      symbol: ACAUSDT
+      fullName: Acala Token
+    BNX:
+      icon: 9891
+      symbol: BNXUSDT
+      fullName: BinaryX
+    RGT:
+      icon: 7486
+      symbol: RGTUSDT
+      fullName: Rari Governance Token
+    CITY:
+      icon: 10049
+      symbol: CITYUSDT
+      fullName: Manchester City Fan Token
+    ENS:
+      icon: 13855
+      symbol: ENSUSDT
+      fullName: Ethereum Name Service
+    PORTO:
+      icon: 14052
+      symbol: PORTOUSDT
+      fullName: FC Porto Fan Token
+    JASMY:
+      icon: 8425
+      symbol: JASMYUSDT
+      fullName: JasmyCoin
+    AMP:
+      icon: 6945
+      symbol: AMPUSDT
+      fullName: Amp
+    PLA:
+      icon: 7461
+      symbol: PLAUSDT
+      fullName: PlayDapp
+    PYR:
+      icon: 9308
+      symbol: PYRUSDT
+      fullName: Vulcan Forged PYR
+    SANTOS:
+      icon: 15248
+      symbol: SANTOSUSDT
+      fullName: Santos FC Fan Token
+    RNDR:
+      icon: 5690
+      symbol: RNDRUSDT
+      fullName: Render Token
+    ALCX:
+      icon: 8613
+      symbol: ALCXUSDT
+      fullName: Alchemix
+    MC:
+      icon: 13523
+      symbol: MCUSDT
+      fullName: Merit Circle
+    ANY:
+      icon: 5892
+      symbol: ANYUSDT
+      fullName: Anyswap
+    VOXEL:
+      icon: 15678
+      symbol: VOXELUSDT
+      fullName: Voxies
+    BICO:
+      icon: 9543
+      symbol: BICOUSDT
+      fullName: Biconomy
+    FLUX:
+      icon: 3029
+      symbol: FLUXUSDT
+      fullName: Flux
+    UST:
+      icon: 7129
+      symbol: USTUSDT
+      fullName: TerraUSD
+    HIGH:
+      icon: 11232
+      symbol: HIGHUSDT
+      fullName: Highstreet
+    OOKI:
+      icon: 16434
+      symbol: OOKIUSDT
+      fullName: Ooki Protocol
+    CVX:
+      icon: 9903
+      symbol: CVXUSDT
+      fullName: Convex Finance
+    PEOPLE:
+      icon: 14806
+      symbol: PEOPLEUSDT
+      fullName: ConstitutionDAO
+    SPELL:
+      icon: 11289
+      symbol: SPELLUSDT
+      fullName: Spell Token
+    JOE:
+      icon: 11396
+      symbol: JOEUSDT
+      fullName: JOE
+    BDOT:
+      icon: 11058
+      symbol: BDOTUSDT
+      fullName: BabyDot
+    GLMR:
+      icon: 6836
+      symbol: GLMRUSDT
+      fullName: Moonbeam
+    ACH:
+      icon: 6958
+      symbol: ACHUSDT
+      fullName: Alchemy Pay
+    IMX:
+      icon: 10603
+      symbol: IMXUSDT
+      fullName: Immutable X
+    LOKA:
+      icon: 17145
+      symbol: LOKAUSDT
+      fullName: League of Kingdoms Arena
+    BTTC:
+      icon: -1
+      symbol: BTTCUSDT
+      fullName: BTTC
+    ANC:
+      icon: 8857
+      symbol: ANCUSDT
+      fullName: Anchor Protocol
+    API3:
+      icon: 7737
+      symbol: API3USDT
+      fullName: API3
+    XNO:
+      icon: 1567
+      symbol: XNOUSDT
+      fullName: Nano
