@@ -58,11 +58,11 @@ public class CustomSubscriptionRepositoryImpl implements CustomSubscriptionRepos
     }
 
     @Override
-    public Page<Subscription> listSubscriptions(User user, List<String> fundsNames, Pageable pageable) {
+    public Page<Subscription> listSubscriptions(User user, List<String> assetNames, Pageable pageable) {
         Criteria matchCriteria = Criteria.where(BaseEntity.Field.CREATED_BY)
                 .is(user.getId())
-                .and(SubscriptionEntity.Field.FUNDS_NAME)
-                .in(fundsNames);
+                .and(SubscriptionEntity.Field.ASSET_NAME)
+                .in(assetNames);
 
         List<SubscriptionEntity> list = mongoOperations.find(
                 Query.query(matchCriteria),
@@ -77,11 +77,11 @@ public class CustomSubscriptionRepositoryImpl implements CustomSubscriptionRepos
     }
 
     @Override
-    public Optional<Subscription> findSubscription(User user, String fundsName) {
+    public Optional<Subscription> findSubscription(User user, String assetName) {
         Criteria matchCriteria = Criteria.where(BaseEntity.Field.CREATED_BY)
                 .is(user.getId())
-                .and(SubscriptionEntity.Field.FUNDS_NAME)
-                .is(fundsName);
+                .and(SubscriptionEntity.Field.ASSET_NAME)
+                .is(assetName);
 
         SubscriptionEntity subscriptionEntity = mongoOperations.findOne(
                 Query.query(matchCriteria),

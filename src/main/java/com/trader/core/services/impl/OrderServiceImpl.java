@@ -20,19 +20,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void testOrder(Principal principal, String fundsName, Order order) {
+    public void testOrder(Principal principal, String assetName, Order order) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Page<Order> getAllOrders(Principal principal, String fundsName, Pageable pageable) {
-        List<Order> orders = apiRestClient.getAllOrders(fundsName);
+    public Page<Order> getAllOrders(Principal principal, String assetName, Pageable pageable) {
+        List<Order> orders = apiRestClient.getAllOrders(assetName);
         return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
     }
 
     @Override
-    public Page<Order> getOpenOrders(Principal principal, String fundsName, Pageable pageable) {
-        List<Order> orders = apiRestClient.getOpenOrders(fundsName);
+    public Page<Order> getOpenOrders(Principal principal, String assetName, Pageable pageable) {
+        List<Order> orders = apiRestClient.getOpenOrders(assetName);
         return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
     }
 }

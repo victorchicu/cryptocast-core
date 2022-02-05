@@ -1,7 +1,7 @@
 package com.trader.core;
 
 import com.trader.core.configs.BinanceProperties;
-import com.trader.core.services.FundsService;
+import com.trader.core.services.AssetService;
 import com.trader.core.repository.SubscriptionRepository;
 import com.trader.core.services.SubscriptionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +30,7 @@ public class TestBase {
     @Autowired
     protected ObjectMapper objectMapper;
     @Autowired
-    protected FundsService fundsService;
+    protected AssetService assetService;
     @Autowired
     protected ConversionService conversionService;
     @Autowired

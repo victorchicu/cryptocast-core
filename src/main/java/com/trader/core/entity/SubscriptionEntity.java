@@ -6,35 +6,35 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class SubscriptionEntity extends BaseEntity {
     public static final String COLLECTION_NAME = "subscriptions";
 
-    private String fundsName;
+    private String assetName;
 
     public SubscriptionEntity() {}
 
-    private SubscriptionEntity(Builder builder) {fundsName = builder.fundsName;}
+    private SubscriptionEntity(Builder builder) {assetName = builder.assetName;}
 
     public static Builder newBuilder() {
         return new Builder();
     }
 
-    public String getFundsName() {
-        return fundsName;
+    public String getAssetName() {
+        return assetName;
     }
 
-    public void setFundsName(String fundsName) {
-        this.fundsName = fundsName;
+    public void setAssetName(String assetName) {
+        this.assetName = assetName;
     }
 
     public static class Field {
-        public static final String FUNDS_NAME = "fundsName";
+        public static final String ASSET_NAME = "assetName";
     }
 
     public static final class Builder {
-        private String fundsName;
+        private String assetName;
 
         private Builder() {}
 
-        public Builder symbolName(String fundsName) {
-            this.fundsName = fundsName;
+        public Builder symbolName(String assetName) {
+            this.assetName = assetName;
             return this;
         }
 

@@ -10,7 +10,7 @@ public class SubscriptionToEntityConverter implements Converter<Subscription, Su
     @Override
     public SubscriptionEntity convert(Subscription source) {
         return SubscriptionEntity.newBuilder()
-                .symbolName(source.getFundsName())
+                .symbolName(source.getAssetName())
                 .build();
     }
 }

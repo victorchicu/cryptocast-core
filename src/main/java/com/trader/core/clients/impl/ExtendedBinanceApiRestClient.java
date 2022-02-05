@@ -1,14 +1,13 @@
 package com.trader.core.clients.impl;
 
 import com.binance.api.client.BinanceApiRestClient;
-import com.binance.api.client.domain.account.AssetBalance;
 import com.binance.api.client.domain.account.Order;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.trader.core.clients.ApiRestClient;
 import com.trader.core.configs.BinanceProperties;
-import com.trader.core.domain.FundsBalance;
-import com.trader.core.exceptions.FundsNotFoundException;
+import com.trader.core.domain.AssetBalance;
+import com.trader.core.exceptions.AssetNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
@@ -36,8 +35,8 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     }
 
     @Override
-    public TickerPrice getPrice(String fundsName) {
-        String symbolName = getSymbolName(fundsName);
+    public TickerPrice getPrice(String assetName) {
+        String symbolName = getAssetSymbol(assetName);
         try {
             return binanceApiRestClient.getPrice(symbolName);
         } catch (Exception e) {
@@ -50,33 +49,33 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     }
 
     @Override
-    public List<Order> getAllOrders(String fundsName) {
-        String symbolName = getSymbolName(fundsName);
+    public List<Order> getAllOrders(String assetName) {
+        String symbolName = getAssetSymbol(assetName);
         return binanceApiRestClient.getAllOrders(new AllOrdersRequest(symbolName));
     }
 
     @Override
-    public List<Order> getOpenOrders(String fundsName) {
-        String symbolName = getSymbolName(fundsName);
+    public List<Order> getOpenOrders(String assetName) {
+        String symbolName = getAssetSymbol(assetName);
         return binanceApiRestClient.getOpenOrders(new AllOrdersRequest(symbolName));
     }
 
     @Override
-    public List<FundsBalance> getFundsBalances() {
+    public List<AssetBalance> getAssetsBalances() {
         return binanceApiRestClient.getAccount().getBalances()
                 .stream()
-                .map(this::toFundsBalance)
+                .map(this::toAssetBalance)
                 .collect(Collectors.toList());
     }
 
 
-    private String getSymbolName(String fundsName) {
-        return Optional.ofNullable(binanceProperties.getFunds().get(fundsName))
-                .map(BinanceProperties.FundsConfig::getSymbol)
-                .orElseThrow(() -> new FundsNotFoundException(fundsName));
+    private String getAssetSymbol(String assetName) {
+        return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
+                .map(BinanceProperties.AssetConfig::getSymbol)
+                .orElseThrow(() -> new AssetNotFoundException(assetName));
     }
 
-    private FundsBalance toFundsBalance(AssetBalance assetBalance) {
-        return conversionService.convert(assetBalance, FundsBalance.class);
+    private AssetBalance toAssetBalance(com.binance.api.client.domain.account.AssetBalance assetBalance) {
+        return conversionService.convert(assetBalance, AssetBalance.class);
     }
 }

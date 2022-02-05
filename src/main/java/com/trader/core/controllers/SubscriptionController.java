@@ -1,7 +1,7 @@
 package com.trader.core.controllers;
 
 import com.trader.core.exceptions.UserNotFoundException;
-import com.trader.core.services.FundsService;
+import com.trader.core.services.AssetService;
 import com.trader.core.domain.Subscription;
 import com.trader.core.dto.SubscriptionDto;
 import com.trader.core.exceptions.SubscriptionNotFoundException;
@@ -18,50 +18,50 @@ import java.security.Principal;
 @RequestMapping("/api/subscriptions")
 public class SubscriptionController {
     private final UserService userService;
-    private final FundsService fundsService;
+    private final AssetService assetService;
     private final SubscriptionService subscriptionService;
     private final ConversionService conversionService;
 
 
     public SubscriptionController(
             UserService userService,
-            FundsService fundsService,
+            AssetService assetService,
             ConversionService conversionService,
             SubscriptionService subscriptionService
     ) {
         this.userService = userService;
-        this.fundsService = fundsService;
+        this.assetService = assetService;
         this.conversionService = conversionService;
         this.subscriptionService = subscriptionService;
     }
 
-    @PostMapping("/{fundsName}/add")
-    public SubscriptionDto addSubscription(Principal principal, @PathVariable String fundsName) {
+    @PostMapping("/{assetName}/add")
+    public SubscriptionDto addSubscription(Principal principal, @PathVariable String assetName) {
         return userService.findById(principal.getName())
                 .map(user ->
-                        subscriptionService.findSubscription(user, fundsName)
+                        subscriptionService.findSubscription(user, assetName)
                                 .map(subscription -> {
-                                    fundsService.removeFundsTickerEvent(user, fundsName);
+                                    assetService.removeAssetTickerEvent(user, assetName);
                                     subscriptionService.deleteSubscriptionById(subscription.getId());
                                     return toSubscriptionDto(subscription);
                                 }).orElseGet(() -> {
-                                    fundsService.addFundsTickerEvent(user, fundsName);
+                                    assetService.addAssetTickerEvent(user, assetName);
                                     return toSubscriptionDto(subscriptionService.saveSubscription(
                                             Subscription.newBuilder()
-                                                    .fundsName(fundsName)
+                                                    .assetName(assetName)
                                                     .build()
                                     ));
                                 }))
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    @DeleteMapping("/{fundsName}/remove")
-    public SubscriptionDto removeSubscription(Principal principal, @PathVariable String fundsName) {
+    @DeleteMapping("/{assetName}/remove")
+    public SubscriptionDto removeSubscription(Principal principal, @PathVariable String assetName) {
         return userService.findById(principal.getName())
                 .map(user ->
-                        subscriptionService.findSubscription(user, fundsName)
+                        subscriptionService.findSubscription(user, assetName)
                                 .map(subscription -> {
-                                    fundsService.removeFundsTickerEvent(user, fundsName);
+                                    assetService.removeAssetTickerEvent(user, assetName);
                                     subscriptionService.deleteSubscriptionById(subscription.getId());
                                     return toSubscriptionDto(subscription);
                                 })

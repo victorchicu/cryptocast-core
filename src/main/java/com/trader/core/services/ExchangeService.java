@@ -2,7 +2,7 @@ package com.trader.core.services;
 
 import com.trader.core.clients.ApiRestClient;
 import com.trader.core.clients.ApiWebSocketClient;
-import com.trader.core.domain.FundsBalance;
+import com.trader.core.domain.AssetBalance;
 import com.trader.core.domain.User;
 
 import java.util.List;
@@ -10,17 +10,17 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface ExchangeService {
-    void createFundsTicker(User user, String fundsName);
+    void createAssetTicker(User user, String assetName);
 
-    void removeFundsTicker(String fundsName);
+    void removeAssetTicker(String assetName);
 
-    Set<String> listSymbols();
+    Set<String> listAssets();
 
     ApiRestClient newApiRestClient(User user);
 
     ApiWebSocketClient newApiWebSocketClient(User user);
 
-    List<FundsBalance> listFundsBalances(User user);
+    List<AssetBalance> listAssetsBalances(User user);
 
-    Optional<FundsBalance> findFundsByName(User user, String fundsName);
+    Optional<AssetBalance> findAssetByName(User user, String assetName);
 }

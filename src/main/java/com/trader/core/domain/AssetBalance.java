@@ -6,7 +6,7 @@ import com.trader.core.enums.Quotation;
 import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FundsBalance {
+public class AssetBalance {
     /**
      * Asset symbol.
      */

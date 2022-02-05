@@ -8,12 +8,12 @@ import com.trader.core.clients.ApiWebSocketClient;
 import com.trader.core.clients.impl.ExtendedBinanceApiRestClient;
 import com.trader.core.clients.impl.ExtendedBinanceApiWebSocketClient;
 import com.trader.core.configs.BinanceProperties;
-import com.trader.core.domain.FundsBalance;
+import com.trader.core.domain.AssetBalance;
 import com.trader.core.domain.User;
-import com.trader.core.dto.FundsBalanceDto;
+import com.trader.core.dto.AssetBalanceDto;
 import com.trader.core.enums.NotificationType;
 import com.trader.core.enums.Quotation;
-import com.trader.core.exceptions.FundsNotFoundException;
+import com.trader.core.exceptions.AssetNotFoundException;
 import com.trader.core.services.ExchangeService;
 import com.trader.core.services.NotificationTemplate;
 import org.slf4j.Logger;
@@ -54,29 +54,29 @@ public class BinanceExchangeService implements ExchangeService {
     }
 
     @Override
-    public void createFundsTicker(User user, String fundsName) {
-        findFundsByName(user, fundsName)
-                .map(fundsBalance -> {
-                    events.computeIfAbsent(fundsName, (String name) ->
+    public void createAssetTicker(User user, String assetName) {
+        findAssetByName(user, assetName)
+                .map(assetBalance -> {
+                    events.computeIfAbsent(assetName, (String name) ->
                             apiWebSocketClient.onTickerEvent(
-                                    fundsBalance.getAsset(),
+                                    assetBalance.getAsset(),
                                     tickerEvent -> {
                                         try {
                                             LOG.info(tickerEvent.toString());
-                                            sendNotification(user, fundsBalance, tickerEvent);
+                                            sendNotification(user, assetBalance, tickerEvent);
                                         } catch (Exception e) {
                                             LOG.error(e.getMessage(), e);
                                         }
                                     }
                             ));
-                    return fundsBalance;
+                    return assetBalance;
                 })
-                .orElseThrow(() -> new FundsNotFoundException(fundsName));
+                .orElseThrow(() -> new AssetNotFoundException(assetName));
     }
 
     @Override
-    public void removeFundsTicker(String fundsName) {
-        Closeable tickerEvent = events.remove(fundsName);
+    public void removeAssetTicker(String assetName) {
+        Closeable tickerEvent = events.remove(assetName);
         if (tickerEvent != null) {
             try {
                 tickerEvent.close();
@@ -87,8 +87,8 @@ public class BinanceExchangeService implements ExchangeService {
     }
 
     @Override
-    public Set<String> listSymbols() {
-        return binanceProperties.getFunds().keySet();
+    public Set<String> listAssets() {
+        return binanceProperties.getAssets().keySet();
     }
 
     @Override
@@ -114,67 +114,67 @@ public class BinanceExchangeService implements ExchangeService {
     }
 
     @Override
-    public List<FundsBalance> listFundsBalances(User user) {
-        return apiRestClient.getFundsBalances().stream()
-                .filter(this::onlyAllowedFunds)
-                .filter(this::onlyEffectiveBalance)
-                .map((FundsBalance fundsBalance) -> {
-                    TickerPrice tickerPrice = apiRestClient.getPrice(fundsBalance.getAsset());
-                    return updateFundsBalance(fundsBalance, new BigDecimal(tickerPrice.getPrice()));
+    public List<AssetBalance> listAssetsBalances(User user) {
+        return apiRestClient.getAssetsBalances().stream()
+                .filter(this::onlyAllowedAssets)
+                .filter(this::onlyEffectiveAssetBalance)
+                .map((AssetBalance assetBalance) -> {
+                    TickerPrice tickerPrice = apiRestClient.getPrice(assetBalance.getAsset());
+                    return updateAssetBalance(assetBalance, new BigDecimal(tickerPrice.getPrice()));
                 })
-                .sorted(Comparator.comparing(FundsBalance::getFree).reversed())
+                .sorted(Comparator.comparing(AssetBalance::getFree).reversed())
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<FundsBalance> findFundsByName(User user, String fundsName) {
-        return apiRestClient.getFundsBalances().stream()
-                .filter(assetBalance -> assetBalance.getAsset().equals(fundsName))
+    public Optional<AssetBalance> findAssetByName(User user, String assetName) {
+        return apiRestClient.getAssetsBalances().stream()
+                .filter(assetBalance -> assetBalance.getAsset().equals(assetName))
                 .findFirst();
     }
 
 
-    private void sendNotification(User user, FundsBalance fundsBalance, TickerEvent tickerEvent) {
-        fundsBalance = updateFundsBalance(fundsBalance, new BigDecimal(tickerEvent.getCurrentDaysClosePrice()));
-        FundsBalanceDto fundsBalanceDto = toFundsBalanceDto(fundsBalance);
-        notificationTemplate.sendNotification(user, NotificationType.TICKER_EVENT, fundsBalanceDto);
+    private void sendNotification(User user, AssetBalance assetBalance, TickerEvent tickerEvent) {
+        assetBalance = updateAssetBalance(assetBalance, new BigDecimal(tickerEvent.getCurrentDaysClosePrice()));
+        AssetBalanceDto assetBalanceDto = toAssetBalanceDto(assetBalance);
+        notificationTemplate.sendNotification(user, NotificationType.TICKER_EVENT, assetBalanceDto);
     }
 
-    private boolean onlyAllowedFunds(FundsBalance fundsBalance) {
-        return !binanceProperties.getBlacklist().contains(fundsBalance.getAsset());
+    private boolean onlyAllowedAssets(AssetBalance assetBalance) {
+        return !binanceProperties.getBlacklist().contains(assetBalance.getAsset());
     }
 
-    private boolean onlyEffectiveBalance(FundsBalance fundsBalance) {
-        return fundsBalance.getFree().compareTo(BigDecimal.ZERO) > 0 || fundsBalance.getLocked().compareTo(BigDecimal.ZERO) > 0;
+    private boolean onlyEffectiveAssetBalance(AssetBalance assetBalance) {
+        return assetBalance.getFree().compareTo(BigDecimal.ZERO) > 0 || assetBalance.getLocked().compareTo(BigDecimal.ZERO) > 0;
     }
 
-    private FundsBalance updateFundsBalance(FundsBalance fundsBalance, BigDecimal price) {
-        fundsBalance.setQuotation(
-                fundsBalance.getPrice() == null
+    private AssetBalance updateAssetBalance(AssetBalance assetBalance, BigDecimal price) {
+        assetBalance.setQuotation(
+                assetBalance.getPrice() == null
                         ? Quotation.EQUAL
-                        : Quotation.valueOf(price.compareTo(fundsBalance.getPrice()))
+                        : Quotation.valueOf(price.compareTo(assetBalance.getPrice()))
         );
-        fundsBalance.setPrice(price);
+        assetBalance.setPrice(price);
         BigDecimal balance = BigDecimal.ZERO;
-        if (fundsBalance.getFree().compareTo(BigDecimal.ZERO) > 0) {
+        if (assetBalance.getFree().compareTo(BigDecimal.ZERO) > 0) {
             balance = balance.add(
-                    fundsBalance.getFree()
+                    assetBalance.getFree()
                             .multiply(price)
                             .setScale(2, RoundingMode.HALF_EVEN)
             );
         }
-        if (fundsBalance.getLocked().compareTo(BigDecimal.ZERO) > 0) {
+        if (assetBalance.getLocked().compareTo(BigDecimal.ZERO) > 0) {
             balance = balance.add(
-                    fundsBalance.getLocked()
+                    assetBalance.getLocked()
                             .multiply(price)
                             .setScale(2, RoundingMode.HALF_EVEN)
             );
         }
-        fundsBalance.setBalance(balance);
-        return fundsBalance;
+        assetBalance.setBalance(balance);
+        return assetBalance;
     }
 
-    private FundsBalanceDto toFundsBalanceDto(FundsBalance fundsBalance) {
-        return conversionService.convert(fundsBalance, FundsBalanceDto.class);
+    private AssetBalanceDto toAssetBalanceDto(AssetBalance assetBalance) {
+        return conversionService.convert(assetBalance, AssetBalanceDto.class);
     }
 }

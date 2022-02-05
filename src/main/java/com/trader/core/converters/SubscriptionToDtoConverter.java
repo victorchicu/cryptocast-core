@@ -11,7 +11,7 @@ public class SubscriptionToDtoConverter implements Converter<Subscription, Subsc
     public SubscriptionDto convert(Subscription source) {
         return new SubscriptionDto(
                 source.getId(),
-                source.getFundsName()
+                source.getAssetName()
         );
     }
 }

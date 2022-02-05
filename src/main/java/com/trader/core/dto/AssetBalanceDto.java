@@ -5,7 +5,7 @@ import com.trader.core.enums.Quotation;
 
 import java.math.BigDecimal;
 
-public class FundsBalanceDto {
+public class AssetBalanceDto {
     private final String asset;
     private final String fullName;
     private final Integer iconIndex;
@@ -17,7 +17,7 @@ public class FundsBalanceDto {
     private final Quotation quotation;
 
     @JsonCreator
-    public FundsBalanceDto(String asset, String fullName, Integer iconIndex, Boolean flagged, BigDecimal free, BigDecimal frozen, BigDecimal price, BigDecimal balance, Quotation quotation) {
+    public AssetBalanceDto(String asset, String fullName, Integer iconIndex, Boolean flagged, BigDecimal free, BigDecimal frozen, BigDecimal price, BigDecimal balance, Quotation quotation) {
         this.asset = asset;
         this.fullName = fullName;
         this.iconIndex = iconIndex;

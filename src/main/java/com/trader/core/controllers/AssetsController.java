@@ -1,12 +1,12 @@
 package com.trader.core.controllers;
 
-import com.trader.core.domain.FundsBalance;
+import com.trader.core.domain.AssetBalance;
 import com.trader.core.dto.ChipDto;
-import com.trader.core.dto.FundsBalanceDto;
+import com.trader.core.dto.AssetBalanceDto;
 import com.trader.core.exceptions.UserNotFoundException;
 import com.trader.core.services.ExchangeService;
 import com.trader.core.services.ExchangeStrategy;
-import com.trader.core.services.FundsService;
+import com.trader.core.services.AssetService;
 import com.trader.core.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,47 +18,37 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/funds")
-public class FundsController {
-    private static final Logger LOG = LoggerFactory.getLogger(FundsController.class);
+@RequestMapping("/api/assets")
+public class AssetsController {
+    private static final Logger LOG = LoggerFactory.getLogger(AssetsController.class);
 
     private final UserService userService;
-    private final FundsService fundsService;
+    private final AssetService assetService;
     private final ExchangeStrategy exchangeStrategy;
     private final ConversionService conversionService;
 
-    public FundsController(
+    public AssetsController(
             UserService userService,
-            FundsService fundsService,
+            AssetService assetService,
             ExchangeStrategy exchangeStrategy,
             ConversionService conversionService
     ) {
         this.userService = userService;
-        this.fundsService = fundsService;
+        this.assetService = assetService;
         this.exchangeStrategy = exchangeStrategy;
         this.conversionService = conversionService;
     }
 
-    @GetMapping
-    public List<FundsBalanceDto> listFundsBalances(Principal principal) {
-        return userService.findById(principal.getName())
-                .map(user ->
-                        fundsService.listFundsBalances(user).stream()
-                                .map(this::toFundsBalanceDto)
-                                .collect(Collectors.toList())
-                )
-                .orElseThrow(UserNotFoundException::new);
-    }
-
     @GetMapping("/available")
-    public List<ChipDto> availableFunds(Principal principal) {
+    public List<ChipDto> availableAssets(Principal principal) {
         return userService.findById(principal.getName())
                 .map(user -> {
                     ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
-                    return exchangeService.listSymbols();
+                    return exchangeService.listAssets();
                 })
                 .map((Set<String> symbols) -> symbols.stream()
                         .map(ChipDto::new)
@@ -67,7 +57,31 @@ public class FundsController {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    private FundsBalanceDto toFundsBalanceDto(FundsBalance fundsBalance) {
-        return conversionService.convert(fundsBalance, FundsBalanceDto.class);
+    @GetMapping
+    public List<AssetBalanceDto> listAssetsBalances(Principal principal) {
+        return userService.findById(principal.getName())
+                .map(user ->
+                        assetService.listAssetsBalances(user).stream()
+                                .filter(suppressNotSupportedAssets())
+                                .map(this::toAssetBalanceDto)
+                                .collect(Collectors.toList())
+                )
+                .orElseThrow(UserNotFoundException::new);
+    }
+
+
+    private AssetBalanceDto toAssetBalanceDto(AssetBalance assetBalance) {
+        return conversionService.convert(assetBalance, AssetBalanceDto.class);
+    }
+
+    private Predicate<AssetBalance> suppressNotSupportedAssets() {
+        return assetBalance -> {
+            try {
+                return this.toAssetBalanceDto(assetBalance) != null;
+            } catch (Exception e) {
+                LOG.warn("Asset {0} is not supported " + assetBalance.getAsset());
+                return false;
+            }
+        };
     }
 }

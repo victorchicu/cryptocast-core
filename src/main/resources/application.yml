@@ -91,7 +91,7 @@ binance:
   useTestnetStreaming: false
   blacklist:
     - NFT
-  funds:
+  assets:
     1INCH:
       icon: 8104
       symbol: 1INCHUSDT

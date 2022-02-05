@@ -1,6 +1,6 @@
 package com.trader.core.domain;
 
-public class FundsPrice {
+public class AssetPrice {
     private String symbol;
     private String price;
 

@@ -1,7 +1,7 @@
 package com.trader.core.services.impl;
 
 import com.trader.core.domain.Subscription;
-import com.trader.core.services.FundsService;
+import com.trader.core.services.AssetService;
 import com.trader.core.services.LogoutService;
 import com.trader.core.services.SubscriptionService;
 import com.trader.core.services.UserService;
@@ -18,16 +18,16 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 public class LogoutServiceImpl implements LogoutService {
     private final UserService userService;
-    private final FundsService fundsService;
+    private final AssetService assetService;
     private final SubscriptionService subscriptionService;
 
     public LogoutServiceImpl(
             UserService userService,
-            FundsService fundsService,
+            AssetService assetService,
             SubscriptionService subscriptionService
     ) {
         this.userService = userService;
-        this.fundsService = fundsService;
+        this.assetService = assetService;
         this.subscriptionService = subscriptionService;
     }
 
@@ -38,7 +38,7 @@ public class LogoutServiceImpl implements LogoutService {
                     .ifPresent(user -> {
                         Page<Subscription> subscriptions = subscriptionService.findSubscriptions(user, Pageable.unpaged());
                         subscriptions.forEach(subscription ->
-                                fundsService.removeFundsTickerEvent(user, subscription.getFundsName())
+                                assetService.removeAssetTickerEvent(user, subscription.getAssetName())
                         );
                     });
             new SecurityContextLogoutHandler().logout(request, response, authentication);

@@ -4,7 +4,7 @@ import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.domain.event.TickerEvent;
 import com.trader.core.clients.ApiWebSocketClient;
 import com.trader.core.configs.BinanceProperties;
-import com.trader.core.exceptions.FundsNotFoundException;
+import com.trader.core.exceptions.AssetNotFoundException;
 
 import java.io.Closeable;
 import java.util.Optional;
@@ -23,15 +23,15 @@ public class ExtendedBinanceApiWebSocketClient implements ApiWebSocketClient {
     }
 
     @Override
-    public Closeable onTickerEvent(String fundsName, Consumer<TickerEvent> consumer) {
-        String symbolName = getSymbolName(fundsName);
+    public Closeable onTickerEvent(String assetName, Consumer<TickerEvent> consumer) {
+        String symbolName = getSymbolName(assetName);
         return binanceApiWebSocketClient.onTickerEvent(symbolName.toLowerCase(), consumer::accept);
     }
 
 
-    private String getSymbolName(String fundsName) {
-        return Optional.ofNullable(binanceProperties.getFunds().get(fundsName))
-                .map(BinanceProperties.FundsConfig::getSymbol)
-                .orElseThrow(() -> new FundsNotFoundException(fundsName));
+    private String getSymbolName(String assetName) {
+        return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
+                .map(BinanceProperties.AssetConfig::getSymbol)
+                .orElseThrow(() -> new AssetNotFoundException(assetName));
     }
 }

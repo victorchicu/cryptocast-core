@@ -21,23 +21,23 @@ public class OrdersController {
         this.conversionService = conversionService;
     }
 
-    @PostMapping("/{fundsName}")
-    public OrderDto createOrder(Principal principal, @PathVariable String fundsName, @RequestBody OrderDto orderDto) {
+    @PostMapping("/{assetName}")
+    public OrderDto createOrder(Principal principal, @PathVariable String assetName, @RequestBody OrderDto orderDto) {
         Order order = toOrder(orderDto);
         //TODO: Remove test order
-        orderService.testOrder(principal, fundsName, order);
+        orderService.testOrder(principal, assetName, order);
         return toOrderDto(order);
     }
 
-    @GetMapping("/{fundsName}")
-    public Page<OrderDto> getAllOrders(Principal principal, @PathVariable String fundsName, Pageable pageable) {
-        return orderService.getAllOrders(principal, fundsName, pageable)
+    @GetMapping("/{assetName}")
+    public Page<OrderDto> getAllOrders(Principal principal, @PathVariable String assetName, Pageable pageable) {
+        return orderService.getAllOrders(principal, assetName, pageable)
                 .map(this::toOrderDto);
     }
 
-    @GetMapping("/open/{fundsName}")
-    public Page<OrderDto> getOpenOrders(Principal principal, @PathVariable String fundsName, Pageable pageable) {
-        return orderService.getOpenOrders(principal, fundsName, pageable)
+    @GetMapping("/open/{assetName}")
+    public Page<OrderDto> getOpenOrders(Principal principal, @PathVariable String assetName, Pageable pageable) {
+        return orderService.getOpenOrders(principal, assetName, pageable)
                 .map(this::toOrderDto);
     }
 

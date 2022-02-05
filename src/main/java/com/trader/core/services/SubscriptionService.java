@@ -17,7 +17,7 @@ public interface SubscriptionService {
 
     Page<Subscription> findSubscriptions(User user, Pageable pageable);
 
-    Page<Subscription> findSubscriptions(User user, List<String> fundsNames, Pageable pageable);
+    Page<Subscription> findSubscriptions(User user, List<String> assetNames, Pageable pageable);
 
-    Optional<Subscription> findSubscription(User user, String fundsName);
+    Optional<Subscription> findSubscription(User user, String assetName);
 }

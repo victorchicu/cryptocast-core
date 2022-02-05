@@ -2,19 +2,19 @@ package com.trader.core.domain;
 
 public class Subscription {
     private String id;
-    private String fundsName;
+    private String assetName;
 
     private Subscription(Builder builder) {
         id = builder.id;
-        fundsName = builder.fundsName;
+        assetName = builder.assetName;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getFundsName() {
-        return fundsName;
+    public String getAssetName() {
+        return assetName;
     }
 
     public static Builder newBuilder() {
@@ -23,7 +23,7 @@ public class Subscription {
 
     public static final class Builder {
         private String id;
-        private String fundsName;
+        private String assetName;
 
         private Builder() {}
 
@@ -32,8 +32,8 @@ public class Subscription {
             return this;
         }
 
-        public Builder fundsName(String fundsName) {
-            this.fundsName = fundsName;
+        public Builder assetName(String assetName) {
+            this.assetName = assetName;
             return this;
         }
 
