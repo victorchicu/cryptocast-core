@@ -35,8 +35,8 @@ public class OrdersController {
                 .map(this::toOrderDto);
     }
 
-    @GetMapping("/open/{assetName}")
-    public Page<OrderDto> getOpenOrders(Principal principal, @PathVariable String assetName, Pageable pageable) {
+    @GetMapping("/open")
+    public Page<OrderDto> getOpenOrders(Principal principal, @RequestParam String assetName, Pageable pageable) {
         return orderService.getOpenOrders(principal, assetName, pageable)
                 .map(this::toOrderDto);
     }

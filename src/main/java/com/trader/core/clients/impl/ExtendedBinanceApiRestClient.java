@@ -11,6 +11,7 @@ import com.trader.core.exceptions.AssetNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -49,19 +50,19 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     }
 
     @Override
-    public List<Order> getAllOrders(String assetName) {
+    public List<Order> getAllOrders(String assetName, Pageable pageable) {
         String symbolName = getAssetSymbol(assetName);
         return binanceApiRestClient.getAllOrders(new AllOrdersRequest(symbolName));
     }
 
     @Override
-    public List<Order> getOpenOrders(String assetName) {
+    public List<Order> getOpenOrders(String assetName, Pageable pageable) {
         String symbolName = getAssetSymbol(assetName);
         return binanceApiRestClient.getOpenOrders(new AllOrdersRequest(symbolName));
     }
 
     @Override
-    public List<AssetBalance> getAssetsBalances() {
+    public List<AssetBalance> getAssetBalances() {
         return binanceApiRestClient.getAccount().getBalances()
                 .stream()
                 .map(this::toAssetBalance)

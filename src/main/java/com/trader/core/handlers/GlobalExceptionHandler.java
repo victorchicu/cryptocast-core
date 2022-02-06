@@ -1,5 +1,6 @@
 package com.trader.core.handlers;
 
+import com.trader.core.exceptions.SubscriptionNotFoundException;
 import com.trader.core.exceptions.SymbolNotFoundException;
 import com.trader.core.exceptions.EmailNotFoundException;
 import org.slf4j.Logger;
@@ -23,18 +24,35 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         LOG.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorDto(
-                        Collections.singletonList(new ErrorDto.Details("EmailNotFoundException", null, ex.getMessage()))
+                        Collections.singletonList(
+                                new ErrorDto.Details("EmailNotFoundException", null, ex.getMessage())
+                        )
                 ),
                 HttpStatus.NOT_FOUND
         );
     }
 
     @ExceptionHandler({SymbolNotFoundException.class})
-    public ResponseEntity<Object> handleSymbolNotFoundException(SymbolNotFoundException ex, WebRequest webRequest) {
+    public ResponseEntity<Object> handleSubscriptionNotFoundException(SymbolNotFoundException ex, WebRequest webRequest) {
         LOG.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorDto(
-                        Collections.singletonList(new ErrorDto.Details("SymbolNotFoundException", null, ex.getMessage()))
+                        Collections.singletonList(
+                                new ErrorDto.Details("SymbolNotFoundException", null, ex.getMessage())
+                        )
+                ),
+                HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler({SubscriptionNotFoundException.class})
+    public ResponseEntity<Object> handleSubscriptionNotFoundException(SubscriptionNotFoundException ex, WebRequest webRequest) {
+        LOG.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
+        return new ResponseEntity<>(
+                new ErrorDto(
+                        Collections.singletonList(
+                                new ErrorDto.Details("SubscriptionNotFoundException", null, ex.getMessage())
+                        )
                 ),
                 HttpStatus.NOT_FOUND
         );

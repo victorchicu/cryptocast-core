@@ -115,7 +115,7 @@ public class BinanceExchangeService implements ExchangeService {
 
     @Override
     public List<AssetBalance> listAssetsBalances(User user) {
-        return apiRestClient.getAssetsBalances().stream()
+        return apiRestClient.getAssetBalances().stream()
                 .filter(this::onlyAllowedAssets)
                 .filter(this::onlyEffectiveAssetBalance)
                 .map((AssetBalance assetBalance) -> {
@@ -128,14 +128,14 @@ public class BinanceExchangeService implements ExchangeService {
 
     @Override
     public Optional<AssetBalance> findAssetByName(User user, String assetName) {
-        return apiRestClient.getAssetsBalances().stream()
+        return apiRestClient.getAssetBalances().stream()
                 .filter(assetBalance -> assetBalance.getAsset().equals(assetName))
                 .findFirst();
     }
 
 
     private void sendNotification(User user, AssetBalance assetBalance, TickerEvent tickerEvent) {
-        assetBalance = updateAssetBalance(assetBalance, new BigDecimal(tickerEvent.getCurrentDaysClosePrice()));
+        assetBalance = updateAssetBalance(assetBalance, new BigDecimal(tickerEvent.getBestBidPrice()));
         AssetBalanceDto assetBalanceDto = toAssetBalanceDto(assetBalance);
         notificationTemplate.sendNotification(user, NotificationType.TICKER_EVENT, assetBalanceDto);
     }
