@@ -4,10 +4,7 @@ import com.trader.core.domain.AssetBalance;
 import com.trader.core.dto.ChipDto;
 import com.trader.core.dto.AssetBalanceDto;
 import com.trader.core.exceptions.UserNotFoundException;
-import com.trader.core.services.ExchangeService;
-import com.trader.core.services.ExchangeStrategy;
-import com.trader.core.services.AssetService;
-import com.trader.core.services.UserService;
+import com.trader.core.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
@@ -48,7 +45,7 @@ public class AssetsController {
         return userService.findById(principal.getName())
                 .map(user -> {
                     ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
-                    return exchangeService.listAssets();
+                    return exchangeService.availableAssets();
                 })
                 .map((Set<String> symbols) -> symbols.stream()
                         .map(ChipDto::new)

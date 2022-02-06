@@ -9,7 +9,6 @@ public class AssetBalanceDto {
     private final String asset;
     private final String fullName;
     private final Integer iconIndex;
-    private final Boolean flagged;
     private final BigDecimal free;
     private final BigDecimal frozen;
     private final BigDecimal price;
@@ -17,11 +16,10 @@ public class AssetBalanceDto {
     private final Quotation quotation;
 
     @JsonCreator
-    public AssetBalanceDto(String asset, String fullName, Integer iconIndex, Boolean flagged, BigDecimal free, BigDecimal frozen, BigDecimal price, BigDecimal balance, Quotation quotation) {
+    public AssetBalanceDto(String asset, String fullName, Integer iconIndex, BigDecimal free, BigDecimal frozen, BigDecimal price, BigDecimal balance, Quotation quotation) {
         this.asset = asset;
         this.fullName = fullName;
         this.iconIndex = iconIndex;
-        this.flagged = flagged;
         this.free = free;
         this.frozen = frozen;
         this.price = price;
@@ -39,10 +37,6 @@ public class AssetBalanceDto {
 
     public Integer getIconIndex() {
         return iconIndex;
-    }
-
-    public Boolean getFlagged() {
-        return flagged;
     }
 
     public BigDecimal getFree() {

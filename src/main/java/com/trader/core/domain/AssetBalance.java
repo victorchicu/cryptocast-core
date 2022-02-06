@@ -13,11 +13,6 @@ public class AssetBalance {
     private String asset;
 
     /**
-     * In watchlist
-     */
-    private Boolean flagged;
-
-    /**
      * Available balance.
      */
     private BigDecimal free;
@@ -49,14 +44,6 @@ public class AssetBalance {
 
     public void setAsset(String asset) {
         this.asset = asset;
-    }
-
-    public Boolean getFlagged() {
-        return flagged;
-    }
-
-    public void setFlagged(Boolean flagged) {
-        this.flagged = flagged;
     }
 
     public BigDecimal getFree() {
@@ -103,7 +90,6 @@ public class AssetBalance {
     public String toString() {
         return "CoinBalance{" +
                 "asset='" + asset + '\'' +
-                ", flagged=" + flagged +
                 ", free=" + free +
                 ", locked=" + locked +
                 ", price=" + price +

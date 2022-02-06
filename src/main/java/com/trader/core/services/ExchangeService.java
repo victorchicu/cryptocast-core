@@ -14,7 +14,7 @@ public interface ExchangeService {
 
     void removeAssetTicker(String assetName);
 
-    Set<String> listAssets();
+    Set<String> availableAssets();
 
     ApiRestClient newApiRestClient(User user);
 

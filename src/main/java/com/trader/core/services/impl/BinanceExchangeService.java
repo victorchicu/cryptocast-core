@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 @Service("BINANCE")
 public class BinanceExchangeService implements ExchangeService {
     private static final Logger LOG = LoggerFactory.getLogger(BinanceExchangeService.class);
+    //TODO: Must be closeable per user asset pair
     private static final Map<String, Closeable> events = new HashMap<>();
 
     private final ApiRestClient apiRestClient;
@@ -87,7 +88,7 @@ public class BinanceExchangeService implements ExchangeService {
     }
 
     @Override
-    public Set<String> listAssets() {
+    public Set<String> availableAssets() {
         return binanceProperties.getAssets().keySet();
     }
 

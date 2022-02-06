@@ -24,7 +24,7 @@ public class GateExchangeService implements ExchangeService {
     }
 
     @Override
-    public Set<String> listAssets() {
+    public Set<String> availableAssets() {
         throw new UnsupportedOperationException("Gate not support list symbols");
     }
 

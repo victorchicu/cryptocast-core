@@ -25,7 +25,6 @@ public class AssetBalanceToDtoConverter implements Converter<AssetBalance, Asset
                 source.getAsset(),
                 assetConfig.getFullName(),
                 assetConfig.getIcon(),
-                source.getFlagged(),
                 source.getFree(),
                 source.getLocked(),
                 source.getPrice(),
