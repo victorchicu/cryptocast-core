@@ -39,11 +39,17 @@ public class SubscriptionController {
     @GetMapping("/{assetName}")
     public SubscriptionDto getSubscription(Principal principal, @PathVariable String assetName) {
         return userService.findById(principal.getName())
-                .map(user ->
-                        subscriptionService.findSubscription(user, assetName)
-                                .map(this::toSubscriptionDto)
-                                .orElseThrow(SubscriptionNotFoundException::new)
-                )
+                .map(user -> {
+                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
+                    return subscriptionService.findSubscription(user, assetName)
+                            .map(subscription -> {
+                                exchangeService.removeAssetTicker(subscription.getAssetName());
+                                exchangeService.createAssetTicker(user, subscription.getAssetName());
+                                return subscription;
+                            })
+                            .map(this::toSubscriptionDto)
+                            .orElseThrow(SubscriptionNotFoundException::new);
+                })
                 .orElseThrow(UserNotFoundException::new);
     }
 
@@ -83,9 +89,8 @@ public class SubscriptionController {
     @GetMapping
     public Page<SubscriptionDto> listSubscriptions(Principal principal, Pageable pageable) {
         return userService.findById(principal.getName())
-                .map(user ->
-                        subscriptionService.findSubscriptions(user, pageable)
-                                .map(this::toSubscriptionDto)
+                .map(user -> subscriptionService.findSubscriptions(user, pageable)
+                        .map(this::toSubscriptionDto)
                 )
                 .orElseThrow(UserNotFoundException::new);
     }

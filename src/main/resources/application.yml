@@ -27,6 +27,9 @@ spring:
       host: localhost
       port: 27017
       database: trader_core
+  cache:
+    type: simple
+    evict-cron: "* */5 * * * *"
   session:
     mongodb:
       collection-name: sessions

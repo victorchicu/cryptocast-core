@@ -18,6 +18,7 @@ import com.trader.core.services.ExchangeService;
 import com.trader.core.services.NotificationTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 

@@ -5,11 +5,14 @@ import com.binance.api.client.domain.account.Order;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.trader.core.clients.ApiRestClient;
+import com.trader.core.configs.BinanceCacheConfig;
 import com.trader.core.configs.BinanceProperties;
 import com.trader.core.domain.AssetBalance;
 import com.trader.core.exceptions.AssetNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Pageable;
 
@@ -18,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@CacheConfig(cacheNames = {BinanceCacheConfig.CACHE_NAME})
 public class ExtendedBinanceApiRestClient implements ApiRestClient {
     private static final Logger LOG = LoggerFactory.getLogger(ExtendedBinanceApiRestClient.class);
 
@@ -36,6 +40,7 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     }
 
     @Override
+    @Cacheable
     public TickerPrice getPrice(String assetName) {
         String symbolName = getAssetSymbol(assetName);
         try {
@@ -50,18 +55,21 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     }
 
     @Override
+    @Cacheable
     public List<Order> getAllOrders(String assetName, Pageable pageable) {
         String symbolName = getAssetSymbol(assetName);
         return binanceApiRestClient.getAllOrders(new AllOrdersRequest(symbolName));
     }
 
     @Override
+    @Cacheable
     public List<Order> getOpenOrders(String assetName, Pageable pageable) {
         String symbolName = getAssetSymbol(assetName);
         return binanceApiRestClient.getOpenOrders(new AllOrdersRequest(symbolName));
     }
 
     @Override
+    @Cacheable
     public List<AssetBalance> getAssetBalances() {
         return binanceApiRestClient.getAccount().getBalances()
                 .stream()
