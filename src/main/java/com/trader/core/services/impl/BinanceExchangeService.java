@@ -2,13 +2,13 @@ package com.trader.core.services.impl;
 
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.domain.event.TickerEvent;
-import com.binance.api.client.domain.market.TickerPrice;
 import com.trader.core.clients.ApiRestClient;
 import com.trader.core.clients.ApiWebSocketClient;
 import com.trader.core.clients.impl.ExtendedBinanceApiRestClient;
 import com.trader.core.clients.impl.ExtendedBinanceApiWebSocketClient;
 import com.trader.core.configs.BinanceProperties;
 import com.trader.core.domain.AssetBalance;
+import com.trader.core.domain.AssetPrice;
 import com.trader.core.domain.User;
 import com.trader.core.dto.AssetBalanceDto;
 import com.trader.core.enums.NotificationType;
@@ -18,7 +18,6 @@ import com.trader.core.services.ExchangeService;
 import com.trader.core.services.NotificationTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
@@ -119,13 +118,19 @@ public class BinanceExchangeService implements ExchangeService {
     public List<AssetBalance> listAssetsBalances(User user) {
         return apiRestClient.getAssetBalances().stream()
                 .filter(this::onlyAllowedAssets)
-                .filter(this::onlyEffectiveAssetBalance)
-                .map((AssetBalance assetBalance) -> {
-                    TickerPrice tickerPrice = apiRestClient.getPrice(assetBalance.getAsset());
-                    return updateAssetBalance(assetBalance, new BigDecimal(tickerPrice.getPrice()));
-                })
+                .filter(this::onlyEffectiveBalance)
+                .map((AssetBalance assetBalance) ->
+                        apiRestClient.getPrice(assetBalance.getAsset())
+                                .map(assetPrice -> updateAssetBalance(assetBalance, assetPrice.getPrice()))
+                                .orElseGet(() -> updateAssetBalance(assetBalance, BigDecimal.ZERO))
+                )
                 .sorted(Comparator.comparing(AssetBalance::getFree).reversed())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<AssetPrice> getAssetPrice(User user, String assetName) {
+        return apiRestClient.getPrice(assetName);
     }
 
     @Override
@@ -146,7 +151,7 @@ public class BinanceExchangeService implements ExchangeService {
         return !binanceProperties.getBlacklist().contains(assetBalance.getAsset());
     }
 
-    private boolean onlyEffectiveAssetBalance(AssetBalance assetBalance) {
+    private boolean onlyEffectiveBalance(AssetBalance assetBalance) {
         return assetBalance.getFree().compareTo(BigDecimal.ZERO) > 0 || assetBalance.getLocked().compareTo(BigDecimal.ZERO) > 0;
     }
 

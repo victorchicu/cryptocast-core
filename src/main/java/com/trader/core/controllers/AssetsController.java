@@ -1,14 +1,21 @@
 package com.trader.core.controllers;
 
 import com.trader.core.domain.AssetBalance;
-import com.trader.core.dto.ChipDto;
+import com.trader.core.domain.AssetPrice;
 import com.trader.core.dto.AssetBalanceDto;
+import com.trader.core.dto.AssetPriceDto;
+import com.trader.core.dto.ChipDto;
+import com.trader.core.exceptions.AssetNotFoundException;
 import com.trader.core.exceptions.UserNotFoundException;
-import com.trader.core.services.*;
+import com.trader.core.services.AssetService;
+import com.trader.core.services.ExchangeService;
+import com.trader.core.services.ExchangeStrategy;
+import com.trader.core.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,24 +61,51 @@ public class AssetsController {
                 .orElseThrow(UserNotFoundException::new);
     }
 
+    @GetMapping("/{assetName}/price")
+    public AssetPriceDto getAssetPrice(Principal principal, @PathVariable String assetName) {
+        return userService.findById(principal.getName())
+                .map(user -> {
+                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
+                    return exchangeService.getAssetPrice(user, assetName)
+                            .map(this::toAssetPriceDto)
+                            .orElseThrow(() -> new AssetNotFoundException(assetName));
+                })
+                .orElseThrow(UserNotFoundException::new);
+    }
+
+    @GetMapping("/{assetName}")
+    public AssetBalanceDto getAssetBalance(Principal principal, @PathVariable String assetName) {
+        return userService.findById(principal.getName())
+                .map(user -> {
+                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
+                    return exchangeService.findAssetByName(user, assetName)
+                            .map(this::toAssetBalanceDto)
+                            .orElseThrow(() -> new AssetNotFoundException(assetName));
+                })
+                .orElseThrow(UserNotFoundException::new);
+    }
+
     @GetMapping
     public List<AssetBalanceDto> listAssetsBalances(Principal principal) {
         return userService.findById(principal.getName())
                 .map(user ->
                         assetService.listAssetsBalances(user).stream()
-                                .filter(suppressNotSupportedAssets())
+                                .filter(suppressUnsupportedAssets())
                                 .map(this::toAssetBalanceDto)
                                 .collect(Collectors.toList())
                 )
                 .orElseThrow(UserNotFoundException::new);
     }
 
+    private AssetPriceDto toAssetPriceDto(AssetPrice assetPrice) {
+        return conversionService.convert(assetPrice, AssetPriceDto.class);
+    }
 
     private AssetBalanceDto toAssetBalanceDto(AssetBalance assetBalance) {
         return conversionService.convert(assetBalance, AssetBalanceDto.class);
     }
 
-    private Predicate<AssetBalance> suppressNotSupportedAssets() {
+    private Predicate<AssetBalance> suppressUnsupportedAssets() {
         return assetBalance -> {
             try {
                 return this.toAssetBalanceDto(assetBalance) != null;

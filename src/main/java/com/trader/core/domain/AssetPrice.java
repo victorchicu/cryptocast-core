@@ -1,8 +1,10 @@
 package com.trader.core.domain;
 
+import java.math.BigDecimal;
+
 public class AssetPrice {
     private String symbol;
-    private String price;
+    private BigDecimal price;
 
     public String getSymbol() {
         return symbol;
@@ -12,11 +14,11 @@ public class AssetPrice {
         this.symbol = symbol;
     }
 
-    public String getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }
