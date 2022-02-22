@@ -2,6 +2,7 @@ package com.trader.core.services.impl;
 
 import com.binance.api.client.domain.account.Order;
 import com.trader.core.clients.ApiRestClient;
+import com.trader.core.domain.TestOrder;
 import com.trader.core.services.OrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,8 +21,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void testOrder(Principal principal, String assetName, Order order) {
-        throw new UnsupportedOperationException();
+    public void createOrder(Principal principal, String assetName, TestOrder testOrder) {
+        apiRestClient.createOrder(principal, assetName, testOrder);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.trader.core.controllers;
 
 import com.binance.api.client.domain.account.Order;
+import com.trader.core.domain.TestOrder;
 import com.trader.core.dto.OrderDto;
+import com.trader.core.dto.OrderRequestDto;
 import com.trader.core.services.OrderService;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
@@ -22,11 +24,9 @@ public class OrdersController {
     }
 
     @PostMapping("/{assetName}")
-    public OrderDto createOrder(Principal principal, @PathVariable String assetName, @RequestBody OrderDto orderDto) {
-        Order order = toOrder(orderDto);
-        //TODO: Remove test order
-        orderService.testOrder(principal, assetName, order);
-        return toOrderDto(order);
+    public void createOrder(Principal principal, @PathVariable String assetName, @RequestBody OrderRequestDto orderRequestDto) {
+        TestOrder testOrder = toOrder(orderRequestDto);
+        orderService.createOrder(principal, assetName, testOrder);
     }
 
     @GetMapping("/{assetName}")
@@ -41,8 +41,8 @@ public class OrdersController {
                 .map(this::toOrderDto);
     }
 
-    private Order toOrder(OrderDto orderDto) {
-        return conversionService.convert(orderDto, Order.class);
+    private TestOrder toOrder(OrderRequestDto orderRequestDto) {
+        return conversionService.convert(orderRequestDto, TestOrder.class);
     }
 
     private OrderDto toOrderDto(Order order) {
