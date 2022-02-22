@@ -1,5 +1,6 @@
 package com.trader.core.handlers;
 
+import com.binance.api.client.exception.BinanceApiException;
 import com.trader.core.exceptions.SubscriptionNotFoundException;
 import com.trader.core.exceptions.SymbolNotFoundException;
 import com.trader.core.exceptions.EmailNotFoundException;
@@ -18,6 +19,19 @@ import java.util.List;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    @ExceptionHandler({BinanceApiException.class})
+    public ResponseEntity<Object> handleBinanceApiException(BinanceApiException ex, WebRequest webRequest) {
+        LOG.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
+        return new ResponseEntity<>(
+                new ErrorDto(
+                        Collections.singletonList(
+                                new ErrorDto.Details("BinanceApiException", null, ex.getMessage())
+                        )
+                ),
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
 
     @ExceptionHandler({EmailNotFoundException.class})
     public ResponseEntity<Object> emailNotFoundException(EmailNotFoundException ex, WebRequest webRequest) {
