@@ -18,6 +18,11 @@ public class ExtendedGateApiRestClient implements ApiRestClient {
     }
 
     @Override
+    public void cancelOrder(Principal principal, Long orderId, String assetName) {
+        throw new UnsupportedOperationException("Gate not support test order");
+    }
+
+    @Override
     public List<Order> getAllOrders(String assetName, Pageable pageable) {
         throw new UnsupportedOperationException("Gate not support get all orders");
     }

@@ -4,6 +4,7 @@ import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.Order;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
+import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.trader.core.clients.ApiRestClient;
 import com.trader.core.configs.BinanceProperties;
@@ -42,6 +43,12 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     public void createOrder(Principal principal, String assetName, TestOrder testOrder) {
         NewOrder newOrder = toNewOrder(testOrder.setAsset(assetName));
         LOG.info(binanceApiRestClient.newOrder(newOrder).toString());
+    }
+
+    @Override
+    public void cancelOrder(Principal principal, Long orderId, String assetName) {
+        String symbol = toSymbol(assetName);
+        binanceApiRestClient.cancelOrder(new CancelOrderRequest(symbol, orderId));
     }
 
 

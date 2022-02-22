@@ -29,6 +29,11 @@ public class OrdersController {
         orderService.createOrder(principal, assetName, testOrder);
     }
 
+    @DeleteMapping("/{orderId}/{assetName}")
+    public void cancelOrder(Principal principal, @PathVariable Long orderId, @PathVariable String assetName) {
+        orderService.cancelOrder(principal, orderId, assetName);
+    }
+
     @GetMapping("/{assetName}")
     public Page<OrderDto> getAllOrders(Principal principal, @PathVariable String assetName, Pageable pageable) {
         return orderService.getAllOrders(principal, assetName, pageable)

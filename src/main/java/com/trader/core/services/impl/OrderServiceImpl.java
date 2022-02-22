@@ -26,6 +26,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public void cancelOrder(Principal principal, Long orderId, String assetName) {
+        apiRestClient.cancelOrder(principal, orderId, assetName);
+    }
+
+    @Override
     public Page<Order> getAllOrders(Principal principal, String assetName, Pageable pageable) {
         List<Order> orders = apiRestClient.getAllOrders(assetName, pageable);
         return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());

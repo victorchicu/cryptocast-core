@@ -13,6 +13,8 @@ import java.util.Optional;
 public interface ApiRestClient {
     void createOrder(Principal principal, String assetName, TestOrder testOrder);
 
+    void cancelOrder(Principal principal, Long orderId, String assetName);
+
     List<Order> getAllOrders(String assetName, Pageable pageable);
 
     List<Order> getOpenOrders(String assetName, Pageable pageable);
@@ -20,4 +22,5 @@ public interface ApiRestClient {
     List<AssetBalance> getAssetBalances();
 
     Optional<AssetPrice> getPrice(String assetName);
+
 }
