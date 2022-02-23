@@ -1,42 +1,17 @@
 package com.trader.core.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.trader.core.enums.Quotation;
 
 import java.math.BigDecimal;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class AssetBalance {
-    /**
-     * Asset symbol.
-     */
     private String asset;
-
-    /**
-     * Available balance.
-     */
     private BigDecimal free;
-
-    /**
-     * Locked by open orders.
-     */
     private BigDecimal locked;
-
-    /**
-     * Asset market price
-     */
     private BigDecimal price;
-
-    /**
-     * Asset balance price
-     */
+    private BigDecimal priceChange;
     private BigDecimal balance;
-
-    /**
-     * Asset quotation
-     */
     private Quotation quotation;
-
 
     public String getAsset() {
         return asset;
@@ -70,6 +45,14 @@ public class AssetBalance {
         this.price = price;
     }
 
+    public BigDecimal getPriceChange() {
+        return priceChange;
+    }
+
+    public void setPriceChange(BigDecimal priceChange) {
+        this.priceChange = priceChange;
+    }
+
     public BigDecimal getBalance() {
         return balance;
     }
@@ -84,18 +67,6 @@ public class AssetBalance {
 
     public void setQuotation(Quotation quotation) {
         this.quotation = quotation;
-    }
-
-    @Override
-    public String toString() {
-        return "CoinBalance{" +
-                "asset='" + asset + '\'' +
-                ", free=" + free +
-                ", locked=" + locked +
-                ", price=" + price +
-                ", balance=" + balance +
-                ", quotation=" + quotation +
-                '}';
     }
 }
 

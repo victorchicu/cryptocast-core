@@ -24,10 +24,10 @@ public class AssetBalanceToDtoConverter implements Converter<AssetBalance, Asset
         return new AssetBalanceDto(
                 source.getAsset(),
                 assetConfig.getFullName(),
-                assetConfig.getIcon(),
                 source.getFree(),
                 source.getLocked(),
                 source.getPrice(),
+                source.getPriceChange(),
                 source.getBalance(),
                 source.getQuotation()
         );

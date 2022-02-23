@@ -80,7 +80,7 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
             String symbol = toSymbol(assetName);
             return Optional.of(binanceApiRestClient.getPrice(symbol)).map(this::toAssetPrice);
         } catch (Exception e) {
-            LOG.error("An error occurred fetching asset price: " + e.getMessage(), e);
+            LOG.warn("An error occurred fetching asset " + assetName, e);
             return Optional.empty();
         }
     }

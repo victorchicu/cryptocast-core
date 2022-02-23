@@ -1,4 +1,4 @@
 package com.trader.core.services;
 
-public interface LogStashService {
+public interface HistoryService {
 }

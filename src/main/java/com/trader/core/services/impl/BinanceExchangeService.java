@@ -61,9 +61,8 @@ public class BinanceExchangeService implements ExchangeService {
                     events.computeIfAbsent(assetName, (String name) ->
                             apiWebSocketClient.onTickerEvent(
                                     assetBalance.getAsset(),
-                                    tickerEvent -> {
+                                    (TickerEvent tickerEvent) -> {
                                         try {
-                                            LOG.info(tickerEvent.toString());
                                             sendNotification(user, assetBalance, tickerEvent);
                                         } catch (Exception e) {
                                             LOG.error(e.getMessage(), e);
@@ -119,11 +118,13 @@ public class BinanceExchangeService implements ExchangeService {
         return apiRestClient.getAssetBalances().stream()
                 .filter(this::onlyAllowedAssets)
                 .filter(this::onlyEffectiveBalance)
-                .map((AssetBalance assetBalance) ->
-                        apiRestClient.getPrice(assetBalance.getAsset())
-                                .map(assetPrice -> updateAssetBalance(assetBalance, assetPrice.getPrice()))
-                                .orElseGet(() -> updateAssetBalance(assetBalance, BigDecimal.ZERO))
-                )
+                .map((AssetBalance assetBalance) -> {
+                    assetBalance.setPriceChange(BigDecimal.ZERO);
+                    apiRestClient.getPrice(assetBalance.getAsset())
+                            .map(assetPrice -> updateAssetBalance(assetBalance, assetPrice.getPrice()))
+                            .orElseGet(() -> updateAssetBalance(assetBalance, BigDecimal.ZERO));
+                    return assetBalance;
+                })
                 .sorted(Comparator.comparing(AssetBalance::getFree).reversed())
                 .collect(Collectors.toList());
     }
@@ -142,6 +143,7 @@ public class BinanceExchangeService implements ExchangeService {
 
 
     private void sendNotification(User user, AssetBalance assetBalance, TickerEvent tickerEvent) {
+        assetBalance.setPriceChange(new BigDecimal(tickerEvent.getPriceChangePercent()));
         assetBalance = updateAssetBalance(assetBalance, new BigDecimal(tickerEvent.getBestBidPrice()));
         AssetBalanceDto assetBalanceDto = toAssetBalanceDto(assetBalance);
         notificationTemplate.sendNotification(user, NotificationType.TICKER_EVENT, assetBalanceDto);

@@ -8,21 +8,30 @@ import java.math.BigDecimal;
 public class AssetBalanceDto {
     private final String asset;
     private final String fullName;
-    private final Integer iconIndex;
     private final BigDecimal free;
     private final BigDecimal frozen;
     private final BigDecimal price;
+    private final BigDecimal priceChange;
     private final BigDecimal balance;
     private final Quotation quotation;
 
     @JsonCreator
-    public AssetBalanceDto(String asset, String fullName, Integer iconIndex, BigDecimal free, BigDecimal frozen, BigDecimal price, BigDecimal balance, Quotation quotation) {
+    public AssetBalanceDto(
+            String asset,
+            String fullName,
+            BigDecimal free,
+            BigDecimal frozen,
+            BigDecimal price,
+            BigDecimal priceChange,
+            BigDecimal balance,
+            Quotation quotation
+    ) {
         this.asset = asset;
         this.fullName = fullName;
-        this.iconIndex = iconIndex;
         this.free = free;
         this.frozen = frozen;
         this.price = price;
+        this.priceChange = priceChange;
         this.balance = balance;
         this.quotation = quotation;
     }
@@ -35,10 +44,6 @@ public class AssetBalanceDto {
         return fullName;
     }
 
-    public Integer getIconIndex() {
-        return iconIndex;
-    }
-
     public BigDecimal getFree() {
         return free;
     }
@@ -49,6 +54,10 @@ public class AssetBalanceDto {
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public BigDecimal getPriceChange() {
+        return priceChange;
     }
 
     public BigDecimal getBalance() {
