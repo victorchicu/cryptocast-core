@@ -1,10 +1,11 @@
-package com.trader.core.clients.impl;
+package com.trader.core.services.impl;
 
 import com.binance.api.client.domain.account.Order;
-import com.trader.core.clients.ApiRestClient;
 import com.trader.core.domain.AssetBalance;
 import com.trader.core.domain.AssetPrice;
+import com.trader.core.domain.Candlestick;
 import com.trader.core.domain.TestOrder;
+import com.trader.core.services.ApiRestClient;
 import org.springframework.data.domain.Pageable;
 
 import java.security.Principal;
@@ -30,6 +31,11 @@ public class ExtendedGateApiRestClient implements ApiRestClient {
     @Override
     public List<Order> getOpenOrders(String assetName, Pageable pageable) {
         throw new UnsupportedOperationException("Gate not support get open orders");
+    }
+
+    @Override
+    public List<Candlestick> getCandlestick(String assetName, String interval, Long startTime, Long endTime) {
+        throw new UnsupportedOperationException("Gate not support get candlestick bars");
     }
 
     @Override

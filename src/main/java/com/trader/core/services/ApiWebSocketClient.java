@@ -1,4 +1,4 @@
-package com.trader.core.clients;
+package com.trader.core.services;
 
 import com.binance.api.client.domain.event.TickerEvent;
 

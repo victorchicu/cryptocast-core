@@ -2,18 +2,17 @@ package com.trader.core.services.impl;
 
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.domain.event.TickerEvent;
-import com.trader.core.clients.ApiRestClient;
-import com.trader.core.clients.ApiWebSocketClient;
-import com.trader.core.clients.impl.ExtendedBinanceApiRestClient;
-import com.trader.core.clients.impl.ExtendedBinanceApiWebSocketClient;
 import com.trader.core.configs.BinanceProperties;
 import com.trader.core.domain.AssetBalance;
 import com.trader.core.domain.AssetPrice;
+import com.trader.core.domain.Candlestick;
 import com.trader.core.domain.User;
 import com.trader.core.dto.AssetBalanceDto;
 import com.trader.core.enums.NotificationType;
 import com.trader.core.enums.Quotation;
 import com.trader.core.exceptions.AssetNotFoundException;
+import com.trader.core.services.ApiRestClient;
+import com.trader.core.services.ApiWebSocketClient;
 import com.trader.core.services.ExchangeService;
 import com.trader.core.services.NotificationTemplate;
 import org.slf4j.Logger;
@@ -111,6 +110,11 @@ public class BinanceExchangeService implements ExchangeService {
                 binanceProperties.getUseTestnetStreaming()
         );
         return new ExtendedBinanceApiWebSocketClient(binanceProperties, factory.newWebSocketClient());
+    }
+
+    @Override
+    public List<Candlestick> getCandlestick(String assetName, String interval, Long startTime, Long endTime) {
+        return apiRestClient.getCandlestick(assetName, interval, startTime, endTime);
     }
 
     @Override

@@ -97,6 +97,7 @@ public class AssetsController {
                 .orElseThrow(UserNotFoundException::new);
     }
 
+
     private AssetPriceDto toAssetPriceDto(AssetPrice assetPrice) {
         return conversionService.convert(assetPrice, AssetPriceDto.class);
     }

@@ -1,9 +1,8 @@
 package com.trader.core.services;
 
-import com.trader.core.clients.ApiRestClient;
-import com.trader.core.clients.ApiWebSocketClient;
 import com.trader.core.domain.AssetBalance;
 import com.trader.core.domain.AssetPrice;
+import com.trader.core.domain.Candlestick;
 import com.trader.core.domain.User;
 
 import java.util.List;
@@ -20,6 +19,8 @@ public interface ExchangeService {
     ApiRestClient newApiRestClient(User user);
 
     ApiWebSocketClient newApiWebSocketClient(User user);
+
+    List<Candlestick> getCandlestick(String assetName, String interval, Long startTime, Long endTime);
 
     List<AssetBalance> listAssetsBalances(User user);
 

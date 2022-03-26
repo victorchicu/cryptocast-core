@@ -1,7 +1,7 @@
-package com.trader.core.clients.impl;
+package com.trader.core.services.impl;
 
 import com.binance.api.client.domain.event.TickerEvent;
-import com.trader.core.clients.ApiWebSocketClient;
+import com.trader.core.services.ApiWebSocketClient;
 
 import java.io.Closeable;
 import java.util.function.Consumer;

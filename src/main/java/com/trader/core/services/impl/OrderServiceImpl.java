@@ -1,7 +1,7 @@
 package com.trader.core.services.impl;
 
 import com.binance.api.client.domain.account.Order;
-import com.trader.core.clients.ApiRestClient;
+import com.trader.core.services.ApiRestClient;
 import com.trader.core.domain.TestOrder;
 import com.trader.core.services.OrderService;
 import org.springframework.data.domain.Page;

@@ -1,17 +1,19 @@
-package com.trader.core.clients.impl;
+package com.trader.core.services.impl;
 
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.Order;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
+import com.binance.api.client.domain.market.CandlestickInterval;
 import com.binance.api.client.domain.market.TickerPrice;
-import com.trader.core.clients.ApiRestClient;
 import com.trader.core.configs.BinanceProperties;
 import com.trader.core.domain.AssetBalance;
 import com.trader.core.domain.AssetPrice;
+import com.trader.core.domain.Candlestick;
 import com.trader.core.domain.TestOrder;
 import com.trader.core.exceptions.AssetNotFoundException;
+import com.trader.core.services.ApiRestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 
 public class ExtendedBinanceApiRestClient implements ApiRestClient {
     private static final Logger LOG = LoggerFactory.getLogger(ExtendedBinanceApiRestClient.class);
+    private static final Integer CANDLESTICK_LIMIT = 1000;
 
     private final BinanceProperties binanceProperties;
     private final BinanceApiRestClient binanceApiRestClient;
@@ -61,9 +64,16 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     @Override
     public List<Order> getOpenOrders(String assetName, Pageable pageable) {
         String symbol = toSymbol(assetName);
-        List<Order> p = binanceApiRestClient.getOpenOrders(new AllOrdersRequest(symbol));
-        System.out.println(p);
-        return p;
+        return binanceApiRestClient.getOpenOrders(new AllOrdersRequest(symbol));
+    }
+
+    @Override
+    public List<Candlestick> getCandlestick(String assetName, String candlestickInterval, Long startTime, Long endTime) {
+        String symbol = toSymbol(assetName);
+        return binanceApiRestClient.getCandlestickBars(symbol, CandlestickInterval.valueOf(candlestickInterval))
+                .stream()
+                .map(this::toCandlestick)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -98,6 +108,10 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
 
     private AssetPrice toAssetPrice(TickerPrice tickerPrice) {
         return conversionService.convert(tickerPrice, AssetPrice.class);
+    }
+
+    private Candlestick toCandlestick(com.binance.api.client.domain.market.Candlestick candlestick) {
+        return conversionService.convert(candlestick, Candlestick.class);
     }
 
     private AssetBalance toAssetBalance(com.binance.api.client.domain.account.AssetBalance assetBalance) {

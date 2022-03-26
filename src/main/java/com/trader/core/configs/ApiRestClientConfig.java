@@ -1,7 +1,7 @@
 package com.trader.core.configs;
 
-import com.trader.core.clients.ApiWebSocketClient;
-import com.trader.core.clients.ApiRestClient;
+import com.trader.core.services.ApiWebSocketClient;
+import com.trader.core.services.ApiRestClient;
 import com.trader.core.exceptions.ApiClientException;
 import com.trader.core.services.ExchangeService;
 import com.trader.core.services.UserService;

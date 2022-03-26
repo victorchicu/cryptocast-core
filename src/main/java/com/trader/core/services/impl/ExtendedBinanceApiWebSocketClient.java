@@ -1,10 +1,10 @@
-package com.trader.core.clients.impl;
+package com.trader.core.services.impl;
 
 import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.domain.event.TickerEvent;
-import com.trader.core.clients.ApiWebSocketClient;
 import com.trader.core.configs.BinanceProperties;
 import com.trader.core.exceptions.AssetNotFoundException;
+import com.trader.core.services.ApiWebSocketClient;
 
 import java.io.Closeable;
 import java.util.Optional;

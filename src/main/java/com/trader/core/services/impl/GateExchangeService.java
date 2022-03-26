@@ -1,10 +1,11 @@
 package com.trader.core.services.impl;
 
-import com.trader.core.clients.ApiRestClient;
-import com.trader.core.clients.ApiWebSocketClient;
 import com.trader.core.domain.AssetBalance;
 import com.trader.core.domain.AssetPrice;
+import com.trader.core.domain.Candlestick;
 import com.trader.core.domain.User;
+import com.trader.core.services.ApiRestClient;
+import com.trader.core.services.ApiWebSocketClient;
 import com.trader.core.services.ExchangeService;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,11 @@ public class GateExchangeService implements ExchangeService {
     @Override
     public ApiWebSocketClient newApiWebSocketClient(User user) {
         throw new UnsupportedOperationException("Gate not support api web socket client");
+    }
+
+    @Override
+    public List<Candlestick> getCandlestick(String assetName, String interval, Long startTime, Long endTime) {
+        throw new UnsupportedOperationException("Gate not support get candlestick");
     }
 
     @Override
