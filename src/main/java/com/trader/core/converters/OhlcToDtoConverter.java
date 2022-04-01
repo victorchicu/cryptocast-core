@@ -1,15 +1,15 @@
 package com.trader.core.converters;
 
-import com.trader.core.domain.Candlestick;
-import com.trader.core.dto.CandlestickDto;
+import com.trader.core.domain.Ohlc;
+import com.trader.core.dto.OhlcDto;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CandlestickToDtoConverter implements Converter<Candlestick, CandlestickDto> {
+public class OhlcToDtoConverter implements Converter<Ohlc, OhlcDto> {
     @Override
-    public CandlestickDto convert(Candlestick source) {
-        return new CandlestickDto(
+    public OhlcDto convert(Ohlc source) {
+        return new OhlcDto(
                 source.getOpenTime(),
                 source.getOpen(),
                 source.getHigh(),

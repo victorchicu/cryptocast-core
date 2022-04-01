@@ -2,7 +2,7 @@ package com.trader.core.services.impl;
 
 import com.trader.core.domain.AssetBalance;
 import com.trader.core.domain.AssetPrice;
-import com.trader.core.domain.Candlestick;
+import com.trader.core.domain.Ohlc;
 import com.trader.core.domain.User;
 import com.trader.core.services.ApiRestClient;
 import com.trader.core.services.ApiWebSocketClient;
@@ -17,46 +17,46 @@ import java.util.Set;
 public class GateExchangeService implements ExchangeService {
     @Override
     public void createAssetTicker(User user, String assetName) {
-        throw new UnsupportedOperationException("Gate not support create asset ticker");
+        throw new UnsupportedOperationException("createAssetTicker");
     }
 
     @Override
     public void removeAssetTicker(String assetName) {
-        throw new UnsupportedOperationException("Gate not support remove asset ticker");
+        throw new UnsupportedOperationException("removeAssetTicker");
+    }
+
+    @Override
+    public List<Ohlc> listOhlc(String assetName, String interval, Long startTime, Long endTime) {
+        throw new UnsupportedOperationException("listOhlc");
     }
 
     @Override
     public Set<String> availableAssets() {
-        throw new UnsupportedOperationException("Gate not support list symbols");
+        throw new UnsupportedOperationException("availableAssets");
     }
 
     @Override
     public ApiRestClient newApiRestClient(User user) {
-        throw new UnsupportedOperationException("Gate not support api rest client");
+        throw new UnsupportedOperationException("newApiRestClient");
     }
 
     @Override
     public ApiWebSocketClient newApiWebSocketClient(User user) {
-        throw new UnsupportedOperationException("Gate not support api web socket client");
-    }
-
-    @Override
-    public List<Candlestick> getCandlestick(String assetName, String interval, Long startTime, Long endTime) {
-        throw new UnsupportedOperationException("Gate not support get candlestick");
+        throw new UnsupportedOperationException("newApiWebSocketClient");
     }
 
     @Override
     public List<AssetBalance> listAssetsBalances(User user) {
-        throw new UnsupportedOperationException("Gate not support list asset balances");
+        throw new UnsupportedOperationException("listAssetsBalances");
     }
 
     @Override
     public Optional<AssetPrice> getAssetPrice(User user, String assetName) {
-        throw new UnsupportedOperationException("Gate not support get asset price");
+        throw new UnsupportedOperationException("getAssetPrice");
     }
 
     @Override
     public Optional<AssetBalance> findAssetByName(User user, String assetName) {
-        throw new UnsupportedOperationException("Gate not support find asset balance by name");
+        throw new UnsupportedOperationException("findAssetByName");
     }
 }

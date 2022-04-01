@@ -10,7 +10,7 @@ import com.binance.api.client.domain.market.TickerPrice;
 import com.trader.core.configs.BinanceProperties;
 import com.trader.core.domain.AssetBalance;
 import com.trader.core.domain.AssetPrice;
-import com.trader.core.domain.Candlestick;
+import com.trader.core.domain.Ohlc;
 import com.trader.core.domain.TestOrder;
 import com.trader.core.exceptions.AssetNotFoundException;
 import com.trader.core.services.ApiRestClient;
@@ -54,6 +54,14 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
         binanceApiRestClient.cancelOrder(new CancelOrderRequest(symbol, orderId));
     }
 
+    @Override
+    public List<Ohlc> listOhlc(String assetName, String candlestickInterval, Long startTime, Long endTime) {
+        String symbol = toSymbol(assetName);
+        return binanceApiRestClient.getCandlestickBars(symbol, CandlestickInterval.valueOf(candlestickInterval))
+                .stream()
+                .map(this::toCandlestick)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public List<Order> getAllOrders(String assetName, Pageable pageable) {
@@ -65,15 +73,6 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     public List<Order> getOpenOrders(String assetName, Pageable pageable) {
         String symbol = toSymbol(assetName);
         return binanceApiRestClient.getOpenOrders(new AllOrdersRequest(symbol));
-    }
-
-    @Override
-    public List<Candlestick> getCandlestick(String assetName, String candlestickInterval, Long startTime, Long endTime) {
-        String symbol = toSymbol(assetName);
-        return binanceApiRestClient.getCandlestickBars(symbol, CandlestickInterval.valueOf(candlestickInterval))
-                .stream()
-                .map(this::toCandlestick)
-                .collect(Collectors.toList());
     }
 
     @Override
@@ -110,8 +109,8 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
         return conversionService.convert(tickerPrice, AssetPrice.class);
     }
 
-    private Candlestick toCandlestick(com.binance.api.client.domain.market.Candlestick candlestick) {
-        return conversionService.convert(candlestick, Candlestick.class);
+    private Ohlc toCandlestick(com.binance.api.client.domain.market.Candlestick candlestick) {
+        return conversionService.convert(candlestick, Ohlc.class);
     }
 
     private AssetBalance toAssetBalance(com.binance.api.client.domain.account.AssetBalance assetBalance) {

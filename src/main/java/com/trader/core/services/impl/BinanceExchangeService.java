@@ -5,7 +5,7 @@ import com.binance.api.client.domain.event.TickerEvent;
 import com.trader.core.configs.BinanceProperties;
 import com.trader.core.domain.AssetBalance;
 import com.trader.core.domain.AssetPrice;
-import com.trader.core.domain.Candlestick;
+import com.trader.core.domain.Ohlc;
 import com.trader.core.domain.User;
 import com.trader.core.dto.AssetBalanceDto;
 import com.trader.core.enums.NotificationType;
@@ -86,6 +86,11 @@ public class BinanceExchangeService implements ExchangeService {
     }
 
     @Override
+    public List<Ohlc> listOhlc(String assetName, String interval, Long startTime, Long endTime) {
+        return apiRestClient.listOhlc(assetName, interval, startTime, endTime);
+    }
+
+    @Override
     public Set<String> availableAssets() {
         return binanceProperties.getAssets().keySet();
     }
@@ -110,11 +115,6 @@ public class BinanceExchangeService implements ExchangeService {
                 binanceProperties.getUseTestnetStreaming()
         );
         return new ExtendedBinanceApiWebSocketClient(binanceProperties, factory.newWebSocketClient());
-    }
-
-    @Override
-    public List<Candlestick> getCandlestick(String assetName, String interval, Long startTime, Long endTime) {
-        return apiRestClient.getCandlestick(assetName, interval, startTime, endTime);
     }
 
     @Override

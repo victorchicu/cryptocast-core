@@ -1,7 +1,7 @@
 package com.trader.core.controllers;
 
-import com.trader.core.domain.Candlestick;
-import com.trader.core.dto.CandlestickDto;
+import com.trader.core.domain.Ohlc;
+import com.trader.core.dto.OhlcDto;
 import com.trader.core.exceptions.UserNotFoundException;
 import com.trader.core.services.ExchangeService;
 import com.trader.core.services.ExchangeStrategy;
@@ -16,15 +16,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/candlestick/{assetName}")
-public class CandlestickController {
-    private static final Logger LOG = LoggerFactory.getLogger(CandlestickController.class);
+@RequestMapping("/api/stocks/{assetName}")
+public class StocksController {
+    private static final Logger LOG = LoggerFactory.getLogger(StocksController.class);
 
     private final UserService userService;
     private final ExchangeStrategy exchangeStrategy;
     private final ConversionService conversionService;
 
-    public CandlestickController(
+    public StocksController(
             UserService userService,
             ExchangeStrategy exchangeStrategy,
             ConversionService conversionService
@@ -35,7 +35,7 @@ public class CandlestickController {
     }
 
     @GetMapping
-    public List<CandlestickDto> getCandlestick(
+    public List<OhlcDto> listOhlc(
             Principal principal,
             @PathVariable String assetName,
             @RequestParam("interval") String interval,
@@ -45,16 +45,16 @@ public class CandlestickController {
         return userService.findById(principal.getName())
                 .map(user -> {
                     ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
-                    return exchangeService.getCandlestick(assetName, interval, startTime, endTime)
+                    return exchangeService.listOhlc(assetName, interval, startTime, endTime)
                             .stream()
-                            .map(this::toCandlestickDto)
+                            .map(this::toOhlcDto)
                             .collect(Collectors.toList());
                 })
                 .orElseThrow(UserNotFoundException::new);
     }
 
 
-    private CandlestickDto toCandlestickDto(Candlestick candlestick) {
-        return conversionService.convert(candlestick, CandlestickDto.class);
+    private OhlcDto toOhlcDto(Ohlc ohlc) {
+        return conversionService.convert(ohlc, OhlcDto.class);
     }
 }

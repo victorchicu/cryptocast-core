@@ -2,7 +2,7 @@ package com.trader.core.domain;
 
 import java.math.BigDecimal;
 
-public class Candlestick {
+public class Ohlc {
     private Long openTime;
     private BigDecimal open;
     private BigDecimal high;

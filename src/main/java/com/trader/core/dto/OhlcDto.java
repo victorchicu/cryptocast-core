@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.math.BigDecimal;
 
-public class CandlestickDto {
+public class OhlcDto {
     private final Long openTime;
     private final BigDecimal open;
     private final BigDecimal high;
@@ -12,7 +12,7 @@ public class CandlestickDto {
     private final BigDecimal close;
 
     @JsonCreator
-    public CandlestickDto(Long openTime, BigDecimal open, BigDecimal high, BigDecimal low, BigDecimal close) {
+    public OhlcDto(Long openTime, BigDecimal open, BigDecimal high, BigDecimal low, BigDecimal close) {
         this.openTime = openTime;
         this.open = open;
         this.high = high;

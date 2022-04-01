@@ -2,7 +2,7 @@ package com.trader.core.services;
 
 import com.trader.core.domain.AssetBalance;
 import com.trader.core.domain.AssetPrice;
-import com.trader.core.domain.Candlestick;
+import com.trader.core.domain.Ohlc;
 import com.trader.core.domain.User;
 
 import java.util.List;
@@ -14,13 +14,13 @@ public interface ExchangeService {
 
     void removeAssetTicker(String assetName);
 
+    List<Ohlc> listOhlc(String assetName, String interval, Long startTime, Long endTime);
+
     Set<String> availableAssets();
 
     ApiRestClient newApiRestClient(User user);
 
     ApiWebSocketClient newApiWebSocketClient(User user);
-
-    List<Candlestick> getCandlestick(String assetName, String interval, Long startTime, Long endTime);
 
     List<AssetBalance> listAssetsBalances(User user);
 
