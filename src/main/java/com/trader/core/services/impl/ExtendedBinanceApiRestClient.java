@@ -8,7 +8,7 @@ import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.market.CandlestickInterval;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.trader.core.configs.BinanceProperties;
-import com.trader.core.domain.AssetBalance;
+import com.trader.core.domain.Asset;
 import com.trader.core.domain.AssetPrice;
 import com.trader.core.domain.Ohlc;
 import com.trader.core.domain.TestOrder;
@@ -28,18 +28,18 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     private static final Logger LOG = LoggerFactory.getLogger(ExtendedBinanceApiRestClient.class);
     private static final Integer CANDLESTICK_LIMIT = 1000;
 
+    private final ConversionService conversionService;
     private final BinanceProperties binanceProperties;
     private final BinanceApiRestClient binanceApiRestClient;
-    private final ConversionService conversionService;
 
     public ExtendedBinanceApiRestClient(
+            ConversionService conversionService,
             BinanceProperties binanceProperties,
-            BinanceApiRestClient binanceApiRestClient,
-            ConversionService conversionService
+            BinanceApiRestClient binanceApiRestClient
     ) {
+        this.conversionService = conversionService;
         this.binanceProperties = binanceProperties;
         this.binanceApiRestClient = binanceApiRestClient;
-        this.conversionService = conversionService;
     }
 
     @Override
@@ -64,6 +64,14 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     }
 
     @Override
+    public List<Asset> listAssets() {
+        return binanceApiRestClient.getAccount().getBalances()
+                .stream()
+                .map(this::toAsset)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<Order> getAllOrders(String assetName, Pageable pageable) {
         String symbol = toSymbol(assetName);
         return binanceApiRestClient.getAllOrders(new AllOrdersRequest(symbol));
@@ -73,14 +81,6 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     public List<Order> getOpenOrders(String assetName, Pageable pageable) {
         String symbol = toSymbol(assetName);
         return binanceApiRestClient.getOpenOrders(new AllOrdersRequest(symbol));
-    }
-
-    @Override
-    public List<AssetBalance> getAssetBalances() {
-        return binanceApiRestClient.getAccount().getBalances()
-                .stream()
-                .map(this::toAssetBalance)
-                .collect(Collectors.toList());
     }
 
     @Override
@@ -95,6 +95,14 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     }
 
 
+    private Ohlc toCandlestick(com.binance.api.client.domain.market.Candlestick candlestick) {
+        return conversionService.convert(candlestick, Ohlc.class);
+    }
+
+    private Asset toAsset(com.binance.api.client.domain.account.AssetBalance assetBalance) {
+        return conversionService.convert(assetBalance, Asset.class);
+    }
+
     private String toSymbol(String assetName) {
         return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
                 .map(BinanceProperties.AssetConfig::getSymbol)
@@ -107,13 +115,5 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
 
     private AssetPrice toAssetPrice(TickerPrice tickerPrice) {
         return conversionService.convert(tickerPrice, AssetPrice.class);
-    }
-
-    private Ohlc toCandlestick(com.binance.api.client.domain.market.Candlestick candlestick) {
-        return conversionService.convert(candlestick, Ohlc.class);
-    }
-
-    private AssetBalance toAssetBalance(com.binance.api.client.domain.account.AssetBalance assetBalance) {
-        return conversionService.convert(assetBalance, AssetBalance.class);
     }
 }

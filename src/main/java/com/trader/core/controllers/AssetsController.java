@@ -1,8 +1,8 @@
 package com.trader.core.controllers;
 
-import com.trader.core.domain.AssetBalance;
+import com.trader.core.domain.Asset;
 import com.trader.core.domain.AssetPrice;
-import com.trader.core.dto.AssetBalanceDto;
+import com.trader.core.dto.AssetDto;
 import com.trader.core.dto.AssetPriceDto;
 import com.trader.core.dto.ChipDto;
 import com.trader.core.exceptions.AssetNotFoundException;
@@ -47,6 +47,18 @@ public class AssetsController {
         this.conversionService = conversionService;
     }
 
+    @GetMapping("/{assetName}")
+    public AssetDto getAsset(Principal principal, @PathVariable String assetName) {
+        return userService.findById(principal.getName())
+                .map(user -> {
+                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
+                    return exchangeService.findAssetByName(user, assetName)
+                            .map(this::toAssetDto)
+                            .orElseThrow(() -> new AssetNotFoundException(assetName));
+                })
+                .orElseThrow(UserNotFoundException::new);
+    }
+
     @GetMapping("/available")
     public List<ChipDto> availableAssets(Principal principal) {
         return userService.findById(principal.getName())
@@ -73,45 +85,33 @@ public class AssetsController {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    @GetMapping("/{assetName}")
-    public AssetBalanceDto getAssetBalance(Principal principal, @PathVariable String assetName) {
-        return userService.findById(principal.getName())
-                .map(user -> {
-                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
-                    return exchangeService.findAssetByName(user, assetName)
-                            .map(this::toAssetBalanceDto)
-                            .orElseThrow(() -> new AssetNotFoundException(assetName));
-                })
-                .orElseThrow(UserNotFoundException::new);
-    }
-
     @GetMapping
-    public List<AssetBalanceDto> listAssetsBalances(Principal principal) {
+    public List<AssetDto> listAssets(Principal principal) {
         return userService.findById(principal.getName())
                 .map(user ->
                         assetService.listAssetsBalances(user).stream()
                                 .filter(suppressUnsupportedAssets())
-                                .map(this::toAssetBalanceDto)
+                                .map(this::toAssetDto)
                                 .collect(Collectors.toList())
                 )
                 .orElseThrow(UserNotFoundException::new);
     }
 
 
+    private AssetDto toAssetDto(Asset asset) {
+        return conversionService.convert(asset, AssetDto.class);
+    }
+
     private AssetPriceDto toAssetPriceDto(AssetPrice assetPrice) {
         return conversionService.convert(assetPrice, AssetPriceDto.class);
     }
 
-    private AssetBalanceDto toAssetBalanceDto(AssetBalance assetBalance) {
-        return conversionService.convert(assetBalance, AssetBalanceDto.class);
-    }
-
-    private Predicate<AssetBalance> suppressUnsupportedAssets() {
-        return assetBalance -> {
+    private Predicate<Asset> suppressUnsupportedAssets() {
+        return asset -> {
             try {
-                return this.toAssetBalanceDto(assetBalance) != null;
+                return this.toAssetDto(asset) != null;
             } catch (Exception e) {
-                LOG.warn("Asset {0} is not supported " + assetBalance.getAsset());
+                LOG.warn("Asset {0} is not supported " + asset.getAsset());
                 return false;
             }
         };

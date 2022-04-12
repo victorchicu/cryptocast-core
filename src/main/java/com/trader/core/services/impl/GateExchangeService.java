@@ -1,6 +1,6 @@
 package com.trader.core.services.impl;
 
-import com.trader.core.domain.AssetBalance;
+import com.trader.core.domain.Asset;
 import com.trader.core.domain.AssetPrice;
 import com.trader.core.domain.Ohlc;
 import com.trader.core.domain.User;
@@ -46,7 +46,7 @@ public class GateExchangeService implements ExchangeService {
     }
 
     @Override
-    public List<AssetBalance> listAssetsBalances(User user) {
+    public List<Asset> listAssetsBalances(User user) {
         throw new UnsupportedOperationException("listAssetsBalances");
     }
 
@@ -56,7 +56,7 @@ public class GateExchangeService implements ExchangeService {
     }
 
     @Override
-    public Optional<AssetBalance> findAssetByName(User user, String assetName) {
+    public Optional<Asset> findAssetByName(User user, String assetName) {
         throw new UnsupportedOperationException("findAssetByName");
     }
 }

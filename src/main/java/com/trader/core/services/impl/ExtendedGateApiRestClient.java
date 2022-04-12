@@ -1,7 +1,7 @@
 package com.trader.core.services.impl;
 
 import com.binance.api.client.domain.account.Order;
-import com.trader.core.domain.AssetBalance;
+import com.trader.core.domain.Asset;
 import com.trader.core.domain.AssetPrice;
 import com.trader.core.domain.Ohlc;
 import com.trader.core.domain.TestOrder;
@@ -29,6 +29,11 @@ public class ExtendedGateApiRestClient implements ApiRestClient {
     }
 
     @Override
+    public List<Asset> listAssets() {
+        throw new UnsupportedOperationException("listAssets");
+    }
+
+    @Override
     public List<Order> getAllOrders(String assetName, Pageable pageable) {
         throw new UnsupportedOperationException("getAllOrders");
     }
@@ -36,11 +41,6 @@ public class ExtendedGateApiRestClient implements ApiRestClient {
     @Override
     public List<Order> getOpenOrders(String assetName, Pageable pageable) {
         throw new UnsupportedOperationException("getOpenOrders");
-    }
-
-    @Override
-    public List<AssetBalance> getAssetBalances() {
-        throw new UnsupportedOperationException("getAssetBalances");
     }
 
     @Override

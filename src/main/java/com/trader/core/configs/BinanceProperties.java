@@ -76,7 +76,7 @@ public class BinanceProperties {
     public static class AssetConfig {
         private String symbol;
         private String fullName;
-        private Integer icon;
+        private Integer iconIndex;
 
         public String getSymbol() {
             return symbol;
@@ -94,12 +94,12 @@ public class BinanceProperties {
             this.fullName = fullName;
         }
 
-        public Integer getIcon() {
-            return icon;
+        public Integer getIconIndex() {
+            return iconIndex;
         }
 
-        public void setIcon(Integer icon) {
-            this.icon = icon;
+        public void setIconIndex(Integer iconIndex) {
+            this.iconIndex = iconIndex;
         }
     }
 }

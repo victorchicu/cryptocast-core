@@ -4,8 +4,9 @@ import com.trader.core.enums.Quotation;
 
 import java.math.BigDecimal;
 
-public class AssetBalance {
+public class Asset {
     private String asset;
+    private Integer iconIndex;
     private BigDecimal free;
     private BigDecimal locked;
     private BigDecimal price;
@@ -19,6 +20,14 @@ public class AssetBalance {
 
     public void setAsset(String asset) {
         this.asset = asset;
+    }
+
+    public Integer getIconIndex() {
+        return iconIndex;
+    }
+
+    public void setIconIndex(Integer iconIndex) {
+        this.iconIndex = iconIndex;
     }
 
     public BigDecimal getFree() {

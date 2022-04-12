@@ -1,6 +1,6 @@
 package com.trader.core.services;
 
-import com.trader.core.domain.AssetBalance;
+import com.trader.core.domain.Asset;
 import com.trader.core.domain.AssetPrice;
 import com.trader.core.domain.Ohlc;
 import com.trader.core.domain.User;
@@ -22,9 +22,9 @@ public interface ExchangeService {
 
     ApiWebSocketClient newApiWebSocketClient(User user);
 
-    List<AssetBalance> listAssetsBalances(User user);
+    List<Asset> listAssetsBalances(User user);
 
     Optional<AssetPrice> getAssetPrice(User user, String assetName);
 
-    Optional<AssetBalance> findAssetByName(User user, String assetName);
+    Optional<Asset> findAssetByName(User user, String assetName);
 }

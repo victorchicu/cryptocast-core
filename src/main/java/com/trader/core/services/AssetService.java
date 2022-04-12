@@ -1,6 +1,6 @@
 package com.trader.core.services;
 
-import com.trader.core.domain.AssetBalance;
+import com.trader.core.domain.Asset;
 import com.trader.core.domain.User;
 
 import java.util.List;
@@ -10,5 +10,5 @@ public interface AssetService {
 
     void removeAssetTickerEvent(User user, String assetName);
 
-    List<AssetBalance> listAssetsBalances(User user);
+    List<Asset> listAssetsBalances(User user);
 }

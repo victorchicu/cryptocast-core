@@ -1,7 +1,7 @@
 package com.trader.core.services;
 
 import com.binance.api.client.domain.account.Order;
-import com.trader.core.domain.AssetBalance;
+import com.trader.core.domain.Asset;
 import com.trader.core.domain.AssetPrice;
 import com.trader.core.domain.Ohlc;
 import com.trader.core.domain.TestOrder;
@@ -18,11 +18,11 @@ public interface ApiRestClient {
 
     List<Ohlc> listOhlc(String assetName, String interval, Long startTime, Long endTime);
 
+    List<Asset> listAssets();
+
     List<Order> getAllOrders(String assetName, Pageable pageable);
 
     List<Order> getOpenOrders(String assetName, Pageable pageable);
-
-    List<AssetBalance> getAssetBalances();
 
     Optional<AssetPrice> getPrice(String assetName);
 }

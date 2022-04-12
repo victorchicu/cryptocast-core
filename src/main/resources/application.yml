@@ -96,2010 +96,2010 @@ binance:
     - NFT
   assets:
     1INCH:
-      icon: 8104
       symbol: 1INCHUSDT
       fullName: 1inch
+      iconIndex: 8104
     AAVE:
-      icon: 7278
       symbol: AAVEUSDT
       fullName: Aave
+      iconIndex: 7278
     ADA:
-      icon: 2010
       symbol: ADAUSDT
       fullName: Cardano
+      iconIndex: 2010
     AKRO:
-      icon: 4134
       symbol: AKROUSDT
       fullName: Akropolis
+      iconIndex: 4134
     ALGO:
-      icon: 4030
       symbol: ALGOUSDT
       fullName: Algorand
+      iconIndex: 4030
     ALICE:
-      icon: 8766
       symbol: ALICEUSDT
       fullName: MyNeighborAlice
+      iconIndex: 8766
     AlPHA:
-      icon: 7232
       symbol: ALPHAUSDT
       fullName: Alpha Finance Lab
+      iconIndex: 7232
     ANKR:
-      icon: 3783
       symbol: ANKRUSDT
       fullName: Ankr
+      iconIndex: 3783
     ATOM:
-      icon: 3794
       symbol: ATOMUSDT
       fullName: Cosmos
+      iconIndex: 3794
     AVAX:
-      icon: 5805
       symbol: AVAXUSDT
       fullName: Avalanche
+      iconIndex: 5805
     AXS:
-      icon: 6783
       symbol: AXSUSDT
       fullName: Axie Infinity
+      iconIndex: 6783
     BAKE:
-      icon: 7064
       symbol: BAKEUSDT
       fullName: BakeryToken
+      iconIndex: 7064
     BAL:
-      icon: 5728
       symbol: BALUSDT
       fullName: Balanceer
+      iconIndex: 5728
     BAND:
-      icon: 4679
       symbol: BANDUSDT
       fullName: Band Protocol
+      iconIndex: 4679
     BAT:
-      icon: 1697
       symbol: BATUSDT
       fullName: Basic Attention Token
+      iconIndex: 1697
     BCH:
-      icon: 1831
       symbol: BCHUSDT
       fullName: Bitcoin Cash
+      iconIndex: 1831
     BEL:
-      icon: 6928
       symbol: BEL
       fullName: Bella Protocol
+      iconIndex: 6928
     BLZ:
-      icon: 2505
       symbol: BLZUSDT
       fullName: Bluzelle
+      iconIndex: 2505
     BTC:
-      icon: 4023
       symbol: BTCUSDT
       fullName: Bitcoin
+      iconIndex: 4023
     BTS:
-      icon: 463
       symbol: BTSUSDT
       fullName: BitShares
+      iconIndex: 463
     BTT:
-      icon: 3718
       symbol: BTTUSDT
       fullName: BitTorrent
+      iconIndex: 3718
     BZR:
-      icon: 5810
       symbol: BZRXUSDT
       fullName: bZx Protocol
+      iconIndex: 5810
     CELR:
-      icon: 3814
       symbol: CELRUSDT
       fullName: Celer Network
+      iconIndex: 3814
     CHR:
-      icon: 3978
       symbol: CHRUSDT
       fullName: Chromia
+      iconIndex: 3978
     CHZ:
-      icon: 4066
       symbol: CHZUSDT
       fullName: Chilliz
+      iconIndex: 4066
     COMP:
-      icon: 5692
       symbol: COMPUSDT
       fullName: Compound
+      iconIndex: 5692
     COTI:
-      icon: 3992
       symbol: COTIUSDT
       fullName: COTI
+      iconIndex: 3992
     CRV:
-      icon: 6538
       symbol: CRVUSDT
       fullName: Curve DAO Token
+      iconIndex: 6538
     CTK:
-      icon: 4807
       symbol: CTKUSDT
       fullName: CertiK
+      iconIndex: 4807
     CVC:
-      icon: 1816
       symbol: CVCUSDT
       fullName: Civic
+      iconIndex: 1816
     DASH:
-      icon: 131
       symbol: DASHUSDT
       fullName: Dash
+      iconIndex: 131
     DEFI:
-      icon: 4276
       symbol: DEFIUSDT
       fullName: Defi
+      iconIndex: 4276
     DENT:
-      icon: 1886
       symbol: DENTUSDT
       fullName: Dent
+      iconIndex: 1886
     DGB:
-      icon: 109
       symbol: DGBUSDT
       fullName: DigiByte
+      iconIndex: 109
     DIT:
-      icon: 3264
       symbol: DITUSDT
       fullName: Digital Insurance Token
+      iconIndex: 3264
     DODO:
-      icon: 7224
       symbol: DODOUSDT
       fullName: DODO
+      iconIndex: 7224
     DOGE:
-      icon: 74
       symbol: DOGEUSDT
       fullName: Dogecoin
+      iconIndex: 74
     EGLD:
-      icon: 6892
       symbol: EGLDUSDT
       fullName: Elrond
+      iconIndex: 6892
     ENJ:
-      icon: 2130
       symbol: ENJUSDT
       fullName: Enjin Coin
+      iconIndex: 2130
     EOS:
-      icon: 1765
       symbol: EOSUSDT
       fullName: EOS
+      iconIndex: 1765
     ETC:
-      icon: 1321
       symbol: ETCUSDT
       fullName: Etherium Classic
+      iconIndex: 1321
     ETH:
-      icon: 1027
       symbol: ETHUSDT
       fullName: Ethereum
+      iconIndex: 1027
     FIL:
-      icon: 2280
       symbol: FILUSDT
       fullName: Filecoin
+      iconIndex: 2280
     FLM:
-      icon: 7150
       symbol: FLMUSDT
       fullName: Flamingo
+      iconIndex: 7150
     FTM:
-      icon: 3513
       symbol: FTMUSDT
       fullName: Fantom
+      iconIndex: 3513
     GRT:
-      icon: 6719
       symbol: GRTUSDT
       fullName: The Graph
+      iconIndex: 6719
     HBAR:
-      icon: 4642
       symbol: HBARUSDT
       fullName: Hedera Hashgraph
+      iconIndex: 4642
     HNT:
-      icon: 5665
       symbol: HNTUSDT
       fullName: Helium
+      iconIndex: 5665
     HOT:
-      icon: 2682
       symbol: HOTUSDT
       fullName: Holo
+      iconIndex: 2682
     ICP:
-      icon: 8916
       symbol: ICPUSDT
       fullName: Internet Computer
+      iconIndex: 8916
     ICX:
-      icon: 2099
       symbol: ICXUSDT
       fullName: ICON
+      iconIndex: 2099
     IOS:
-      icon: 2405
       symbol: IOSTUSDT
       fullName: IOST
+      iconIndex: 2405
     IOTA:
-      icon: 1720
       symbol: IOTAUSDT
       fullName: MIOTA
+      iconIndex: 1720
     KAVA:
-      icon: 4846
       symbol: KAVAUSDT
       fullName: KAVA
+      iconIndex: 4846
     KNC:
-      icon: 9444
       symbol: KNCUSDT
       fullName: Kyber Network Crystal v2
+      iconIndex: 9444
     KSM:
-      icon: 5034
       symbol: KSMUSDT
       fullName: Kusama
+      iconIndex: 5034
     LINA:
-      icon: 7102
       symbol: LINAUSDT
       fullName: Linear
+      iconIndex: 7102
     LINK:
-      icon: 1975
       symbol: LINKUSDT
       fullName: Chainlink
+      iconIndex: 1975
     LIT:
-      icon: 6833
       symbol: LITUSDT
       fullName: Litentry
+      iconIndex: 6833
     LRC:
-      icon: 1934
       symbol: LRCUSDT
       fullName: Loopring
+      iconIndex: 1934
     LTC:
-      icon: 2
       symbol: LTCUSDT
       fullName: Litecoin
+      iconIndex: 2
     LUNA:
-      icon: 4172
       symbol: LUNAUSDT
       fullName: Terra
+      iconIndex: 4172
     MANA:
-      icon: 1966
       symbol: MANAUSDT
       fullName: Decentraland
+      iconIndex: 1966
     MATIC:
-      icon: 3890
       symbol: MATICUSDT
       fullName: Polygon
+      iconIndex: 3890
     MKR:
-      icon: 1518
       symbol: MKRUSDT
       fullName: Maker
+      iconIndex: 1518
     MTL:
-      icon: 1788
       symbol: MTLUSDT
       fullName: Metal
+      iconIndex: 1788
     NEAR:
-      icon: 6535
       symbol: NEARUSDT
       fullName: NEAR Protocol
+      iconIndex: 6535
     NEO:
-      icon: 1376
       symbol: NEOUSDT
       fullName: Neo
+      iconIndex: 1376
     NKN:
-      icon: 2780
       symbol: NKNUSDT
       fullName: NKN
+      iconIndex: 2780
     OCEAN:
-      icon: 3911
       symbol: OCEANUSDT
       fullName: Ocean Protocol
+      iconIndex: 3911
     OGN:
-      icon: 5117
       symbol: OGNUSDT
       fullName: Origin Protocol
+      iconIndex: 5117
     OMG:
-      icon: 8104
       symbol: OMGUSDT
       fullName: OMG Network
+      iconIndex: 8104
     ONE:
-      icon: 3945
       symbol: ONEUSDT
       fullName: Harmony
+      iconIndex: 3945
     ONT:
-      icon: 2566
       symbol: ONTUSDT
       fullName: Ontology
+      iconIndex: 2566
     QTUM:
-      icon: 1684
       symbol: QTUMUSDT
       fullName: Qtum
+      iconIndex: 1684
     REEF:
-      icon: 6951
       symbol: REEFUSDT
       fullName: Reef
+      iconIndex: 6951
     REN:
-      icon: 2539
       symbol: RENUSDT
       fullName: Ren
+      iconIndex: 2539
     RLC:
-      icon: 1637
       symbol: RLCUSDT
       fullName: iExec RLC
+      iconIndex: 1637
     RSR:
-      icon: 3964
       symbol: RSRUSDT
       fullName: Reserve Rights
+      iconIndex: 3964
     RUNE:
-      icon: 4157
       symbol: RUNEUSDT
       fullName: THORChain
+      iconIndex: 4157
     RVN:
-      icon: 2577
       symbol: RVNUSDT
       fullName: Ravecoin
+      iconIndex: 2577
     SAND:
-      icon: 6210
       symbol: SANDUSDT
       fullName: The Sandbox
+      iconIndex: 6210
     SC:
-      icon: 1042
       symbol: SCUSDT
       fullName: Siacoin
+      iconIndex: 1042
     SFP:
-      icon: 8119
       symbol: SFPUSDT
       fullName: SafePal
+      iconIndex: 8119
     SHIB:
-      icon: 5994
       symbol: 1000SHIBUSDT
       fullName: SHIBA INU
+      iconIndex: 5994
     SKL:
-      icon: 5691
       symbol: SKLUSDT
       fullName: SKALE Network
+      iconIndex: 5691
     SNX:
-      icon: 2586
       symbol: SNXUSDT
       fullName: Synthetix
+      iconIndex: 2586
     SRM:
-      icon: 6187
       symbol: SRMUSDT
       fullName: Serum
+      iconIndex: 6187
     STMX:
-      icon: 2297
       symbol: STMXUSDT
       fullName: StormX
+      iconIndex: 2297
     STORJ:
-      icon: 1772
       symbol: STORJUSDT
       fullName: Storj
+      iconIndex: 1772
     SUSHI:
-      icon: 6758
       symbol: SUSHIUSDT
       fullName: SushiSwap
+      iconIndex: 6758
     SXP:
-      icon: 4279
       symbol: SXPUSDT
       fullName: Swipe
+      iconIndex: 4279
     THETA:
-      icon: 2416
       symbol: THETAUSDT
       fullName: THETA
+      iconIndex: 2416
     TOMO:
-      icon: 2570
       symbol: TOMOUSDT
       fullName: TomoChain
+      iconIndex: 2570
     TRB:
-      icon: 4944
       symbol: TRBUSDT
       fullName: Tellor
+      iconIndex: 4944
     TRX:
-      icon: 1958
       symbol: TRXUSDT
       fullName: TRON
+      iconIndex: 1958
     UNFI:
-      icon: 7672
       symbol: UNFIUSDT
       fullName: Unifi Protocol DAO
+      iconIndex: 7672
     UNI:
-      icon: 7083
       symbol: UNIUSDT
       fullName: Uniswap
+      iconIndex: 7083
     VET:
-      icon: 3077
       symbol: VETUSDT
       fullName: VeChain
+      iconIndex: 3077
     XEM:
-      icon: 873
       symbol: XEMUSDT
       fullName: NEM
+      iconIndex: 873
     XLM:
-      icon: 512
       symbol: XLMUSDT
       fullName: Stellar
+      iconIndex: 512
     XMR:
-      icon: 328
       symbol: XMRUSDT
       fullName: Monero
+      iconIndex: 328
     XTZ:
-      icon: 2011
       symbol: XTZUSDT
       fullName: Tezos
+      iconIndex: 2011
     YFI:
-      icon: 5864
       symbol: YFIUSDT
       fullName: yearn.finance
+      iconIndex: 5864
     YFII:
-      icon: 5957
       symbol: YFIIUSDT
       fullName: DFI.Money
+      iconIndex: 5957
     ZEC:
-      icon: 1437
       symbol: ZECUSDT
       fullName: Zcash
+      iconIndex: 1437
     ZEN:
-      icon: 1698
       symbol: ZENUSDT
       fullName: Horizen
+      iconIndex: 1698
     ZIL:
-      icon: 2469
       symbol: ZILUSDT
       fullName: Zilliqa
+      iconIndex: 2469
     ZRX:
-      icon: 1896
       symbol: ZRXUSDT
       fullName: Ox
+      iconIndex: 1896
     XEC:
-      icon: 10791
       symbol: 1000XECUSDT
       fullName: eCash
+      iconIndex: 10791
     C98:
-      icon: 10903
       symbol: C98USDT
       fullName: Coin98
+      iconIndex: 10903
     KEEP:
-      icon: 5566
       symbol: KEEPUSDT
       fullName: Keep Network4
+      iconIndex: 5566
     AR:
-      icon: 5632
       symbol: ARUSDT
       fullName: Arweave
+      iconIndex: 5632
     CELO:
-      icon: 5567
       symbol: CELOUSDT
       fullName: Celo
+      iconIndex: 5567
     GTC:
-      icon: 10052
       symbol: GTCUSDT
       fullName: Gitcoin
+      iconIndex: 10052
     TLM:
-      icon: 9119
       symbol: TLMUSDT
       fullName: Alien Worlds
+      iconIndex: 9119
     AUDIO:
-      icon: 7455
       symbol: AUDIOUSDT
       fullName: Audius
+      iconIndex: 7455
     RAY:
-      icon: 8526
       symbol: RAYUSDT
       fullName: Raydium
+      iconIndex: 8526
     DOT:
-      icon: 6636
       symbol: DOTUSDT
       fullName: Polkadot
+      iconIndex: 6636
     BNB:
-      icon: 1839
       symbol: BNBUSDT
       fullName: Binance Coin
+      iconIndex: 1839
     SOL:
-      icon: 5426
       symbol: SOLUSDT
       fullName: Solana
+      iconIndex: 5426
     WAVES:
-      icon: 1274
       symbol: WAVESUSDT
       fullName: Waves
+      iconIndex: 1274
     MASK:
-      icon: 8536
       symbol: MASKUSDT
       fullName: Mask Network
+      iconIndex: 8536
     XRP:
-      icon: 52
       symbol: XRPUSDT
       fullName: XRP
+      iconIndex: 52
     DYDX:
-      icon: 11156
       symbol: DYDXUSDT
       fullName: dYdX
+      iconIndex: 11156
     ATA:
-      icon: 10188
       symbol: ATAUSDT
       fullName: Automata Network
+      iconIndex: 10188
     IOTX:
-      icon: 2777
       symbol: IOTXUSDT
       fullName: IoTeX
+      iconIndex: 2777
     GALA:
-      icon: 7080
       symbol: GALAUSDT
       fullName: Gala
+      iconIndex: 7080
     USDT:
-      icon: 825
       symbol: USDT
       fullName: Tether
+      iconIndex: 825
     NFT:
-      icon: 9816
       symbol: NFTUSDT
       fullName: APENNFT
+      iconIndex: 9816
     LPT:
-      icon: 3640
       symbol: LPTUSDT
       fullName: Livepeer
+      iconIndex: 3640
     SNT:
-      icon: 1759
       symbol: SNTUSDT
       fullName: Status
+      iconIndex: 1759
     BNT:
-      icon: 1727
       symbol: BNTUSDT
       fullName: Bancor
+      iconIndex: 1727
     GAS:
-      icon: 1785
       symbol: GASUSDT
       fullName: Gas
+      iconIndex: 1785
     BCC:
-      icon: 17644
       symbol: BCCUSDT
       fullName: BlueChip Capital Token
+      iconIndex: 17644
     HSR:
-      icon: 0
       symbol: HSRUSDT
       fullName: HSR
+      iconIndex: 0
     OAX:
-      icon: 1853
       symbol: OAXUSDT
       fullName: OAX
+      iconIndex: 1853
     DNT:
-      icon: 1856
       symbol: DNTUSDT
       fullName: district0x
+      iconIndex: 1856
     MCO:
-      icon: 1776
       symbol: MCOUSDT
       fullName: MCO
+      iconIndex: 1776
     ICN:
-      icon: 3431
       symbol: ICNUSDT
       fullName: Iconic Token
+      iconIndex: 3431
     WTC:
-      icon: 1925
       symbol: WTCUSDT
       fullName: Waltonchain
+      iconIndex: 1925
     YOYO:
-      icon: -1
       symbol: YOYOUSDT
       fullName: YOYO
+      iconIndex: -1
     SNGLS:
-      icon: 1409
       symbol: SNGLSUSDT
       fullName: SingularDTV
+      iconIndex: 1409
     STRAT:
-      icon: -1
       symbol: STRATUSDT
       fullName: STRAT
+      iconIndex: -1
     BQX:
-      icon: -1
       symbol: BQXUSDT
       fullName: BQX
+      iconIndex: -1
     FUN:
-      icon: 1757
       symbol: FUNUSDT
       fullName: FUNToken
+      iconIndex: 1757
     CDT:
-      icon: 14489
       symbol: CDTUSDT
       fullName: CheckDot
+      iconIndex: 14489
     XVG:
-      icon: 693
       symbol: XVGUSDT
       fullName: Verge
+      iconIndex: 693
     SNM:
-      icon: 9931
       symbol: SNMUSDT
       fullName: SONM (BEP-20)
+      iconIndex: 9931
     TNT:
-      icon: 1923
       symbol: TNTUSDT
       fullName: Tierion
+      iconIndex: 1923
     REP:
-      icon: 1104
       symbol: REPUSDT
       fullName: Augur
+      iconIndex: 1104
     MDA:
-      icon: 1954
       symbol: MDAUSDT
       fullName: Moeda Loyalty Points
+      iconIndex: 1954
     SALT:
-      icon:
       symbol: SALTUSDT
       fullName:
+      iconIndex: -1
     NULS:
-      icon: 2092
       symbol: NULSUSDT
       fullName: NULS
+      iconIndex: 2092
     SUB:
-      icon: 1984
       symbol: SUBUSDT
       fullName: Substratum
+      iconIndex: 1984
     STX:
-      icon: 4847
       symbol: STXUSDT
       fullName: Stacks
+      iconIndex: 4847
     MTH:
-      icon: 1947
       symbol: MTHUSDT
       fullName: Monetha
+      iconIndex: 1947
     ADX:
-      icon: 1768
       symbol: ADXUSDT
       fullName: Ambire AdEx
+      iconIndex: 1768
     ENG:
-      icon: 2044
       symbol: ENGUSDT
       fullName: Enigma
+      iconIndex: 2044
     AST:
-      icon: 2058
       symbol: ASTUSDT
       fullName: AirSwap
+      iconIndex: 2058
     GNT:
-      icon: 9533
       symbol: GNTUSDT
       fullName: GreenTrust
+      iconIndex: 9533
     DGD:
-      icon: 1229
       symbol: DGDUSDT
       fullName: DigixDAO
+      iconIndex: 1229
     POWR:
-      icon: 2132
       symbol: POWRUSDT
       fullName: Powerledger
+      iconIndex: 2132
     BTG:
-      icon: 2083
       symbol: BTGUSDT
       fullName: Bitcoin Gold
+      iconIndex: 2083
     REQ:
-      icon: 2071
       symbol: REQUSDT
       fullName: Request
+      iconIndex: 2071
     EVX:
-      icon: 2034
       symbol: EVXUSDT
       fullName: Everex
+      iconIndex: 2034
     VIB:
-      icon: 2019
       symbol: VIBUSDT
       fullName: Viberate
+      iconIndex: 2019
     VEN:
-      icon: 8908
       symbol: VENUSDT
       fullName: ImpulseVen
+      iconIndex: 8908
     ARK:
-      icon: 1586
       symbol: ARKUSDT
       fullName: Ark
+      iconIndex: 1586
     MOD:
-      icon: 8494
       symbol: MODUSDT
       fullName: Modefi
+      iconIndex: 8494
     KMD:
-      icon: 1521
       symbol: KMDUSDT
       fullName: Komodo
+      iconIndex: 1521
     RCN:
-      icon: 2096
       symbol: RCNUSDT
       fullName: Ripio Credit Network
+      iconIndex: 2096
     EDO:
-      icon: 2057
       symbol: EDOUSDT
       fullName: Eidoo {Old}
+      iconIndex: 2057
     DATA:
-      icon: 2143
       symbol: DATAUSDT
       fullName: Streamr
+      iconIndex: 2143
     DLT:
-      icon: 1949
       symbol: DLTUSDT
       fullName: Agrello
+      iconIndex: 1949
     PPT:
-      icon: 1789
       symbol: PPTUSDT
       fullName: Populous
+      iconIndex: 1789
     RDN:
-      icon: 2161
       symbol: RDNUSDT
       fullName: Raiden Network Token
+      iconIndex: 2161
     GXS:
-      icon: -1
       symbol: GXSUSDT
       fullName: GXS
+      iconIndex: -1
     AMB:
-      icon: 2081
       symbol: AMBUSDT
       fullName: Ambrosus
+      iconIndex: 2081
     ARN:
-      icon: 16476
       symbol: ARNUSDT
       fullName: Arenum
+      iconIndex: 16476
     BCPT:
-      icon: 2061
       symbol: BCPTUSDT
       fullName: Blockmason Credit Protocol
+      iconIndex: 2061
     CND:
-      icon: 2043
       symbol: CNDUSDT
       fullName: Cindicator
+      iconIndex: 2043
     GVT:
-      icon: 2181
       symbol: GVTUSDT
       fullName: Genesis Vision
+      iconIndex: 2181
     POE:
-      icon: 1937
       symbol: POEUSDT
       fullName: Po.et
+      iconIndex: 1937
     FUEL:
-      icon: 2120
       symbol: FUELUSDT
       fullName: Etherparty
+      iconIndex: 2120
     XZC:
-      icon: -1
       symbol: XZCUSDT
       fullName: XZC
+      iconIndex: -1
     QSP:
-      icon: 2212
       symbol: QSPUSDT
       fullName: Quantstamp
+      iconIndex: 2212
     LSK:
-      icon: 1214
       symbol: LSKUSDT
       fullName: Lisk
+      iconIndex: 1214
     BCD:
-      icon: 2222
       symbol: BCDUSDT
       fullName: Bitcoin Diamond
+      iconIndex: 2222
     TNB:
-      icon: 2235
       symbol: TNBUSDT
       fullName: Time New Bank
+      iconIndex: 2235
     LEND:
-      icon: 2239
       symbol: LENDUSDT
       fullName: Aave [old]
+      iconIndex: 2239
     CMT:
-      icon: 2246
       symbol: CMTUSDT
       fullName: CyberMiles
+      iconIndex: 2246
     WABI:
-      icon: 2267
       symbol: WABIUSDT
       fullName: Wabi
+      iconIndex: 2267
     GTO:
-      icon: 2289
       symbol: GTOUSDT
       fullName: Gifto
+      iconIndex: 2289
     OST:
-      icon: 2296
       symbol: OSTUSDT
       fullName: OST
+      iconIndex: 2296
     ELF:
-      icon: 2299
       symbol: ELFUSDT
       fullName: aelf
+      iconIndex: 2299
     AION:
-      icon: 2062
       symbol: AIONUSDT
       fullName: Aion
+      iconIndex: 2062
     WINGS:
-      icon: 1500
       symbol: WINGSUSDT
       fullName: Wings
+      iconIndex: 1500
     BRD:
-      icon: 2306
       symbol: BRDUSDT
       fullName: Bread
+      iconIndex: 2306
     NEBL:
-      icon: 1955
       symbol: NEBLUSDT
       fullName: Neblio
+      iconIndex: 1955
     NAV:
-      icon: 377
       symbol: NAVUSDT
       fullName: Navcoin
+      iconIndex: 377
     VIBE:
-      icon: 1983
       symbol: VIBEUSDT
       fullName: VIBE
+      iconIndex: 1983
     LUN:
-      icon: 1658
       symbol: LUNUSDT
       fullName: Lunyr
+      iconIndex: 1658
     TRIG:
-      icon: -1
       symbol: TRIGUSDT
       fullName: TRIG
+      iconIndex: -1
     APPC:
-      icon: 2344
       symbol: APPCUSDT
       fullName: AppCoins
+      iconIndex: 2344
     CHAT:
-      icon: 2427
       symbol: CHATUSDT
       fullName: ChatCoin
+      iconIndex: 2427
     INS:
-      icon: 3602
       symbol: INSUSDT
       fullName: Bitcoin SV
+      iconIndex: 3602
     PIVX:
-      icon: 1169
       symbol: PIVXUSDT
       fullName: PIVX
+      iconIndex: 1169
     IOST:
-      icon: 2405
       symbol: IOSTUSDT
       fullName: IOST
+      iconIndex: 2405
     STEEM:
-      icon: 1230
       symbol: STEEMUSDT
       fullName: Steem
+      iconIndex: 1230
     NANO:
-      icon: -1
       symbol: NANOUSDT
       fullName: NANO
+      iconIndex: -1
     AE:
-      icon: 1700
       symbol: AEUSDT
       fullName: Aeternity
+      iconIndex: 1700
     VIA:
-      icon: 470
       symbol: VIAUSDT
       fullName: Viacoin
+      iconIndex: 470
     SYS:
-      icon: 541
       symbol: SYSUSDT
       fullName: Syscoin
+      iconIndex: 541
     RPX:
-      icon: -1
       symbol: RPXUSDT
       fullName: RPX
+      iconIndex: -1
     NCASH:
-      icon: 2544
       symbol: NCASHUSDT
       fullName: Nitro Network
+      iconIndex: 2544
     POA:
-      icon: 2548
       symbol: POAUSDT
       fullName: POA Network
+      iconIndex: 2548
     STORM:
-      icon: 11655
       symbol: STORMUSDT
       fullName: Storm Token
+      iconIndex: 11655
     WAN:
-      icon: 2606
       symbol: WANUSDT
       fullName: Wanchain
+      iconIndex: 2606
     WPR:
-      icon: 2511
       symbol: WPRUSDT
       fullName: WePower
+      iconIndex: 2511
     QLC:
-      icon: 2321
       symbol: QLCUSDT
       fullName: QLC Chain
+      iconIndex: 2321
     GRS:
-      icon: 258
       symbol: GRSUSDT
       fullName: Groestlcoin
+      iconIndex: 258
     CLOAK:
-      icon: 362
       symbol: CLOAKUSDT
       fullName: CloakCoin
+      iconIndex: 362
     LOOM:
-      icon: 2588
       symbol: LOOMUSDT
       fullName: Loom Network
+      iconIndex: 2588
     BCN:
-      icon: 372
       symbol: BCNUSDT
       fullName: Bytecoin
+      iconIndex: 372
     TUSD:
-      icon: 2563
       symbol: TUSDUSDT
       fullName: TrueUSD
+      iconIndex: 2563
     SKY:
-      icon: 1619
       symbol: SKYUSDT
       fullName: Skycoin
+      iconIndex: 1619
     QKC:
-      icon: 2840
       symbol: QKCUSDT
       fullName: QuarkChain
+      iconIndex: 2840
     AGI:
-      icon: -1
       symbol: AGIUSDT
       fullName: AGI
+      iconIndex: -1
     NXS:
-      icon: 789
       symbol: NXSUSDT
       fullName: Nexus
+      iconIndex: 789
     NPXS:
-      icon: 2603
       symbol: NPXSUSDT
       fullName: Pundi X (Old)
+      iconIndex: 2603
     KEY:
-      icon: 2398
       symbol: KEYUSDT
       fullName: Selfkey
+      iconIndex: 2398
     NAS:
-      icon: 1908
       symbol: NASUSDT
       fullName: Nebulas
+      iconIndex: 1908
     MFT:
-      icon: 2896
       symbol: MFTUSDT
       fullName: Hifi Finance
+      iconIndex: 2896
     IQ:
-      icon: 2930
       symbol: IQUSDT
       fullName: Everipedia
+      iconIndex: 2930
     ARDR:
-      icon: 1320
       symbol: ARDRUSDT
       fullName: Ardor
+      iconIndex: 1320
     DOCK:
-      icon: 2675
       symbol: DOCKUSDT
       fullName: Dock
+      iconIndex: 2675
     POLY:
-      icon: 2496
       symbol: POLYUSDT
       fullName: Polymath
+      iconIndex: 2496
     VTHO:
-      icon: 3012
       symbol: VTHOUSDT
       fullName: VeThor Token
+      iconIndex: 3012
     ONG:
-      icon: 3217
       symbol: ONGUSDT
       fullName: Ontology Gas
+      iconIndex: 3217
     PHX:
-      icon: 11727
       symbol: PHXUSDT
       fullName: Phoenix Token
+      iconIndex: 11727
     HC:
-      icon: 1903
       symbol: HCUSDT
       fullName: HyperCash
+      iconIndex: 1903
     GO:
-      icon: 2861
       symbol: GOUSDT
       fullName: GoChain
+      iconIndex: 2861
     PAX:
-      icon: -1
       symbol: PAXUSDT
       fullName: PAX
+      iconIndex: -1
     DCR:
-      icon:  1168
       symbol: DCRUSDT
       fullName: Decred
+      iconIndex: 1168
     USDC:
-      icon: 3408
       symbol: USDCUSDT
       fullName: USD Coin
+      iconIndex: 3408
     MITH:
-      icon: 2608
       symbol: MITHUSDT
       fullName: Mithril
+      iconIndex: 2608
     BCHABC:
-      icon: -1
       symbol: BCHABCUSDT
       fullName: BCHABC
+      iconIndex: -1
     BCHSV:
-      icon: -1
       symbol: BCHSVUSDT
       fullName: BCHSV
+      iconIndex: -1
     USDS:
-      icon:
       symbol: USDSUSDT
-      fullName:
+      fullName: USDSUSDT
+      iconIndex: -1
     FET:
-      icon: 3773
       symbol: FETUSDT
       fullName: Fetch.ai
+      iconIndex: 3773
     TFUEL:
-      icon: 3822
       symbol: TFUELUSDT
       fullName: Theta Fuel
+      iconIndex: 3822
     PHB:
-      icon: 13969
       symbol: PHBUSDT
       fullName: Phoenix Global (new)
+      iconIndex: 13969
     BTCB:
-      icon: 4023
       symbol: BTCBUSDT
       fullName: BTCB
+      iconIndex: 4023
     USDSB:
-      icon: -1
       symbol: USDSBUSDT
       fullName: USDSB
+      iconIndex: -1
     COS:
-      icon: 4036
       symbol: COSUSDT
       fullName: Contentos
+      iconIndex: 4036
     ERD:
-      icon: 4961
       symbol: ERDUSDT
       fullName: ELDORADO TOKEN
+      iconIndex: 4961
     BGBP:
-      icon: 4186
       symbol: BGBPUSDT
       fullName: Binance GBP Stable Coin
+      iconIndex: 4186
     DUSK:
-      icon: 4092
       symbol: DUSKUSDT
       fullName: Dusk Network
+      iconIndex: 4092
     WIN:
-      icon: 4206
       symbol: WINUSDT
       fullName: WINkLink
+      iconIndex: 4206
     TUSDB:
-      icon: -1
       symbol: TUSDBUSDT
       fullName: TUSDB
+      iconIndex: -1
     COCOS:
-      icon: 4275
       symbol: COCOSUSDT
       fullName: Cocos-BCX
+      iconIndex: 4275
     PERL:
-      icon: 4293
       symbol: PERLUSDT
       fullName: PERL.eco
+      iconIndex: 4293
     BUSD:
-      icon: 4687
       symbol: BUSDUSDT
       fullName: Binance USD
+      iconIndex: 4687
     BEAM:
-      icon: 3702
       symbol: BEAMUSDT
       fullName: Beam
+      iconIndex: 3702
     NGN:
-      icon: 13941
       symbol: NGNUSDT
       fullName: CryptoNijigen
+      iconIndex: 13941
     GBP:
-      icon: 6897
       symbol: GBPUSDT
       fullName: Good Boy Points
+      iconIndex: 6897
     EUR:
-      icon: 2989
       symbol: EURUSDT
       fullName: STASIS EURO
+      iconIndex: 2989
     RUB:
-      icon: -1
       symbol: RUBUSDT
       fullName: RUB
+      iconIndex: -1
     UAH:
-      icon: -1
       symbol: UAHUSDT
       fullName: UAH
+      iconIndex: -1
     ARPA:
-      icon: 4039
       symbol: ARPAUSDT
       fullName: ARPA Chain
+      iconIndex: 4039
     TRY:
-      icon: 9097
       symbol: TRYUSDT
       fullName: Try.Finance
+      iconIndex: 9097
     CTXC:
-      icon: 2638
       symbol: CTXCUSDT
       fullName: Cortex
+      iconIndex: 2638
     AERGO:
-      icon: 3637
       symbol: AERGOUSDT
       fullName: Aergo
+      iconIndex: 3637
     TROY:
-      icon: 5007
       symbol: TROYUSDT
       fullName: TROY
+      iconIndex: 5007
     BRL:
-      icon: 16660
       symbol: BRLUSDT
       fullName: Borealis
+      iconIndex: 16660
     VITE:
-      icon: 2937
       symbol: VITEUSDT
       fullName: VITE
+      iconIndex: 2937
     FTT:
-      icon: 4195
       symbol: FTTUSDT
       fullName: FTX Token
+      iconIndex: 4195
     AUD:
-      icon: -1
       symbol: AUDUSDT
       fullName: AUD
+      iconIndex: -1
     DREP:
-      icon: 9148
       symbol: DREPUSDT
       fullName: Drep [new]
+      iconIndex: 9148
     BULL:
-      icon: 5157
       symbol: BULLUSDT
       fullName: 3X Long Bitcoin Token
+      iconIndex: 5157
     BEAR:
-      icon: 5158
       symbol: BEARUSDT
       fullName: 3X Short Bitcoin Token
+      iconIndex: 5158
     ETHBULL:
-      icon: 5217
       symbol: ETHBULLUSDT
       fullName: 3X Long Ethereum Token
+      iconIndex: 5217
     ETHBEAR:
-      icon: 5216
       symbol: ETHBEARUSDT
       fullName: 3X Short Ethereum Token
+      iconIndex: 5216
     XRPBULL:
-      icon: 5412
       symbol: XRPBULLUSDT
       fullName: 3x Long XRP Token
+      iconIndex: 5412
     XRPBEAR:
-      icon: 5413
       symbol: XRPBEARUSDT
       fullName: 3x Short XRP Token
+      iconIndex: 5413
     EOSBULL:
-      icon: 5414
       symbol: EOSBULLUSDT
       fullName: 3x Long EOS Token
+      iconIndex: 5414
     EOSBEAR:
-      icon: 5415
       symbol: EOSBEARUSDT
       fullName: 3x Short EOS Token
+      iconIndex: 5415
     TCT:
-      icon: 2364
       symbol: TCTUSDT
       fullName: TokenClub
+      iconIndex: 2364
     WRX:
-      icon: 5161
       symbol: WRXUSDT
       fullName: WazirX
+      iconIndex: 5161
     LTO:
-      icon: 3714
       symbol: LTOUSDT
       fullName: LTO Network
+      iconIndex: 3714
     ZAR:
-      icon: -1
       symbol: ZARUSDT
       fullName: ZAR
+      iconIndex: -1
     MBL:
-      icon: 4038
       symbol: MBLUSDT
       fullName: MovieBloc
+      iconIndex: 4038
     BKRW:
-      icon: 5483
       symbol: BKRWUSDT
       fullName: Binance KRW
+      iconIndex: 5483
     BNBBULL:
-      icon: 5295
       symbol: BNBBULLUSDT
       fullName: 3X Long BNB Token
+      iconIndex: 5295
     BNBBEAR:
-      icon: 5294
       symbol: BNBBEARUSDT
       fullName: 3X Short BNB Token
+      iconIndex: 5294
     HIVE:
-      icon: 5370
       symbol: HIVEUSDT
       fullName: Hive
+      iconIndex: 5370
     STPT:
-      icon: 4006
       symbol: STPTUSDT
       fullName: Standard Tokenization Protocol
+      iconIndex: 4006
     IDRT:
-      icon: 4702
       symbol: IDRTUSDT
       fullName: Rupiah Token
+      iconIndex: 4702
     CTSI:
-      icon: 5444
       symbol: CTSIUSDT
       fullName: Cartesi
+      iconIndex: 5444
     BTCUP:
-      icon: 5608
       symbol: BTCUPUSDT
       fullName: BTCUP
+      iconIndex: 5608
     BTCDOWN:
-      icon: 5609
       symbol: BTCDOWNUSDT
       fullName: BTCDOWN
+      iconIndex: 5609
     JST:
-      icon: 5488
       symbol: JSTUSDT
       fullName: JUST
+      iconIndex: 5488
     FIO:
-      icon: 5865
       symbol: FIOUSDT
       fullName: FIO Protocol
+      iconIndex: 5865
     BIDR:
-      icon: 6855
       symbol: BIDRUSDT
       fullName: BIDR
+      iconIndex: 6855
     MDT:
-      icon: 2348
       symbol: MDTUSDT
       fullName: Measurable Data Token
+      iconIndex: 2348
     PNT:
-      icon: 5794
       symbol: PNTUSDT
       fullName: pNetwork
+      iconIndex: 5794
     IRIS:
-      icon: 3874
       symbol: IRISUSDT
       fullName: IRISnet
+      iconIndex: 3874
     DAI:
-      icon: 4943
       symbol: DAIUSDT
       fullName: Dai
+      iconIndex: 4943
     ETHUP:
-      icon: 7016
       symbol: ETHUPUSDT
       fullName: ETHUP
+      iconIndex: 7016
     ETHDOWN:
-      icon: 10853
       symbol: ETHDOWNUSDT
       fullName: ETHDOWN
+      iconIndex: 10853
     ADAUP:
-      icon: 7013
       symbol: ADAUPUSDT
       fullName: ADAUP
+      iconIndex: 7013
     ADADOWN:
-      icon: 7014
       symbol: ADADOWNUSDT
       fullName: ADADOWN
+      iconIndex: 7014
     LINKUP:
-      icon: 7011
       symbol: LINKUPUSDT
       fullName: LINKUP
+      iconIndex: 7011
     LINKDOWN:
-      icon: 7012
       symbol: LINKDOWNUSDT
       fullName: LINKDOWN
+      iconIndex: 7012
     BNBUP:
-      icon: 7009
       symbol: BNBUPUSDT
       fullName: BNBUP
+      iconIndex: 7009
     BNBDOWN:
-      icon: 7010
       symbol: BNBDOWNUSDT
       fullName: BNBDOWN
+      iconIndex: 7010
     XTZUP:
-      icon: 7007
       symbol: XTZUPUSDT
       fullName: XTZUP
+      iconIndex: 7007
     XTZDOWN:
-      icon: 7008
       symbol: XTZDOWNUSDT
       fullName: XTZDOWN
+      iconIndex: 7008
     AVA:
-      icon:
       symbol: AVAUSDT
       fullName: Travala.com
+      iconIndex: -1
     ANT:
-      icon: 2776
       symbol: ANTUSDT
-      fullName:
+      fullName: ANTUSDT
+      iconIndex: 2776
     NMR:
-      icon: 1732
       symbol: NMRUSDT
       fullName: Numeraire
+      iconIndex: 1732
     IDEX:
-      icon: 3928
       symbol: IDEXUSDT
       fullName: IDEX
+      iconIndex: 3928
     PAXG:
-      icon: 4705
       symbol: PAXGUSDT
       fullName: PAX Gold
+      iconIndex: 4705
     WNXM:
-      icon: 5939
       symbol: WNXMUSDT
       fullName: Wrapped NXM
+      iconIndex: 5939
     BZRX:
-      icon: 5810
       symbol: BZRXUSDT
       fullName: bZx Protocol
+      iconIndex: 5810
     WBTC:
-      icon: 3717
       symbol: WBTCUSDT
       fullName: Wrapped Bitcoin
+      iconIndex: 3717
     DIA:
-      icon: 6138
       symbol: DIAUSDT
       fullName: DIA
+      iconIndex: 6138
     UMA:
-      icon: 5617
       symbol: UMAUSDT
       fullName: UMA
+      iconIndex: 5617
     EOSUP:
-      icon: 6999
       symbol: EOSUPUSDT
       fullName: EOSUP
+      iconIndex: 6999
     TRXUP:
-      icon: 7005
       symbol: TRXUPUSDT
       fullName: TRXUP
+      iconIndex: 7005
     EOSDOWN:
-      icon: 7000
       symbol: EOSDOWNUSDT
       fullName: EOSDOWN
+      iconIndex: 7000
     TRXDOWN:
-      icon: 7004
       symbol: TRXDOWNUSDT
       fullName: TRXDOWN
+      iconIndex: 7004
     XRPUP:
-      icon: 7001
       symbol: XRPUPUSDT
       fullName: XRPUP
+      iconIndex: 7001
     XRPDOWN:
-      icon: 7002
       symbol: XRPDOWNUSDT
       fullName: XRPDOWN
+      iconIndex: 7002
     DOTUP:
-      icon: 7003
       symbol: DOTUPUSDT
       fullName: DOTUP
+      iconIndex: 7003
     DOTDOWN:
-      icon:
       symbol: DOTDOWNUSDT
       fullName: DOTDOWN
+      iconIndex: -1
     NBS:
-      icon: 7006
       symbol: NBSUSDT
-      fullName:
+      fullName: NBSUSDT
+      iconIndex: 7006
     WING:
-      icon: 7048
       symbol: WINGUSDT
       fullName: Wing Finance
+      iconIndex: 7048
     SWRV:
-      icon: 6901
       symbol: SWRVUSDT
       fullName: Swerve
+      iconIndex: 6901
     LTCUP:
-      icon: 7526
       symbol: LTCUPUSDT
       fullName: LTCUP
+      iconIndex: 7526
     LTCDOWN:
-      icon: 7527
       symbol: LTCDOWNUSDT
       fullName: LTCDOWN
+      iconIndex: 7527
     CREAM:
-      icon: 6193
       symbol: CREAMUSDT
       fullName: Cream Finance
+      iconIndex: 6193
     OXT:
-      icon: 5026
       symbol: OXTUSDT
       fullName: Orchid
+      iconIndex: 5026
     SUN:
-      icon: 10529
       symbol: SUNUSDT
       fullName: Sun (New)
+      iconIndex: 10529
     BURGER:
-      icon: 7158
       symbol: BURGERUSDT
       fullName: Burger Swap
+      iconIndex: 7158
     SCRT:
-      icon: 5604
       symbol: SCRTUSDT
       fullName: Secret
+      iconIndex: 5604
     XVS:
-      icon: 7288
       symbol: XVSUSDT
       fullName: Venus
+      iconIndex: 7288
     CAKE:
-      icon: 7186
       symbol: CAKEUSDT
       fullName: PancakeSwap
+      iconIndex: 7186
     SPARTA:
-      icon: 6992
       symbol: SPARTAUSDT
       fullName: Spartan Protocol
+      iconIndex: 6992
     UNIUP:
-      icon: 7524
       symbol: UNIUPUSDT
       fullName: UNIUP
+      iconIndex: 7524
     UNIDOWN:
-      icon: 7525
       symbol: UNIDOWNUSDT
       fullName: UNIDOWN
+      iconIndex: 7525
     ALPHA:
-      icon: 7232
       symbol: ALPHAUSDT
       fullName: Alpha Finance Lab
+      iconIndex: 7232
     ORN:
-      icon: 5631
       symbol: ORNUSDT
       fullName: Orion Protocol
+      iconIndex: 5631
     UTK:
-      icon: 2320
       symbol: UTKUSDT
       fullName: Utrust
+      iconIndex: 2320
     VIDT:
-      icon: 3845
       symbol: VIDTUSDT
       fullName: VIDT Datalink
+      iconIndex: 3845
     SXPUP:
-      icon: 7528
       symbol: SXPUPUSDT
       fullName: SXPUP
+      iconIndex: 7528
     SXPDOWN:
-      icon: 7529
       symbol: SXPDOWNUSDT
       fullName: SXPDOWN
+      iconIndex: 7529
     INJ:
-      icon: 7226
       symbol: INJUSDT
       fullName: Injective
+      iconIndex: 7226
     FILDOWN:
-      icon: 8051
       symbol: FILDOWNUSDT
       fullName: FILDOWN
+      iconIndex: 8051
     FILUP:
-      icon: 8050
       symbol: FILUPUSDT
       fullName: FILUP
+      iconIndex: 8050
     YFIUP:
-      icon: 7452
       symbol: YFIUPUSDT
       fullName: YFIUP
+      iconIndex: 7452
     YFIDOWN:
-      icon: 7453
       symbol: YFIDOWNUSDT
       fullName: YFIDOWN
+      iconIndex: 7453
     EASY:
-      icon: -1
       symbol: EASYUSDT
       fullName: EASY
+      iconIndex: -1
     BCHUP:
-      icon: 7522
       symbol: BCHUPUSDT
       fullName: BCHUP
+      iconIndex: 7522
     BCHDOWN:
-      icon: 7523
       symbol: BCHDOWNUSDT
       fullName: BCHDOWN
+      iconIndex: 7523
     BOT:
-      icon: 16262
       symbol: BOTUSDT
       fullName: Starbots
+      iconIndex: 16262
     HARD:
-      icon: 7576
       symbol: HARDUSDT
       fullName: Kava Lend
+      iconIndex: 7576
     KP3R:
-      icon: 7535
       symbol: KP3RUSDT
       fullName: Keep3rV1
+      iconIndex: 7535
     RENBTC:
-      icon: 5777
       symbol: RENBTCUSDT
       fullName: renBTC
+      iconIndex: 5777
     SLP:
-      icon: 5824
       symbol: SLPUSDT
       fullName: Smooth Love Potion
+      iconIndex: 5824
     STRAX:
-      icon: 1343
       symbol: STRAXUSDT
       fullName: Stratis
+      iconIndex: 1343
     CVP:
-      icon: 6669
       symbol: CVPUSDT
       fullName: PowerPool
+      iconIndex: 6669
     BCHA:
-      icon: -1
       symbol: BCHAUSDT
       fullName: BCHA
+      iconIndex: -1
     FOR:
-      icon: 4118
       symbol: FORUSDT
       fullName: ForTube
+      iconIndex: 4118
     FRONT:
-      icon: 5893
       symbol: FRONTUSDT
       fullName: Frontier
+      iconIndex: 5893
     ROSE:
-      icon: 7653
       symbol: ROSEUSDT
       fullName: Oasis Network
+      iconIndex: 7653
     MDX:
-      icon: 8335
       symbol: MDXUSDT
       fullName: Mdex
+      iconIndex: 8335
     HEGIC:
-      icon: 6929
       symbol: HEGICUSDT
       fullName: Hegic
+      iconIndex: 6929
     AAVEUP:
-      icon: 7774
       symbol: AAVEUPUSDT
       fullName: AAVEUP
+      iconIndex: 7774
     AAVEDOWN:
-      icon: 7775
       symbol: AAVEDOWNUSDT
       fullName: AAVEDOWN
+      iconIndex: 7775
     PROM:
-      icon: 4120
       symbol: PROMUSDT
       fullName: Prometeus
+      iconIndex: 4120
     BETH:
-      icon: 8353
       symbol: BETHUSDT
       fullName: Beacon ETH
+      iconIndex: 8353
     GLM:
-      icon: 1455
       symbol: GLMUSDT
       fullName: Golem
+      iconIndex: 1455
     SUSD:
-      icon: 2927
       symbol: SUSDUSDT
       fullName: sUSD
+      iconIndex: 2927
     COVER:
-      icon: 8175
       symbol: COVERUSDT
       fullName: COVER Protocol
+      iconIndex: 8175
     GHST:
-      icon: 7046
       symbol: GHSTUSDT
       fullName: Aavegotchi
+      iconIndex: 7046
     SUSHIUP:
-      icon: 8053
       symbol: SUSHIUPUSDT
       fullName: SUSHIUP
+      iconIndex: 8053
     SUSHIDOWN:
-      icon: 8052
       symbol: SUSHIDOWNUSDT
       fullName: SUSHIDOWN
+      iconIndex: 8052
     XLMUP:
-      icon: 8055
       symbol: XLMUPUSDT
       fullName: XLMUP
+      iconIndex: 8055
     XLMDOWN:
-      icon: 8054
       symbol: XLMDOWNUSDT
       fullName: XLMDOWN
+      iconIndex: 8054
     DF:
-      icon: 4758
       symbol: DFUSDT
       fullName: dForce
+      iconIndex: 4758
     JUV:
-      icon: 5224
       symbol: JUVUSDT
       fullName: Juventus Fan Token
+      iconIndex: 5224
     PSG:
-      icon: 5226
       symbol: PSGUSDT
       fullName: Paris Saint-Germain Fan Token
+      iconIndex: 5226
     BVND:
-      icon: 8058
       symbol: BVNDUSDT
       fullName: Binance VND
+      iconIndex: 8058
     TWT:
-      icon: 5964
       symbol: TWTUSDT
       fullName: Trust Wallet Token
+      iconIndex: 5964
     OG:
-      icon: 5309
       symbol: OGUSDT
       fullName: OG Fan Token
+      iconIndex: 5309
     ATM:
-      icon: 5227
       symbol: ATMUSDT
       fullName: Atletico De Madrid Fan Token
+      iconIndex: 5227
     ASR:
-      icon: 5229
       symbol: ASRUSDT
       fullName: AS Roma Fan Token
+      iconIndex: 5229
     RIF:
-      icon: 3701
       symbol: RIFUSDT
       fullName: RSK Infrastructure Framework
+      iconIndex: 3701
     BTCST:
-      icon: 8891
       symbol: BTCSTUSDT
       fullName: Bitcoin Standard Hashrate Token
+      iconIndex: 8891
     TRU:
-      icon: 7725
       symbol: TRUUSDT
       fullName: TrueFi
+      iconIndex: 7725
     DEXE:
-      icon: 7326
       symbol: DEXEUSDT
       fullName: DeXe
+      iconIndex: 7326
     CKB:
-      icon: 4948
       symbol: CKBUSDT
       fullName: Nervos Network
+      iconIndex: 4948
     FIRO:
-      icon: 1414
       symbol: FIROUSDT
       fullName: Firo
+      iconIndex: 1414
     PROS:
-      icon: 8255
       symbol: PROSUSDT
       fullName: Prosper
+      iconIndex: 8255
     VAI:
-      icon: 7824
       symbol: VAIUSDT
       fullName: Vai
+      iconIndex: 7824
     FXS:
-      icon: 6953
       symbol: FXSUSDT
       fullName: Frax Share
+      iconIndex: 6953
     AUCTION:
-      icon: 8602
       symbol: AUCTIONUSDT
       fullName: Bounce Finance Governance Token
+      iconIndex: 8602
     UFT:
-      icon: 7412
       symbol: UFTUSDT
       fullName: UniLend
+      iconIndex: 7412
     ACM:
-      icon: 8538
       symbol: ACMUSDT
       fullName: AC Milan Fan Token
+      iconIndex: 8538
     PHA:
-      icon: 6841
       symbol: PHAUSDT
       fullName: Phala Network
+      iconIndex: 6841
     TVK:
-      icon: 8037
       symbol: TVKUSDT
       fullName: Terra Virtua Kolect
+      iconIndex: 8037
     BADGER:
-      icon: 7859
       symbol: BADGERUSDT
       fullName: Badger DAO
+      iconIndex: 7859
     FIS:
-      icon: 5882
       symbol: FISUSDT
       fullName: Stafi
+      iconIndex: 5882
     QI:
-      icon: 9288
       symbol: QIUSDT
       fullName: BENQI
+      iconIndex: 9288
     OM:
-      icon: 6536
       symbol: OMUSDT
       fullName: MANTRA DAO
+      iconIndex: 6536
     POND:
-      icon: 7497
       symbol: PONDUSDT
       fullName: Marlin
+      iconIndex: 7497
     DEGO:
-      icon: 7087
       symbol: DEGOUSDT
       fullName: Dego Finance
+      iconIndex: 7087
     BIFI:
-      icon: 7311
       symbol: BIFIUSDT
       fullName: Beefy Finance
+      iconIndex: 7311
     PERP:
-      icon: 6950
       symbol: PERPUSDT
       fullName: Perpetual Protocol
+      iconIndex: 6950
     RAMP:
-      icon: 7463
       symbol: RAMPUSDT
       fullName: RAMP
+      iconIndex: 7463
     SUPER:
-      icon: 8290
       symbol: SUPERUSDT
       fullName: SuperFarm
+      iconIndex: 8290
     CFX:
-      icon: 7334
       symbol: CFXUSDT
       fullName: Conflux
+      iconIndex: 7334
     TKO:
-      icon: 9020
       symbol: TKOUSDT
       fullName: Toko Token
+      iconIndex: 9020
     AUTO:
-      icon: 8387
       symbol: AUTOUSDT
       fullName: Auto
+      iconIndex: 8387
     EPS:
-      icon: 8938
       symbol: EPSUSDT
       fullName: Ellipsis
+      iconIndex: 8938
     PUNDIX:
-      icon: 9040
       symbol: PUNDIXUSDT
       fullName: Pundi X (New)
+      iconIndex: 9040
     1INCHUP:
-      icon: 11956
       symbol: 1INCHUPUSDT
       fullName: 1INCHUP
+      iconIndex: 11956
     1INCHDOWN:
-      icon: 11957
       symbol: 1INCHDOWNUSDT
       fullName: 1INCHDOWN
+      iconIndex: 11957
     MIR:
-      icon: 7857
       symbol: MIRUSDT
       fullName: Mirror Protocol
+      iconIndex: 7857
     BAR:
-      icon: 5225
       symbol: BARUSDT
       fullName: FC Barcelona Fan Token
+      iconIndex: 5225
     FORTH:
-      icon: 9421
       symbol: FORTHUSDT
       fullName: Ampleforth Governance Token
+      iconIndex: 9421
     EZ:
-      icon: 7332
       symbol: EZUSDT
       fullName: EasyFi
+      iconIndex: 7332
     GYEN:
-      icon: 8771
       symbol: GYENUSDT
       fullName: GYEN
+      iconIndex: 8771
     POLS:
-      icon: 7208
       symbol: POLSUSDT
       fullName: Polkastarter
+      iconIndex: 7208
     AGIX:
-      icon: 2424
       symbol: AGIXUSDT
       fullName: SingularityNET
+      iconIndex: 2424
     NU:
-      icon: 4761
       symbol: NUUSDT
       fullName: NuCypher
+      iconIndex: 4761
     KLAY:
-      icon: 4256
       symbol: KLAYUSDT
       fullName: Klaytn
+      iconIndex: 4256
     TORN:
-      icon: 8049
       symbol: TORNUSDT
       fullName: Tornado Cash
+      iconIndex: 8049
     ERN:
-      icon: 8615
       symbol: ERNUSDT
       fullName: Ethernity Chain
+      iconIndex: 8615
     BOND:
-      icon: 7440
       symbol: BONDUSDT
       fullName: BarnBridge
+      iconIndex: 7440
     MLN:
-      icon: 1552
       symbol: MLNUSDT
       fullName: Enzyme
+      iconIndex: 1552
     FLOW:
-      icon: 4558
       symbol: FLOWUSDT
       fullName: Flow
+      iconIndex: 4558
     QUICK:
-      icon: 8206
       symbol: QUICKUSDT
       fullName: QuickSwap
+      iconIndex: 8206
     MINA:
-      icon: 8646
       symbol: MINAUSDT
       fullName: Mina
+      iconIndex: 8646
     QNT:
-      icon: 3155
       symbol: QNTUSDT
       fullName: Quant
+      iconIndex: 3155
     CLV:
-      icon: 8384
       symbol: CLVUSDT
       fullName: Clover Finance
+      iconIndex: 8384
     ALPACA:
-      icon: 8707
       symbol: ALPACAUSDT
       fullName: Alpaca Finance
+      iconIndex: 8707
     FARM:
-      icon: 6859
       symbol: FARMUSDT
       fullName: Harvest Finance
+      iconIndex: 6859
     VGX:
-      icon: 1817
       symbol: VGXUSDT
       fullName: Voyager Token
+      iconIndex: 1817
     MBOX:
-      icon: 9175
       symbol: MBOXUSDT
       fullName: MOBOX
+      iconIndex: 9175
     WAXP:
-      icon: 2300
       symbol: WAXPUSDT
       fullName: WAX
+      iconIndex: 2300
     TRIBE:
-      icon: 9025
       symbol: TRIBEUSDT
       fullName: Tribe
+      iconIndex: 9025
     GNO:
-      icon: 1659
       symbol: GNOUSDT
       fullName: Gnosis
+      iconIndex: 1659
     USDP:
-      icon: 3330
       symbol: USDPUSDT
       fullName: Pax Dollar
+      iconIndex: 3330
     ILV:
-      icon: 8719
       symbol: ILVUSDT
       fullName: Illuvium
+      iconIndex: 8719
     YGG:
-      icon: 10688
       symbol: YGGUSDT
       fullName: Yield Guild Games
+      iconIndex: 10688
     FIDA:
-      icon: 7978
       symbol: FIDAUSDT
       fullName: Bonfida
+      iconIndex: 7978
     AGLD:
-      icon: 11568
       symbol: AGLDUSDT
       fullName: Adventure Gold
+      iconIndex: 11568
     BETA:
-      icon: 11307
       symbol: BETAUSDT
       fullName: Beta Finance
+      iconIndex: 11307
     RAD:
-      icon: 6843
       symbol: RADUSDT
       fullName: Radicle
+      iconIndex: 6843
     RARE:
-      icon: 11294
       symbol: RAREUSDT
       fullName: SuperRare
+      iconIndex: 11294
     SSV:
-      icon: 12999
       symbol: SSVUSDT
       fullName: ssv.network
+      iconIndex: 12999
     LAZIO:
-      icon: 12687
       symbol: LAZIOUSDT
       fullName: S.S. Lazio Fan Token
+      iconIndex: 12687
     MOVR:
-      icon: 9285
       symbol: MOVRUSDT
       fullName: Moonriver
+      iconIndex: 9285
     CHESS:
-      icon: 10974
       symbol: CHESSUSDT
       fullName: Tranchess
+      iconIndex: 10974
     DAR:
-      icon: 11374
       symbol: DARUSDT
       fullName: Mines of Dalarnia
+      iconIndex: 11374
     ACA:
-      icon: 6756
       symbol: ACAUSDT
       fullName: Acala Token
+      iconIndex: 6756
     BNX:
-      icon: 9891
       symbol: BNXUSDT
       fullName: BinaryX
+      iconIndex: 9891
     RGT:
-      icon: 7486
       symbol: RGTUSDT
       fullName: Rari Governance Token
+      iconIndex: 7486
     CITY:
-      icon: 10049
       symbol: CITYUSDT
       fullName: Manchester City Fan Token
+      iconIndex: 10049
     ENS:
-      icon: 13855
       symbol: ENSUSDT
       fullName: Ethereum Name Service
+      iconIndex: 13855
     PORTO:
-      icon: 14052
       symbol: PORTOUSDT
       fullName: FC Porto Fan Token
+      iconIndex: 14052
     JASMY:
-      icon: 8425
       symbol: JASMYUSDT
       fullName: JasmyCoin
+      iconIndex: 8425
     AMP:
-      icon: 6945
       symbol: AMPUSDT
       fullName: Amp
+      iconIndex: 6945
     PLA:
-      icon: 7461
       symbol: PLAUSDT
       fullName: PlayDapp
+      iconIndex: 7461
     PYR:
-      icon: 9308
       symbol: PYRUSDT
       fullName: Vulcan Forged PYR
+      iconIndex: 9308
     SANTOS:
-      icon: 15248
       symbol: SANTOSUSDT
       fullName: Santos FC Fan Token
+      iconIndex: 15248
     RNDR:
-      icon: 5690
       symbol: RNDRUSDT
       fullName: Render Token
+      iconIndex: 5690
     ALCX:
-      icon: 8613
       symbol: ALCXUSDT
       fullName: Alchemix
+      iconIndex: 8613
     MC:
-      icon: 13523
       symbol: MCUSDT
       fullName: Merit Circle
+      iconIndex: 13523
     ANY:
-      icon: 5892
       symbol: ANYUSDT
       fullName: Anyswap
+      iconIndex: 5892
     VOXEL:
-      icon: 15678
       symbol: VOXELUSDT
       fullName: Voxies
+      iconIndex: 15678
     BICO:
-      icon: 9543
       symbol: BICOUSDT
       fullName: Biconomy
+      iconIndex: 9543
     FLUX:
-      icon: 3029
       symbol: FLUXUSDT
       fullName: Flux
+      iconIndex: 3029
     UST:
-      icon: 7129
       symbol: USTUSDT
       fullName: TerraUSD
+      iconIndex: 7129
     HIGH:
-      icon: 11232
       symbol: HIGHUSDT
       fullName: Highstreet
+      iconIndex: 11232
     OOKI:
-      icon: 16434
       symbol: OOKIUSDT
       fullName: Ooki Protocol
+      iconIndex: 16434
     CVX:
-      icon: 9903
       symbol: CVXUSDT
       fullName: Convex Finance
+      iconIndex: 9903
     PEOPLE:
-      icon: 14806
       symbol: PEOPLEUSDT
       fullName: ConstitutionDAO
+      iconIndex: 14806
     SPELL:
-      icon: 11289
       symbol: SPELLUSDT
       fullName: Spell Token
+      iconIndex: 11289
     JOE:
-      icon: 11396
       symbol: JOEUSDT
       fullName: JOE
+      iconIndex: 11396
     BDOT:
-      icon: 11058
       symbol: BDOTUSDT
       fullName: BabyDot
+      iconIndex: 11058
     GLMR:
-      icon: 6836
       symbol: GLMRUSDT
       fullName: Moonbeam
+      iconIndex: 6836
     ACH:
-      icon: 6958
       symbol: ACHUSDT
       fullName: Alchemy Pay
+      iconIndex: 6958
     IMX:
-      icon: 10603
       symbol: IMXUSDT
       fullName: Immutable X
+      iconIndex: 10603
     LOKA:
-      icon: 17145
       symbol: LOKAUSDT
       fullName: League of Kingdoms Arena
+      iconIndex: 17145
     BTTC:
-      icon: -1
       symbol: BTTCUSDT
       fullName: BTTC
+      iconIndex: -1
     ANC:
-      icon: 8857
       symbol: ANCUSDT
       fullName: Anchor Protocol
+      iconIndex: 8857
     API3:
-      icon: 7737
       symbol: API3USDT
       fullName: API3
+      iconIndex: 7737
     XNO:
-      icon: 1567
       symbol: XNOUSDT
       fullName: Nano
+      iconIndex: 1567
