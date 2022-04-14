@@ -14,7 +14,9 @@ public interface ExchangeService {
 
     void removeAssetTicker(String assetName);
 
-    List<Ohlc> listOhlc(String assetName, String interval, Long startTime, Long endTime);
+    List<Ohlc> listOhlc(String assetName, String interval, Long start, Long end);
+
+    List<Asset> listAssets(User user, Set<String> assets);
 
     Set<String> availableAssets();
 
@@ -22,9 +24,7 @@ public interface ExchangeService {
 
     ApiWebSocketClient newApiWebSocketClient(User user);
 
-    List<Asset> listAssetsBalances(User user);
+    Optional<Asset> findAssetByName(User user, String assetName);
 
     Optional<AssetPrice> getAssetPrice(User user, String assetName);
-
-    Optional<Asset> findAssetByName(User user, String assetName);
 }

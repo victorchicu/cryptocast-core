@@ -8,6 +8,7 @@ import com.trader.core.services.ExchangeStrategy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AssetServiceImpl implements AssetService {
@@ -31,8 +32,8 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public List<Asset> listAssetsBalances(User user) {
+    public List<Asset> listAssets(User user, Set<String> assets) {
         ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
-        return exchangeService.listAssetsBalances(user);
+        return exchangeService.listAssets(user, assets);
     }
 }

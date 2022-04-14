@@ -10,7 +10,7 @@ public class OhlcToDtoConverter implements Converter<Ohlc, OhlcDto> {
     @Override
     public OhlcDto convert(Ohlc source) {
         return new OhlcDto(
-                source.getOpenTime(),
+                source.getTime(),
                 source.getOpen(),
                 source.getHigh(),
                 source.getLow(),

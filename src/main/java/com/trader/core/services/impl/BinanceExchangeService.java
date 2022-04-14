@@ -86,20 +86,15 @@ public class BinanceExchangeService implements ExchangeService {
     }
 
     @Override
-    public List<Ohlc> listOhlc(String assetName, String interval, Long startTime, Long endTime) {
-        return apiRestClient.listOhlc(assetName, interval, startTime, endTime);
+    public List<Ohlc> listOhlc(String assetName, String interval, Long start, Long end) {
+        return apiRestClient.listOhlc(assetName, interval, start, end);
     }
 
     @Override
-    public Set<String> availableAssets() {
-        return binanceProperties.getAssets().keySet();
-    }
-
-    @Override
-    public List<Asset> listAssetsBalances(User user) {
+    public List<Asset> listAssets(User user, Set<String> assets) {
         return apiRestClient.listAssets().stream()
                 .filter(this::onlyAllowedAssets)
-                .filter(this::onlyEffectiveBalance)
+                .filter(asset -> assets.contains(asset.getAsset()))
                 .map((Asset asset) -> {
                     asset.setPriceChange(BigDecimal.ZERO);
                     apiRestClient.getPrice(asset.getAsset())
@@ -116,9 +111,24 @@ public class BinanceExchangeService implements ExchangeService {
     }
 
     @Override
+    public Set<String> availableAssets() {
+        return binanceProperties.getAssets().keySet();
+    }
+
+    @Override
     public Optional<Asset> findAssetByName(User user, String assetName) {
         return apiRestClient.listAssets().stream()
                 .filter(asset -> asset.getAsset().equals(assetName))
+                .map(asset -> {
+                    asset.setPriceChange(BigDecimal.ZERO);
+                    return apiRestClient.getPrice(asset.getAsset())
+                            .map(assetPrice ->
+                                    updateAsset(asset, assetPrice.getPrice())
+                            )
+                            .orElseGet(() ->
+                                    updateAsset(asset, BigDecimal.ONE)
+                            );
+                })
                 .findFirst();
     }
 
@@ -148,6 +158,7 @@ public class BinanceExchangeService implements ExchangeService {
         );
         return new ExtendedBinanceApiWebSocketClient(binanceProperties, factory.newWebSocketClient());
     }
+
 
     private void sendNotification(User user, Asset asset, TickerEvent tickerEvent) {
         asset.setPriceChange(new BigDecimal(tickerEvent.getPriceChangePercent()));
@@ -184,10 +195,6 @@ public class BinanceExchangeService implements ExchangeService {
 
     private boolean onlyAllowedAssets(Asset asset) {
         return !binanceProperties.getBlacklist().contains(asset.getAsset());
-    }
-
-    private boolean onlyEffectiveBalance(Asset asset) {
-        return asset.getFree().compareTo(BigDecimal.ZERO) > 0 || asset.getLocked().compareTo(BigDecimal.ZERO) > 0;
     }
 
     private AssetDto toAssetDto(Asset asset) {

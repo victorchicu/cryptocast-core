@@ -26,13 +26,28 @@ public class GateExchangeService implements ExchangeService {
     }
 
     @Override
-    public List<Ohlc> listOhlc(String assetName, String interval, Long startTime, Long endTime) {
+    public List<Ohlc> listOhlc(String assetName, String interval, Long start, Long end) {
         throw new UnsupportedOperationException("listOhlc");
+    }
+
+    @Override
+    public List<Asset> listAssets(User user, Set<String> assets) {
+        throw new UnsupportedOperationException("listAssets");
     }
 
     @Override
     public Set<String> availableAssets() {
         throw new UnsupportedOperationException("availableAssets");
+    }
+
+    @Override
+    public Optional<Asset> findAssetByName(User user, String assetName) {
+        throw new UnsupportedOperationException("findAssetByName");
+    }
+
+    @Override
+    public Optional<AssetPrice> getAssetPrice(User user, String assetName) {
+        throw new UnsupportedOperationException("getAssetPrice");
     }
 
     @Override
@@ -43,20 +58,5 @@ public class GateExchangeService implements ExchangeService {
     @Override
     public ApiWebSocketClient newApiWebSocketClient(User user) {
         throw new UnsupportedOperationException("newApiWebSocketClient");
-    }
-
-    @Override
-    public List<Asset> listAssetsBalances(User user) {
-        throw new UnsupportedOperationException("listAssetsBalances");
-    }
-
-    @Override
-    public Optional<AssetPrice> getAssetPrice(User user, String assetName) {
-        throw new UnsupportedOperationException("getAssetPrice");
-    }
-
-    @Override
-    public Optional<Asset> findAssetByName(User user, String assetName) {
-        throw new UnsupportedOperationException("findAssetByName");
     }
 }

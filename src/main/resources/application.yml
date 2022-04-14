@@ -84,7 +84,7 @@ rabbitmq:
 
 notification:
   destinations:
-    TICKER_EVENT: "'/topic/' + asset + '-ticker'"
+    TICKER_EVENT: "'/topic/' + name + '-ticker'"
 
 binance:
   url: wss://api.binance.com/

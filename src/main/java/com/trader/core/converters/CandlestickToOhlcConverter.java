@@ -12,7 +12,7 @@ public class CandlestickToOhlcConverter implements Converter<Candlestick, Ohlc> 
     @Override
     public Ohlc convert(Candlestick source) {
         Ohlc ohlc = new Ohlc();
-        ohlc.setOpenTime(source.getOpenTime());
+        ohlc.setTime(source.getOpenTime());
         ohlc.setOpen(new BigDecimal(source.getOpen()));
         ohlc.setHigh(new BigDecimal(source.getHigh()));
         ohlc.setLow(new BigDecimal(source.getLow()));

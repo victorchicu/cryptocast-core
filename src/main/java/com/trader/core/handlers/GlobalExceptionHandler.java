@@ -34,7 +34,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({EmailNotFoundException.class})
-    public ResponseEntity<Object> emailNotFoundException(EmailNotFoundException ex, WebRequest webRequest) {
+    public ResponseEntity<Object> handleEmailNotFoundException(EmailNotFoundException ex, WebRequest webRequest) {
         LOG.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorDto(
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({SymbolNotFoundException.class})
-    public ResponseEntity<Object> handleSubscriptionNotFoundException(SymbolNotFoundException ex, WebRequest webRequest) {
+    public ResponseEntity<Object> handleSymbolNotFoundException(SymbolNotFoundException ex, WebRequest webRequest) {
         LOG.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
         return new ResponseEntity<>(
                 new ErrorDto(

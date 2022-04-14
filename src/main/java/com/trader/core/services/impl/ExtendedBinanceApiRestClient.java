@@ -55,9 +55,9 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     }
 
     @Override
-    public List<Ohlc> listOhlc(String assetName, String candlestickInterval, Long startTime, Long endTime) {
+    public List<Ohlc> listOhlc(String assetName, String interval, Long start, Long end) {
         String symbol = toSymbol(assetName);
-        return binanceApiRestClient.getCandlestickBars(symbol, CandlestickInterval.valueOf(candlestickInterval))
+        return binanceApiRestClient.getCandlestickBars(symbol, CandlestickInterval.valueOf(interval))
                 .stream()
                 .map(this::toCandlestick)
                 .collect(Collectors.toList());
@@ -87,7 +87,8 @@ public class ExtendedBinanceApiRestClient implements ApiRestClient {
     public Optional<AssetPrice> getPrice(String assetName) {
         try {
             String symbol = toSymbol(assetName);
-            return Optional.of(binanceApiRestClient.getPrice(symbol)).map(this::toAssetPrice);
+            return Optional.of(binanceApiRestClient.getPrice(symbol))
+                    .map(this::toAssetPrice);
         } catch (Exception e) {
             LOG.warn("An error occurred fetching asset " + assetName, e);
             return Optional.empty();

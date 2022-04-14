@@ -3,18 +3,18 @@ package com.trader.core.domain;
 import java.math.BigDecimal;
 
 public class Ohlc {
-    private Long openTime;
+    private Long time;
     private BigDecimal open;
     private BigDecimal high;
     private BigDecimal low;
     private BigDecimal close;
 
-    public Long getOpenTime() {
-        return openTime;
+    public Long getTime() {
+        return time;
     }
 
-    public void setOpenTime(Long openTime) {
-        this.openTime = openTime;
+    public void setTime(Long time) {
+        this.time = time;
     }
 
     public BigDecimal getOpen() {

@@ -16,7 +16,7 @@ public interface ApiRestClient {
 
     void cancelOrder(Principal principal, Long orderId, String assetName);
 
-    List<Ohlc> listOhlc(String assetName, String interval, Long startTime, Long endTime);
+    List<Ohlc> listOhlc(String assetName, String interval, Long start, Long end);
 
     List<Asset> listAssets();
 

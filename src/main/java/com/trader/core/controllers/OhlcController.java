@@ -16,15 +16,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/stocks/{assetName}")
-public class StocksController {
-    private static final Logger LOG = LoggerFactory.getLogger(StocksController.class);
+@RequestMapping("/api/ohlc/{assetName}")
+public class OhlcController {
+    private static final Logger LOG = LoggerFactory.getLogger(OhlcController.class);
 
     private final UserService userService;
     private final ExchangeStrategy exchangeStrategy;
     private final ConversionService conversionService;
 
-    public StocksController(
+    public OhlcController(
             UserService userService,
             ExchangeStrategy exchangeStrategy,
             ConversionService conversionService
@@ -35,17 +35,11 @@ public class StocksController {
     }
 
     @GetMapping
-    public List<OhlcDto> listOhlc(
-            Principal principal,
-            @PathVariable String assetName,
-            @RequestParam("interval") String interval,
-            @RequestParam(value = "startTime", required = false) Long startTime,
-            @RequestParam(value = "endTime", required = false) Long endTime
-    ) {
+    public List<OhlcDto> list(Principal principal, @PathVariable String assetName, @RequestParam String interval, @RequestParam(value = "start", required = false) Long start, @RequestParam(value = "end", required = false) Long end) {
         return userService.findById(principal.getName())
                 .map(user -> {
                     ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
-                    return exchangeService.listOhlc(assetName, interval, startTime, endTime)
+                    return exchangeService.listOhlc(assetName, interval, start, end)
                             .stream()
                             .map(this::toOhlcDto)
                             .collect(Collectors.toList());

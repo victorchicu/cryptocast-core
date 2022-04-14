@@ -24,7 +24,7 @@ public class ExtendedGateApiRestClient implements ApiRestClient {
     }
 
     @Override
-    public List<Ohlc> listOhlc(String assetName, String interval, Long startTime, Long endTime) {
+    public List<Ohlc> listOhlc(String assetName, String interval, Long start, Long end) {
         throw new UnsupportedOperationException("listOhlc");
     }
 

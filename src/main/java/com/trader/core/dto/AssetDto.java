@@ -6,7 +6,7 @@ import com.trader.core.enums.Quotation;
 import java.math.BigDecimal;
 
 public class AssetDto {
-    private final String asset;
+    private final String name;
     private final String fullName;
     private final Integer iconIndex;
     private final BigDecimal free;
@@ -18,7 +18,7 @@ public class AssetDto {
 
     @JsonCreator
     public AssetDto(
-            String asset,
+            String name,
             String fullName,
             Integer iconIndex,
             BigDecimal free,
@@ -28,7 +28,7 @@ public class AssetDto {
             BigDecimal balance,
             Quotation quotation
     ) {
-        this.asset = asset;
+        this.name = name;
         this.fullName = fullName;
         this.iconIndex = iconIndex;
         this.free = free;
@@ -39,8 +39,8 @@ public class AssetDto {
         this.quotation = quotation;
     }
 
-    public String getAsset() {
-        return asset;
+    public String getName() {
+        return name;
     }
 
     public String getFullName() {
