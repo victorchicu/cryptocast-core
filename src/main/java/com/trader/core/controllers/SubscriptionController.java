@@ -71,12 +71,12 @@ public class SubscriptionController {
     @DeleteMapping("/{assetName}/remove")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeSubscription(Principal principal, @PathVariable String assetName) {
-        userService.findById(principal.getName()).
-                ifPresentOrElse(user -> subscriptionService.findSubscription(user, assetName)
+        userService.findById(principal.getName())
+                .ifPresentOrElse(user -> subscriptionService.findSubscription(user, assetName)
                         .ifPresentOrElse(subscription -> {
                             assetService.removeAssetTickerEvent(user, subscription.getAssetName());
                             subscriptionService.deleteSubscriptionById(subscription.getId());
-                        }, () -> new SubscriptionNotFoundException()), () -> new UserNotFoundException()
+                        }, SubscriptionNotFoundException::new), UserNotFoundException::new
                 );
     }
 
