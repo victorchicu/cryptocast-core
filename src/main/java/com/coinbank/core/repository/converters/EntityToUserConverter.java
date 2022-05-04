@@ -1,0 +1,24 @@
+package com.coinbank.core.repository.converters;
+
+import com.coinbank.core.domain.User;
+import com.coinbank.core.entity.UserEntity;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
+
+@Component
+public class EntityToUserConverter implements Converter<UserEntity, User> {
+    @Override
+    public User convert(UserEntity source) {
+        return User.newBuilder()
+                .id(source.getId())
+                .email(source.getEmail())
+                .password(source.getPassword())
+                .imageUrl(source.getImageUrl())
+                .auth2Provider(source.getAuth2Provider())
+                .providerId(source.getProviderId())
+                .apiKey(source.getApiKey())
+                .secretKey(source.getSecretKey())
+                .exchangeProvider(source.getExchangeProvider())
+                .build();
+    }
+}

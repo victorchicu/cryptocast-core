@@ -14,7 +14,7 @@ jar {
     enabled(false)
     manifest {
         attributes(
-                'Main-Class': 'com.trader.core.TraderCoreApplication'
+                'Main-Class': 'com.coinbank.core.CoinbankCoreApplication'
         )
     }
 }
@@ -35,7 +35,7 @@ compileJava {
     options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
 }
 
-group = 'com.trader'
+group = 'com.coinbank'
 version = '0.0.1'
 sourceCompatibility = "15"
 
@@ -85,6 +85,8 @@ dependencies {
     implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.4.0'
     // https://mvnrepository.com/artifact/commons-configuration/commons-configuration
     implementation group: 'commons-configuration', name: 'commons-configuration', version: '1.10'
+    // https://mvnrepository.com/artifact/com.braintreepayments.gateway/braintree-java
+    implementation group: 'com.braintreepayments.gateway', name: 'braintree-java', version: '3.15.0'
 
     testImplementation 'io.projectreactor:reactor-test'
     testImplementation 'org.testcontainers:mongodb:1.15.3'
