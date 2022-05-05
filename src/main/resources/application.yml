@@ -73,7 +73,7 @@ logging:
 
 routes:
   publicRoutes:
-    - "/api/login/**"
+    - "/api/signin/**"
     - "/api/logout/**"
     - "/api/signup/**"
     - "/websocket/**"

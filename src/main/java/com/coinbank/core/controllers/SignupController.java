@@ -2,7 +2,7 @@ package com.coinbank.core.controllers;
 
 import com.coinbank.core.domain.User;
 import com.coinbank.core.dto.AccessTokenDto;
-import com.coinbank.core.dto.SignupRequestDto;
+import com.coinbank.core.dto.SignupDto;
 import com.coinbank.core.enums.ExchangeProvider;
 import com.coinbank.core.services.TokenProviderService;
 import com.coinbank.core.services.UserService;
@@ -38,18 +38,18 @@ public class SignupController {
     }
 
     @PostMapping
-    public AccessTokenDto signup(@RequestBody SignupRequestDto signupRequestDto) {
-        String email = signupRequestDto.getEmail();
-        ExchangeProvider provider = signupRequestDto.getExchangeProvider();
+    public AccessTokenDto signup(@RequestBody SignupDto signupDto) {
+        String email = signupDto.getEmail();
+        ExchangeProvider provider = signupDto.getExchangeProvider();
         if (userService.findByEmailAndExchangeProvider(email, provider).isPresent()) {
             throw new EmailNotFoundException();
         }
-        User user = toUser(signupRequestDto);
+        User user = toUser(signupDto);
         user = userService.save(user);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getId(),
-                        signupRequestDto.getPassword()
+                        signupDto.getPassword()
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -57,7 +57,7 @@ public class SignupController {
         return new AccessTokenDto(accessToken);
     }
 
-    private User toUser(SignupRequestDto signupRequestDto) {
-        return conversionService.convert(signupRequestDto, User.class);
+    private User toUser(SignupDto signupDto) {
+        return conversionService.convert(signupDto, User.class);
     }
 }

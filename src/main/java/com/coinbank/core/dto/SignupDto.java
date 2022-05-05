@@ -3,7 +3,7 @@ package com.coinbank.core.dto;
 import com.coinbank.core.enums.ExchangeProvider;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class SignupRequestDto {
+public class SignupDto {
     private final String email;
     private final String password;
     private final String apiKey;
@@ -11,7 +11,7 @@ public class SignupRequestDto {
     private final ExchangeProvider exchangeProvider;
 
     @JsonCreator
-    public SignupRequestDto(
+    public SignupDto(
             String email,
             String password,
             String apiKey,

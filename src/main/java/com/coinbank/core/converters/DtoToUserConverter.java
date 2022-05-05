@@ -1,7 +1,7 @@
 package com.coinbank.core.converters;
 
 import com.coinbank.core.domain.User;
-import com.coinbank.core.dto.SignupRequestDto;
+import com.coinbank.core.dto.SignupDto;
 import com.coinbank.core.enums.OAuth2Provider;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.convert.converter.Converter;
@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DtoToUserConverter implements Converter<SignupRequestDto, User> {
+public class DtoToUserConverter implements Converter<SignupDto, User> {
     private final PasswordEncoder passwordEncoder;
 
     public DtoToUserConverter(@Lazy PasswordEncoder passwordEncoder) {
@@ -17,7 +17,7 @@ public class DtoToUserConverter implements Converter<SignupRequestDto, User> {
     }
 
     @Override
-    public User convert(SignupRequestDto source) {
+    public User convert(SignupDto source) {
         return User.newBuilder()
                 .email(source.getEmail())
                 .password(passwordEncoder.encode(source.getPassword()))
