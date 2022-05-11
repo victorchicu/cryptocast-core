@@ -1,9 +1,9 @@
 package com.coinbank.core.services.impl;
 
+import com.coinbank.core.exceptions.UnsupportedExchangeProviderException;
 import com.coinbank.core.services.ExchangeStrategy;
 import com.coinbank.core.enums.ExchangeProvider;
 import com.coinbank.core.services.ExchangeService;
-import com.coinbank.core.exceptions.UnsupportedExchangeProviderService;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -19,7 +19,10 @@ public class ExchangeStrategyImpl implements ExchangeStrategy {
 
     @Override
     public ExchangeService getExchangeService(ExchangeProvider exchangeProvider) {
-        return Optional.ofNullable(exchanges.get(exchangeProvider))
-                .orElseThrow(UnsupportedExchangeProviderService::new);
+        ExchangeService q = exchanges.get(exchangeProvider);
+        return Optional.ofNullable(q)
+                .orElseThrow(() -> {
+                    return new UnsupportedExchangeProviderException(exchangeProvider);
+                });
     }
 }

@@ -3,10 +3,9 @@ package com.coinbank.core.controllers;
 import com.coinbank.core.domain.User;
 import com.coinbank.core.dto.AccessTokenDto;
 import com.coinbank.core.dto.SignupDto;
-import com.coinbank.core.enums.ExchangeProvider;
+import com.coinbank.core.exceptions.EmailException;
 import com.coinbank.core.services.TokenProviderService;
 import com.coinbank.core.services.UserService;
-import com.coinbank.core.exceptions.EmailNotFoundException;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,9 +39,8 @@ public class SignupController {
     @PostMapping
     public AccessTokenDto signup(@RequestBody SignupDto signupDto) {
         String email = signupDto.getEmail();
-        ExchangeProvider provider = signupDto.getExchangeProvider();
-        if (userService.findByEmailAndExchangeProvider(email, provider).isPresent()) {
-            throw new EmailNotFoundException();
+        if (userService.findByEmail(email).isPresent()) {
+            throw new EmailException(String.format("%s is taken", email));
         }
         User user = toUser(signupDto);
         user = userService.save(user);

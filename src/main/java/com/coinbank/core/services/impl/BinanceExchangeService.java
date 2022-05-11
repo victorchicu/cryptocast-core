@@ -140,8 +140,8 @@ public class BinanceExchangeService implements ExchangeService {
     @Override
     public ApiRestClient newApiRestClient(User user) {
         BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(
-                user.getApiKey(),
-                user.getSecretKey(),
+                "user.getApiKey()",
+                "user.getSecretKey()",
                 binanceProperties.getUseTestnet(),
                 binanceProperties.getUseTestnetStreaming()
         );
@@ -151,8 +151,8 @@ public class BinanceExchangeService implements ExchangeService {
     @Override
     public ApiWebSocketClient newApiWebSocketClient(User user) {
         BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(
-                user.getApiKey(),
-                user.getSecretKey(),
+                "user.getApiKey()",
+                "user.getSecretKey()",
                 binanceProperties.getUseTestnet(),
                 binanceProperties.getUseTestnetStreaming()
         );

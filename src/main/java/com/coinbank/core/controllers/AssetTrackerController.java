@@ -2,7 +2,7 @@ package com.coinbank.core.controllers;
 
 import com.coinbank.core.domain.AssetTracker;
 import com.coinbank.core.dto.AssetTrackerDto;
-import com.coinbank.core.exceptions.SubscriptionNotFoundException;
+import com.coinbank.core.exceptions.AssetTrackerNotFoundException;
 import com.coinbank.core.exceptions.UserNotFoundException;
 import com.coinbank.core.services.AssetService;
 import com.coinbank.core.services.AssetTrackerService;
@@ -44,7 +44,7 @@ public class AssetTrackerController {
                         .ifPresentOrElse(subscription -> {
                             assetService.removeAssetTickerEvent(user, subscription.getAssetName());
                             assetTrackerService.deleteById(subscription.getId());
-                        }, SubscriptionNotFoundException::new), UserNotFoundException::new
+                        }, AssetTrackerNotFoundException::new), UserNotFoundException::new
                 );
     }
 
@@ -78,7 +78,7 @@ public class AssetTrackerController {
                                     return subscription;
                                 })
                                 .map(this::toAssetTrackerDto)
-                                .orElseThrow(SubscriptionNotFoundException::new)
+                                .orElseThrow(AssetTrackerNotFoundException::new)
                 )
                 .orElseThrow(UserNotFoundException::new);
     }

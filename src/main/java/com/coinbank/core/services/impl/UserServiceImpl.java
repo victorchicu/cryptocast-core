@@ -2,7 +2,6 @@ package com.coinbank.core.services.impl;
 
 import com.coinbank.core.domain.User;
 import com.coinbank.core.entity.UserEntity;
-import com.coinbank.core.enums.ExchangeProvider;
 import com.coinbank.core.repository.UserRepository;
 import com.coinbank.core.services.UserService;
 import org.springframework.core.convert.ConversionService;
@@ -34,11 +33,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmailAndExchangeProvider(String email, ExchangeProvider exchangeProvider) {
-        return userRepository.findByEmailAndExchangeProvider(email, exchangeProvider)
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email)
                 .map(this::toUser);
     }
-
 
     private User toUser(UserEntity accountEntity) {
         return conversionService.convert(accountEntity, User.class);

@@ -3,16 +3,16 @@ package com.coinbank.core.domain;
 import com.coinbank.core.enums.ExchangeProvider;
 import com.coinbank.core.enums.OAuth2Provider;
 
+import java.util.Map;
+
 public class User {
     private String id;
     private String email;
     private String password;
     private String imageUrl;
     private String providerId;
-    private String apiKey;
-    private String secretKey;
     private OAuth2Provider auth2Provider;
-    private ExchangeProvider exchangeProvider;
+    private Map<String, CryptoExchange> cryptoExchanges;
 
     private User(Builder builder) {
         id = builder.id;
@@ -20,10 +20,8 @@ public class User {
         password = builder.password;
         imageUrl = builder.imageUrl;
         providerId = builder.providerId;
-        apiKey = builder.apiKey;
-        secretKey = builder.secretKey;
         auth2Provider = builder.auth2Provider;
-        exchangeProvider = builder.exchangeProvider;
+        cryptoExchanges = builder.cryptoExchanges;
     }
 
     public static Builder newBuilder() {
@@ -34,72 +32,111 @@ public class User {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getImageUrl() {
         return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     public String getProviderId() {
         return providerId;
     }
 
-    public void setProviderId(String providerId) {
-        this.providerId = providerId;
-    }
-
-    public String getApiKey() {
-        return apiKey;
-    }
-
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
-    }
-
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
-
     public OAuth2Provider getAuth2Provider() {
         return auth2Provider;
     }
 
-    public void setAuth2Provider(OAuth2Provider auth2Provider) {
-        this.auth2Provider = auth2Provider;
+    public Map<String, CryptoExchange> getCryptoExchanges() {
+        return cryptoExchanges;
     }
 
-    public ExchangeProvider getExchangeProvider() {
-        return exchangeProvider;
-    }
+    public static class CryptoExchange {
+        private String name;
+        private String apiKey;
+        private String secretKey;
+        private ExchangeProvider provider;
 
-    public void setExchangeProvider(ExchangeProvider exchangeProvider) {
-        this.exchangeProvider = exchangeProvider;
+        private CryptoExchange(Builder builder) {
+            name = builder.name;
+            apiKey = builder.apiKey;
+            secretKey = builder.secretKey;
+            provider = builder.provider;
+        }
+
+        public static Builder newBuilder() {
+            return new Builder();
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getApiKey() {
+            return apiKey;
+        }
+
+        public void setApiKey(String apiKey) {
+            this.apiKey = apiKey;
+        }
+
+        public String getSecretKey() {
+            return secretKey;
+        }
+
+        public void setSecretKey(String secretKey) {
+            this.secretKey = secretKey;
+        }
+
+        public ExchangeProvider getProvider() {
+            return provider;
+        }
+
+        public void setProvider(ExchangeProvider provider) {
+            this.provider = provider;
+        }
+
+        public static final class Builder {
+            private String name;
+            private String apiKey;
+            private String secretKey;
+            private ExchangeProvider provider;
+
+            private Builder() {}
+
+            public Builder name(String name) {
+                this.name = name;
+                return this;
+            }
+
+            public Builder apiKey(String apiKey) {
+                this.apiKey = apiKey;
+                return this;
+            }
+
+            public Builder secretKey(String secretKey) {
+                this.secretKey = secretKey;
+                return this;
+            }
+
+            public Builder provider(ExchangeProvider provider) {
+                this.provider = provider;
+                return this;
+            }
+
+            public CryptoExchange build() {
+                return new CryptoExchange(this);
+            }
+        }
     }
 
     public static final class Builder {
@@ -108,10 +145,8 @@ public class User {
         private String password;
         private String imageUrl;
         private String providerId;
-        private String apiKey;
-        private String secretKey;
         private OAuth2Provider auth2Provider;
-        private ExchangeProvider exchangeProvider;
+        private Map<String, CryptoExchange> cryptoExchanges;
 
         private Builder() {}
 
@@ -140,23 +175,13 @@ public class User {
             return this;
         }
 
-        public Builder apiKey(String apiKey) {
-            this.apiKey = apiKey;
-            return this;
-        }
-
-        public Builder secretKey(String secretKey) {
-            this.secretKey = secretKey;
-            return this;
-        }
-
         public Builder auth2Provider(OAuth2Provider auth2Provider) {
             this.auth2Provider = auth2Provider;
             return this;
         }
 
-        public Builder exchangeProvider(ExchangeProvider exchangeProvider) {
-            this.exchangeProvider = exchangeProvider;
+        public Builder cryptoExchanges(Map<String, CryptoExchange> cryptoExchanges) {
+            this.cryptoExchanges = cryptoExchanges;
             return this;
         }
 

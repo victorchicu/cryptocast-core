@@ -22,9 +22,10 @@ public class DtoToUserConverter implements Converter<SignupDto, User> {
                 .email(source.getEmail())
                 .password(passwordEncoder.encode(source.getPassword()))
                 .auth2Provider(OAuth2Provider.LOCAL)
-                .apiKey(source.getApiKey())
-                .secretKey(source.getSecretKey())
-                .exchangeProvider(source.getExchangeProvider())
+                //TODO: Refactor providers and API credentials
+                //.apiKey(source.getApiKey())
+                //.secretKey(source.getSecretKey())
+                //.exchangeProvider(source.getExchangeProvider())
                 .build();
     }
 }

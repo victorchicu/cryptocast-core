@@ -1,5 +1,6 @@
 package com.coinbank.core.configs;
 
+import com.coinbank.core.domain.User;
 import com.coinbank.core.services.ApiWebSocketClient;
 import com.coinbank.core.services.ApiRestClient;
 import com.coinbank.core.exceptions.ApiClientException;
@@ -29,9 +30,9 @@ public class ApiRestClientConfig {
     @SessionScope(proxyMode = ScopedProxyMode.TARGET_CLASS)
     public ApiRestClient apiRestClient() {
         return userService.findById(SecurityContextHolder.getContext().getAuthentication().getName())
-                .map(user -> {
+                .map((User user) -> {
                     ExchangeService exchangeService = exchangeStrategy.getExchangeService(
-                            user.getExchangeProvider()
+                            user.getCryptoExchanges().get("BINANCE").getProvider()
                     );
                     return exchangeService.newApiRestClient(user);
                 })
@@ -44,7 +45,7 @@ public class ApiRestClientConfig {
         return userService.findById(SecurityContextHolder.getContext().getAuthentication().getName())
                 .map(user -> {
                     ExchangeService exchangeService = exchangeStrategy.getExchangeService(
-                            user.getExchangeProvider()
+                            user.getCryptoExchanges().get("BINANCE").getProvider()
                     );
                     return exchangeService.newApiWebSocketClient(user);
                 })

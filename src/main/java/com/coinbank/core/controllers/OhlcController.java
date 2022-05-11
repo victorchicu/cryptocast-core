@@ -2,6 +2,7 @@ package com.coinbank.core.controllers;
 
 import com.coinbank.core.domain.Ohlc;
 import com.coinbank.core.dto.OhlcDto;
+import com.coinbank.core.enums.ExchangeProvider;
 import com.coinbank.core.services.ExchangeService;
 import com.coinbank.core.services.ExchangeStrategy;
 import com.coinbank.core.services.UserService;
@@ -38,7 +39,7 @@ public class OhlcController {
     public List<OhlcDto> list(Principal principal, @PathVariable String assetName, @RequestParam String interval, @RequestParam(value = "start", required = false) Long start, @RequestParam(value = "end", required = false) Long end) {
         return userService.findById(principal.getName())
                 .map(user -> {
-                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
+                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(ExchangeProvider.BINANCE);
                     return exchangeService.listOhlc(assetName, interval, start, end)
                             .stream()
                             .map(this::toOhlcDto)

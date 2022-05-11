@@ -5,6 +5,7 @@ import com.coinbank.core.domain.AssetPrice;
 import com.coinbank.core.dto.AssetDto;
 import com.coinbank.core.dto.AssetPriceDto;
 import com.coinbank.core.dto.ChipDto;
+import com.coinbank.core.enums.ExchangeProvider;
 import com.coinbank.core.services.AssetService;
 import com.coinbank.core.services.ExchangeService;
 import com.coinbank.core.services.ExchangeStrategy;
@@ -49,7 +50,7 @@ public class AssetsController {
     public AssetDto getAsset(Principal principal, @PathVariable String assetName) {
         return userService.findById(principal.getName())
                 .map(user -> {
-                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
+                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(ExchangeProvider.BINANCE);
                     return exchangeService.findAssetByName(user, assetName)
                             .map(this::toAssetDto)
                             .orElseThrow(() -> new AssetNotFoundException(assetName));
@@ -61,7 +62,7 @@ public class AssetsController {
     public AssetPriceDto getAssetPrice(Principal principal, @PathVariable String assetName) {
         return userService.findById(principal.getName())
                 .map(user -> {
-                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
+                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(ExchangeProvider.BINANCE);
                     return exchangeService.getAssetPrice(user, assetName)
                             .map(this::toAssetPriceDto)
                             .orElseThrow(() -> new AssetNotFoundException(assetName));
@@ -73,7 +74,7 @@ public class AssetsController {
     public List<ChipDto> availableAssets(Principal principal) {
         return userService.findById(principal.getName())
                 .map(user -> {
-                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
+                    ExchangeService exchangeService = exchangeStrategy.getExchangeService(ExchangeProvider.BINANCE);
                     return exchangeService.availableAssets();
                 })
                 .map((Set<String> symbols) -> symbols.stream()

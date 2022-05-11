@@ -72,9 +72,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         return userService.save(account);
     }
 
-    private User updateExistingUser(User existingAccount, OAuth2UserInfo oAuth2UserInfo) {
-        existingAccount.setId(oAuth2UserInfo.getName());
-        existingAccount.setImageUrl(oAuth2UserInfo.getImageUrl());
-        return userService.save(existingAccount);
+    private User updateExistingUser(User user, OAuth2UserInfo oAuth2UserInfo) {
+//        user.setId(oAuth2UserInfo.getName());
+//        user.setImageUrl(oAuth2UserInfo.getImageUrl());
+        return userService.save(user);
     }
 }

@@ -1,5 +1,6 @@
 package com.coinbank.core.services.impl;
 
+import com.coinbank.core.enums.ExchangeProvider;
 import com.coinbank.core.services.ExchangeStrategy;
 import com.coinbank.core.domain.Asset;
 import com.coinbank.core.domain.User;
@@ -20,20 +21,20 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public void addAssetTickerEvent(User user, String assetName) {
-        ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
+        ExchangeService exchangeService = exchangeStrategy.getExchangeService(ExchangeProvider.BINANCE);
         exchangeService.createAssetTicker(user, assetName);
     }
 
 
     @Override
     public void removeAssetTickerEvent(User user, String assetName) {
-        ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
+        ExchangeService exchangeService = exchangeStrategy.getExchangeService(ExchangeProvider.BINANCE);
         exchangeService.removeAssetTicker(assetName);
     }
 
     @Override
     public List<Asset> listAssets(User user, Set<String> assets) {
-        ExchangeService exchangeService = exchangeStrategy.getExchangeService(user.getExchangeProvider());
+        ExchangeService exchangeService = exchangeStrategy.getExchangeService(ExchangeProvider.BINANCE);
         return exchangeService.listAssets(user, assets);
     }
 }

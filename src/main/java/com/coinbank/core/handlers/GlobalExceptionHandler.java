@@ -1,9 +1,10 @@
 package com.coinbank.core.handlers;
 
 import com.binance.api.client.exception.BinanceApiException;
-import com.coinbank.core.exceptions.SubscriptionNotFoundException;
+import com.coinbank.core.exceptions.AssetTrackerNotFoundException;
+import com.coinbank.core.exceptions.NotFoundEmailException;
 import com.coinbank.core.exceptions.SymbolNotFoundException;
-import com.coinbank.core.exceptions.EmailNotFoundException;
+import com.coinbank.core.exceptions.UnsupportedExchangeProviderException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -11,31 +12,35 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Collections;
 import java.util.List;
 
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler {
+    private static final boolean DEFAULT_INCLUDE_CLIENT_INFO = true;
+
     private static final Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler({BinanceApiException.class})
     public ResponseEntity<Object> handleBinanceApiException(BinanceApiException ex, WebRequest webRequest) {
-        LOG.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
+        LOG.warn("Binance error {}", ex.getError());
+        LOG.warn("Error message {}", ex.getMessage());
+        LOG.warn("Request description {}", webRequest.getDescription(DEFAULT_INCLUDE_CLIENT_INFO));
         return new ResponseEntity<>(
                 new ErrorDto(
                         Collections.singletonList(
-                                new ErrorDto.Details("BinanceApiException", null, ex.getMessage())
+                                new ErrorDto.Details(BinanceApiException.class.getSimpleName(), null, ex.getMessage())
                         )
                 ),
                 HttpStatus.INTERNAL_SERVER_ERROR
         );
     }
 
-    @ExceptionHandler({EmailNotFoundException.class})
-    public ResponseEntity<Object> handleEmailNotFoundException(EmailNotFoundException ex, WebRequest webRequest) {
-        LOG.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
+    @ExceptionHandler({NotFoundEmailException.class})
+    public ResponseEntity<Object> handleNotFoundEmailException(NotFoundEmailException ex, WebRequest webRequest) {
+        LOG.warn("Error message {}", ex.getMessage());
+        LOG.warn("Request description {}", webRequest.getDescription(DEFAULT_INCLUDE_CLIENT_INFO));
         return new ResponseEntity<>(
                 new ErrorDto(
                         Collections.singletonList(
@@ -48,7 +53,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({SymbolNotFoundException.class})
     public ResponseEntity<Object> handleSymbolNotFoundException(SymbolNotFoundException ex, WebRequest webRequest) {
-        LOG.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
+        LOG.warn("Error message {}", ex.getMessage());
+        LOG.warn("Request description {}", webRequest.getDescription(DEFAULT_INCLUDE_CLIENT_INFO));
         return new ResponseEntity<>(
                 new ErrorDto(
                         Collections.singletonList(
@@ -59,9 +65,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
     }
 
-    @ExceptionHandler({SubscriptionNotFoundException.class})
-    public ResponseEntity<Object> handleSubscriptionNotFoundException(SubscriptionNotFoundException ex, WebRequest webRequest) {
-        LOG.warn("Request description: {} | Error message: {}", webRequest.getDescription(true), ex.getMessage());
+    @ExceptionHandler({AssetTrackerNotFoundException.class})
+    public ResponseEntity<Object> handleAssetTrackerNotFoundException(AssetTrackerNotFoundException ex, WebRequest webRequest) {
+        LOG.warn("Error message {}", ex.getMessage());
+        LOG.warn("Request description: {}", webRequest.getDescription(DEFAULT_INCLUDE_CLIENT_INFO));
         return new ResponseEntity<>(
                 new ErrorDto(
                         Collections.singletonList(
@@ -72,15 +79,29 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
     }
 
-    public static class ErrorDto {
-        private final List<Details> errors;
+    @ExceptionHandler({UnsupportedExchangeProviderException.class})
+    public ResponseEntity<Object> handleUnsupportedExchangeProviderException(UnsupportedExchangeProviderException ex, WebRequest webRequest) {
+        LOG.warn("Error message {}", ex.getMessage());
+        LOG.warn("Request description: {}", webRequest.getDescription(DEFAULT_INCLUDE_CLIENT_INFO));
+        return new ResponseEntity<>(
+                new ErrorDto(
+                        Collections.singletonList(
+                                new ErrorDto.Details(UnsupportedExchangeProviderException.class.getSimpleName(), null, ex.getMessage())
+                        )
+                ),
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
 
-        public ErrorDto(List<Details> errors) {
-            this.errors = errors;
+    public static class ErrorDto {
+        private final List<Details> details;
+
+        public ErrorDto(List<Details> details) {
+            this.details = details;
         }
 
-        public List<Details> getErrors() {
-            return errors;
+        public List<Details> getDetails() {
+            return details;
         }
 
         public static final class Details {

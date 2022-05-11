@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface UserService {
     User save(User user);
     Optional<User> findById(String id);
-    Optional<User> findByEmailAndExchangeProvider(String email, ExchangeProvider exchangeProvider);
+    Optional<User> findByEmail(String email);
 }
