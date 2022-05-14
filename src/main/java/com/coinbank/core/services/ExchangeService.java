@@ -1,28 +1,33 @@
 package com.coinbank.core.services;
 
-import com.coinbank.core.domain.Asset;
-import com.coinbank.core.domain.AssetPrice;
-import com.coinbank.core.domain.Ohlc;
-import com.coinbank.core.domain.User;
+import com.binance.api.client.domain.account.Order;
+import com.coinbank.core.domain.*;
+import org.springframework.data.domain.Pageable;
 
+import java.io.Closeable;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public interface ExchangeService {
-    void createAssetTicker(User user, String assetName);
+public interface ExchangeService extends Closeable {
+    void createOrder(Principal principal, String assetName, TestOrder testOrder);
+
+    void cancelOrder(Principal principal, Long orderId, String assetName);
+
+    void addAssetTicker(User user, String assetName);
 
     void removeAssetTicker(String assetName);
 
     List<Ohlc> listOhlc(String assetName, String interval, Long start, Long end);
 
-    List<Asset> listAssets(User user, Set<String> assets);
+    List<Asset> listAssets(String label, User user);
 
     Set<String> availableAssets();
 
-    ApiRestClient newApiRestClient(User user);
+    List<Order> getAllOrders(String assetName, Pageable pageable);
 
-    ApiWebSocketClient newApiWebSocketClient(User user);
+    List<Order> getOpenOrders(String assetName, Pageable pageable);
 
     Optional<Asset> findAssetByName(User user, String assetName);
 

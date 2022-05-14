@@ -4,7 +4,6 @@ import com.binance.api.client.exception.BinanceApiException;
 import com.coinbank.core.exceptions.AssetTrackerNotFoundException;
 import com.coinbank.core.exceptions.NotFoundEmailException;
 import com.coinbank.core.exceptions.SymbolNotFoundException;
-import com.coinbank.core.exceptions.UnsupportedExchangeProviderException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -76,20 +75,6 @@ public class GlobalExceptionHandler {
                         )
                 ),
                 HttpStatus.NOT_FOUND
-        );
-    }
-
-    @ExceptionHandler({UnsupportedExchangeProviderException.class})
-    public ResponseEntity<Object> handleUnsupportedExchangeProviderException(UnsupportedExchangeProviderException ex, WebRequest webRequest) {
-        LOG.warn("Error message {}", ex.getMessage());
-        LOG.warn("Request description: {}", webRequest.getDescription(DEFAULT_INCLUDE_CLIENT_INFO));
-        return new ResponseEntity<>(
-                new ErrorDto(
-                        Collections.singletonList(
-                                new ErrorDto.Details(UnsupportedExchangeProviderException.class.getSimpleName(), null, ex.getMessage())
-                        )
-                ),
-                HttpStatus.INTERNAL_SERVER_ERROR
         );
     }
 

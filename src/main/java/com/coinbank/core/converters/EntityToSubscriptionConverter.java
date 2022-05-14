@@ -1,4 +1,4 @@
-package com.coinbank.core.repository.converters;
+package com.coinbank.core.converters;
 
 import com.coinbank.core.domain.AssetTracker;
 import com.coinbank.core.entity.AssetTrackerEntity;

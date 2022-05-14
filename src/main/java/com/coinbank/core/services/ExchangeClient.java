@@ -11,7 +11,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
-public interface ApiRestClient {
+public interface ExchangeClient {
     void createOrder(Principal principal, String assetName, TestOrder testOrder);
 
     void cancelOrder(Principal principal, Long orderId, String assetName);

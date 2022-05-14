@@ -47,7 +47,7 @@ public class ChipsController {
                     return chipsService.addChip(chip);
                 })
                 .map(this::toChipDto)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new UserNotFoundException());
     }
 
     @GetMapping
@@ -58,7 +58,7 @@ public class ChipsController {
                         .map(this::toChipDto)
                         .collect(Collectors.toList())
                 )
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new UserNotFoundException());
     }
 
 

@@ -1,4 +1,4 @@
-package com.coinbank.core.repository.converters;
+package com.coinbank.core.converters;
 
 import com.coinbank.core.domain.Chip;
 import com.coinbank.core.entity.ChipEntity;

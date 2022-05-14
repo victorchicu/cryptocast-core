@@ -44,7 +44,7 @@ public class AssetTrackerController {
                         .ifPresentOrElse(subscription -> {
                             assetService.removeAssetTickerEvent(user, subscription.getAssetName());
                             assetTrackerService.deleteById(subscription.getId());
-                        }, AssetTrackerNotFoundException::new), UserNotFoundException::new
+                        }, AssetTrackerNotFoundException::new), () -> new UserNotFoundException()
                 );
     }
 
@@ -64,7 +64,7 @@ public class AssetTrackerController {
                     assetService.addAssetTickerEvent(user, subscription.getAssetName());
                     return subscription;
                 })
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new UserNotFoundException());
     }
 
     @GetMapping("/{assetName}")
@@ -80,7 +80,7 @@ public class AssetTrackerController {
                                 .map(this::toAssetTrackerDto)
                                 .orElseThrow(AssetTrackerNotFoundException::new)
                 )
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new UserNotFoundException());
     }
 
     @GetMapping
@@ -89,7 +89,7 @@ public class AssetTrackerController {
                 .map(user -> assetTrackerService.findAll(user, pageable)
                         .map(this::toAssetTrackerDto)
                 )
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new UserNotFoundException());
     }
 
     private AssetTrackerDto toAssetTrackerDto(AssetTracker assetTracker) {

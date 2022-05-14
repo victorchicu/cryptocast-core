@@ -1,40 +1,45 @@
 package com.coinbank.core.services.impl;
 
-import com.coinbank.core.enums.ExchangeProvider;
-import com.coinbank.core.services.ExchangeStrategy;
 import com.coinbank.core.domain.Asset;
 import com.coinbank.core.domain.User;
 import com.coinbank.core.services.AssetService;
 import com.coinbank.core.services.ExchangeService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class AssetServiceImpl implements AssetService {
-    private final ExchangeStrategy exchangeStrategy;
+    private final Map<String, ExchangeService> exchanges;
 
-    public AssetServiceImpl(ExchangeStrategy exchangeStrategy) {
-        this.exchangeStrategy = exchangeStrategy;
+    public AssetServiceImpl(Map<String, ExchangeService> exchanges) {
+        this.exchanges = exchanges;
     }
 
     @Override
     public void addAssetTickerEvent(User user, String assetName) {
-        ExchangeService exchangeService = exchangeStrategy.getExchangeService(ExchangeProvider.BINANCE);
-        exchangeService.createAssetTicker(user, assetName);
+//        ExchangeService exchangeService = exchangeFactory.create(, ExchangeProvider.BINANCE);
+//        exchangeService.addAssetTicker(user, assetName);
     }
 
 
     @Override
     public void removeAssetTickerEvent(User user, String assetName) {
-        ExchangeService exchangeService = exchangeStrategy.getExchangeService(ExchangeProvider.BINANCE);
-        exchangeService.removeAssetTicker(assetName);
+//        ExchangeService exchangeService = exchangeFactory.create(, ExchangeProvider.BINANCE);
+//        exchangeService.removeAssetTicker(assetName);
     }
 
     @Override
-    public List<Asset> listAssets(User user, Set<String> assets) {
-        ExchangeService exchangeService = exchangeStrategy.getExchangeService(ExchangeProvider.BINANCE);
-        return exchangeService.listAssets(user, assets);
+    public List<Asset> listAssets(User user) {
+        return user.getApiKeys().entrySet().stream()
+                .map(entry ->
+                        Optional.ofNullable(exchanges.get(entry.getKey()))
+                                .map(exchangeService -> exchangeService.listAssets(entry.getKey(), user))
+                                .orElseThrow(() -> new RuntimeException("Unsupported exchange service: " + entry.getKey()))
+                )
+                .collect(ArrayList::new, List::addAll, List::addAll);
     }
 }

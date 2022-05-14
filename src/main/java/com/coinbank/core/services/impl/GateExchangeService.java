@@ -1,22 +1,29 @@
 package com.coinbank.core.services.impl;
 
-import com.coinbank.core.domain.Asset;
-import com.coinbank.core.domain.AssetPrice;
-import com.coinbank.core.domain.Ohlc;
-import com.coinbank.core.domain.User;
-import com.coinbank.core.services.ApiRestClient;
-import com.coinbank.core.services.ApiWebSocketClient;
+import com.binance.api.client.domain.account.Order;
+import com.coinbank.core.domain.*;
 import com.coinbank.core.services.ExchangeService;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
+import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@Service("GATE")
 public class GateExchangeService implements ExchangeService {
     @Override
-    public void createAssetTicker(User user, String assetName) {
+    public void createOrder(Principal principal, String assetName, TestOrder testOrder) {
+        throw new UnsupportedOperationException("createOrder");
+    }
+
+    @Override
+    public void cancelOrder(Principal principal, Long orderId, String assetName) {
+        throw new UnsupportedOperationException("cancelOrder");
+    }
+
+    @Override
+    public void addAssetTicker(User user, String assetName) {
         throw new UnsupportedOperationException("createAssetTicker");
     }
 
@@ -31,13 +38,23 @@ public class GateExchangeService implements ExchangeService {
     }
 
     @Override
-    public List<Asset> listAssets(User user, Set<String> assets) {
+    public List<Asset> listAssets(String label, User user) {
         throw new UnsupportedOperationException("listAssets");
     }
 
     @Override
     public Set<String> availableAssets() {
         throw new UnsupportedOperationException("availableAssets");
+    }
+
+    @Override
+    public List<Order> getAllOrders(String assetName, Pageable pageable) {
+        throw new UnsupportedOperationException("getAllOrders");
+    }
+
+    @Override
+    public List<Order> getOpenOrders(String assetName, Pageable pageable) {
+        throw new UnsupportedOperationException("getOpenOrders");
     }
 
     @Override
@@ -51,12 +68,7 @@ public class GateExchangeService implements ExchangeService {
     }
 
     @Override
-    public ApiRestClient newApiRestClient(User user) {
-        throw new UnsupportedOperationException("newApiRestClient");
-    }
+    public void close() throws IOException {
 
-    @Override
-    public ApiWebSocketClient newApiWebSocketClient(User user) {
-        throw new UnsupportedOperationException("newApiWebSocketClient");
     }
 }

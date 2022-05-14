@@ -2,9 +2,10 @@ package com.coinbank.core.converters;
 
 import com.binance.api.client.domain.TimeInForce;
 import com.binance.api.client.domain.account.NewOrder;
+import com.coinbank.core.configs.BinanceConfig;
 import com.coinbank.core.configs.BinanceProperties;
 import com.coinbank.core.domain.TestOrder;
-import com.coinbank.core.exceptions.AssetNotFoundException;
+import com.coinbank.core.exceptions.IllegalAssetException;
 import com.coinbank.core.exceptions.IllegalOrderTypeException;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -13,10 +14,10 @@ import java.util.Optional;
 
 @Component
 public class OrderToNewConverter implements Converter<TestOrder, NewOrder> {
-    private final BinanceProperties binanceProperties;
+    private final BinanceConfig binanceConfig;
 
-    public OrderToNewConverter(BinanceProperties binanceProperties) {
-        this.binanceProperties = binanceProperties;
+    public OrderToNewConverter(BinanceConfig binanceConfig) {
+        this.binanceConfig = binanceConfig;
     }
 
     @Override
@@ -56,8 +57,8 @@ public class OrderToNewConverter implements Converter<TestOrder, NewOrder> {
     }
 
     private String toSymbol(String assetName) {
-        return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
+        return Optional.ofNullable(binanceConfig.getProps().getAssets().get(assetName))
                 .map(BinanceProperties.AssetConfig::getSymbol)
-                .orElseThrow(() -> new AssetNotFoundException(assetName));
+                .orElseThrow(() -> new IllegalAssetException(assetName));
     }
 }

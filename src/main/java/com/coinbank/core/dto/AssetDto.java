@@ -1,6 +1,6 @@
 package com.coinbank.core.dto;
 
-import com.coinbank.core.enums.Quotation;
+import com.coinbank.core.enums.Exchange;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.math.BigDecimal;
@@ -8,35 +8,21 @@ import java.math.BigDecimal;
 public class AssetDto {
     private final String name;
     private final String fullName;
-    private final Integer iconIndex;
-    private final BigDecimal free;
-    private final BigDecimal frozen;
-    private final BigDecimal price;
-    private final BigDecimal priceChange;
-    private final BigDecimal balance;
-    private final Quotation quotation;
+    private final String apiKeyName;
+    private final Exchange exchange;
+    private final BigDecimal totalFunds;
+    private final BigDecimal fundsAvailable;
+    private final BigDecimal usedInAnyOutstandingOrders;
 
     @JsonCreator
-    public AssetDto(
-            String name,
-            String fullName,
-            Integer iconIndex,
-            BigDecimal free,
-            BigDecimal frozen,
-            BigDecimal price,
-            BigDecimal priceChange,
-            BigDecimal balance,
-            Quotation quotation
-    ) {
+    public AssetDto(String name, String fullName, String apiKeyName, Exchange exchange, BigDecimal totalFunds, BigDecimal fundsAvailable, BigDecimal usedInAnyOutstandingOrders) {
         this.name = name;
         this.fullName = fullName;
-        this.iconIndex = iconIndex;
-        this.free = free;
-        this.frozen = frozen;
-        this.price = price;
-        this.priceChange = priceChange;
-        this.balance = balance;
-        this.quotation = quotation;
+        this.apiKeyName = apiKeyName;
+        this.exchange = exchange;
+        this.totalFunds = totalFunds;
+        this.fundsAvailable = fundsAvailable;
+        this.usedInAnyOutstandingOrders = usedInAnyOutstandingOrders;
     }
 
     public String getName() {
@@ -47,31 +33,23 @@ public class AssetDto {
         return fullName;
     }
 
-    public Integer getIconIndex() {
-        return iconIndex;
+    public String getApiKeyName() {
+        return apiKeyName;
     }
 
-    public BigDecimal getFree() {
-        return free;
+    public Exchange getExchange() {
+        return exchange;
     }
 
-    public BigDecimal getFrozen() {
-        return frozen;
+    public BigDecimal getTotalFunds() {
+        return totalFunds;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getFundsAvailable() {
+        return fundsAvailable;
     }
 
-    public BigDecimal getPriceChange() {
-        return priceChange;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public Quotation getQuotation() {
-        return quotation;
+    public BigDecimal getUsedInAnyOutstandingOrders() {
+        return usedInAnyOutstandingOrders;
     }
 }

@@ -1,41 +1,26 @@
 package com.coinbank.core.converters;
 
-import com.coinbank.core.configs.BinanceProperties;
 import com.coinbank.core.domain.Asset;
 import com.coinbank.core.dto.AssetDto;
-import com.coinbank.core.exceptions.AssetNotFoundException;
-import org.springframework.context.annotation.Lazy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 public class AssetToDtoConverter implements Converter<Asset, AssetDto> {
-    private final BinanceProperties binanceProperties;
-
-    public AssetToDtoConverter(@Lazy BinanceProperties binanceProperties) {
-        this.binanceProperties = binanceProperties;
-    }
+    private static final Logger LOG = LoggerFactory.getLogger(AssetToDtoConverter.class);
 
     @Override
     public AssetDto convert(Asset source) {
-        BinanceProperties.AssetConfig assetConfig = findAssetConfig(source.getAsset());
         return new AssetDto(
-                source.getAsset(),
-                assetConfig.getFullName(),
-                assetConfig.getIconIndex(),
-                source.getFree(),
-                source.getLocked(),
-                source.getPrice(),
-                source.getPriceChange(),
-                source.getBalance(),
-                source.getQuotation()
+                source.getName(),
+                source.getFullName(),
+                source.getApiKeyName(),
+                source.getExchange(),
+                source.getTotalFunds(),
+                source.getFundsAvailable(),
+                source.getUsedInAnyOutstandingOrders()
         );
-    }
-
-    private BinanceProperties.AssetConfig findAssetConfig(String assetName) {
-        return Optional.ofNullable(binanceProperties.getAssets().get(assetName))
-                .orElseThrow(() -> new AssetNotFoundException(assetName));
     }
 }

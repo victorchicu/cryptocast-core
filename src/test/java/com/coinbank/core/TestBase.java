@@ -1,9 +1,9 @@
 package com.coinbank.core;
 
-import com.coinbank.core.configs.BinanceProperties;
+import com.coinbank.core.configs.BinanceConfig;
+import com.coinbank.core.repository.AssetTrackerRepository;
 import com.coinbank.core.services.AssetService;
 import com.coinbank.core.services.AssetTrackerService;
-import com.coinbank.core.repository.AssetTrackerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +32,9 @@ public class TestBase {
     @Autowired
     protected AssetService assetService;
     @Autowired
-    protected ConversionService conversionService;
+    protected BinanceConfig binanceConfig;
     @Autowired
-    protected BinanceProperties binanceProperties;
+    protected ConversionService conversionService;
     @Autowired
     protected AssetTrackerService assetTrackerService;
     @Autowired

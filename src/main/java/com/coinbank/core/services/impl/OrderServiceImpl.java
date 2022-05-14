@@ -1,44 +1,43 @@
 package com.coinbank.core.services.impl;
 
 import com.binance.api.client.domain.account.Order;
-import com.coinbank.core.services.ApiRestClient;
 import com.coinbank.core.domain.TestOrder;
 import com.coinbank.core.services.OrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    private final ApiRestClient apiRestClient;
+//    private final ExchangeClient exchangeClient;
 
-    public OrderServiceImpl(ApiRestClient apiRestClient) {
-        this.apiRestClient = apiRestClient;
-    }
+//    public OrderServiceImpl(ExchangeClient exchangeClient) {
+//        this.exchangeClient = exchangeClient;
+//    }
 
     @Override
     public void createOrder(Principal principal, String assetName, TestOrder testOrder) {
-        apiRestClient.createOrder(principal, assetName, testOrder);
+//        exchangeClient.createOrder(principal, assetName, testOrder);
     }
 
     @Override
     public void cancelOrder(Principal principal, Long orderId, String assetName) {
-        apiRestClient.cancelOrder(principal, orderId, assetName);
+//        exchangeClient.cancelOrder(principal, orderId, assetName);
     }
 
     @Override
     public Page<Order> getAllOrders(Principal principal, String assetName, Pageable pageable) {
-        List<Order> orders = apiRestClient.getAllOrders(assetName, pageable);
-        return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
+        throw new UnsupportedOperationException();
+//        List<Order> orders = exchangeClient.getAllOrders(assetName, pageable);
+//        return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
     }
 
     @Override
     public Page<Order> getOpenOrders(Principal principal, String assetName, Pageable pageable) {
-        List<Order> orders = apiRestClient.getOpenOrders(assetName, pageable);
-        return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
+        throw new UnsupportedOperationException();
+//        List<Order> orders = exchangeClient.getOpenOrders(assetName, pageable);
+//        return PageableExecutionUtils.getPage(orders, pageable, () -> orders.size());
     }
 }

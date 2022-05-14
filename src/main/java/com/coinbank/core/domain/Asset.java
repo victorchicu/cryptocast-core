@@ -1,81 +1,137 @@
 package com.coinbank.core.domain;
 
-import com.coinbank.core.enums.Quotation;
+import com.coinbank.core.enums.Exchange;
 
 import java.math.BigDecimal;
 
 public class Asset {
-    private String asset;
-    private Integer iconIndex;
-    private BigDecimal free;
-    private BigDecimal locked;
-    private BigDecimal price;
-    private BigDecimal priceChange;
-    private BigDecimal balance;
-    private Quotation quotation;
+    private String name;
+    private String fullName;
+    private String apiKeyName;
+    private Exchange exchange;
+    private BigDecimal totalFunds;
+    private BigDecimal fundsAvailable;
+    private BigDecimal usedInAnyOutstandingOrders;
 
-    public String getAsset() {
-        return asset;
+    private Asset(Builder builder) {
+        setName(builder.name);
+        setFullName(builder.fullName);
+        setApiKeyName(builder.apiKeyName);
+        setExchange(builder.exchange);
+        setTotalFunds(builder.totalFunds);
+        setFundsAvailable(builder.fundsAvailable);
+        setUsedInAnyOutstandingOrders(builder.usedInAnyOutstandingOrders);
     }
 
-    public void setAsset(String asset) {
-        this.asset = asset;
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
-    public Integer getIconIndex() {
-        return iconIndex;
+    public String getName() {
+        return name;
     }
 
-    public void setIconIndex(Integer iconIndex) {
-        this.iconIndex = iconIndex;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public BigDecimal getFree() {
-        return free;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFree(BigDecimal free) {
-        this.free = free;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public BigDecimal getLocked() {
-        return locked;
+    public String getApiKeyName() {
+        return apiKeyName;
     }
 
-    public void setLocked(BigDecimal locked) {
-        this.locked = locked;
+    public void setApiKeyName(String apiKeyName) {
+        this.apiKeyName = apiKeyName;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public Exchange getExchange() {
+        return exchange;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setExchange(Exchange exchange) {
+        this.exchange = exchange;
     }
 
-    public BigDecimal getPriceChange() {
-        return priceChange;
+    public BigDecimal getTotalFunds() {
+        return totalFunds;
     }
 
-    public void setPriceChange(BigDecimal priceChange) {
-        this.priceChange = priceChange;
+    public void setTotalFunds(BigDecimal totalFunds) {
+        this.totalFunds = totalFunds;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
+    public BigDecimal getFundsAvailable() {
+        return fundsAvailable;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
+    public void setFundsAvailable(BigDecimal fundsAvailable) {
+        this.fundsAvailable = fundsAvailable;
     }
 
-    public Quotation getQuotation() {
-        return quotation;
+    public BigDecimal getUsedInAnyOutstandingOrders() {
+        return usedInAnyOutstandingOrders;
     }
 
-    public void setQuotation(Quotation quotation) {
-        this.quotation = quotation;
+    public void setUsedInAnyOutstandingOrders(BigDecimal usedInAnyOutstandingOrders) {
+        this.usedInAnyOutstandingOrders = usedInAnyOutstandingOrders;
+    }
+
+    public static final class Builder {
+        private String name;
+        private String fullName;
+        private String apiKeyName;
+        private Exchange exchange;
+        private BigDecimal totalFunds;
+        private BigDecimal fundsAvailable;
+        private BigDecimal usedInAnyOutstandingOrders;
+
+        private Builder() {}
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder fullName(String fullName) {
+            this.fullName = fullName;
+            return this;
+        }
+
+        public Builder apiKeyName(String apiKeyName) {
+            this.apiKeyName = apiKeyName;
+            return this;
+        }
+
+        public Builder exchange(Exchange exchange) {
+            this.exchange = exchange;
+            return this;
+        }
+
+        public Builder totalFunds(BigDecimal totalFunds) {
+            this.totalFunds = totalFunds;
+            return this;
+        }
+
+        public Builder fundsAvailable(BigDecimal fundsAvailable) {
+            this.fundsAvailable = fundsAvailable;
+            return this;
+        }
+
+        public Builder usedInAnyOutstandingOrders(BigDecimal usedInAnyOutstandingOrders) {
+            this.usedInAnyOutstandingOrders = usedInAnyOutstandingOrders;
+            return this;
+        }
+
+        public Asset build() {
+            return new Asset(this);
+        }
     }
 }
 
