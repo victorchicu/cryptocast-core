@@ -2,8 +2,8 @@ package com.coinbank.core.repository.impl;
 
 import com.coinbank.core.domain.AssetTracker;
 import com.coinbank.core.domain.User;
-import com.coinbank.core.entity.AssetTrackerEntity;
-import com.coinbank.core.entity.BaseEntity;
+import com.coinbank.core.repository.entity.AssetTrackerEntity;
+import com.coinbank.core.repository.entity.BaseEntity;
 import com.coinbank.core.repository.CustomSubscriptionRepository;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;

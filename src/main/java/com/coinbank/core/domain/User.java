@@ -10,17 +10,19 @@ public class User {
     private String password;
     private String imageUrl;
     private String providerId;
+    private String displayName;
     private OAuth2Provider auth2Provider;
     private Map<String, ApiKey> apiKeys;
 
     private User(Builder builder) {
-        id = builder.id;
-        email = builder.email;
-        password = builder.password;
-        imageUrl = builder.imageUrl;
-        providerId = builder.providerId;
-        auth2Provider = builder.auth2Provider;
-        apiKeys = builder.apiKeys;
+        setId(builder.id);
+        setEmail(builder.email);
+        setPassword(builder.password);
+        setImageUrl(builder.imageUrl);
+        setProviderId(builder.providerId);
+        setDisplayName(builder.displayName);
+        setAuth2Provider(builder.auth2Provider);
+        setApiKeys(builder.apiKeys);
     }
 
     public static Builder newBuilder() {
@@ -31,28 +33,64 @@ public class User {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getProviderId() {
         return providerId;
     }
 
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
     public OAuth2Provider getAuth2Provider() {
         return auth2Provider;
     }
 
+    public void setAuth2Provider(OAuth2Provider auth2Provider) {
+        this.auth2Provider = auth2Provider;
+    }
+
     public Map<String, ApiKey> getApiKeys() {
         return apiKeys;
+    }
+
+    public void setApiKeys(Map<String, ApiKey> apiKeys) {
+        this.apiKeys = apiKeys;
     }
 
     public void addApiKey(ApiKey apiKey) {
@@ -69,6 +107,7 @@ public class User {
         private String password;
         private String imageUrl;
         private String providerId;
+        private String displayName;
         private OAuth2Provider auth2Provider;
         private Map<String, ApiKey> apiKeys;
 
@@ -99,8 +138,18 @@ public class User {
             return this;
         }
 
+        public Builder displayName(String displayName) {
+            this.displayName = displayName;
+            return this;
+        }
+
         public Builder auth2Provider(OAuth2Provider auth2Provider) {
             this.auth2Provider = auth2Provider;
+            return this;
+        }
+
+        public Builder apiKeys(Map<String, ApiKey> apiKeys) {
+            this.apiKeys = apiKeys;
             return this;
         }
 

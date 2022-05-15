@@ -4,7 +4,7 @@ import com.coinbank.core.domain.facebook.FacebookOAuth2UserInfo;
 import com.coinbank.core.domain.google.GoogleOAuth2UserInfo;
 import com.coinbank.core.domain.github.GithubOAuth2UserInfo;
 import com.coinbank.core.enums.OAuth2Provider;
-import com.coinbank.core.exceptions.OAuth2AuthenticationProcessingException;
+import com.coinbank.core.domain.exceptions.OAuth2AuthenticationProcessingException;
 
 import java.util.Map;
 
