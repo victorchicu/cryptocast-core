@@ -1,4 +1,4 @@
-package com.coinbank.core.configs;
+package com.coinbank.core.domain.configs;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

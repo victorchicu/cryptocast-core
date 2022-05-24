@@ -2,24 +2,17 @@ jwt:
   tokenSecret: QAZwsx123
   tokenExpiresInMillis: 3600000 #1h
 
-oauth2:
-  # After successfully authenticating with the OAuth2 Provider,
-  # we'll be generating an auth token for the user and sending the token to the
-  # redirectUri mentioned by the client in the /oauth2/authorize request.
-  # We're not using cookies because they won't work well in mobile clients.
-  authorizedRedirectUris:
-    - http://localhost:4200/oauth2/redirect
-
 feign:
   client:
     config:
       default:
         loggerLevel: basic
         readTimeout: 5000
-        connectTimeout: 5000
+        connectTimeout: 500
 
-server:
-  port: 8080
+oauth2:
+  authorizedRedirectUris:
+    - http://localhost:4200/%23/oauth2/redirect
 
 spring:
   data:
@@ -41,49 +34,55 @@ spring:
       client:
         registration:
           google:
-            clientId: 5014057553-8gm9um6vnli3cle5rgigcdjpdrid14m9.apps.googleusercontent.com
-            clientSecret: tWZKVLxaD_ARWsriiiUFYoIk
+            clientId: 208677993213-hb5o73qr7gbebh85jd9q1q2eovuael7p.apps.googleusercontent.com
+            clientSecret: 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
             redirectUri: "http://localhost:4200/oauth2/callback/{registrationId}"
             scope:
               - email
               - profile
           facebook:
             clientId: 1254079278109916
-            clientSecret: e745bee31c8601eb242e27a4b26e8d2f
+            clientSecret: 4c527117de903416a9683d56998ac930
             redirectUri: "http://localhost:4200/oauth2/callback/{registrationId}"
             scope:
               - email
               - public_profile
-          github:
-            clientId: d3e47fc2ddd966fa4352
-            clientSecret: 3bc0f6b8332f93076354c2a5bada2f5a05aea60d
-            redirectUri: "http://localhost:4200/oauth2/callback/{registrationId}"
-            scope:
-              - user:email
-              - read:user
         provider:
           facebook:
-            authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
-            tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
-            userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
+            tokenUri: https://graph.facebook.com/v2.8/oauth/access_token
+            userInfoUri: https://graph.facebook.com/v2.8/me?fields=email,name,picture.width(250).height(250)
+            authorizationUri: https://www.facebook.com/v2.8/dialog/oauth
+    filter:
+      order: 3
 
 logging:
   level:
     root: info
 
-routes:
+security:
   publicRoutes:
+    - "/"
+    - "/error"
+    - "/favicon.ico"
+    - "/**/*.png"
+    - "/**/*.gif"
+    - "/**/*.svg"
+    - "/**/*.jpg"
+    - "/**/*.html"
+    - "/**/*.css"
+    - "/**/*.js"
+    - "/signin/**"
+    - "/oauth2/**"
+    - "/websocket/**"
     - "/api/signin/**"
     - "/api/logout/**"
     - "/api/signup/**"
-    - "/websocket/**"
-    - "/oauth2/callback/**"
 
 rabbitmq:
   relayHost: localhost
   relayPort: 61613
 
-notification:
+stomp:
   destinations:
     TICKER_EVENT: "'/topic/' + name + '-ticker'"
 

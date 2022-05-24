@@ -1,6 +1,5 @@
 package com.coinbank.core.web.configs;
 
-import com.coinbank.core.configs.RoutesConfig;
 import com.coinbank.core.domain.services.TokenProviderService;
 import com.coinbank.core.domain.services.impl.CustomOAuth2UserService;
 import com.coinbank.core.domain.services.impl.CustomUserDetailsService;
@@ -9,29 +8,41 @@ import com.coinbank.core.repository.impl.HttpCookieOAuth2AuthorizationRequestRep
 import com.coinbank.core.web.filters.TokenAuthenticationFilter;
 import com.coinbank.core.web.handlers.OAuth2AuthenticationFailureHandler;
 import com.coinbank.core.web.handlers.OAuth2AuthenticationSuccessHandler;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler;
+import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.Collections;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final RoutesConfig routesConfig;
+@EnableConfigurationProperties({SecurityProperties.class})
+public class OAuth2WebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+    private final SecurityProperties securityProperties;
     private final TokenProviderService tokenProviderService;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomUserDetailsService customUserDetailsService;
@@ -39,8 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
-    public SecurityConfig(
-            RoutesConfig routesConfig,
+    public OAuth2WebSecurityConfigurerAdapter(
+            SecurityProperties securityProperties,
             TokenProviderServiceImpl tokenProviderService,
             CustomOAuth2UserService customOAuth2UserService,
             CustomUserDetailsService customUserDetailsService,
@@ -48,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler,
             HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository
     ) {
-        this.routesConfig = routesConfig;
+        this.securityProperties = securityProperties;
         this.tokenProviderService = tokenProviderService;
         this.customOAuth2UserService = customOAuth2UserService;
         this.customUserDetailsService = customUserDetailsService;
@@ -95,6 +106,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .antMatchers("/**/*.{js,html}");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
                 //
@@ -111,16 +129,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 //
                 .exceptionHandling()
-                .authenticationEntryPoint(
-                        (request, response, ex) -> response.sendError(
-                                HttpServletResponse.SC_UNAUTHORIZED,
-                                ex.getMessage()
-                        )
-                )
+                .authenticationEntryPoint((request, response, ex) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage()))
                 .and()
                 //
                 .authorizeRequests()
-                .antMatchers(routesConfig.getPublicRoutes().toArray(new String[0]))
+                .antMatchers(securityProperties.getPublicRoutes().toArray(new String[0]))
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -140,6 +153,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userService(customOAuth2UserService)
                 .and()
                 //
+                .tokenEndpoint()
+                .accessTokenResponseClient(authorizationCodeTokenResponseClient())
+                .and()
+                //
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler);
 
@@ -153,4 +170,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
+
+    private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> authorizationCodeTokenResponseClient() {
+        OAuth2AccessTokenResponseHttpMessageConverter tokenResponseHttpMessageConverter = new OAuth2AccessTokenResponseHttpMessageConverter();
+        tokenResponseHttpMessageConverter.setTokenResponseConverter(new OAuth2AccessTokenResponseConverter());
+        RestTemplate restTemplate = new RestTemplate(
+                Arrays.asList(
+                        new FormHttpMessageConverter(),
+                        tokenResponseHttpMessageConverter
+                )
+        );
+        restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler());
+        DefaultAuthorizationCodeTokenResponseClient tokenResponseClient = new DefaultAuthorizationCodeTokenResponseClient();
+        tokenResponseClient.setRestOperations(restTemplate);
+        return tokenResponseClient;
+    }
 }
+

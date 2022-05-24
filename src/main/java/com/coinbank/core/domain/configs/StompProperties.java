@@ -1,14 +1,12 @@
-package com.coinbank.core.configs;
+package com.coinbank.core.domain.configs;
 
 import com.coinbank.core.enums.NotificationType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
 
-@Configuration
-@ConfigurationProperties(prefix = "notification")
-public class NotificationProperties {
+@ConfigurationProperties(prefix = "stomp")
+public class StompProperties {
     private Map<NotificationType, String> destinations;
 
     public Map<NotificationType, String> getDestinations() {

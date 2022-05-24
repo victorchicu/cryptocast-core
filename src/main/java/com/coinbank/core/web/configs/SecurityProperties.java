@@ -1,13 +1,11 @@
-package com.coinbank.core.configs;
+package com.coinbank.core.web.configs;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
-@Configuration
-@ConfigurationProperties("routes")
-public class RoutesConfig {
+@ConfigurationProperties("security")
+public class SecurityProperties {
     private List<String> publicRoutes;
 
     public List<String> getPublicRoutes() {

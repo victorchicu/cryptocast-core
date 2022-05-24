@@ -1,4 +1,4 @@
-package com.coinbank.core.domain;
+package com.coinbank.core.domain.oauth2;
 
 import java.util.Map;
 

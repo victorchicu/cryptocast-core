@@ -1,11 +1,11 @@
-package com.coinbank.core.configs;
+package com.coinbank.core.domain.configs;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConfigurationProperties(prefix = "jwt")
-public class JwtConfig {
+public class JsonWebTokenConfig {
     private Long tokenExpiresInMillis;
     private String tokenSecret;
 

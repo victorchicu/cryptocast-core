@@ -1,10 +1,10 @@
 package com.coinbank.core.web.controllers;
 
-import com.coinbank.core.web.dto.AccessTokenDto;
-import com.coinbank.core.web.dto.SigninDto;
+import com.coinbank.core.domain.exceptions.NotFoundEmailException;
 import com.coinbank.core.domain.services.TokenProviderService;
 import com.coinbank.core.domain.services.UserService;
-import com.coinbank.core.domain.exceptions.NotFoundEmailException;
+import com.coinbank.core.web.dto.AccessTokenDto;
+import com.coinbank.core.web.dto.SigninDto;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,7 +30,6 @@ public class SigninController {
         this.tokenProviderService = tokenProviderService;
         this.authenticationManager = authenticationManager;
     }
-
     @PostMapping
     public AccessTokenDto signin(@RequestBody SigninDto signinDto) {
         return userService.findByEmail(signinDto.getEmail())

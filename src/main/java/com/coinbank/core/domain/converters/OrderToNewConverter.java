@@ -2,8 +2,8 @@ package com.coinbank.core.domain.converters;
 
 import com.binance.api.client.domain.TimeInForce;
 import com.binance.api.client.domain.account.NewOrder;
-import com.coinbank.core.configs.BinanceConfig;
-import com.coinbank.core.configs.BinanceProperties;
+import com.coinbank.core.domain.configs.BinanceConfig;
+import com.coinbank.core.domain.configs.BinanceProperties;
 import com.coinbank.core.domain.TestOrder;
 import com.coinbank.core.domain.exceptions.IllegalAssetException;
 import com.coinbank.core.domain.exceptions.IllegalOrderTypeException;

@@ -2,8 +2,8 @@ package com.coinbank.core.domain.services.impl;
 
 import com.binance.api.client.BinanceApiWebSocketClient;
 import com.binance.api.client.domain.event.TickerEvent;
-import com.coinbank.core.configs.BinanceConfig;
-import com.coinbank.core.configs.BinanceProperties;
+import com.coinbank.core.domain.configs.BinanceConfig;
+import com.coinbank.core.domain.configs.BinanceProperties;
 import com.coinbank.core.domain.exceptions.IllegalAssetException;
 import com.coinbank.core.domain.services.SocketExchangeClient;
 

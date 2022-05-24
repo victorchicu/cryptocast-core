@@ -1,13 +1,15 @@
 package com.coinbank.core.domain.services.impl;
 
-import com.coinbank.core.domain.OAuth2UserInfo;
-import com.coinbank.core.domain.OAuth2UserInfoFactory;
+import com.coinbank.core.domain.oauth2.OAuth2UserInfo;
+import com.coinbank.core.domain.oauth2.OAuth2UserInfoFactory;
 import com.coinbank.core.domain.User;
 import com.coinbank.core.domain.UserPrincipal;
 import com.coinbank.core.domain.exceptions.OAuth2AuthenticationProcessingException;
 import com.coinbank.core.domain.services.UserService;
 import com.coinbank.core.enums.OAuth2Provider;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+    private static final Logger LOG = LoggerFactory.getLogger(CustomOAuth2UserService.class);
+
     private final UserService userService;
 
     public CustomOAuth2UserService(UserService userService) {
@@ -28,7 +32,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
         try {
-            return processOAuth2User(oAuth2UserRequest, oAuth2User);
+            return findOrRegisterOAuth2User(oAuth2UserRequest, oAuth2User);
         } catch (AuthenticationException ex) {
             throw ex;
         } catch (Exception ex) {
@@ -37,35 +41,44 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
     }
 
-    private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
-        OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(oAuth2UserRequest.getClientRegistration().getRegistrationId(), oAuth2User.getAttributes());
+    private User registerOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
+        return userService.save(
+                User.newBuilder()
+                        .id(oAuth2UserInfo.getId())
+                        .email(oAuth2UserInfo.getEmail())
+                        .imageUrl(oAuth2UserInfo.getImageUrl())
+                        .displayName(oAuth2UserInfo.getName())
+                        .auth2Provider(
+                                OAuth2Provider.fromString(
+                                        oAuth2UserRequest.getClientRegistration().getRegistrationId()
+                                )
+                        )
+                        .providerId(oAuth2UserInfo.getId())
+                        .build()
+        );
+    }
+
+    private OAuth2User findOrRegisterOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
+        OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(
+                oAuth2UserRequest.getClientRegistration().getRegistrationId(),
+                oAuth2User.getAttributes()
+        );
         if (StringUtils.isEmpty(oAuth2UserInfo.getEmail())) {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
         return UserPrincipal.create(
-                userService.findById(oAuth2UserInfo.getEmail())
-                        .map((User user) -> {
-                            if (!user.getAuth2Provider().equals(OAuth2Provider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
+                userService.findByEmail(oAuth2UserInfo.getEmail())
+                        .map(user -> {
+                            if (!user.getAuth2Provider().equals(OAuth2Provider.fromString(oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
                                 throw new OAuth2AuthenticationProcessingException("Looks like you're signed up with " + user.getAuth2Provider() + " account. Please use your " + user.getAuth2Provider() + " account to login.");
+                            } else {
+                                user.setImageUrl(oAuth2UserInfo.getImageUrl());
+                                user.setDisplayName(oAuth2UserInfo.getName());
+                                return userService.save(user);
                             }
-                            user.setImageUrl(oAuth2UserInfo.getImageUrl());
-                            user.setDisplayName(oAuth2UserInfo.getName());
-                            return userService.save(user);
                         })
-                        .orElseGet(() -> registerUser(oAuth2UserRequest, oAuth2UserInfo)),
+                        .orElseGet(() -> registerOAuth2User(oAuth2UserRequest, oAuth2UserInfo)),
                 oAuth2User.getAttributes()
         );
-    }
-
-    private User registerUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
-        User account = User.newBuilder()
-                .id(oAuth2UserInfo.getName())
-                .email(oAuth2UserInfo.getEmail())
-                .imageUrl(oAuth2UserInfo.getImageUrl())
-                .displayName(oAuth2UserInfo.getName())
-                .auth2Provider(OAuth2Provider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))
-                .providerId(oAuth2UserInfo.getId())
-                .build();
-        return userService.save(account);
     }
 }

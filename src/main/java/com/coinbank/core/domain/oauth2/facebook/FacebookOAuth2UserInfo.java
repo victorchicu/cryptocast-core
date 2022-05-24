@@ -1,6 +1,6 @@
-package com.coinbank.core.domain.facebook;
+package com.coinbank.core.domain.oauth2.facebook;
 
-import com.coinbank.core.domain.OAuth2UserInfo;
+import com.coinbank.core.domain.oauth2.OAuth2UserInfo;
 
 import java.util.Map;
 

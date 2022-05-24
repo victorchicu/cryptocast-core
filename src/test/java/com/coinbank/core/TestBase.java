@@ -1,6 +1,6 @@
 package com.coinbank.core;
 
-import com.coinbank.core.configs.BinanceConfig;
+import com.coinbank.core.domain.configs.BinanceConfig;
 import com.coinbank.core.repository.AssetTrackerRepository;
 import com.coinbank.core.domain.services.AssetService;
 import com.coinbank.core.domain.services.AssetTrackerService;

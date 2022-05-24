@@ -1,7 +1,7 @@
 package com.coinbank.core.domain.services.impl;
 
 import com.binance.api.client.impl.BinanceApiRestClientImpl;
-import com.coinbank.core.configs.BinanceConfig;
+import com.coinbank.core.domain.configs.BinanceConfig;
 import com.coinbank.core.domain.services.ExchangeFactory;
 import com.coinbank.core.domain.services.ExchangeService;
 import com.coinbank.core.domain.services.NotificationTemplate;

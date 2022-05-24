@@ -1,13 +1,11 @@
-package com.coinbank.core.configs;
+package com.coinbank.core.web.configs;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
-@Configuration
 @ConfigurationProperties(prefix = "oauth2")
-public class OAuth2Config {
+public class OAuth2Properties {
     private List<String> authorizedRedirectUris;
 
     public List<String> getAuthorizedRedirectUris() {

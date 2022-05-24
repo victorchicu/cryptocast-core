@@ -34,16 +34,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            String bearerToken = getBearerTokenFromRequest(request);
-            if (StringUtils.hasText(bearerToken) && tokenProviderService.validateToken(bearerToken)) {
-                String subject = tokenProviderService.decodeSubject(bearerToken);
-                Object credentials = null;
+            String jwt = extractJwtFromHttpServletRequestHeader(request);
+            if (StringUtils.hasText(jwt) && tokenProviderService.validateToken(jwt)) {
+                String subject = tokenProviderService.decodeSubject(jwt);
                 UserDetails userDetails = customUserDetailsService.loadUserById(subject);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        credentials,
-                        userDetails.getAuthorities()
-                );
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
@@ -53,10 +48,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private String getBearerTokenFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
+    private String extractJwtFromHttpServletRequestHeader(HttpServletRequest request) {
+        String jwt = request.getHeader("Authorization");
+        if (StringUtils.hasText(jwt) && jwt.startsWith("Bearer ")) {
+            return jwt.substring(7);
         }
         return null;
     }

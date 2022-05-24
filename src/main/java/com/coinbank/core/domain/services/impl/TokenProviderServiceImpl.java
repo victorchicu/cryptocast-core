@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.coinbank.core.domain.UserPrincipal;
-import com.coinbank.core.configs.JwtConfig;
+import com.coinbank.core.domain.configs.JsonWebTokenConfig;
 import com.coinbank.core.domain.services.TokenProviderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,21 +17,21 @@ import java.util.Date;
 public class TokenProviderServiceImpl implements TokenProviderService {
     private static final Logger LOG = LoggerFactory.getLogger(TokenProviderServiceImpl.class);
 
-    private JwtConfig jwtConfig;
+    private JsonWebTokenConfig jsonWebTokenConfig;
 
-    public TokenProviderServiceImpl(JwtConfig jwtConfig) {
-        this.jwtConfig = jwtConfig;
+    public TokenProviderServiceImpl(JsonWebTokenConfig jsonWebTokenConfig) {
+        this.jsonWebTokenConfig = jsonWebTokenConfig;
     }
 
     public String createToken(Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         Date issuedAt = new Date();
-        Date expiresAt = new Date(issuedAt.getTime() + jwtConfig.getTokenExpiresInMillis());
+        Date expiresAt = new Date(issuedAt.getTime() + jsonWebTokenConfig.getTokenExpiresInMillis());
         return JWT.create()
                 .withSubject(userPrincipal.getId())
                 .withIssuedAt(issuedAt)
                 .withExpiresAt(expiresAt)
-                .sign(Algorithm.HMAC256(jwtConfig.getTokenSecret()));
+                .sign(Algorithm.HMAC256(jsonWebTokenConfig.getTokenSecret()));
     }
 
     public String decodeSubject(String token) {

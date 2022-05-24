@@ -1,7 +1,7 @@
 package com.coinbank.core.domain.converters;
 
-import com.coinbank.core.configs.BinanceConfig;
-import com.coinbank.core.configs.BinanceProperties;
+import com.coinbank.core.domain.configs.BinanceConfig;
+import com.coinbank.core.domain.configs.BinanceProperties;
 import com.coinbank.core.domain.Asset;
 import com.coinbank.core.enums.Exchange;
 import org.springframework.core.convert.converter.Converter;
