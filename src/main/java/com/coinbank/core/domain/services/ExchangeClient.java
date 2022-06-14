@@ -3,7 +3,6 @@ package com.coinbank.core.domain.services;
 import com.binance.api.client.domain.account.Order;
 import com.coinbank.core.domain.Asset;
 import com.coinbank.core.domain.AssetPrice;
-import com.coinbank.core.domain.Ohlc;
 import com.coinbank.core.domain.TestOrder;
 import org.springframework.data.domain.Pageable;
 
@@ -15,8 +14,6 @@ public interface ExchangeClient {
     void createOrder(Principal principal, String assetName, TestOrder testOrder);
 
     void cancelOrder(Principal principal, Long orderId, String assetName);
-
-    List<Ohlc> listOhlc(String assetName, String interval, Long start, Long end);
 
     List<Asset> listAssets();
 

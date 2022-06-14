@@ -2,7 +2,7 @@ package com.coinbank.core.web.controllers;
 
 import com.coinbank.core.domain.User;
 import com.coinbank.core.web.dto.AccessTokenDto;
-import com.coinbank.core.web.dto.SignupDto;
+import com.coinbank.core.web.dto.SignUpDto;
 import com.coinbank.core.domain.exceptions.EmailException;
 import com.coinbank.core.domain.services.TokenProviderService;
 import com.coinbank.core.domain.services.UserService;
@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/signup")
-public class SignupController {
+public class SignUpController {
     private final UserService userService;
     private final ConversionService conversionService;
     private final TokenProviderService tokenProviderService;
     private final AuthenticationManager authenticationManager;
 
-    public SignupController(
+    public SignUpController(
             UserService userService,
             ConversionService conversionService,
             TokenProviderService tokenProviderService,
@@ -37,7 +37,7 @@ public class SignupController {
     }
 
     @PostMapping
-    public AccessTokenDto signup(@RequestBody SignupDto signupDto) {
+    public AccessTokenDto signUp(@RequestBody SignUpDto signupDto) {
         String email = signupDto.getEmail();
         if (userService.findByEmail(email).isPresent()) {
             throw new EmailException(String.format("%s is taken", email));
@@ -55,7 +55,7 @@ public class SignupController {
         return new AccessTokenDto(accessToken);
     }
 
-    private User toUser(SignupDto signupDto) {
+    private User toUser(SignUpDto signupDto) {
         return conversionService.convert(signupDto, User.class);
     }
 }

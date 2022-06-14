@@ -1,6 +1,5 @@
 package com.coinbank.core.repository.configs;
 
-import com.coinbank.core.repository.entity.AssetTrackerEntity;
 import com.coinbank.core.repository.entity.UserEntity;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
@@ -27,15 +26,6 @@ public class IndexesConfig {
         mongoOperations.indexOps(UserEntity.class)
                 .ensureIndex(
                         emailIndex.unique().sparse()
-                );
-        Index assetNameIndex = new Index()
-                .on(
-                        buildIndexKeyName(AssetTrackerEntity.Field.ASSET_NAME),
-                        Sort.Direction.ASC
-                );
-        mongoOperations.indexOps(AssetTrackerEntity.class)
-                .ensureIndex(
-                        assetNameIndex.unique().sparse()
                 );
     }
 

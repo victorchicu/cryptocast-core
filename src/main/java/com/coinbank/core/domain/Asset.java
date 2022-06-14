@@ -1,14 +1,13 @@
 package com.coinbank.core.domain;
 
-import com.coinbank.core.enums.Exchange;
+import com.coinbank.core.enums.ExchangeType;
 
 import java.math.BigDecimal;
 
 public class Asset {
     private String name;
     private String fullName;
-    private String apiKeyName;
-    private Exchange exchange;
+    private ExchangeType exchange;
     private BigDecimal totalFunds;
     private BigDecimal fundsAvailable;
     private BigDecimal usedInAnyOutstandingOrders;
@@ -16,7 +15,6 @@ public class Asset {
     private Asset(Builder builder) {
         setName(builder.name);
         setFullName(builder.fullName);
-        setApiKeyName(builder.apiKeyName);
         setExchange(builder.exchange);
         setTotalFunds(builder.totalFunds);
         setFundsAvailable(builder.fundsAvailable);
@@ -43,19 +41,11 @@ public class Asset {
         this.fullName = fullName;
     }
 
-    public String getApiKeyName() {
-        return apiKeyName;
-    }
-
-    public void setApiKeyName(String apiKeyName) {
-        this.apiKeyName = apiKeyName;
-    }
-
-    public Exchange getExchange() {
+    public ExchangeType getExchange() {
         return exchange;
     }
 
-    public void setExchange(Exchange exchange) {
+    public void setExchange(ExchangeType exchange) {
         this.exchange = exchange;
     }
 
@@ -86,8 +76,7 @@ public class Asset {
     public static final class Builder {
         private String name;
         private String fullName;
-        private String apiKeyName;
-        private Exchange exchange;
+        private ExchangeType exchange;
         private BigDecimal totalFunds;
         private BigDecimal fundsAvailable;
         private BigDecimal usedInAnyOutstandingOrders;
@@ -104,12 +93,7 @@ public class Asset {
             return this;
         }
 
-        public Builder apiKeyName(String apiKeyName) {
-            this.apiKeyName = apiKeyName;
-            return this;
-        }
-
-        public Builder exchange(Exchange exchange) {
+        public Builder exchange(ExchangeType exchange) {
             this.exchange = exchange;
             return this;
         }

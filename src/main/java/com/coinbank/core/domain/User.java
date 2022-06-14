@@ -12,7 +12,7 @@ public class User {
     private String providerId;
     private String displayName;
     private OAuth2Provider auth2Provider;
-    private Map<String, ApiKey> apiKeys;
+    private Map<String, ApiKey> exchanges;
 
     private User(Builder builder) {
         setId(builder.id);
@@ -22,7 +22,7 @@ public class User {
         setProviderId(builder.providerId);
         setDisplayName(builder.displayName);
         setAuth2Provider(builder.auth2Provider);
-        setApiKeys(builder.apiKeys);
+        setExchanges(builder.exchanges);
     }
 
     public static Builder newBuilder() {
@@ -85,20 +85,20 @@ public class User {
         this.auth2Provider = auth2Provider;
     }
 
-    public Map<String, ApiKey> getApiKeys() {
-        return apiKeys;
+    public Map<String, ApiKey> getExchanges() {
+        return exchanges;
     }
 
-    public void setApiKeys(Map<String, ApiKey> apiKeys) {
-        this.apiKeys = apiKeys;
+    public void setExchanges(Map<String, ApiKey> exchanges) {
+        this.exchanges = exchanges;
     }
 
     public void addApiKey(ApiKey apiKey) {
-        apiKeys.put(apiKey.getLabel(), apiKey);
+        exchanges.put(apiKey.getLabel(), apiKey);
     }
 
-    public void deleteApiKey(String label) {
-        apiKeys.remove(label);
+    public void deleteApiKeyByLabel(String label) {
+        exchanges.remove(label);
     }
 
     public static final class Builder {
@@ -109,7 +109,7 @@ public class User {
         private String providerId;
         private String displayName;
         private OAuth2Provider auth2Provider;
-        private Map<String, ApiKey> apiKeys;
+        private Map<String, ApiKey> exchanges;
 
         private Builder() {}
 
@@ -149,12 +149,12 @@ public class User {
         }
 
         public Builder apiKeys(Map<String, ApiKey> apiKeys) {
-            this.apiKeys = apiKeys;
+            this.exchanges = apiKeys;
             return this;
         }
 
         public Builder exchanges(Map<String, ApiKey> exchanges) {
-            this.apiKeys = exchanges;
+            this.exchanges = exchanges;
             return this;
         }
 

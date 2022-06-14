@@ -1,16 +1,16 @@
 package com.coinbank.core.web.dto;
 
-import com.coinbank.core.enums.Exchange;
+import com.coinbank.core.enums.ExchangeType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class ApiKeyDto {
     private final String label;
     private final String apiKey;
     private final String secretKey;
-    private final Exchange exchange;
+    private final ExchangeType exchange;
 
     @JsonCreator
-    public ApiKeyDto(String label, String apiKey, String secretKey, Exchange exchange) {
+    public ApiKeyDto(String label, String apiKey, String secretKey, ExchangeType exchange) {
         this.label = label;
         this.apiKey = apiKey;
         this.secretKey = secretKey;
@@ -29,7 +29,7 @@ public class ApiKeyDto {
         return secretKey;
     }
 
-    public Exchange getExchange() {
+    public ExchangeType getExchange() {
         return exchange;
     }
 }

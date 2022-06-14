@@ -1,6 +1,6 @@
 package com.coinbank.core.enums;
 
-public enum Exchange {
+public enum ExchangeType {
     GATE,
     BINANCE;
 }

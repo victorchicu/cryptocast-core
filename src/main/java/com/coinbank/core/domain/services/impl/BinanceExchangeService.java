@@ -6,7 +6,6 @@ import com.binance.api.client.domain.account.Order;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
 import com.binance.api.client.domain.account.request.CancelOrderRequest;
 import com.binance.api.client.domain.event.TickerEvent;
-import com.binance.api.client.domain.market.CandlestickInterval;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.coinbank.core.domain.configs.BinanceConfig;
 import com.coinbank.core.domain.configs.BinanceProperties;
@@ -94,22 +93,9 @@ public class BinanceExchangeService implements ExchangeService {
     }
 
     @Override
-    public List<Ohlc> listOhlc(String assetName, String interval, Long start, Long end) {
-        String symbol = toSymbol(assetName);
-        return binanceApiRestClient.getCandlestickBars(symbol, CandlestickInterval.valueOf(interval))
-                .stream()
-                .map(this::toCandlestick)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Asset> listAssets(String label, User user) {
+    public List<Asset> listAssets() {
         return binanceApiRestClient.getAccount().getBalances().stream()
                 .map(this::toAsset)
-                .map(asset -> {
-                    asset.setApiKeyName(label);
-                    return asset;
-                })
                 .filter(onlyNonZeroBalance())
                 .collect(Collectors.toList());
     }
@@ -199,10 +185,6 @@ public class BinanceExchangeService implements ExchangeService {
 
     private AssetDto toAssetDto(Asset asset) {
         return conversionService.convert(asset, AssetDto.class);
-    }
-
-    private Ohlc toCandlestick(com.binance.api.client.domain.market.Candlestick candlestick) {
-        return conversionService.convert(candlestick, Ohlc.class);
     }
 
     private Asset toAsset(com.binance.api.client.domain.account.AssetBalance assetBalance) {

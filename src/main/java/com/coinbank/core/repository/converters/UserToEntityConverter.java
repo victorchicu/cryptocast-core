@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class UserToEntityConverter implements Converter<User, UserEntity> {
     @Override
     public UserEntity convert(User source) {
-        Map<String, ApiKeyEntity> exchanges = MapUtils.emptyIfNull(source.getApiKeys()).entrySet().stream()
+        Map<String, ApiKeyEntity> exchanges = MapUtils.emptyIfNull(source.getExchanges()).entrySet().stream()
                 .collect(Collectors.toMap(
                                 Map.Entry::getKey,
                                 entry -> ApiKeyEntity.newBuilder()

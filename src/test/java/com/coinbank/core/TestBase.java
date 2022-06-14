@@ -1,9 +1,7 @@
 package com.coinbank.core;
 
 import com.coinbank.core.domain.configs.BinanceConfig;
-import com.coinbank.core.repository.AssetTrackerRepository;
 import com.coinbank.core.domain.services.AssetService;
-import com.coinbank.core.domain.services.AssetTrackerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;

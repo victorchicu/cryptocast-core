@@ -3,7 +3,7 @@ package com.coinbank.core.domain.converters;
 import com.coinbank.core.domain.configs.BinanceConfig;
 import com.coinbank.core.domain.configs.BinanceProperties;
 import com.coinbank.core.domain.Asset;
-import com.coinbank.core.enums.Exchange;
+import com.coinbank.core.enums.ExchangeType;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -24,17 +24,11 @@ public class AssetBalanceToAssetConverter implements Converter<com.binance.api.c
         BigDecimal locked = new BigDecimal(source.getLocked());
         return Asset.newBuilder()
                 .name(source.getAsset())
-                .fullName(toAssetFullNameOrDefault(source.getAsset()))
-                .exchange(Exchange.BINANCE)
+                .fullName(source.getAsset())
+                .exchange(ExchangeType.BINANCE)
                 .totalFunds(free.add(locked))
                 .fundsAvailable(free)
                 .usedInAnyOutstandingOrders(locked)
                 .build();
-    }
-
-    private String toAssetFullNameOrDefault(String assetName) {
-        return Optional.ofNullable(binanceConfig.getProps().getAssets().get(assetName))
-                .map(BinanceProperties.AssetConfig::getFullName)
-                .orElse(assetName);
     }
 }

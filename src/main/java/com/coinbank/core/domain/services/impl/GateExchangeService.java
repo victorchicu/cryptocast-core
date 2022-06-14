@@ -32,12 +32,7 @@ public class GateExchangeService implements ExchangeService {
     }
 
     @Override
-    public List<Ohlc> listOhlc(String assetName, String interval, Long start, Long end) {
-        throw new UnsupportedOperationException("listOhlc");
-    }
-
-    @Override
-    public List<Asset> listAssets(String label, User user) {
+    public List<Asset> listAssets() {
         throw new UnsupportedOperationException("listAssets");
     }
 

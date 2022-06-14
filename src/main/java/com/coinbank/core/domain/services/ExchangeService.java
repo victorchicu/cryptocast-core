@@ -18,9 +18,7 @@ public interface ExchangeService {
 
     void removeAssetTicker(String assetName);
 
-    List<Ohlc> listOhlc(String assetName, String interval, Long start, Long end);
-
-    List<Asset> listAssets(String label, User user);
+    List<Asset> listAssets();
 
     Set<String> availableAssets();
 

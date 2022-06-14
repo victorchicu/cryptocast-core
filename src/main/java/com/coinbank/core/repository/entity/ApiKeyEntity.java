@@ -1,12 +1,12 @@
 package com.coinbank.core.repository.entity;
 
-import com.coinbank.core.enums.Exchange;
+import com.coinbank.core.enums.ExchangeType;
 
 public class ApiKeyEntity {
     private String name;
     private String apiKey;
     private String secretKey;
-    private Exchange exchange;
+    private ExchangeType exchange;
 
     public ApiKeyEntity() {
         //
@@ -47,11 +47,11 @@ public class ApiKeyEntity {
         this.secretKey = secretKey;
     }
 
-    public Exchange getExchange() {
+    public ExchangeType getExchange() {
         return exchange;
     }
 
-    public void setExchange(Exchange exchange) {
+    public void setExchange(ExchangeType exchange) {
         this.exchange = exchange;
     }
 
@@ -59,7 +59,7 @@ public class ApiKeyEntity {
         private String name;
         private String apiKey;
         private String secretKey;
-        private Exchange exchange;
+        private ExchangeType exchange;
 
         private Builder() {}
 
@@ -78,7 +78,7 @@ public class ApiKeyEntity {
             return this;
         }
 
-        public Builder exchange(Exchange exchange) {
+        public Builder exchange(ExchangeType exchange) {
             this.exchange = exchange;
             return this;
         }

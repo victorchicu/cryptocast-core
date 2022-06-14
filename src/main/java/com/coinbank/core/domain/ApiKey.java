@@ -1,12 +1,12 @@
 package com.coinbank.core.domain;
 
-import com.coinbank.core.enums.Exchange;
+import com.coinbank.core.enums.ExchangeType;
 
 public class ApiKey {
     private String label;
     private String apiKey;
     private String secretKey;
-    private Exchange exchange;
+    private ExchangeType exchange;
 
     private ApiKey(Builder builder) {
         setLabel(builder.label);
@@ -43,11 +43,11 @@ public class ApiKey {
         this.secretKey = secretKey;
     }
 
-    public Exchange getExchange() {
+    public ExchangeType getExchange() {
         return exchange;
     }
 
-    public void setExchange(Exchange exchange) {
+    public void setExchange(ExchangeType exchange) {
         this.exchange = exchange;
     }
 
@@ -55,7 +55,7 @@ public class ApiKey {
         private String label;
         private String apiKey;
         private String secretKey;
-        private Exchange exchange;
+        private ExchangeType exchange;
 
         private Builder() {}
 
@@ -74,7 +74,7 @@ public class ApiKey {
             return this;
         }
 
-        public Builder exchange(Exchange exchange) {
+        public Builder exchange(ExchangeType exchange) {
             this.exchange = exchange;
             return this;
         }

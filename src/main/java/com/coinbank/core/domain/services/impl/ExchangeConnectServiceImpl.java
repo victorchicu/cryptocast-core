@@ -2,7 +2,7 @@ package com.coinbank.core.domain.services.impl;
 
 import com.coinbank.core.domain.ApiKey;
 import com.coinbank.core.domain.User;
-import com.coinbank.core.domain.services.ApiConnectionService;
+import com.coinbank.core.domain.services.ExchangeConnectService;
 import com.coinbank.core.domain.services.ExchangeProvider;
 import com.coinbank.core.domain.services.UserService;
 import com.coinbank.core.domain.exceptions.UserNotFoundException;
@@ -15,16 +15,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.security.Principal;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class ApiConnectionServiceImpl implements ApiConnectionService {
+public class ExchangeConnectServiceImpl implements ExchangeConnectService {
     private final UserService userService;
     private final ExchangeProvider exchangeProvider;
     private final Map<String, ExchangeService> exchanges;
 
-    private ApiConnectionServiceImpl(UserService userService, ExchangeProvider exchangeProvider, @Lazy Map<String, ExchangeService> exchanges) {
+    private ExchangeConnectServiceImpl(UserService userService, ExchangeProvider exchangeProvider, @Lazy Map<String, ExchangeService> exchanges) {
         this.userService = userService;
         this.exchangeProvider = exchangeProvider;
         this.exchanges = exchanges;
@@ -37,10 +37,11 @@ public class ApiConnectionServiceImpl implements ApiConnectionService {
                         user -> {
                             user.addApiKey(apiKey);
                             userService.save(user);
-                            ExchangeService exchangeService = exchangeProvider.get(apiKey);
-                            exchanges.put(apiKey.getLabel(), exchangeService);
-                        },
-                        () -> {
+                            Optional.ofNullable(exchangeProvider.get(apiKey))
+                                    .ifPresent(exchangeService ->
+                                            exchanges.put(apiKey.getLabel(), exchangeService)
+                                    );
+                        }, () -> {
                             throw new UserNotFoundException();
                         });
     }
@@ -50,13 +51,19 @@ public class ApiConnectionServiceImpl implements ApiConnectionService {
         userService.findById(principal.getName())
                 .ifPresentOrElse(
                         user -> {
-                            user.deleteApiKey(label);
+                            user.deleteApiKeyByLabel(label);
                             userService.save(user);
                             exchanges.remove(label);
-                        },
-                        () -> {
+                        }, () -> {
                             throw new UserNotFoundException();
                         });
+    }
+
+    @Override
+    public List<ApiKey> list(Principal principal) {
+        return userService.findById(principal.getName())
+                .map(user -> user.getExchanges().values()).stream()
+                .collect(ArrayList::new, List::addAll, List::addAll);
     }
 
     @Bean
@@ -64,7 +71,7 @@ public class ApiConnectionServiceImpl implements ApiConnectionService {
     public Map<String, ExchangeService> exchanges() {
         return userService.findById(SecurityContextHolder.getContext().getAuthentication().getName())
                 .map((User user) ->
-                        user.getApiKeys().entrySet().stream()
+                        user.getExchanges().entrySet().stream()
                                 .collect(
                                         Collectors.toMap(
                                                 Map.Entry::getKey,

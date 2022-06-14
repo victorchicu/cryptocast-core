@@ -2,12 +2,12 @@ package com.coinbank.core.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class SignupDto {
+public class SignInDto {
     private final String email;
     private final String password;
 
     @JsonCreator
-    public SignupDto(String email, String password) {
+    public SignInDto(String email, String password) {
         this.email = email;
         this.password = password;
     }

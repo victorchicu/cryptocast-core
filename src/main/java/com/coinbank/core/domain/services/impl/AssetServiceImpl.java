@@ -6,10 +6,7 @@ import com.coinbank.core.domain.services.AssetService;
 import com.coinbank.core.domain.services.ExchangeService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AssetServiceImpl implements AssetService {
@@ -20,26 +17,13 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public void addAssetTickerEvent(User user, String assetName) {
-//        ExchangeService exchangeService = exchangeFactory.create(, ExchangeProvider.BINANCE);
-//        exchangeService.addAssetTicker(user, assetName);
-    }
-
-
-    @Override
-    public void removeAssetTickerEvent(User user, String assetName) {
-//        ExchangeService exchangeService = exchangeFactory.create(, ExchangeProvider.BINANCE);
-//        exchangeService.removeAssetTicker(assetName);
-    }
-
-    @Override
-    public List<Asset> listAssets(User user) {
-        return user.getApiKeys().entrySet().stream()
-                .map(entry ->
-                        Optional.ofNullable(exchanges.get(entry.getKey()))
-                                .map(exchangeService -> exchangeService.listAssets(entry.getKey(), user))
-                                .orElseThrow(() -> new RuntimeException("Unsupported exchange service: " + entry.getKey()))
+    public List<Asset> listAssets(User user, String label) {
+        return Optional.ofNullable(user.getExchanges().get(label))
+                .map(apiKey -> Optional.ofNullable(exchanges.get(apiKey.getLabel())))
+                .map(optionalExchange ->
+                        optionalExchange.map(ExchangeService::listAssets)
+                                .orElse(Collections.emptyList())
                 )
-                .collect(ArrayList::new, List::addAll, List::addAll);
+                .orElseThrow(() -> new RuntimeException("Unsupported exchange service: " + label));
     }
 }

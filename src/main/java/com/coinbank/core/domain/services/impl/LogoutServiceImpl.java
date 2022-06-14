@@ -1,7 +1,6 @@
 package com.coinbank.core.domain.services.impl;
 
 import com.coinbank.core.domain.AssetTracker;
-import com.coinbank.core.domain.services.AssetTrackerService;
 import com.coinbank.core.domain.services.UserService;
 import com.coinbank.core.domain.services.AssetService;
 import com.coinbank.core.domain.services.LogoutService;
@@ -19,28 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 public class LogoutServiceImpl implements LogoutService {
     private final UserService userService;
     private final AssetService assetService;
-    private final AssetTrackerService assetTrackerService;
 
-    public LogoutServiceImpl(
-            UserService userService,
-            AssetService assetService,
-            AssetTrackerService assetTrackerService
-    ) {
+    public LogoutServiceImpl(UserService userService, AssetService assetService) {
         this.userService = userService;
         this.assetService = assetService;
-        this.assetTrackerService = assetTrackerService;
     }
 
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
-            userService.findById(authentication.getName())
-                    .ifPresent(user -> {
-                        Page<AssetTracker> subscriptions = assetTrackerService.findAll(user, Pageable.unpaged());
-                        subscriptions.forEach(subscription ->
-                                assetService.removeAssetTickerEvent(user, subscription.getAssetName())
-                        );
-                    });
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
     }

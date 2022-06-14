@@ -1,6 +1,6 @@
 package com.coinbank.core.web.dto;
 
-import com.coinbank.core.enums.Exchange;
+import com.coinbank.core.enums.ExchangeType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.math.BigDecimal;
@@ -8,17 +8,15 @@ import java.math.BigDecimal;
 public class AssetDto {
     private final String name;
     private final String fullName;
-    private final String apiKeyName;
-    private final Exchange exchange;
+    private final ExchangeType exchange;
     private final BigDecimal totalFunds;
     private final BigDecimal fundsAvailable;
     private final BigDecimal usedInAnyOutstandingOrders;
 
     @JsonCreator
-    public AssetDto(String name, String fullName, String apiKeyName, Exchange exchange, BigDecimal totalFunds, BigDecimal fundsAvailable, BigDecimal usedInAnyOutstandingOrders) {
+    public AssetDto(String name, String fullName, ExchangeType exchange, BigDecimal totalFunds, BigDecimal fundsAvailable, BigDecimal usedInAnyOutstandingOrders) {
         this.name = name;
         this.fullName = fullName;
-        this.apiKeyName = apiKeyName;
         this.exchange = exchange;
         this.totalFunds = totalFunds;
         this.fundsAvailable = fundsAvailable;
@@ -33,11 +31,7 @@ public class AssetDto {
         return fullName;
     }
 
-    public String getApiKeyName() {
-        return apiKeyName;
-    }
-
-    public Exchange getExchange() {
+    public ExchangeType getExchange() {
         return exchange;
     }
 
