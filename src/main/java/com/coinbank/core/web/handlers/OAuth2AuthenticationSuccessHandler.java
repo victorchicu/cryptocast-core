@@ -1,7 +1,7 @@
 package com.coinbank.core.web.handlers;
 
 import com.coinbank.core.domain.exceptions.UnauthorizedRedirectException;
-import com.coinbank.core.domain.services.TokenProviderService;
+import com.coinbank.core.services.TokenProviderService;
 import com.coinbank.core.repository.impl.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.coinbank.core.web.configs.OAuth2Properties;
 import com.coinbank.core.web.utils.CookieUtils;

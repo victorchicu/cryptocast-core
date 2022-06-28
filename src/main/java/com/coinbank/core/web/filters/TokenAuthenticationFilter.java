@@ -1,7 +1,7 @@
 package com.coinbank.core.web.filters;
 
-import com.coinbank.core.domain.services.TokenProviderService;
-import com.coinbank.core.domain.services.impl.CustomUserDetailsService;
+import com.coinbank.core.services.TokenProviderService;
+import com.coinbank.core.services.impl.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

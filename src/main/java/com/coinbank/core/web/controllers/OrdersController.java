@@ -4,7 +4,7 @@ import com.binance.api.client.domain.account.Order;
 import com.coinbank.core.domain.TestOrder;
 import com.coinbank.core.web.dto.OrderDto;
 import com.coinbank.core.web.dto.OrderRequestDto;
-import com.coinbank.core.domain.services.OrderService;
+import com.coinbank.core.services.OrderService;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

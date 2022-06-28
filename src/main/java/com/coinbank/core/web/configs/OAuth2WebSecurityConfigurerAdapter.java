@@ -1,9 +1,9 @@
 package com.coinbank.core.web.configs;
 
-import com.coinbank.core.domain.services.TokenProviderService;
-import com.coinbank.core.domain.services.impl.CustomOAuth2UserService;
-import com.coinbank.core.domain.services.impl.CustomUserDetailsService;
-import com.coinbank.core.domain.services.impl.TokenProviderServiceImpl;
+import com.coinbank.core.services.TokenProviderService;
+import com.coinbank.core.services.impl.CustomOAuth2UserService;
+import com.coinbank.core.services.impl.CustomUserDetailsService;
+import com.coinbank.core.services.impl.TokenProviderServiceImpl;
 import com.coinbank.core.repository.impl.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.coinbank.core.web.filters.TokenAuthenticationFilter;
 import com.coinbank.core.web.handlers.OAuth2AuthenticationFailureHandler;

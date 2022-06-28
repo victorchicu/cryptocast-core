@@ -1,8 +1,8 @@
 package com.coinbank.core.web.controllers;
 
 import com.coinbank.core.domain.exceptions.NotFoundEmailException;
-import com.coinbank.core.domain.services.TokenProviderService;
-import com.coinbank.core.domain.services.UserService;
+import com.coinbank.core.services.TokenProviderService;
+import com.coinbank.core.services.UserService;
 import com.coinbank.core.web.dto.AccessTokenDto;
 import com.coinbank.core.web.dto.SignInDto;
 import org.springframework.security.authentication.AuthenticationManager;

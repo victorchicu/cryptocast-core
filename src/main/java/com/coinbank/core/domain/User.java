@@ -97,7 +97,7 @@ public class User {
         exchanges.put(apiKey.getLabel(), apiKey);
     }
 
-    public void deleteApiKeyByLabel(String label) {
+    public void deleteApiKey(String label) {
         exchanges.remove(label);
     }
 

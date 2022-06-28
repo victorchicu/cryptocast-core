@@ -1,7 +1,7 @@
 package com.coinbank.core;
 
-import com.coinbank.core.domain.configs.BinanceConfig;
-import com.coinbank.core.domain.services.AssetService;
+import com.coinbank.core.configs.BinanceConfig;
+import com.coinbank.core.services.WalletBalanceService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +28,11 @@ public class TestBase {
     @Autowired
     protected ObjectMapper objectMapper;
     @Autowired
-    protected AssetService assetService;
-    @Autowired
     protected BinanceConfig binanceConfig;
     @Autowired
     protected ConversionService conversionService;
     @Autowired
-    protected AssetTrackerService assetTrackerService;
-    @Autowired
-    protected AssetTrackerRepository participantsRepository;
+    protected WalletBalanceService walletBalanceService;
 
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {

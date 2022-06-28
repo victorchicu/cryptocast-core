@@ -1,6 +1,6 @@
 package com.coinbank.core.web.controllers;
 
-import com.coinbank.core.domain.services.LogoutService;
+import com.coinbank.core.services.LogoutService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
