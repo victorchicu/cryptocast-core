@@ -19,7 +19,7 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: coinbank_core
+      database: cryptocast_core
   cache:
     type: simple
     evict-cron: "* */5 * * * *"
