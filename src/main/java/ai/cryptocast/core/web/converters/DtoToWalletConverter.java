@@ -1,15 +1,15 @@
 package ai.cryptocast.core.web.converters;
 
-import ai.cryptocast.core.domain.ApiKey;
-import ai.cryptocast.core.web.dto.ApiKeyDto;
+import ai.cryptocast.core.domain.Wallet;
+import ai.cryptocast.core.web.dto.WalletDto;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DtoToApiKeyConverter implements Converter<ApiKeyDto, ApiKey> {
+public class DtoToWalletConverter implements Converter<WalletDto, Wallet> {
     @Override
-    public ApiKey convert(ApiKeyDto source) {
-        return ApiKey.newBuilder()
+    public Wallet convert(WalletDto source) {
+        return Wallet.newBuilder()
                 .label(source.getLabel())
                 .apiKey(source.getApiKey())
                 .secretKey(source.getSecretKey())

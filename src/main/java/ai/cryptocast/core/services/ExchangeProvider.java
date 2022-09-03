@@ -1,7 +1,7 @@
 package ai.cryptocast.core.services;
 
-import ai.cryptocast.core.domain.ApiKey;
+import ai.cryptocast.core.domain.Wallet;
 
 public interface ExchangeProvider {
-    ExchangeService get(ApiKey apiKey);
+    ExchangeService get(Wallet wallet);
 }

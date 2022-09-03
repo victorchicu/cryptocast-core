@@ -1,19 +1,15 @@
-package ai.cryptocast.core.repository.entity;
+package ai.cryptocast.core.domain;
 
 import ai.cryptocast.core.enums.ExchangeType;
 
-public class ApiKeyEntity {
-    private String name;
+public class Wallet {
+    private String label;
     private String apiKey;
     private String secretKey;
     private ExchangeType exchange;
 
-    public ApiKeyEntity() {
-        //
-    }
-
-    private ApiKeyEntity(Builder builder) {
-        setName(builder.name);
+    private Wallet(Builder builder) {
+        setLabel(builder.label);
         setApiKey(builder.apiKey);
         setSecretKey(builder.secretKey);
         setExchange(builder.exchange);
@@ -23,12 +19,12 @@ public class ApiKeyEntity {
         return new Builder();
     }
 
-    public String getName() {
-        return name;
+    public String getLabel() {
+        return label;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getApiKey() {
@@ -56,15 +52,15 @@ public class ApiKeyEntity {
     }
 
     public static final class Builder {
-        private String name;
+        private String label;
         private String apiKey;
         private String secretKey;
         private ExchangeType exchange;
 
         private Builder() {}
 
-        public Builder name(String name) {
-            this.name = name;
+        public Builder label(String label) {
+            this.label = label;
             return this;
         }
 
@@ -83,8 +79,8 @@ public class ApiKeyEntity {
             return this;
         }
 
-        public ApiKeyEntity build() {
-            return new ApiKeyEntity(this);
+        public Wallet build() {
+            return new Wallet(this);
         }
     }
 }

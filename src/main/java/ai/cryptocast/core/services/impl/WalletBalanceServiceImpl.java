@@ -18,8 +18,8 @@ public class WalletBalanceServiceImpl implements WalletBalanceService {
 
     @Override
     public List<AssetBalance> list(User user, String label) {
-        return Optional.ofNullable(user.getExchanges().get(label))
-                .map(apiKey -> Optional.ofNullable(exchanges.get(apiKey.getLabel())))
+        return Optional.ofNullable(user.getWallets().get(label))
+                .map(wallet -> Optional.ofNullable(exchanges.get(wallet.getLabel())))
                 .map(exchangeService -> exchangeService.map(ExchangeService::listAssetBalances)
                         .orElse(Collections.emptyList())
                 )

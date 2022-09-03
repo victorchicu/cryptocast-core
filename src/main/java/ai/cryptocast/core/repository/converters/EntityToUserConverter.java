@@ -1,6 +1,6 @@
 package ai.cryptocast.core.repository.converters;
 
-import ai.cryptocast.core.domain.ApiKey;
+import ai.cryptocast.core.domain.Wallet;
 import ai.cryptocast.core.domain.User;
 import ai.cryptocast.core.repository.entity.UserEntity;
 import org.apache.commons.collections4.MapUtils;
@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 public class EntityToUserConverter implements Converter<UserEntity, User> {
     @Override
     public User convert(UserEntity source) {
-        Map<String, ApiKey> exchanges = MapUtils.emptyIfNull(source.getApiKeys()).entrySet().stream()
+        Map<String, Wallet> exchanges = MapUtils.emptyIfNull(source.getWallets()).entrySet().stream()
                 .collect(Collectors.toMap(
                                 Map.Entry::getKey,
-                                entry -> ApiKey.newBuilder()
+                                entry -> Wallet.newBuilder()
                                         .label(entry.getValue().getName())
                                         .apiKey(entry.getValue().getApiKey())
                                         .secretKey(entry.getValue().getSecretKey())
@@ -32,7 +32,7 @@ public class EntityToUserConverter implements Converter<UserEntity, User> {
                 .imageUrl(source.getImageUrl())
                 .providerId(source.getProviderId())
                 .auth2Provider(source.getAuth2Provider())
-                .exchanges(exchanges)
+                .wallets(exchanges)
                 .build();
     }
 }

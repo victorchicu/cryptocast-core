@@ -13,7 +13,7 @@ public class UserEntity extends BaseEntity {
     private String imageUrl;
     private String providerId;
     private OAuth2Provider auth2Provider;
-    private Map<String, ApiKeyEntity> apiKeys;
+    private Map<String, WalletEntity> wallets;
 
     public UserEntity() {
 
@@ -28,7 +28,7 @@ public class UserEntity extends BaseEntity {
         setImageUrl(builder.imageUrl);
         setProviderId(builder.providerId);
         setAuth2Provider(builder.auth2Provider);
-        setApiKeys(builder.apiKeys);
+        setWallets(builder.wallets);
     }
 
     public static Builder newBuilder() {
@@ -75,12 +75,12 @@ public class UserEntity extends BaseEntity {
         this.auth2Provider = auth2Provider;
     }
 
-    public Map<String, ApiKeyEntity> getApiKeys() {
-        return apiKeys;
+    public Map<String, WalletEntity> getWallets() {
+        return wallets;
     }
 
-    public void setApiKeys(Map<String, ApiKeyEntity> apiKeys) {
-        this.apiKeys = apiKeys;
+    public void setWallets(Map<String, WalletEntity> wallets) {
+        this.wallets = wallets;
     }
 
     public static final class Builder {
@@ -92,7 +92,7 @@ public class UserEntity extends BaseEntity {
         private String imageUrl;
         private String providerId;
         private OAuth2Provider auth2Provider;
-        private Map<String, ApiKeyEntity> apiKeys;
+        private Map<String, WalletEntity> wallets;
 
         private Builder() {}
 
@@ -136,8 +136,8 @@ public class UserEntity extends BaseEntity {
             return this;
         }
 
-        public Builder apiKeys(Map<String, ApiKeyEntity> apiKeys) {
-            this.apiKeys = apiKeys;
+        public Builder wallets(Map<String, WalletEntity> wallets) {
+            this.wallets = wallets;
             return this;
         }
 
@@ -152,6 +152,6 @@ public class UserEntity extends BaseEntity {
         public static final String IMAGE_URL = "imageUrl";
         public static final String PROVIDER = "provider";
         public static final String PROVIDER_ID = "providerId";
-        public static final String API_KEYS = "apiKeys";
+        public static final String WALLETS = "wallets";
     }
 }

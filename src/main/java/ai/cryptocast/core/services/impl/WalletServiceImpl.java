@@ -1,10 +1,10 @@
 package ai.cryptocast.core.services.impl;
 
-import ai.cryptocast.core.domain.ApiKey;
+import ai.cryptocast.core.domain.Wallet;
 import ai.cryptocast.core.domain.User;
 import ai.cryptocast.core.services.ExchangeProvider;
 import ai.cryptocast.core.services.ExchangeService;
-import ai.cryptocast.core.services.ApiKeyService;
+import ai.cryptocast.core.services.WalletService;
 import ai.cryptocast.core.services.UserService;
 import ai.cryptocast.core.domain.exceptions.UserNotFoundException;
 import org.springframework.context.annotation.Bean;
@@ -19,24 +19,24 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class ApiKeyServiceImpl implements ApiKeyService {
+public class WalletServiceImpl implements WalletService {
     private final UserService userService;
     private final ExchangeProvider exchangeProvider;
     private final Map<String, ExchangeService> exchanges;
 
-    private ApiKeyServiceImpl(UserService userService, ExchangeProvider exchangeProvider, @Lazy Map<String, ExchangeService> exchanges) {
+    private WalletServiceImpl(UserService userService, ExchangeProvider exchangeProvider, @Lazy Map<String, ExchangeService> exchanges) {
         this.userService = userService;
         this.exchangeProvider = exchangeProvider;
         this.exchanges = exchanges;
     }
 
     @Override
-    public void create(Principal principal, ApiKey apiKey) {
+    public void create(Principal principal, Wallet wallet) {
         userService.findById(principal.getName())
                 .ifPresentOrElse(
                         user -> {
-                            user.addApiKey(apiKey);
-                            exchanges.put(apiKey.getLabel(), exchangeProvider.get(apiKey));
+                            user.addWallet(wallet);
+                            exchanges.put(wallet.getLabel(), exchangeProvider.get(wallet));
                             userService.save(user);
                         }, () -> {
                             throw new UserNotFoundException();
@@ -48,7 +48,7 @@ public class ApiKeyServiceImpl implements ApiKeyService {
         userService.findById(principal.getName())
                 .ifPresentOrElse(
                         user -> {
-                            user.deleteApiKey(label);
+                            user.removeWallet(label);
                             exchanges.remove(label);
                             userService.save(user);
                         }, () -> {
@@ -57,9 +57,9 @@ public class ApiKeyServiceImpl implements ApiKeyService {
     }
 
     @Override
-    public List<ApiKey> list(Principal principal) {
+    public List<Wallet> list(Principal principal) {
         return userService.findById(principal.getName())
-                .map(user -> user.getExchanges().values()).stream()
+                .map(user -> user.getWallets().values()).stream()
                 .collect(ArrayList::new, List::addAll, List::addAll);
     }
 
@@ -68,7 +68,7 @@ public class ApiKeyServiceImpl implements ApiKeyService {
     public Map<String, ExchangeService> exchanges() {
         return userService.findById(SecurityContextHolder.getContext().getAuthentication().getName())
                 .map((User user) ->
-                        user.getExchanges().entrySet().stream()
+                        user.getWallets().entrySet().stream()
                                 .collect(
                                         Collectors.toMap(
                                                 Map.Entry::getKey,

@@ -3,14 +3,14 @@ package ai.cryptocast.core.web.dto;
 import ai.cryptocast.core.enums.ExchangeType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class ApiKeyDto {
+public class WalletDto {
     private final String label;
     private final String apiKey;
     private final String secretKey;
     private final ExchangeType exchange;
 
     @JsonCreator
-    public ApiKeyDto(String label, String apiKey, String secretKey, ExchangeType exchange) {
+    public WalletDto(String label, String apiKey, String secretKey, ExchangeType exchange) {
         this.label = label;
         this.apiKey = apiKey;
         this.secretKey = secretKey;

@@ -1,6 +1,6 @@
 package ai.cryptocast.core.services.impl;
 
-import ai.cryptocast.core.domain.ApiKey;
+import ai.cryptocast.core.domain.Wallet;
 import ai.cryptocast.core.services.ExchangeProvider;
 import ai.cryptocast.core.services.ExchangeService;
 import ai.cryptocast.core.services.ExchangeFactory;
@@ -18,9 +18,9 @@ public class ExchangeProviderImpl implements ExchangeProvider {
     }
 
     @Override
-    public ExchangeService get(ApiKey apiKey) {
-        return Optional.ofNullable(exchangeFactory.get(apiKey.getExchange().name()))
-                .map(factory -> factory.create(apiKey.getApiKey(), apiKey.getSecretKey()))
-                .orElseThrow(() -> new RuntimeException("Unsupported exchange factory: " + apiKey.getExchange()));
+    public ExchangeService get(Wallet wallet) {
+        return Optional.ofNullable(exchangeFactory.get(wallet.getExchange().name()))
+                .map(factory -> factory.create(wallet.getApiKey(), wallet.getSecretKey()))
+                .orElseThrow(() -> new RuntimeException("Unsupported exchange factory: " + wallet.getExchange()));
     }
 }

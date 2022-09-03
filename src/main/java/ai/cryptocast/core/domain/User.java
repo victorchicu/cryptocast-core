@@ -12,7 +12,7 @@ public class User {
     private String providerId;
     private String displayName;
     private OAuth2Provider auth2Provider;
-    private Map<String, ApiKey> exchanges;
+    private Map<String, Wallet> wallets;
 
     private User(Builder builder) {
         setId(builder.id);
@@ -22,7 +22,7 @@ public class User {
         setProviderId(builder.providerId);
         setDisplayName(builder.displayName);
         setAuth2Provider(builder.auth2Provider);
-        setExchanges(builder.exchanges);
+        setWallets(builder.wallets);
     }
 
     public static Builder newBuilder() {
@@ -85,20 +85,20 @@ public class User {
         this.auth2Provider = auth2Provider;
     }
 
-    public Map<String, ApiKey> getExchanges() {
-        return exchanges;
+    public Map<String, Wallet> getWallets() {
+        return wallets;
     }
 
-    public void setExchanges(Map<String, ApiKey> exchanges) {
-        this.exchanges = exchanges;
+    public void setWallets(Map<String, Wallet> wallets) {
+        this.wallets = wallets;
     }
 
-    public void addApiKey(ApiKey apiKey) {
-        exchanges.put(apiKey.getLabel(), apiKey);
+    public void addWallet(Wallet wallet) {
+        wallets.put(wallet.getLabel(), wallet);
     }
 
-    public void deleteApiKey(String label) {
-        exchanges.remove(label);
+    public void removeWallet(String label) {
+        wallets.remove(label);
     }
 
     public static final class Builder {
@@ -109,7 +109,7 @@ public class User {
         private String providerId;
         private String displayName;
         private OAuth2Provider auth2Provider;
-        private Map<String, ApiKey> exchanges;
+        private Map<String, Wallet> wallets;
 
         private Builder() {}
 
@@ -148,13 +148,8 @@ public class User {
             return this;
         }
 
-        public Builder apiKeys(Map<String, ApiKey> apiKeys) {
-            this.exchanges = apiKeys;
-            return this;
-        }
-
-        public Builder exchanges(Map<String, ApiKey> exchanges) {
-            this.exchanges = exchanges;
+        public Builder wallets(Map<String, Wallet> wallets) {
+            this.wallets = wallets;
             return this;
         }
 
