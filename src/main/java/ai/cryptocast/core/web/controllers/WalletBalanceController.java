@@ -1,10 +1,10 @@
 package ai.cryptocast.core.web.controllers;
 
-import ai.cryptocast.core.domain.AssetBalance;
+import ai.cryptocast.core.domain.WalletBalance;
 import ai.cryptocast.core.domain.exceptions.UserNotFoundException;
 import ai.cryptocast.core.services.WalletBalanceService;
 import ai.cryptocast.core.services.UserService;
-import ai.cryptocast.core.web.dto.AssetBalanceDto;
+import ai.cryptocast.core.web.dto.WalletBalanceDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
@@ -37,18 +37,18 @@ public class WalletBalanceController {
     }
 
     @GetMapping
-    public List<AssetBalanceDto> listAssetBalances(Principal principal, @PathVariable String label) {
+    public List<WalletBalanceDto> listWalletsBalance(Principal principal, @PathVariable String label) {
         return userService.findById(principal.getName())
                 .map(user -> {
-                    List<AssetBalanceDto> list = walletBalanceService.list(user, label).stream()
-                            .map(this::toAssetBalanceDto)
+                    List<WalletBalanceDto> list = walletBalanceService.list(user, label).stream()
+                            .map(this::toWalletBalanceDto)
                             .collect(Collectors.toList());
                     return list;
                 })
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    private AssetBalanceDto toAssetBalanceDto(AssetBalance assetBalance) {
-        return conversionService.convert(assetBalance, AssetBalanceDto.class);
+    private WalletBalanceDto toWalletBalanceDto(WalletBalance walletBalance) {
+        return conversionService.convert(walletBalance, WalletBalanceDto.class);
     }
 }

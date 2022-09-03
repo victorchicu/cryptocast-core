@@ -1,6 +1,6 @@
 package ai.cryptocast.core.services.impl;
 
-import ai.cryptocast.core.domain.AssetBalance;
+import ai.cryptocast.core.domain.WalletBalance;
 import ai.cryptocast.core.domain.User;
 import ai.cryptocast.core.services.ExchangeService;
 import ai.cryptocast.core.services.WalletBalanceService;
@@ -17,11 +17,12 @@ public class WalletBalanceServiceImpl implements WalletBalanceService {
     }
 
     @Override
-    public List<AssetBalance> list(User user, String label) {
+    public List<WalletBalance> list(User user, String label) {
         return Optional.ofNullable(user.getWallets().get(label))
                 .map(wallet -> Optional.ofNullable(exchanges.get(wallet.getLabel())))
-                .map(exchangeService -> exchangeService.map(ExchangeService::listAssetBalances)
-                        .orElse(Collections.emptyList())
+                .map(exchangeService ->
+                        exchangeService.map(ExchangeService::listWalletBalances)
+                                .orElse(Collections.emptyList())
                 )
                 .orElseThrow(() -> new RuntimeException("Unsupported exchange service: " + label));
     }

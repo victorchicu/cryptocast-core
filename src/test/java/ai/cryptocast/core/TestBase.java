@@ -3,7 +3,6 @@ package ai.cryptocast.core;
 import ai.cryptocast.core.services.WalletBalanceService;
 import ai.cryptocast.core.configs.BinanceConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
@@ -19,7 +18,6 @@ import org.testcontainers.containers.MongoDBContainer;
 @ContextConfiguration(initializers = TestBase.Initializer.class)
 public class TestBase {
     private static final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:latest");
-    protected static final Faker faker = new Faker();
 
     static {
         mongoDBContainer.start();

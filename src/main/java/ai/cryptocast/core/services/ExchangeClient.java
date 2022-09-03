@@ -1,6 +1,6 @@
 package ai.cryptocast.core.services;
 
-import ai.cryptocast.core.domain.AssetBalance;
+import ai.cryptocast.core.domain.WalletBalance;
 import ai.cryptocast.core.domain.AssetPrice;
 import ai.cryptocast.core.domain.TestOrder;
 import com.binance.api.client.domain.account.Order;
@@ -15,7 +15,7 @@ public interface ExchangeClient {
 
     void cancelOrder(Principal principal, Long orderId, String assetName);
 
-    List<AssetBalance> listAssets();
+    List<WalletBalance> listAssets();
 
     List<Order> getAllOrders(String assetName, Pageable pageable);
 

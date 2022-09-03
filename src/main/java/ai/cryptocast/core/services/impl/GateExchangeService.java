@@ -1,6 +1,6 @@
 package ai.cryptocast.core.services.impl;
 
-import ai.cryptocast.core.domain.AssetBalance;
+import ai.cryptocast.core.domain.WalletBalance;
 import ai.cryptocast.core.domain.AssetPrice;
 import ai.cryptocast.core.domain.TestOrder;
 import ai.cryptocast.core.domain.User;
@@ -30,7 +30,7 @@ public class GateExchangeService implements ExchangeService {
     }
 
     @Override
-    public List<AssetBalance> listAssetBalances() {
+    public List<WalletBalance> listWalletBalances() {
         throw new UnsupportedOperationException("listAssets");
     }
 

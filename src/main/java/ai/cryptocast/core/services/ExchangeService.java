@@ -1,7 +1,7 @@
 package ai.cryptocast.core.services;
 
 import com.binance.api.client.domain.account.Order;
-import ai.cryptocast.core.domain.AssetBalance;
+import ai.cryptocast.core.domain.WalletBalance;
 import ai.cryptocast.core.domain.AssetPrice;
 import ai.cryptocast.core.domain.TestOrder;
 import ai.cryptocast.core.domain.User;
@@ -23,7 +23,7 @@ public interface ExchangeService {
 
     List<Order> getOpenOrders(String assetName, Pageable pageable);
 
-    List<AssetBalance> listAssetBalances();
+    List<WalletBalance> listWalletBalances();
 
     Optional<AssetPrice> getAssetPrice(User user, String assetName);
 }

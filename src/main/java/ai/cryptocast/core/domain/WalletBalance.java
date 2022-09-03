@@ -4,7 +4,7 @@ import ai.cryptocast.core.enums.ExchangeType;
 
 import java.math.BigDecimal;
 
-public class AssetBalance {
+public class WalletBalance {
     private String name;
     private String fullName;
     private ExchangeType exchange;
@@ -12,7 +12,7 @@ public class AssetBalance {
     private BigDecimal fundsAvailable;
     private BigDecimal usedInAnyOutstandingOrders;
 
-    private AssetBalance(Builder builder) {
+    private WalletBalance(Builder builder) {
         setName(builder.name);
         setFullName(builder.fullName);
         setExchange(builder.exchange);
@@ -113,8 +113,8 @@ public class AssetBalance {
             return this;
         }
 
-        public AssetBalance build() {
-            return new AssetBalance(this);
+        public WalletBalance build() {
+            return new WalletBalance(this);
         }
     }
 }

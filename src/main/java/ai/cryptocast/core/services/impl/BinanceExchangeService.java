@@ -1,6 +1,6 @@
 package ai.cryptocast.core.services.impl;
 
-import ai.cryptocast.core.domain.AssetBalance;
+import ai.cryptocast.core.domain.WalletBalance;
 import ai.cryptocast.core.domain.AssetPrice;
 import ai.cryptocast.core.domain.TestOrder;
 import ai.cryptocast.core.domain.User;
@@ -8,6 +8,7 @@ import ai.cryptocast.core.services.ExchangeService;
 import ai.cryptocast.core.services.NotificationTemplate;
 import com.binance.api.client.BinanceApiRestClient;
 import com.binance.api.client.BinanceApiWebSocketClient;
+import com.binance.api.client.domain.account.AssetBalance;
 import com.binance.api.client.domain.account.NewOrder;
 import com.binance.api.client.domain.account.Order;
 import com.binance.api.client.domain.account.request.AllOrdersRequest;
@@ -83,9 +84,9 @@ public class BinanceExchangeService implements ExchangeService {
     }
 
     @Override
-    public List<AssetBalance> listAssetBalances() {
+    public List<WalletBalance> listWalletBalances() {
         return binanceApiRestClient.getAccount().getBalances().stream()
-                .map(this::toAssetBalance)
+                .map(this::toWalletBalance)
                 .filter(onlyNonZeroBalance())
                 .collect(Collectors.toList());
     }
@@ -110,11 +111,11 @@ public class BinanceExchangeService implements ExchangeService {
         return conversionService.convert(tickerPrice, AssetPrice.class);
     }
 
-    private AssetBalance toAssetBalance(com.binance.api.client.domain.account.AssetBalance assetBalance) {
-        return conversionService.convert(assetBalance, AssetBalance.class);
+    private WalletBalance toWalletBalance(AssetBalance assetBalance) {
+        return conversionService.convert(assetBalance, WalletBalance.class);
     }
 
-    private Predicate<? super AssetBalance> onlyNonZeroBalance() {
+    private Predicate<? super WalletBalance> onlyNonZeroBalance() {
         return asset -> asset.getTotalFunds().compareTo(BigDecimal.ZERO) > 0;
     }
 }
