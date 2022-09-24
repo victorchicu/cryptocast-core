@@ -1,12 +1,12 @@
 package ai.cryptocast.core.domain;
 
-import ai.cryptocast.core.enums.ExchangeType;
+import ai.cryptocast.core.enums.Exchange;
 
 public class Wallet {
     private String label;
     private String apiKey;
     private String secretKey;
-    private ExchangeType exchange;
+    private Exchange exchange;
 
     private Wallet(Builder builder) {
         setLabel(builder.label);
@@ -43,11 +43,11 @@ public class Wallet {
         this.secretKey = secretKey;
     }
 
-    public ExchangeType getExchange() {
+    public Exchange getExchange() {
         return exchange;
     }
 
-    public void setExchange(ExchangeType exchange) {
+    public void setExchange(Exchange exchange) {
         this.exchange = exchange;
     }
 
@@ -55,7 +55,7 @@ public class Wallet {
         private String label;
         private String apiKey;
         private String secretKey;
-        private ExchangeType exchange;
+        private Exchange exchange;
 
         private Builder() {}
 
@@ -74,7 +74,7 @@ public class Wallet {
             return this;
         }
 
-        public Builder exchange(ExchangeType exchange) {
+        public Builder exchange(Exchange exchange) {
             this.exchange = exchange;
             return this;
         }

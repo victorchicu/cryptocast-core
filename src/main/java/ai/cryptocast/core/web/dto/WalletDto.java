@@ -1,16 +1,16 @@
 package ai.cryptocast.core.web.dto;
 
-import ai.cryptocast.core.enums.ExchangeType;
+import ai.cryptocast.core.enums.Exchange;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class WalletDto {
     private final String label;
     private final String apiKey;
     private final String secretKey;
-    private final ExchangeType exchange;
+    private final Exchange exchange;
 
     @JsonCreator
-    public WalletDto(String label, String apiKey, String secretKey, ExchangeType exchange) {
+    public WalletDto(String label, String apiKey, String secretKey, Exchange exchange) {
         this.label = label;
         this.apiKey = apiKey;
         this.secretKey = secretKey;
@@ -29,7 +29,7 @@ public class WalletDto {
         return secretKey;
     }
 
-    public ExchangeType getExchange() {
+    public Exchange getExchange() {
         return exchange;
     }
 }

@@ -1,6 +1,6 @@
 package ai.cryptocast.core.web.dto;
 
-import ai.cryptocast.core.enums.ExchangeType;
+import ai.cryptocast.core.enums.Exchange;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.math.BigDecimal;
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class WalletBalanceDto {
     private final String name;
     private final String fullName;
-    private final ExchangeType exchange;
+    private final Exchange exchange;
     private final BigDecimal totalFunds;
     private final BigDecimal fundsAvailable;
     private final BigDecimal usedInAnyOutstandingOrders;
@@ -17,7 +17,7 @@ public class WalletBalanceDto {
     public WalletBalanceDto(
             String name,
             String fullName,
-            ExchangeType exchange,
+            Exchange exchange,
             BigDecimal totalFunds,
             BigDecimal fundsAvailable,
             BigDecimal usedInAnyOutstandingOrders
@@ -38,7 +38,7 @@ public class WalletBalanceDto {
         return fullName;
     }
 
-    public ExchangeType getExchange() {
+    public Exchange getExchange() {
         return exchange;
     }
 

@@ -87,7 +87,7 @@ public class BinanceExchangeService implements ExchangeService {
     public List<WalletBalance> listWalletBalances() {
         return binanceApiRestClient.getAccount().getBalances().stream()
                 .map(this::toWalletBalance)
-                .filter(onlyNonZeroBalance())
+//                .filter(onlyNonZeroBalance())
                 .collect(Collectors.toList());
     }
 

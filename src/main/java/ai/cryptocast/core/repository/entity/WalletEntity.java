@@ -1,12 +1,12 @@
 package ai.cryptocast.core.repository.entity;
 
-import ai.cryptocast.core.enums.ExchangeType;
+import ai.cryptocast.core.enums.Exchange;
 
 public class WalletEntity {
     private String name;
     private String apiKey;
     private String secretKey;
-    private ExchangeType exchange;
+    private Exchange exchange;
 
     public WalletEntity() {
         //
@@ -47,11 +47,11 @@ public class WalletEntity {
         this.secretKey = secretKey;
     }
 
-    public ExchangeType getExchange() {
+    public Exchange getExchange() {
         return exchange;
     }
 
-    public void setExchange(ExchangeType exchange) {
+    public void setExchange(Exchange exchange) {
         this.exchange = exchange;
     }
 
@@ -59,7 +59,7 @@ public class WalletEntity {
         private String name;
         private String apiKey;
         private String secretKey;
-        private ExchangeType exchange;
+        private Exchange exchange;
 
         private Builder() {}
 
@@ -78,7 +78,7 @@ public class WalletEntity {
             return this;
         }
 
-        public Builder exchange(ExchangeType exchange) {
+        public Builder exchange(Exchange exchange) {
             this.exchange = exchange;
             return this;
         }

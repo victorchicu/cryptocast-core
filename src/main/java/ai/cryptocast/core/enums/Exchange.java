@@ -1,6 +1,6 @@
 package ai.cryptocast.core.enums;
 
-public enum ExchangeType {
+public enum Exchange {
     GATE,
     BINANCE;
 }

@@ -1,13 +1,13 @@
 package ai.cryptocast.core.domain;
 
-import ai.cryptocast.core.enums.ExchangeType;
+import ai.cryptocast.core.enums.Exchange;
 
 import java.math.BigDecimal;
 
 public class WalletBalance {
     private String name;
     private String fullName;
-    private ExchangeType exchange;
+    private Exchange exchange;
     private BigDecimal totalFunds;
     private BigDecimal fundsAvailable;
     private BigDecimal usedInAnyOutstandingOrders;
@@ -41,11 +41,11 @@ public class WalletBalance {
         this.fullName = fullName;
     }
 
-    public ExchangeType getExchange() {
+    public Exchange getExchange() {
         return exchange;
     }
 
-    public void setExchange(ExchangeType exchange) {
+    public void setExchange(Exchange exchange) {
         this.exchange = exchange;
     }
 
@@ -76,7 +76,7 @@ public class WalletBalance {
     public static final class Builder {
         private String name;
         private String fullName;
-        private ExchangeType exchange;
+        private Exchange exchange;
         private BigDecimal totalFunds;
         private BigDecimal fundsAvailable;
         private BigDecimal usedInAnyOutstandingOrders;
@@ -93,7 +93,7 @@ public class WalletBalance {
             return this;
         }
 
-        public Builder exchange(ExchangeType exchange) {
+        public Builder exchange(Exchange exchange) {
             this.exchange = exchange;
             return this;
         }

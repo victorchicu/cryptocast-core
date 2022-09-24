@@ -4,6 +4,7 @@ import ai.cryptocast.core.services.ExchangeService;
 import ai.cryptocast.core.services.ExchangeFactory;
 import ai.cryptocast.core.services.NotificationTemplate;
 import com.binance.api.client.BinanceApiClientFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +19,9 @@ public class BinanceExchangeFactory implements ExchangeFactory {
     }
 
     @Override
+    @Cacheable
     public ExchangeService create(String apiKey, String secretKey) {
-        //TODO: new instance should be singleton
         BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(apiKey, secretKey);
-        return new BinanceExchangeService(
-                conversionService,
-                notificationTemplate,
-                factory.newRestClient(),
-                factory.newWebSocketClient()
-        );
+        return new BinanceExchangeService(conversionService, notificationTemplate, factory.newRestClient(), factory.newWebSocketClient());
     }
 }
